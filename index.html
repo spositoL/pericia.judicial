@@ -12,11 +12,12 @@
 
 <header class="navbar">
     <div class="container">
-        <div class="logo">Dr. Lincoln Sposito<span>.</span></div>
+        <div class="logo">Dr. Lincoln Sposito<span> ( Perito Judicial )</span></div>
         <nav>
             <ul>
-                <li><a href="#servicos">Serviços</a></li>
-                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#servicos">Serviços</a></li>				
+                <li><a href="sobre.html">Sobre</a></li>
+				<li><a href="materiais.html">Materiais Gratuitos</a></li> 				
                 <li><a href="#contato" class="btn-nav">Solicitar Análise</a></li>
             </ul>
         </nav>
@@ -54,11 +55,113 @@
             </div>
         </div>
     </section>
+	
+	<section class="cta-materiais" style="padding: 60px 0; background: #1a2a3a; color: #fff; text-align: center;">
+		<div class="container">
+			<h2>Fortaleça sua Inicial com Dados Técnicos</h2>
+			<p>Baixe gratuitamente meu modelo de quesitos para perícias bancárias e revisionais.</p>
+			<a href="materiais.html" class="btn-primary" style="background: #c5a059; margin-top: 20px; display: inline-block;">Acessar Materiais Gratuitos</a>
+		</div>
+	</section>
 </main>
+
+<section id="blog" class="blog-section">
+    <div class="container">
+        <h2 class="section-title">Artigos e Insights Técnicos</h2>
+        <p class="section-subtitle">Análises aprofundadas sobre legislação, perícia e modelagem de dados.</p>
+
+        <div class="search-container">
+            <input type="text" id="blogSearch" placeholder="Pesquisar por tema (ex: Gauss, SFH, TI)...">
+            <button onclick="searchBlog()" class="btn-search">Buscar</button>
+        </div>
+		<!--
+        <div class="carousel-container">
+            <div class="carousel-track">
+                
+                <article class="blog-card">
+                    <img src="img/capa-artigo-gauss.jpg" alt="Tabela Price vs Gauss">
+                    <div class="card-body">
+                        <h3>Tabela Price vs. Método de Gauss</h3>
+                        <p>Uma análise da evolução pericial e legislativa de 2011 a 2025.</p>
+                        <a href="artigo-pericia-financeira.html" class="read-more">Ler Artigo Completo →</a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <img src="img/blog-trabalhista.jpg" alt="Perícia Trabalhista">
+                    <div class="card-body">
+                        <h3>Cálculos Trabalhistas em 2026</h3>
+                        <p>O impacto das novas súmulas na liquidação de sentença.</p>
+                        <a href="#" class="read-more">Em breve</a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <img src="img/blog-ti.jpg" alt="Perícia em TI">
+                    <div class="card-body">
+                        <h3>Auditoria de Sistemas Bancários</h3>
+                        <p>Como a perícia em TI identifica fraudes em contratos digitais.</p>
+                        <a href="#" class="read-more">Em breve</a>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+		-->
+		<div class="carousel-track">
+			<article class="blog-card">
+				<img src="img/capa-jurisprudencia.jpg" alt="Jurisprudência Planos de Saúde">
+				<div class="card-body">
+					<h3>Jurisprudência e Perícia</h3>
+					<p>A centralidade da prova técnica na judicialização da saúde suplementar.</p>
+					<a href="artigo-jurisprudencia-planos-saude.html" class="read-more">Ler Artigo</a>
+				</div>
+			</article>
+
+			<article class="blog-card">
+				<img src="img/capa-caixa-preta.jpg" alt="A Caixa-Preta dos Reajustes">
+				<div class="card-body">
+					<h3>A Caixa-Preta: Produto 445</h3>
+					<p>Análise técnica sobre as inconsistências nos reajustes por sinistralidade.</p>
+					<a href="artigo-plano-saude-445.html" class="read-more">Ler Artigo</a>
+				</div>
+			</article>
+
+			<article class="blog-card">
+				<img src="img/capa-artigo-gauss.jpg" alt="Tabela Price vs Gauss">
+				<div class="card-body">
+					<h3>Tabela Price vs. Gauss</h3>
+					<p>Evolução legislativa e transparência algorítmica em perícias financeiras.</p>
+					<a href="artigo-pericia-financeira.html" class="read-more">Ler Artigo</a>
+				</div>
+			</article>
+		</div>
+    </div>
+</section>
 
 <footer>
     <p>&copy; 2026 Dr. Lincoln Sposito - Perícia Judicial. Todos os direitos reservados.</p>
 </footer>
+
+<script>
+    function searchBlog() {
+        let input = document.getElementById('blogSearch').value.toLowerCase();
+        let cards = document.querySelectorAll('.blog-card');
+        
+        cards.forEach(card => {
+            let title = card.querySelector('h3').innerText.toLowerCase();
+            if (title.includes(input)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+
+    // Lógica para carrossel (Opcional: Avançar cards)
+    const track = document.querySelector('.carousel-track');
+    // Você pode adicionar botões de Próximo/Anterior e manipular o track.style.transform
+</script>
 
 </body>
 </html>
