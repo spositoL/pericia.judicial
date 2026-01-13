@@ -204,13 +204,28 @@ nav ul li a:hover {
 }
 
 
-/* Definição Global de Títulos Semânticos */
+/* Definição Global de Títulos Semânticos
 h1 { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--primary); }
 h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
 h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary); }
 
-/* Classe para centralizar textos de seção */
+/* Classe para centralizar textos de seção 
 .section-title {
     text-align: center;
     margin-bottom: 40px;
+} */
+
+/* Títulos globais para SEO */
+h1 { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--primary); margin-bottom: 20px; }
+h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--primary); margin-bottom: 30px; text-align: center; }
+h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--primary); }
+
+/* Ajuste para títulos em seções escuras (como o Hero ou Rodapé) */
+.bg-dark h1, .bg-dark h2, .bg-dark h3, .bg-dark p {
+    color: #ffffff !important;
+}
+
+/* Ajuste específico para a seção de Contato se o fundo for escuro */
+#contato h2 {
+    color: #1a2a3a; /* Se o fundo for claro (f4f7f9), mantenha escuro */
 }
