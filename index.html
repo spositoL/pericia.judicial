@@ -246,8 +246,9 @@
     // Você pode adicionar botões de Próximo/Anterior e manipular o track.style.transform
 </script>
 
+<!--
 <script>
-document.getElementById('form-hibrido').addEventListener('submit', function(e) {
+	document.getElementById('form-hibrido').addEventListener('submit', function(e) {
     // Pegamos os valores dos campos
     const nome = document.getElementById('nome').value;
     const assunto = document.getElementById('assunto').value;
@@ -266,6 +267,27 @@ document.getElementById('form-hibrido').addEventListener('submit', function(e) {
     }, 500);
 });
 </script>
+-->
+<script>
+	document.getElementById('form-hibrido').addEventListener('submit', function(e) {
+		// 1. Captura os dados
+		const nome = document.getElementById('nome').value;
+		const assunto = document.getElementById('assunto').value;
+		const mensagem = document.getElementById('mensagem').value;
+		
+		// 2. Configura o WhatsApp (coloque seu número real aqui)
+		const telefone = "5511999999999"; 
+		const textoZap = `Olá Dr. Lincoln, meu nome é ${nome}. Gostaria de tratar sobre ${assunto}. Detalhes: ${mensagem}`;
+		const urlZap = `https://wa.me/${telefone}?text=${encodeURIComponent(textoZap)}`;
+
+		// 3. ABRE O WHATSAPP IMEDIATAMENTE (O navegador permite pois é um clique direto)
+		window.open(urlZap, '_blank');
+
+		// 4. O FORMULÁRIO SEGUE PARA O EMAIL AUTOMATICAMENTE PELO 'ACTION'
+		// Não precisamos de timer, o navegador processará ambos quase simultaneamente.
+	});
+</script>
+
 
 </body>
 </html>
