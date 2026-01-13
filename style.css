@@ -229,3 +229,21 @@ h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--pri
 #contato h2 {
     color: #1a2a3a; /* Se o fundo for claro (f4f7f9), mantenha escuro */
 }
+
+/* Ajuste de links dentro da Bio do Autor (Fundo Escuro) */
+.author-box.bg-dark a.author-link {
+    color: #c5a059 !important; /* Usa o seu dourado padrão */
+    text-decoration: underline; /* Mantém o sublinhado para indicar que é clicável */
+    font-weight: 600;
+}
+
+.author-box.bg-dark a.author-link:hover {
+    color: #ffffff !important; /* Muda para branco ao passar o mouse */
+    text-decoration: none;
+}
+
+/* Garante que o título H3 dentro da box também use a cor correta caso tenha link */
+.author-box.bg-dark h3 a {
+    color: #c5a059 !important;
+    text-decoration: none;
+}
