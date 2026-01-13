@@ -135,3 +135,70 @@ footer p {
 .card-body { padding: 20px; }
 .card-body h3 { font-size: 1.2rem; color: #1a2a3a; margin-bottom: 10px; }
 .read-more { color: #c5a059; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 15px; }
+
+
+/* Estilização de Links Internos nos Artigos */
+.article-content p a {
+    color: #c5a059; /* O dourado que você já usa */
+    text-decoration: none;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+    transition: all 0.3s ease;
+}
+
+.article-content p a:hover {
+    color: #1a2a3a; /* Muda para o azul marinho no hover */
+    border-bottom: 2px solid #c5a059;
+    background-color: rgba(197, 160, 89, 0.05);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    max-width: 300px; /* Ajuste conforme o desejado */
+    height: auto;
+}
+
+.logo-container svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Ajuste para o cabeçalho fixo se necessário */
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+/* Garante que o cabeçalho seja escuro e tenha altura para o logo */
+header {
+    background-color: #1a2a3a; 
+    padding: 15px 0;
+    border-bottom: 2px solid #c5a059; /* Linha dourada de acabamento */
+}
+
+/* Container do logo para limitar o tamanho do SVG */
+.logo-link {
+    display: inline-block;
+    max-width: 220px; /* Tamanho ideal para desktop */
+    vertical-align: middle;
+}
+
+.logo-link svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Garante que os links do menu continuem visíveis (Brancos) */
+nav ul li a {
+    color: #ffffff !important;
+    font-weight: 500;
+}
+
+nav ul li a:hover {
+    color: #c5a059 !important;
+}
