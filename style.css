@@ -202,3 +202,15 @@ nav ul li a {
 nav ul li a:hover {
     color: #c5a059 !important;
 }
+
+
+/* Definição Global de Títulos Semânticos */
+h1 { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--primary); }
+h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px; }
+h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--primary); }
+
+/* Classe para centralizar textos de seção */
+.section-title {
+    text-align: center;
+    margin-bottom: 40px;
+}
