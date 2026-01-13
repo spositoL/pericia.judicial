@@ -105,7 +105,7 @@
             </div>
         </div>
     </section>
-
+	
     <section id="servicos" class="services">
         <div class="container">
             <h2>Especialidades Periciais</h2>
@@ -135,46 +135,91 @@
 	</section>
 </main>
 
-<section id="blog" class="blog-section">
-    <div class="container">
-        <h2 class="section-title">Artigos e Insights Técnicos</h2>
-        <p class="section-subtitle">Análises aprofundadas sobre legislação, perícia e modelagem de dados.</p>
+	<section id="blog" class="blog-section">
+		<div class="container">
+			<h2 class="section-title">Artigos e Insights Técnicos</h2>
+			<p class="section-subtitle">Análises aprofundadas sobre legislação, perícia e modelagem de dados.</p>
 
-        <div class="search-container">
-            <input type="text" id="blogSearch" placeholder="Pesquisar por tema (ex: Gauss, SFH, TI)...">
-            <button onclick="searchBlog()" class="btn-search">Buscar</button>
-        </div>
-		
-		<div class="carousel-track">
-			<article class="blog-card">
-				<img src="img/capa-jurisprudencia.jpg" alt="Jurisprudência Planos de Saúde">
-				<div class="card-body">
-					<h3>Jurisprudência e Perícia</h3>
-					<p>A centralidade da prova técnica na judicialização da saúde suplementar.</p>
-					<a href="artigo-jurisprudencia-planos-saude.html" class="read-more">Ler Artigo</a>
-				</div>
-			</article>
-
-			<article class="blog-card">
-				<img src="img/capa-caixa-preta.jpg" alt="Gráfico de reajuste por sinistralidade em planos de saúde coletivos e perícia atuarial">
-				<div class="card-body">
-					<h3>Perícia em Reajuste de Plano de Saúde Coletivo: Análise do Produto 445</h3>
-					<p>Análise técnica sobre inconsistências nos reajustes e como a jurisprudência atual protege o consumidor contra abusividades.</p>
-					<a href="artigo-plano-saude-445.html" class="read-more">Ler Artigo</a>
-				</div>
-			</article>
+			<div class="search-container">
+				<input type="text" id="blogSearch" placeholder="Pesquisar por tema (ex: Gauss, SFH, TI)...">
+				<button onclick="searchBlog()" class="btn-search">Buscar</button>
+			</div>
 			
-			<article class="blog-card">
-				<img src="img/capa-artigo-gauss.jpg" alt="Comparativo técnico entre Tabela Price e Método de Gauss em perícia bancária judicial">
-				<div class="card-body">
-					<h3>Tabela Price vs. Gauss</h3>
-					<p>Evolução legislativa e transparência algorítmica em perícias financeiras.</p>
-					<a href="artigo-pericia-financeira.html" class="read-more">Ler Artigo</a>
-				</div>
-			</article>
+			<div class="carousel-track">
+				<article class="blog-card">
+					<img src="img/capa-jurisprudencia.jpg" alt="Jurisprudência Planos de Saúde">
+					<div class="card-body">
+						<h3>Jurisprudência e Perícia</h3>
+						<p>A centralidade da prova técnica na judicialização da saúde suplementar.</p>
+						<a href="artigo-jurisprudencia-planos-saude.html" class="read-more">Ler Artigo</a>
+					</div>
+				</article>
+
+				<article class="blog-card">
+					<img src="img/capa-caixa-preta.jpg" alt="Gráfico de reajuste por sinistralidade em planos de saúde coletivos e perícia atuarial">
+					<div class="card-body">
+						<h3>Perícia em Reajuste de Plano de Saúde Coletivo: Análise do Produto 445</h3>
+						<p>Análise técnica sobre inconsistências nos reajustes e como a jurisprudência atual protege o consumidor contra abusividades.</p>
+						<a href="artigo-plano-saude-445.html" class="read-more">Ler Artigo</a>
+					</div>
+				</article>
+				
+				<article class="blog-card">
+					<img src="img/capa-artigo-gauss.jpg" alt="Comparativo técnico entre Tabela Price e Método de Gauss em perícia bancária judicial">
+					<div class="card-body">
+						<h3>Tabela Price vs. Gauss</h3>
+						<p>Evolução legislativa e transparência algorítmica em perícias financeiras.</p>
+						<a href="artigo-pericia-financeira.html" class="read-more">Ler Artigo</a>
+					</div>
+				</article>
+			</div>
 		</div>
-    </div>
-</section>
+	</section>
+	
+	<section id="contato" style="padding: 80px 0; background-color: #f4f7f9;">
+		<div class="container" style="max-width: 800px; margin: 0 auto; padding: 0 20px;">
+			<div style="text-align: center; margin-bottom: 40px;">
+				<h2 style="font-family: 'Playfair Display', serif; color: #1a2a3a; font-size: 2.5rem;">Solicitar Consultoria Técnica</h2>
+				<p style="color: #666;">Preencha os dados abaixo para iniciar o atendimento prioritário via WhatsApp.</p>
+			</div>
+
+			<form id="form-hibrido" action="https://formsubmit.co/seu-email@dominio.com" method="POST" style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);">
+				
+				<input type="hidden" name="_captcha" value="false">
+				<input type="hidden" name="_template" value="table">
+				<input type="hidden" name="_next" value="https://spositol.github.io/pericia.judicial/obrigado.html"> <div style="margin-bottom: 20px;">
+					<label style="display: block; margin-bottom: 5px; font-weight: 600; color: #1a2a3a;">Nome Completo / Escritório</label>
+					<input type="text" name="name" id="nome" placeholder="Ex: Silva & Advogados" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
+				</div>
+
+				<div style="margin-bottom: 20px;">
+					<label style="display: block; margin-bottom: 5px; font-weight: 600; color: #1a2a3a;">Área de Interesse</label>
+					<select name="assunto" id="assunto" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; background: white;">
+						<option value="">Selecione a área...</option>
+						<option value="Financiamento Imobiliário">Financiamento Imobiliário</option>
+						<option value="Financiamento de Veículos">Financiamento de Veículos</option>
+						<option value="Cheque especial">Cheque especial</option>
+						<option value="Cartão de crédito">Cartão de crédito</option>						
+						<option value="Consórcio">Consórcio</option>
+						<option value="Planos de Saúde">Planos de Saúde</option>
+						<option value="Outros contratos de seguro">Outros contratos bancários & seguro</option>
+						<option value="Verbas trabalhistas">Verbas trabalhistas</option>
+						<option value="Questões tributárias">Questões tributárias</option>						
+						<option value="Outros">Outras Demandas</option>
+					</select>
+				</div>
+
+				<div style="margin-bottom: 25px;">
+					<label style="display: block; margin-bottom: 5px; font-weight: 600; color: #1a2a3a;">Breve descrição do caso</label>
+					<textarea name="message" id="mensagem" rows="4" placeholder="Como posso ajudar no seu processo?" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+				</div>
+
+				<button type="submit" style="width: 100%; background-color: #c5a059; color: #1a2a3a; border: none; padding: 15px; font-size: 1.1rem; font-weight: bold; border-radius: 5px; cursor: pointer; transition: 0.3s;">
+					Enviar e Falar com o Perito agora
+				</button>
+			</form>
+		</div>
+	</section>
 
 <footer>
     <p>&copy; 2026 Dr. Lincoln Sposito - Perícia Judicial. Todos os direitos reservados.</p>
@@ -198,6 +243,27 @@
     // Lógica para carrossel (Opcional: Avançar cards)
     const track = document.querySelector('.carousel-track');
     // Você pode adicionar botões de Próximo/Anterior e manipular o track.style.transform
+</script>
+
+<script>
+document.getElementById('form-hibrido').addEventListener('submit', function(e) {
+    // Pegamos os valores dos campos
+    const nome = document.getElementById('nome').value;
+    const assunto = document.getElementById('assunto').value;
+    const mensagem = document.getElementById('mensagem').value;
+    
+    // Seu número de WhatsApp (substitua os zeros)
+    const telefone = "5511914612603"; 
+    
+    // Formatamos a mensagem para o WhatsApp
+    const textoZap = `Olá Dr. Lincoln, meu nome é ${nome}. Gostaria de tratar sobre ${assunto}. Detalhes: ${mensagem}`;
+    const urlZap = `https://wa.me/${telefone}?text=${encodeURIComponent(textoZap)}`;
+
+    // Pequeno delay para garantir que o FormSubmit capture o envio antes de redirecionar
+    setTimeout(function() {
+        window.open(urlZap, '_blank');
+    }, 500);
+});
 </script>
 
 </body>
