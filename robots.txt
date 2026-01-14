@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /404.html
+Disallow: /obrigado.html
+
+Sitemap: https://spositol.github.io/pericia.judicial/sitemap.xml
