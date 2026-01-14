@@ -247,3 +247,15 @@ h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--pri
     color: #c5a059 !important;
     text-decoration: none;
 }
+
+/* Melhora visibilidade de links na página Sobre */
+.about-content a {
+    color: #c5a059;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.about-content a:hover {
+    color: #1a2a3a;
+    text-decoration: none;
+}
