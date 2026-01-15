@@ -222,7 +222,25 @@ footer p {
     transform: scale(1.1);
 }
 
-/* Responsividade para celulares */
+/* --- Responsividade Ajustada --- */
+@media (max-width: 768px) {
+    .blog-card {
+        /* Força cada card a ter a largura total do container */
+        min-width: 100% !important; 
+        max-width: 100% !important;
+        margin: 0; /* Remove margens laterais que podem somar largura */
+    }
+
+    .carousel-track {
+        gap: 0; /* No mobile, tirar o gap ajuda no cálculo matemático do slide */
+    }
+    
+    .carousel-container-main {
+        padding: 0 5px;
+    }
+}
+
+/* Responsividade para celulares 
 @media (max-width: 768px) {
     .carousel-btn {
         width: 35px;
@@ -231,9 +249,9 @@ footer p {
     }
     
     .blog-grid {
-        margin: 0; /* Remove margens extras no mobile */
+        margin: 0; /* Remove margens extras no mobile 
     }
-}
+} */
 
 /* --- Responsividade --- 
 @media (max-width: 768px) {
