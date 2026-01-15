@@ -121,13 +121,13 @@ footer p {
 }
 
 
-/* Estilos do Blog */
+/* Estilos do Blog
 .blog-section { padding: 80px 0; background: #f4f7f9; }
 .search-container { max-width: 600px; margin: 0 auto 40px; display: flex; gap: 10px; }
 #blogSearch { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 4px; }
 .btn-search { background: #1a2a3a; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
-
-/* Carrossel Simples */
+ */
+/* Carrossel Simples 
 .carousel-container { overflow: hidden; position: relative; }
 .carousel-track { display: flex; gap: 20px; transition: transform 0.5s ease; padding: 20px 0; }
 .blog-card { min-width: 300px; background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; }
@@ -135,7 +135,120 @@ footer p {
 .card-body { padding: 20px; }
 .card-body h3 { font-size: 1.2rem; color: #1a2a3a; margin-bottom: 10px; }
 .read-more { color: #c5a059; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 15px; }
+*/
 
+/*inicio do ajuste do blog*/
+/* --- Estilos da Seção Blog --- */
+.blog-section { padding: 80px 0; background: #f4f7f9; }
+
+.search-container { 
+    max-width: 600px; margin: 0 auto 40px; 
+    display: flex; gap: 10px; padding: 0 15px; 
+}
+
+#blogSearch { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 4px; min-width: 0; }
+.btn-search { background: #1a2a3a; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
+
+/* --- Estrutura do Carrossel --- */
+.blog-grid {
+    overflow: hidden; /* Importante: esconde os cards que estão "fora" da tela */
+    width: 100%;
+    position: relative;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out; /* Suaviza o movimento */
+    gap: 20px;
+    padding: 20px 0;
+    /* REMOVIDO: flex-wrap (isso impedia o carrossel de funcionar) */
+}
+
+.blog-card {
+    /* No desktop, mostra 3 por vez (considerando o gap) */
+    min-width: calc(33.333% - 14px); 
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* Botões de Navegação
+.carousel-next {
+    display: block;
+    margin: 20px auto 0; /* Centraliza o botão abaixo do carrossel 
+    background: #1a2a3a;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background 0.3s;
+}
+
+.carousel-next:hover { background: #c5a059; }*/
+/* Container principal do carrossel */
+.carousel-container-main {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Estilo comum para os dois botões */
+.carousel-btn {
+    background: #1a2a3a;
+    color: white;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: background 0.3s, transform 0.2s;
+    z-index: 10;
+    flex-shrink: 0; /* Impede o botão de amassar */
+}
+
+.carousel-btn:hover {
+    background: #c5a059;
+    transform: scale(1.1);
+}
+
+/* Responsividade para celulares */
+@media (max-width: 768px) {
+    .carousel-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .blog-grid {
+        margin: 0; /* Remove margens extras no mobile */
+    }
+}
+
+/* --- Responsividade --- 
+@media (max-width: 768px) {
+    .blog-card {
+        min-width: 100%; /* No celular, o card ocupa a tela toda 
+    }
+    .search-container { flex-direction: column; }
+}
+*/
+
+.blog-card img { width: 100%; height: 180px; object-fit: cover; }
+.card-body { padding: 20px; flex-grow: 1; }
+.card-body h3 { font-size: 1.2rem; color: #1a2a3a; margin-bottom: 10px; }
+.read-more { color: #c5a059; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 15px; }
+/*final de ajuste do blog*/
 
 /* Estilização de Links Internos nos Artigos */
 .article-content p a {
@@ -261,24 +374,3 @@ h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--pri
 }
 
 
-/* Ajustes para telemóveis (ecrãs até 768px) */
-@media (max-width: 768px) {
-    .container {
-        width: 90%; /* Aumenta ligeiramente a largura em ecrãs pequenos */
-    }
-
-    /* Forçar os itens do blog a ocuparem a largura total e empilharem */
-    .blog-grid { 
-        display: block; /* Altera de flex/grid para bloco */
-    }
-
-    .blog-card {
-        width: 100%;
-        margin-bottom: 20px;
-        padding: 15px;
-    }
-    
-    /* Ajuste de títulos para não transbordarem */
-    h1 { font-size: 2rem; }
-    h2 { font-size: 1.8rem; }
-}

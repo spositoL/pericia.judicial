@@ -195,45 +195,52 @@
 				<input type="text" id="blogSearch" placeholder="Pesquisar por tema (ex: Gauss, SFH, TI)...">
 				<button onclick="searchBlog()" class="btn-search">Buscar</button>
 			</div>
-			<div class="blog-grid">
-				<div class="carousel-track">
-					<article class="blog-card">
-						<img src="img/jurisprudencia-stj-reajuste-plano-saude-coletivo.webp" alt="Representação da balança da justiça sobre documentos de planos de saúde, simbolizando jurisprudência do STJ.">
-						<div class="card-body">
-							<h3 class="section-title">Jurisprudência e Perícia</h3>
-							<p>A centralidade da prova técnica na judicialização da saúde suplementar.</p>
-							<a href="artigo-jurisprudencia-planos-saude.html" class="read-more">Ler Artigo</a>
-						</div>
-					</article>
-					<article class="blog-card">
-						<img src="img/analise-pericial-reajuste-plano-saude-coletivo-lincoln-sposito.webp" alt="Capa de artigo intitulada A Caixa-Preta dos Reajustes: Análise Pericial em Planos de Saúde Coletivos por Adesão, com estetoscópio e balança da justiça ao fundo.">
-						<div class="card-body">
-							<h3 class="section-title">Perícia em Reajuste de Plano de Saúde Coletivo: Análise do Produto 445</h3>
-							<p>Análise técnica sobre inconsistências nos reajustes e como a jurisprudência atual protege o consumidor contra abusividades.</p>
-							<a href="artigo-plano-saude-445.html" class="read-more">Ler Artigo</a>
-						</div>
-					</article>
+			
+			<div class="carousel-container-main">
+				<button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+				<div class="blog-grid">
+					<div class="carousel-track" id="carouselTrack">
+						<article class="blog-card">
+							<img src="img/jurisprudencia-stj-reajuste-plano-saude-coletivo.webp" alt="Representação da balança da justiça sobre documentos de planos de saúde, simbolizando jurisprudência do STJ.">
+							<div class="card-body">
+								<h3 class="section-title">Jurisprudência e Perícia</h3>
+								<p>A centralidade da prova técnica na judicialização da saúde suplementar.</p>
+								<a href="artigo-jurisprudencia-planos-saude.html" class="read-more">Ler Artigo</a>
+							</div>
+						</article>
 					
-					<article class="blog-card">
-						<img src="img/analise-contratual-calculo-judicial-perito-administrador.webp" alt="Mesa de trabalho com calculadora, lupa sobre um contrato com gráficos e uma balança da justiça ao fundo, representando análise pericial de contratos">
-						<div class="card-body">
-							<h3 class="section-title">Tabela Price vs. Gauss</h3>
-							<p>Evolução legislativa e transparência algorítmica em perícias financeiras.</p>
-							<a href="artigo-pericia-financeira.html" class="read-more">Ler Artigo</a>
-						</div>
-					</article>
+						<article class="blog-card">
+							<img src="img/analise-pericial-reajuste-plano-saude-coletivo-lincoln-sposito.webp" alt="Capa de artigo intitulada A Caixa-Preta dos Reajustes: Análise Pericial em Planos de Saúde Coletivos por Adesão, com estetoscópio e balança da justiça ao fundo.">
+							<div class="card-body">
+								<h3 class="section-title">Perícia em Reajuste de Plano de Saúde Coletivo: Análise do Produto 445</h3>
+								<p>Análise técnica sobre inconsistências nos reajustes e como a jurisprudência atual protege o consumidor contra abusividades.</p>
+								<a href="artigo-plano-saude-445.html" class="read-more">Ler Artigo</a>
+							</div>
+						</article>
 					
-					<article class="blog-card">
-						<img src="img/perito-calculo-vcmh-reajuste-abusivo.webp" alt="Gráfico demonstrativo da variação de custos médico-hospitalares VCMH para contestação judicial de reajuste abusivo.">
-						<div class="card-body">
-							<h3>Análise Técnica do VCMH para Contestação de Reajustes Abusivos</h3>
-							<p>Entenda como a variação de custos é utilizada para justificar reajustes abusivos e como contestar.</p>
-							<a href="artigo-vcmh-caixa-preta.html" class="read-more"">Ler Artigo</a>
-						</div>
-					</article>
-				</div>
+						<article class="blog-card">
+							<img src="img/analise-contratual-calculo-judicial-perito-administrador.webp" alt="Mesa de trabalho com calculadora, lupa sobre um contrato com gráficos e uma balança da justiça ao fundo, representando análise pericial de contratos">
+							<div class="card-body">
+								<h3 class="section-title">Tabela Price vs. Gauss</h3>
+								<p>Evolução legislativa e transparência algorítmica em perícias financeiras.</p>
+								<a href="artigo-pericia-financeira.html" class="read-more">Ler Artigo</a>
+							</div>
+						</article>
+						
+						<article class="blog-card">
+							<img src="img/perito-calculo-vcmh-reajuste-abusivo.webp" alt="Gráfico demonstrativo da variação de custos médico-hospitalares VCMH para contestação judicial de reajuste abusivo.">
+							<div class="card-body">
+								<h3>Análise Técnica do VCMH para Contestação de Reajustes Abusivos</h3>
+								<p>Entenda como a variação de custos é utilizada para justificar reajustes abusivos e como contestar.</p>
+								<a href="artigo-vcmh-caixa-preta.html" class="read-more">Ler Artigo</a>
+							</div>
+						</article>
+					</div>				
+				</div>		
+				<!--<button class="carousel-next" onclick="moveSlide(1)">&#10095;</button>			-->
+				<button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
 			</div>
-		</div>
+		</div>		
 	</section>
 	
 	<section id="contato" style="padding: 80px 0; background-color: #f4f7f9;">
@@ -286,6 +293,58 @@
 <footer>
     <p>&copy; 2026 Dr. Lincoln Sposito - Perícia Judicial. Todos os direitos reservados.</p>
 </footer>
+
+<!--
+<script>
+	let currentIndex = 0;
+
+	function moveSlide(direction) {
+		const track = document.getElementById('carouselTrack');
+		const cards = document.querySelectorAll('.blog-card');
+		const totalCards = cards.length;
+		
+		// Calcula quantos cards mostrar com base na largura da tela
+		const cardsVisible = window.innerWidth <= 768 ? 1 : 3;
+		const maxIndex = totalCards - cardsVisible;
+
+		currentIndex += direction;
+
+		// Lógica para não passar do limite
+		if (currentIndex < 0) currentIndex = 0;
+		if (currentIndex > maxIndex) currentIndex = maxIndex;
+
+		const percentage = currentIndex * (100 / cardsVisible);
+		track.style.transform = `translateX(-${percentage}%)`;
+	}
+</script>
+-->
+<script>
+	let currentIndex = 0;
+
+	function moveSlide(direction) {
+		const track = document.getElementById('carouselTrack');
+		const cards = document.querySelectorAll('.blog-card');
+		const totalCards = cards.length;
+		
+		// Detecta quantos cards estão visíveis agora
+		const cardsVisible = window.innerWidth <= 768 ? 1 : 3;
+		const maxIndex = totalCards - cardsVisible;
+
+		currentIndex += direction;
+
+		// Impede de ir antes do primeiro ou depois do último
+		if (currentIndex < 0) {
+			currentIndex = 0;
+		} else if (currentIndex > maxIndex) {
+			currentIndex = maxIndex;
+		}
+
+		// Calcula o deslocamento
+		// Usamos a largura do card + o gap (20px)
+		const cardWidth = cards[0].offsetWidth + 20; 
+		track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+	}
+</script>
 
 <script>
     function searchBlog() {
