@@ -259,3 +259,26 @@ h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--pri
     color: #1a2a3a;
     text-decoration: none;
 }
+
+
+/* Ajustes para telemóveis (ecrãs até 768px) */
+@media (max-width: 768px) {
+    .container {
+        width: 90%; /* Aumenta ligeiramente a largura em ecrãs pequenos */
+    }
+
+    /* Forçar os itens do blog a ocuparem a largura total e empilharem */
+    .blog-grid { 
+        display: block; /* Altera de flex/grid para bloco */
+    }
+
+    .blog-card {
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 15px;
+    }
+    
+    /* Ajuste de títulos para não transbordarem */
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.8rem; }
+}
