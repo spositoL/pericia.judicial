@@ -392,3 +392,17 @@ h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--pri
 }
 
 
+/* Estilos para Celular (telas menores que 768px) */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column; /* Empilha a logo e o menu verticalmente */
+        text-align: center;
+    }
+
+    nav ul {
+        flex-direction: column; /* Coloca os links um abaixo do outro */
+        gap: 15px;
+        padding: 0;
+        margin-top: 20px;
+    }
+}
