@@ -15,8 +15,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-	<link rel="canonical" href="https://spositol.github.io/pericia.judicial/artigo-vcmh-caixa-preta.html" />
-	
+		
     <style>
         .article-container { max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.8; color: #333; }
         .article-header { text-align: center; margin-bottom: 40px; }
@@ -46,7 +45,7 @@
         }
     </style>	
 	
-	<script type="application/ld+json">
+<!-- 	<script type="application/ld+json">
 	{
 	  "@context": "https://schema.org",
 	  "@type": "FAQPage",
@@ -77,8 +76,74 @@
 		}
 	  ]
 	}
-	</script>
-	
+	</script> -->
+	<script type="application/ld+json">
+	{
+	  "@context": "https://schema.org",
+	  "@graph": [
+		{
+		  "@type": "Article",
+		  "headline": "A Engenharia Financeira e a Perícia Judicial em Cédulas de Crédito Bancário",
+		  "description": "Análise técnica sobre abusividade em contratos de CDC, juros acima da média de mercado e o papel da perícia na identificação de maquiagem financeira.",
+		  "image": "https://spositol.github.io/pericia.judicial/img/capa-pericia-cdc.jpg",
+		  "author": {
+			"@type": "Person",
+			"name": "Dr. Lincoln Sposito",
+			"url": "https://www.linkedin.com/in/lincolnsposito/"
+		  },
+		  "publisher": {
+			"@type": "Organization",
+			"name": "Sposito Perícias Judiciais",
+			"logo": {
+			  "@type": "ImageObject",
+			  "url": "https://spositol.github.io/pericia.judicial/img/logo.png"
+			}
+		  },
+		  "mainEntityOfPage": {
+			"@type": "WebPage",
+			"@id": "https://spositol.github.io/pericia.judicial/artigo-pericia-cdc-abusividade.html"
+		  }
+		},
+		{
+		  "@type": "FAQPage",
+		  "mainEntity": [
+			{
+			  "@type": "Question",
+			  "name": "Como saber se a taxa de juros do meu contrato é abusiva?",
+			  "acceptedAnswer": {
+				"@type": "Answer",
+				"text": "A abusividade é identificada através do confronto da taxa pactuada com a Taxa Média de Mercado divulgada pelo Banco Central (Série 20749). Se a taxa contratada superar significativamente a média (geralmente acima de 1,5x), há fundamentação para revisão por onerosidade excessiva."
+			  }
+			},
+			{
+			  "@type": "Question",
+			  "name": "O que é a 'maquiagem financeira' citada no artigo?",
+			  "acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Refere-se a manipulações nos cálculos onde a instituição informa uma taxa nominal, mas aplica uma taxa efetiva maior na parcela, ou altera a curva de juros no DDC para priorizar amortizações artificiais, ocultando o custo real da operação."
+			  }
+			},
+			{
+			  "@type": "Question",
+			  "name": "Posso pedir a devolução em dobro de valores pagos a maior?",
+			  "acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Sim. Com base no Art. 42 do CDC, quando a perícia comprova que houve erro de cálculo injustificável ou má-fé (como cobrar juros maiores que o pactuado), o consumidor tem direito à repetição do indébito em dobro sobre os valores pagos indevidamente."
+			  }
+			},
+			{
+			  "@type": "Question",
+			  "name": "Qual a diferença entre o sistema Price e o MEJS na perícia?",
+			  "acceptedAnswer": {
+				"@type": "Answer",
+				"text": "A Tabela Price utiliza juros compostos. O MEJS (Método de Equivalência em Juros Simples) aplica juros simples. A perícia estratégica avalia qual método é mais benéfico, pois em prazos longos, a Price com expurgo de taxas abusivas pode ser superior à migração para juros simples."
+			  }
+			}
+		  ]
+		}
+	  ]
+	}
+	</script>	
 	
 </head>
 <body>
