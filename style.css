@@ -409,7 +409,7 @@ h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--pri
 
 /* Garante que imagens nunca transbordem o container */
 img {
-    max-width: 75%;
+    max-width: 100%;
     height: auto;
     display: block;
 }
