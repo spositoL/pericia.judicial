@@ -86,110 +86,77 @@
 						📋 Solicitar Checklist via E-mail
 					</a>
 				</div>
-			</article>			
+			</article>		
+            <article class="material-card" style="border-top: 4px solid var(--accent);">
+                <div class="card-content">
+                    <span style="font-size: 0.8rem; color: var(--accent); font-weight: bold; text-transform: uppercase;">Bancário / CDC</span>
+                    <h2>Checklist: Revisional de Veículos</h2>
+                    <p>Pontos de auditoria para taxas de terceiros, seguros e capitalização em contratos de financiamento.</p>
+                    
+					<!-- <button onclick="abrirModal('veiculos')" class="btn-download" style="cursor: pointer; border: none;">
+					   📋 Acessar Checklist Revisional
+					</button> -->
+					<a href="javascript:void(0)" 
+					   onclick="abrirModal('veiculos')" 
+					   class="btn-primary" 
+					   style="display: inline-block; text-decoration: none; text-align: center; width: 100%; box-sizing: border-box;">
+						📋 Solicitar Checklist via E-mail
+					</a>					
+                </div>
+            </article>
+
+            <article class="material-card" style="border-top: 4px solid var(--primary);">
+                <div class="card-content">
+                    <span style="font-size: 0.8rem; color: var(--accent); font-weight: bold; text-transform: uppercase;">Matemática Financeira</span>
+                    <h2>Checklist: Tabela Price vs. Gauss</h2>
+                    <p>Critérios técnicos para identificação de anatocismo e tese de transparência algorítmica.</p>
+                    
+					<!-- <button onclick="abrirModal('financeiro')" class="btn-download" style="cursor: pointer; border: none;">
+					   📋 Acessar Checklist Price vs. Gauss
+					</button> -->
+					<a href="javascript:void(0)" 
+					   onclick="abrirModal('financeiro')" 
+					   class="btn-primary" 
+					   style="display: inline-block; text-decoration: none; text-align: center; width: 100%; box-sizing: border-box;">
+						📋 Solicitar Checklist via E-mail
+					</a>					
+                </div>
+            </article>
+
+			<article class="material-card" style="border-top: 4px solid #c5a059;">
+				<div class="card-content">
+					<span style="font-size: 0.8rem; color: #666; font-weight: bold; text-transform: uppercase;">Checklist Técnico</span>
+					<h2>Revisão SFH - Contratos 1988</h2>
+					<p>Guia de admissibilidade documental para teses de expurgo do Plano Verão e descumprimento do PES.</p>
+					<!--
+					<button onclick="abrirModal('1988')" class="btn-download" style="cursor: pointer; border: none;">
+					   📂 Acessar Checklist SFH
+					</button> -->
+					<a href="javascript:void(0)" 
+					   onclick="abrirModal('1988')" 
+					   class="btn-primary" 
+					   style="display: inline-block; text-decoration: none; text-align: center; width: 100%; box-sizing: border-box;">
+						📋 Solicitar Checklist via E-mail
+					</a>	
+				</div>
+			</article>
 			
-			<!-- <div id="modalLead" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
-				<div style="background:#fff; padding:30px; border-radius:12px; max-width:400px; width:90%; position:relative;">
-					<span onclick="fecharModal()" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:20px;">&times;</span>
-					<h3 style="font-family:'Playfair Display', serif; margin-bottom:20px;">Acesse o PDF de Quesitos</h3>
-					<p id="info-material-selecionado"
-					   style="font-size:0.9rem; color:#555; margin-bottom:20px;">
-						Material selecionado: <span id="texto-material"></span>
-					</p>
+			<article class="material-card" style="border-top: 4px solid #666;">
+				<div class="card-content">
+					<span style="font-size: 0.8rem; color: #666; font-weight: bold; text-transform: uppercase;">Modelos Processuais</span>
+					<h2>Quesitos para Perícia Bancária</h2>
+					<p>Sugestões estratégicas de quesitos para apuração de juros e recálculo de saldo devedor.</p>
 					
-					<form id="form-lead-materiais" method="POST" action="https://formsubmit.co/lincoln.sposito@linspti.com.br">
-						<input type="hidden" name="_next" value="https://spositol.github.io/pericia.judicial/obrigadomateriais.html">
-						<input type="hidden" name="_subject" id="email-subject" value="Novo Pedido de Material">
-						<input type="hidden" name="_captcha" value="false">
-						<input type="hidden" name="material_solicitado" id="material_solicitado_input">
-
-						<div class="form-group">
-							<label>Nome Completo:</label>
-							<input type="text" name="Nome" placeholder="Seu nome profissional" required>
-						</div>
-
-						<div class="form-group">
-							<label>E-mail Profissional:</label>
-							<input type="email" name="Email" placeholder="email@escritorio.com.br" required>
-						</div>
-
-						<div style="display: flex; gap: 15px;">
-							<div class="form-group" style="flex: 1;">
-								<label>OAB (UF/Número):</label>
-								<input type="text" name="OAB" placeholder="Ex: SP/123456" required>
-							</div>
-							<div class="form-group" style="flex: 1;">
-								<label>Área de Atuação:</label>
-								<select name="Area_de_Atuacao" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
-									<option value="">Selecione...</option>
-									<option value="Direito Bancário">Direito Bancário</option>
-									<option value="Direito à Saúde">Direito à Saúde</option>
-									<option value="Direito do Trabalho">Direito do Trabalho</option>
-									<option value="Direito Civil/Imobiliário">Direito Civil/Imobiliário</option>
-									<option value="Direito Criminal">Direito Tributário</option>
-									<option value="Outros">Outros</option>
-								</select>
-							</div>
-						</div>
-
-						<button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; margin-top: 15px;">
-							Receber material por e-mail
-						</button>
-					</form>					
-
+					<!-- <a href="javascript:void(0)" onclick="abrirModal('quesitos')" class="btn-primary">📋 Solicitar Acesso Gratuito</a> -->
+					<a href="javascript:void(0)" 
+					   onclick="abrirModal('quesitos')" 
+					   class="btn-primary" 
+					   style="display: inline-block; text-decoration: none; text-align: center; width: 100%; box-sizing: border-box;">
+						📋 Solicitar quesitos via E-mail
+					</a>	
 				</div>
-			</div> -->
-			<!-- <div id="modalLead" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
-				<div style="background:#fff; padding:30px; border-radius:12px; max-width:400px; width:90%; position:relative;">
-					<span onclick="fecharModal()" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:20px;">&times;</span>
-					<h3 style="font-family:'Playfair Display', serif; margin-bottom:20px;">Receber Material Técnico</h3>
-					<p id="info-material-selecionado" style="font-size:0.9rem; color:#555; margin-bottom:20px;">
-						Material selecionado: <span id="texto-material" style="font-weight:bold; color:var(--primary);"></span>
-					</p>
-					
-					<form id="form-lead-materiais" method="POST" action="https://formsubmit.co/lincoln.sposito@linspti.com.br">
-						<input type="hidden" name="_next" value="https://spositol.github.io/pericia.judicial/obrigadomateriais.html">
-						<input type="hidden" name="_subject" id="email-subject" value="Novo Pedido de Material">
-						<input type="hidden" name="_captcha" value="false">
-						
-						<input type="hidden" name="material_solicitado" id="material_solicitado_input">
-						<input type="hidden" name="_autoresponse" id="autoresponse_message" value="">
-
-						<div class="form-group">
-							<label>Nome Completo:</label>
-							<input type="text" name="Nome" placeholder="Seu nome profissional" required>
-						</div>
-
-						<div class="form-group">
-							<label>E-mail Profissional:</label>
-							<input type="email" name="Email" placeholder="email@escritorio.com.br" required>
-						</div>
-
-						<div style="display: flex; gap: 15px;">
-							<div class="form-group" style="flex: 1;">
-								<label>OAB (UF/Número):</label>
-								<input type="text" name="OAB" placeholder="Ex: SP/123456" required>
-							</div>
-							<div class="form-group" style="flex: 1;">
-								<label>Área de Atuação:</label>
-								<select name="Area_de_Atuacao" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
-									<option value="">Selecione...</option>
-									<option value="Direito Bancário">Direito Bancário</option>
-									<option value="Direito à Saúde">Direito à Saúde</option>
-									<option value="Direito do Trabalho">Direito do Trabalho</option>
-									<option value="Direito Civil/Imobiliário">Direito Civil/Imobiliário</option>
-									<option value="Direito Tributário">Direito Tributário</option>
-									<option value="Outros">Outros</option>
-								</select>
-							</div>
-						</div>
-
-						<button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; margin-top: 15px;">
-							Receber material por e-mail
-						</button>
-					</form>					
-				</div>
-			</div>	 -->	
+			</article>			
+				
 			<div id="modalLead" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
 				<div style="background:#fff; padding:40px; border-radius:12px; max-width:450px; width:90%; position:relative; box-shadow: 0 20px 40px rgba(0,0,0,0.2); text-align: left;">
 					
@@ -551,3 +518,106 @@ function fecharModal() { document.getElementById('modalLead').style.display = 'n
 				</div>
 			</article>			
 			-->
+
+			<!-- <div id="modalLead" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
+				<div style="background:#fff; padding:30px; border-radius:12px; max-width:400px; width:90%; position:relative;">
+					<span onclick="fecharModal()" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:20px;">&times;</span>
+					<h3 style="font-family:'Playfair Display', serif; margin-bottom:20px;">Acesse o PDF de Quesitos</h3>
+					<p id="info-material-selecionado"
+					   style="font-size:0.9rem; color:#555; margin-bottom:20px;">
+						Material selecionado: <span id="texto-material"></span>
+					</p>
+					
+					<form id="form-lead-materiais" method="POST" action="https://formsubmit.co/lincoln.sposito@linspti.com.br">
+						<input type="hidden" name="_next" value="https://spositol.github.io/pericia.judicial/obrigadomateriais.html">
+						<input type="hidden" name="_subject" id="email-subject" value="Novo Pedido de Material">
+						<input type="hidden" name="_captcha" value="false">
+						<input type="hidden" name="material_solicitado" id="material_solicitado_input">
+
+						<div class="form-group">
+							<label>Nome Completo:</label>
+							<input type="text" name="Nome" placeholder="Seu nome profissional" required>
+						</div>
+
+						<div class="form-group">
+							<label>E-mail Profissional:</label>
+							<input type="email" name="Email" placeholder="email@escritorio.com.br" required>
+						</div>
+
+						<div style="display: flex; gap: 15px;">
+							<div class="form-group" style="flex: 1;">
+								<label>OAB (UF/Número):</label>
+								<input type="text" name="OAB" placeholder="Ex: SP/123456" required>
+							</div>
+							<div class="form-group" style="flex: 1;">
+								<label>Área de Atuação:</label>
+								<select name="Area_de_Atuacao" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+									<option value="">Selecione...</option>
+									<option value="Direito Bancário">Direito Bancário</option>
+									<option value="Direito à Saúde">Direito à Saúde</option>
+									<option value="Direito do Trabalho">Direito do Trabalho</option>
+									<option value="Direito Civil/Imobiliário">Direito Civil/Imobiliário</option>
+									<option value="Direito Criminal">Direito Tributário</option>
+									<option value="Outros">Outros</option>
+								</select>
+							</div>
+						</div>
+
+						<button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; margin-top: 15px;">
+							Receber material por e-mail
+						</button>
+					</form>					
+
+				</div>
+			</div> -->
+			<!-- <div id="modalLead" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
+				<div style="background:#fff; padding:30px; border-radius:12px; max-width:400px; width:90%; position:relative;">
+					<span onclick="fecharModal()" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:20px;">&times;</span>
+					<h3 style="font-family:'Playfair Display', serif; margin-bottom:20px;">Receber Material Técnico</h3>
+					<p id="info-material-selecionado" style="font-size:0.9rem; color:#555; margin-bottom:20px;">
+						Material selecionado: <span id="texto-material" style="font-weight:bold; color:var(--primary);"></span>
+					</p>
+					
+					<form id="form-lead-materiais" method="POST" action="https://formsubmit.co/lincoln.sposito@linspti.com.br">
+						<input type="hidden" name="_next" value="https://spositol.github.io/pericia.judicial/obrigadomateriais.html">
+						<input type="hidden" name="_subject" id="email-subject" value="Novo Pedido de Material">
+						<input type="hidden" name="_captcha" value="false">
+						
+						<input type="hidden" name="material_solicitado" id="material_solicitado_input">
+						<input type="hidden" name="_autoresponse" id="autoresponse_message" value="">
+
+						<div class="form-group">
+							<label>Nome Completo:</label>
+							<input type="text" name="Nome" placeholder="Seu nome profissional" required>
+						</div>
+
+						<div class="form-group">
+							<label>E-mail Profissional:</label>
+							<input type="email" name="Email" placeholder="email@escritorio.com.br" required>
+						</div>
+
+						<div style="display: flex; gap: 15px;">
+							<div class="form-group" style="flex: 1;">
+								<label>OAB (UF/Número):</label>
+								<input type="text" name="OAB" placeholder="Ex: SP/123456" required>
+							</div>
+							<div class="form-group" style="flex: 1;">
+								<label>Área de Atuação:</label>
+								<select name="Area_de_Atuacao" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+									<option value="">Selecione...</option>
+									<option value="Direito Bancário">Direito Bancário</option>
+									<option value="Direito à Saúde">Direito à Saúde</option>
+									<option value="Direito do Trabalho">Direito do Trabalho</option>
+									<option value="Direito Civil/Imobiliário">Direito Civil/Imobiliário</option>
+									<option value="Direito Tributário">Direito Tributário</option>
+									<option value="Outros">Outros</option>
+								</select>
+							</div>
+						</div>
+
+						<button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; margin-top: 15px;">
+							Receber material por e-mail
+						</button>
+					</form>					
+				</div>
+			</div>	 -->			
