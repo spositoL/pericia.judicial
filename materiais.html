@@ -224,6 +224,65 @@
 </footer>
 
 <script>
+// Variável global para armazenar o link do material selecionado
+let linkMaterialSelecionado = "";
+
+function abrirModal(foco) {
+    const linksMateriais = {
+        'saude': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-saude-produto-445-lincoln-sposito.pdf',
+        'veiculos': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-revisional-veiculos-cdc-lincoln-sposito.pdf',
+        'financeiro': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-tabela-price-gauss-lincoln-sposito.pdf',
+        '1988': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-revisao-contrato-1988-SFH-lincoln-sposito.pdf',
+        'quesitos': 'https://spositol.github.io/pericia.judicial/arquivos/modelo-quesitos-bancarios-lincoln-sposito.pdf'
+    };
+
+    const nomesMateriais = {
+        'saude': 'Checklist Produto 445 (Saúde)',
+        'veiculos': 'Checklist Revisional Veículos',
+        'financeiro': 'Checklist Tabela Price vs Gauss',
+        '1988': 'Checklist SFH 1988',
+        'quesitos': 'Modelo de Quesitos Bancários'
+    };
+
+    const link = linksMateriais[foco];
+    const nome = nomesMateriais[foco];
+
+    // Armazena o link para usar no momento do envio
+    linkMaterialSelecionado = link;
+
+    // Atualiza os campos do modal
+    document.getElementById('texto-material').textContent = nome;
+    document.getElementById('material_solicitado_input').value = nome;
+    document.getElementById('email-subject').value = `Solicitação de Material: ${nome}`;
+
+    // Apenas abre o modal, SEM disparar o download
+    document.getElementById('modalLead').style.display = 'flex';
+}
+
+// NOVA FUNÇÃO: Dispara o download quando o formulário é enviado
+document.getElementById('form-lead-materiais').addEventListener('submit', function(e) {
+    if (linkMaterialSelecionado) {
+        const linkDownload = document.createElement('a');
+        linkDownload.href = linkMaterialSelecionado;
+        linkDownload.download = ''; 
+        document.body.appendChild(linkDownload);
+        linkDownload.click();
+        document.body.removeChild(linkDownload);
+    }
+    // O formulário continuará o envio para o FormSubmit e redirecionará para a página de obrigado
+});
+
+function fecharModal() {
+    document.getElementById('modalLead').style.display = 'none';
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById('modalLead');
+    if (event.target == modal) { fecharModal(); }
+}
+</script>
+
+<!-- <script>
     function abrirModal(foco) {
         const linksMateriais = {
             'saude': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-saude-produto-445-lincoln-sposito.pdf',
@@ -282,7 +341,7 @@
             fecharModal();
         }
     }
-</script>
+</script> -->
 <!-- <script>
     function abrirModal(foco) {
         const linksMateriais = {
