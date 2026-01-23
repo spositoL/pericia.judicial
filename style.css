@@ -413,3 +413,101 @@ img {
     height: auto;
     display: block;
 }
+
+.cta-box-checklist {
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+.cta-box-checklist:hover {
+    transform: translateY(-5px);
+}
+
+/* --- ESTILOS DA PÁGINA DE CASOS EMBLEMÁTICOS --- */
+
+/* Container dos botões de filtro */
+.filtros-casos {
+    text-align: center;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Estilo base dos botões de filtro */
+.btn-filtro {
+    background: transparent;
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    padding: 10px 22px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+/* Estado ativo e hover do filtro */
+.btn-filtro.active, 
+.btn-filtro:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* Estilização dos Cards de Caso */
+.caso-box {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+.caso-box:hover {
+    transform: translateY(-5px);
+}
+
+/* Tags de categoria dentro dos cards */
+.tag-categoria {
+    display: inline-block;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.tag-saude { background: var(--primary); }
+.tag-bancario { background: #27ae60; }
+.tag-revisional { background: #8e44ad; }
+
+/* Classe utilitária para o filtro JavaScript */
+.hidden {
+    display: none !important;
+}
+
+/* Ajuste para Mobile */
+@media (max-width: 768px) {
+    .caso-box {
+        padding: 20px;
+    }
+    .btn-filtro {
+        width: 100%; /* Botões ocupam largura total no celular */
+    }
+}
+
+#inputBusca:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 4px 15px rgba(197, 160, 89, 0.2) !important;
+}
+
+.search-container {
+    padding: 0 20px;
+}
+
+.tag-saude { background: #1a2a3a; }

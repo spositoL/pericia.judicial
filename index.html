@@ -58,7 +58,7 @@
 		  ]
 		}
 	</script> -->
-	<script type="application/ld+json">
+	<!-- <script type="application/ld+json">
 	{
 	  "@context": "https://schema.org",
 	  "@graph": [
@@ -108,7 +108,66 @@
 		}
 	  ]
 	}
-	</script>
+	</script> -->
+	
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://spositol.github.io/pericia.judicial/artigo-pericia-financeira-revisao-contrato-1988.html"
+      },
+      "headline": "O Enigma Financeiro de 1988: A Perícia na Reconstrução de Contratos Históricos",
+      "description": "Análise técnica pericial sobre contratos de 1988, expurgos inflacionários e a reconstrução de saldos devedores no SFH.",
+      "image": "https://spositol.github.io/pericia.judicial/img/capa-artigo-revisao-contrato-1988-SFH.webp",
+      "author": { "@id": "https://spositol.github.io/pericia.judicial/#person" },
+      "publisher": { "@id": "https://spositol.github.io/pericia.judicial/#organization" },
+      "datePublished": "2026-01-23",
+      "articleSection": "Perícia Financeira",
+      "keywords": "SFH 1988, Perícia Judicial, Expurgos Inflacionários, Plano Verão, Revisão de Contrato"
+    },
+    {
+      "@type": "LegalService",
+      "@id": "https://spositol.github.io/pericia.judicial/#organization",
+      "name": "Dr. Lincoln Sposito - Perícia Judicial e Assistência Técnica",
+      "url": "https://spositol.github.io/pericia.judicial",
+      "image": "https://spositol.github.io/pericia.judicial/img/perito-judicial-administracao-lincoln-sposito.webp",
+      "telephone": "+5511914612603",
+      "priceRange": "$$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Avenida Pedro Bueno 1671",
+        "addressLocality": "São Paulo",
+        "addressRegion": "SP",
+        "postalCode": "04342-011",
+        "addressCountry": "BR"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -23.6455, 
+        "longitude": -46.6508
+      },
+      "description": "Especialista em perícia judicial financeira, tributária e de TI, com foco em reequilíbrio econômico-financeiro.",
+      "founder": { "@id": "https://spositol.github.io/pericia.judicial/#person" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://spositol.github.io/pericia.judicial/#person",
+      "name": "Lincoln Sposito",
+      "jobTitle": "Perito Judicial e Doutor em Administração",
+      "honorificPrefix": "Dr.",
+      "url": "https://spositol.github.io/pericia.judicial/sobre.html",
+      "sameAs": [
+        "https://www.linkedin.com/in/lincolnsposito",
+        "http://lattes.cnpq.br/4917125955922920"
+      ]
+    }
+  ]
+}
+</script>	
 </head>
 <body>
 
@@ -126,7 +185,8 @@
                 <li><a href="index.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Início</a></li>
                 <li><a href="sobre.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Sobre</a></li>
 				<li><a href="index.html#servicos" class="btn-nav">Serviços</a></li>
-				<li><a href="index.html#blog"     class="btn-nav">Blog/Artigos</a></li>
+				<li><a href="index.html#blog"     class="btn-nav">Artigos</a></li>
+				<li><a href="casos-emblematicos.html"     class="btn-nav">Casos emblemáticos</a></li>
                 <li><a href="materiais.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Materiais</a></li>
                 <li><a href="index.html#contato"  class="btn-nav">Contato</a></li>				
             </ul>
@@ -202,6 +262,14 @@
 				<button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
 				<div class="blog-grid">
 					<div class="carousel-track" id="carouselTrack">
+						<article class="blog-card">
+							<img src="img/capa-artigo-revisao-contrato-1988-SFH.webp" alt="Perícia em Contratos de 1988 SFH">
+							<div class="card-body">
+								<h3 class="section-title">O Enigma Financeiro de 1988: A Perícia na Reconstrução de Contratos Históricos</h3>
+								<p>Como restabelecer o equilíbrio contratual de 1988 através do rigor matemático e da análise técnica de expurgos inflacionários.</p>
+								<a href="artigo-pericia-financeira-revisao-contrato-1988.html" class="read-more">Ler Artigo</a>
+							</div>
+						</article>					
 						<article class="blog-card">
 							<img src="img/capa-pericia-cdc.webp" alt="Perícia em Contratos de Financiamento">
 							<div class="card-body">

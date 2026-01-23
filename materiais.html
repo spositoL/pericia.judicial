@@ -44,21 +44,6 @@
 </head>
 <body>
 
-<!--
-<header class="navbar">
-    <div class="container">
-        <a href="index.html" style="text-decoration: none;"><div class="logo">Dr. Lincoln Sposito<span> ( Perito Judicial )</span></div></a>
-        <nav>
-            <ul>
-                <li><a href="index.html#servicos">Serviços</a></li>
-                <li><a href="materiais.html">Materiais Gratuítos</a></li>
-                <li><a href="sobre.html">Sobre</a></li>
-                <li><a href="index.html#contato" class="btn-nav">Contato</a></li>
-            </ul>
-        </nav>
-    </div>
-</header>
--->
 <header style="background-color: #1a2a3a; padding: 15px 0; border-bottom: 2px solid #c5a059;">
     <div class="container" style="display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
         <a href="index.html" style="text-decoration: none; display: block; width: 220px;">
@@ -73,7 +58,8 @@
                 <li><a href="index.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Início</a></li>
                 <li><a href="sobre.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Sobre</a></li>
 				<li><a href="index.html#servicos" class="btn-nav">Serviços</a></li>
-				<li><a href="index.html#blog"     class="btn-nav">Blog/Artigos</a></li>
+				<li><a href="index.html#blog"     class="btn-nav">Artigos</a></li>
+				<li><a href="casos-emblematicos.html"     class="btn-nav">Casos emblemáticos</a></li>
                 <li><a href="materiais.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Materiais</a></li>
                 <li><a href="index.html#contato"  class="btn-nav">Contato</a></li>				
             </ul>
@@ -81,32 +67,188 @@
     </div>
 </header>
 
-
 <main class="container">
     <section class="download-section">
-        <!--
-		<h1 style="font-family: 'Playfair Display', serif; color: #1a2a3a;">Materiais Gratuitos para Advogados</h1>
-		-->
-		<h1>Materiais Gratuitos para Advogados</h1>
-		
-        <p>Acesse modelos e guias técnicos para fortalecer sua instrução processual.</p>
+        <h1>Materiais Técnicos Gratuitos</h1>
+        <p>Recursos exclusivos para advogados instruírem petições com fundamentação administrativa e financeira de alto rigor.</p>
 
-        <article class="material-card">
-            <div class="card-content">
-                <!--<h2 style="color: #1a2a3a;">Modelo: Quesitos para Perícia Bancária (Revisional)</h2>-->
-				<h2>Modelo: Quesitos para Perícia Bancária (Revisional)</h2>
-                <p>Sugestões de quesitos estratégicos para apuração de capitalização de juros, taxas abusivas e recálculo pela Tabela Price vs SAC.</p>
-                
-                <a href="modelo-quesitos-bancarios-lincoln-sposito.pdf" class="btn-download" download>
-                   📄 Baixar PDF Gratuito
-                </a>
-            </div>
-        </article>
-        
-        <p style="margin-top: 40px; font-size: 0.9rem; color: #666;">
-            Precisa de quesitos personalizados para um caso específico? 
-            <a href="index.html#contato" style="color: #c5a059; font-weight: bold;">Entre em contato agora.</a>
-        </p>
+        <div class="materials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 40px;">            
+			<article class="material-card" style="border-top: 4px solid var(--primary);">
+				<div class="card-content">
+					<span style="font-size: 0.8rem; color: var(--accent); font-weight: bold; text-transform: uppercase;">Saúde Suplementar</span>
+					<h2>Checklist: Produto 445 (Qualicorp)</h2>
+					<p>Filtros de viabilidade para reajustes por VCMH e Sinistralidade em planos coletivos.</p>
+					
+					<a href="javascript:void(0)" 
+					   onclick="abrirModal('saude')" 
+					   class="btn-primary" 
+					   style="display: inline-block; text-decoration: none; text-align: center; width: 100%; box-sizing: border-box;">
+						📋 Solicitar Checklist via E-mail
+					</a>
+				</div>
+			</article>			
+			
+			<!-- <div id="modalLead" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
+				<div style="background:#fff; padding:30px; border-radius:12px; max-width:400px; width:90%; position:relative;">
+					<span onclick="fecharModal()" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:20px;">&times;</span>
+					<h3 style="font-family:'Playfair Display', serif; margin-bottom:20px;">Acesse o PDF de Quesitos</h3>
+					<p id="info-material-selecionado"
+					   style="font-size:0.9rem; color:#555; margin-bottom:20px;">
+						Material selecionado: <span id="texto-material"></span>
+					</p>
+					
+					<form id="form-lead-materiais" method="POST" action="https://formsubmit.co/lincoln.sposito@linspti.com.br">
+						<input type="hidden" name="_next" value="https://spositol.github.io/pericia.judicial/obrigadomateriais.html">
+						<input type="hidden" name="_subject" id="email-subject" value="Novo Pedido de Material">
+						<input type="hidden" name="_captcha" value="false">
+						<input type="hidden" name="material_solicitado" id="material_solicitado_input">
+
+						<div class="form-group">
+							<label>Nome Completo:</label>
+							<input type="text" name="Nome" placeholder="Seu nome profissional" required>
+						</div>
+
+						<div class="form-group">
+							<label>E-mail Profissional:</label>
+							<input type="email" name="Email" placeholder="email@escritorio.com.br" required>
+						</div>
+
+						<div style="display: flex; gap: 15px;">
+							<div class="form-group" style="flex: 1;">
+								<label>OAB (UF/Número):</label>
+								<input type="text" name="OAB" placeholder="Ex: SP/123456" required>
+							</div>
+							<div class="form-group" style="flex: 1;">
+								<label>Área de Atuação:</label>
+								<select name="Area_de_Atuacao" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+									<option value="">Selecione...</option>
+									<option value="Direito Bancário">Direito Bancário</option>
+									<option value="Direito à Saúde">Direito à Saúde</option>
+									<option value="Direito do Trabalho">Direito do Trabalho</option>
+									<option value="Direito Civil/Imobiliário">Direito Civil/Imobiliário</option>
+									<option value="Direito Criminal">Direito Tributário</option>
+									<option value="Outros">Outros</option>
+								</select>
+							</div>
+						</div>
+
+						<button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; margin-top: 15px;">
+							Receber material por e-mail
+						</button>
+					</form>					
+
+				</div>
+			</div> -->
+			<!-- <div id="modalLead" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
+				<div style="background:#fff; padding:30px; border-radius:12px; max-width:400px; width:90%; position:relative;">
+					<span onclick="fecharModal()" style="position:absolute; top:10px; right:15px; cursor:pointer; font-size:20px;">&times;</span>
+					<h3 style="font-family:'Playfair Display', serif; margin-bottom:20px;">Receber Material Técnico</h3>
+					<p id="info-material-selecionado" style="font-size:0.9rem; color:#555; margin-bottom:20px;">
+						Material selecionado: <span id="texto-material" style="font-weight:bold; color:var(--primary);"></span>
+					</p>
+					
+					<form id="form-lead-materiais" method="POST" action="https://formsubmit.co/lincoln.sposito@linspti.com.br">
+						<input type="hidden" name="_next" value="https://spositol.github.io/pericia.judicial/obrigadomateriais.html">
+						<input type="hidden" name="_subject" id="email-subject" value="Novo Pedido de Material">
+						<input type="hidden" name="_captcha" value="false">
+						
+						<input type="hidden" name="material_solicitado" id="material_solicitado_input">
+						<input type="hidden" name="_autoresponse" id="autoresponse_message" value="">
+
+						<div class="form-group">
+							<label>Nome Completo:</label>
+							<input type="text" name="Nome" placeholder="Seu nome profissional" required>
+						</div>
+
+						<div class="form-group">
+							<label>E-mail Profissional:</label>
+							<input type="email" name="Email" placeholder="email@escritorio.com.br" required>
+						</div>
+
+						<div style="display: flex; gap: 15px;">
+							<div class="form-group" style="flex: 1;">
+								<label>OAB (UF/Número):</label>
+								<input type="text" name="OAB" placeholder="Ex: SP/123456" required>
+							</div>
+							<div class="form-group" style="flex: 1;">
+								<label>Área de Atuação:</label>
+								<select name="Area_de_Atuacao" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+									<option value="">Selecione...</option>
+									<option value="Direito Bancário">Direito Bancário</option>
+									<option value="Direito à Saúde">Direito à Saúde</option>
+									<option value="Direito do Trabalho">Direito do Trabalho</option>
+									<option value="Direito Civil/Imobiliário">Direito Civil/Imobiliário</option>
+									<option value="Direito Tributário">Direito Tributário</option>
+									<option value="Outros">Outros</option>
+								</select>
+							</div>
+						</div>
+
+						<button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer; margin-top: 15px;">
+							Receber material por e-mail
+						</button>
+					</form>					
+				</div>
+			</div>	 -->	
+			<div id="modalLead" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
+				<div style="background:#fff; padding:40px; border-radius:12px; max-width:450px; width:90%; position:relative; box-shadow: 0 20px 40px rgba(0,0,0,0.2); text-align: left;">
+					
+					<span onclick="fecharModal()" style="position:absolute; top:15px; right:20px; cursor:pointer; font-size:24px; color:#999;">&times;</span>
+					
+					<h3 style="font-family:'Playfair Display', serif; margin: 0 0 10px 0; color: #1a2a3a; font-size: 1.6rem;">Solicitar Material</h3>
+					<p style="font-size:0.9rem; color:#666; margin-bottom:25px; border-bottom: 1px solid #eee; padding-bottom: 15px;">
+						Material: <span id="texto-material" style="font-weight:600; color:#c5a059;"></span>
+					</p>
+					
+					<form id="form-lead-materiais" method="POST" action="https://formsubmit.co/lincoln.sposito@linspti.com.br">
+						<input type="hidden" name="_next" value="https://spositol.github.io/pericia.judicial/obrigadomateriais.html">
+						<input type="hidden" name="_subject" id="email-subject" value="Novo Pedido de Material">
+						<input type="hidden" name="_captcha" value="false">
+						<input type="hidden" name="material_solicitado" id="material_solicitado_input">
+						<input type="hidden" name="_autoresponse" id="autoresponse_message" value="">
+
+						<div style="margin-bottom: 15px;">
+							<label style="display:block; font-weight:600; font-size:0.85rem; margin-bottom:5px; color:#333;">Nome Completo</label>
+							<input type="text" name="Nome" placeholder="Seu nome profissional" required 
+								   style="width:100%; height:45px; padding:0 12px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box; font-family:'Inter', sans-serif;">
+						</div>
+
+						<div style="margin-bottom: 15px;">
+							<label style="display:block; font-weight:600; font-size:0.85rem; margin-bottom:5px; color:#333;">E-mail Profissional</label>
+							<input type="email" name="Email" placeholder="exemplo@escritorio.com.br" required 
+								   style="width:100%; height:45px; padding:0 12px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box; font-family:'Inter', sans-serif;">
+						</div>
+
+						<div style="display: flex; gap: 15px; margin-bottom: 20px;">
+							<div style="flex: 1;">
+								<label style="display:block; font-weight:600; font-size:0.85rem; margin-bottom:5px; color:#333;">OAB (UF/Nº)</label>
+								<input type="text" name="OAB" placeholder="SP/000000" required 
+									   style="width:100%; height:45px; padding:0 12px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box; font-family:'Inter', sans-serif;">
+							</div>
+							<div style="flex: 1;">
+								<label style="display:block; font-weight:600; font-size:0.85rem; margin-bottom:5px; color:#333;">Área de Atuação</label>
+								<select name="Area_de_Atuacao" required 
+										style="width:100%; height:45px; padding:0 12px; border:1px solid #ccc; border-radius:6px; box-sizing:border-box; background-color:#fff; font-family:'Inter', sans-serif;">
+									<option value="">Selecione...</option>
+									<option value="Direito Bancário">Direito Bancário</option>
+									<option value="Direito à Saúde">Direito à Saúde</option>
+									<option value="Direito do Trabalho">Direito do Trabalho</option>
+									<option value="Direito Civil">Direito Civil</option>
+									<option value="Direito Tributário">Direito Tributário</option>
+									<option value="Outros">Outros</option>
+								</select>
+							</div>
+						</div>
+
+						<button type="submit" class="btn-primary" 
+								style="width: 100%; height: 50px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: background 0.3s;">
+							Receber por e-mail
+						</button>
+					</form>					
+				</div>
+			</div>			
+
+        </div>
     </section>
 </main>
 
@@ -114,5 +256,298 @@
     <p>&copy; 2026 Dr. Lincoln Sposito - Perícia Judicial. Todos os direitos reservados.</p>
 </footer>
 
+<script>
+    function abrirModal(foco) {
+        const linksMateriais = {
+            'saude': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-saude-produto-445-lincoln-sposito.pdf',
+            'veiculos': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-revisional-veiculos-cdc-lincoln-sposito.pdf',
+            'financeiro': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-tabela-price-gauss-lincoln-sposito.pdf',
+            '1988': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-revisao-contrato-1988-SFH-lincoln-sposito.pdf',
+            'quesitos': 'https://spositol.github.io/pericia.judicial/arquivos/modelo-quesitos-bancarios-lincoln-sposito.pdf'
+        };
+
+        const nomesMateriais = {
+            'saude': 'Checklist Produto 445 (Saúde)',
+            'veiculos': 'Checklist Revisional Veículos',
+            'financeiro': 'Checklist Tabela Price vs Gauss',
+            '1988': 'Checklist SFH 1988',
+            'quesitos': 'Modelo de Quesitos Bancários'
+        };
+
+        const link = linksMateriais[foco];
+        const nome = nomesMateriais[foco];
+
+        // 1. Atualiza o texto visual do modal
+        const textoMaterial = document.getElementById('texto-material');
+        if (textoMaterial) { textoMaterial.textContent = nome; }
+
+        // 2. Preenche os dados que o Dr. Lincoln (Perito) recebe
+        document.getElementById('material_solicitado_input').value = nome;
+        document.getElementById('email-subject').value = `Solicitação de Material: ${nome}`;
+
+        // 3. Configura a Resposta Automática que o Solicitante recebe
+        const mensagemAuto = `Olá! \n\nObrigado por solicitar o material técnico. Você pode baixar o seu "${nome}" clicando no link abaixo:\n\n${link}\n\nEspero que seja útil para a sua instrução processual.\n\nAtenciosamente,\nDr. Lincoln Sposito`;
+        document.getElementById('autoresponse_message').value = mensagemAuto;
+
+        // 4. Exibe o modal (usa FLEX para centralizar conforme seu estilo)
+        document.getElementById('modalLead').style.display = 'flex';
+    }
+
+    function fecharModal() {
+        document.getElementById('modalLead').style.display = 'none';
+    }
+
+    // Fecha se clicar fora da caixa branca
+    window.onclick = function(event) {
+        const modal = document.getElementById('modalLead');
+        if (event.target == modal) {
+            fecharModal();
+        }
+    }
+</script>
+<!-- <script>
+    function abrirModal(foco) {
+        const linksMateriais = {
+            'saude': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-saude-produto-445-lincoln-sposito.pdf',
+            'veiculos': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-revisional-veiculos-cdc-lincoln-sposito.pdf',
+            'financeiro': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-tabela-price-gauss-lincoln-sposito.pdf',
+            '1988': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-revisao-contrato-1988-SFH-lincoln-sposito.pdf',
+            'quesitos': 'https://spositol.github.io/pericia.judicial/arquivos/modelo-quesitos-bancarios-lincoln-sposito.pdf'
+        };
+
+        const nomesMateriais = {
+            'saude': 'Checklist Produto 445 (Saúde)',
+            'veiculos': 'Checklist Revisional Veículos',
+            'financeiro': 'Checklist Tabela Price vs Gauss',
+            '1988': 'Checklist SFH 1988',
+            'quesitos': 'Modelo de Quesitos Bancários'
+        };
+
+        const link = linksMateriais[foco];
+        const nome = nomesMateriais[foco];
+
+        // 1. Atualiza o texto do modal
+        document.getElementById('texto-material').textContent = nome;
+
+        // 2. Preenche o campo que o Perito recebe
+        document.getElementById('material_solicitado_input').value = nome;
+        document.getElementById('email-subject').value = `Solicitação de Material: ${nome}`;
+
+        // 3. Preenche a mensagem que o Solicitante recebe (Auto-responder)
+        const mensagemAuto = `Olá! Obrigado pelo interesse. Você pode baixar seu ${nome} no link abaixo:\n\n${link}\n\nAtenciosamente,\nDr. Lincoln Sposito`;
+        document.getElementById('autoresponse_message').value = mensagemAuto;
+
+        document.getElementById('modalLead').style.display = 'flex';
+    }
+</script> -->
+
 </body>
 </html>
+
+
+<!-- <script>
+function abrirModal() { document.getElementById('modalLead').style.display = 'flex'; }
+function fecharModal() { document.getElementById('modalLead').style.display = 'none'; }
+</script>
+<script>
+    let materialSelecionado = '';
+
+    function abrirModal(foco) {
+        materialSelecionado = foco;
+        document.getElementById('modalLead').style.display = 'flex';
+    }
+
+    function fecharModal() {
+        document.getElementById('modalLead').style.display = 'none';
+    }
+
+    // Ajuste no envio do formulário do modal
+    document.getElementById('form-lead-materiais').addEventListener('submit', function(e) {
+        // Adicionamos o foco na URL de redirecionamento
+		const nome = encodeURIComponent(this.querySelector('[name="nome"]').value);
+        const email = encodeURIComponent(this.querySelector('[name="email"]').value);
+        const oab = encodeURIComponent(this.querySelector('[name="oab"]').value);
+		this.action = "obrigadomateriais.html?foco=" + materialSelecionado + "nome=" + nome + "email=" + email + "oab=" + oab;
+		
+		//this.action = "obrigadomateriais.html?foco=" + materialSelecionado;
+        
+		//this.action = `obrigadomateriais.html?foco=${materialSelecionado}&nome=${nome}&email=${email}&oab=${oab}`;
+		//this.action = `obrigadomateriais.html?foco=${materialSelecionado}&nome=${nome}&email=${email}&oab=${oab}`;
+    });
+</script>
+<script>
+    let materialSelecionado = '';
+
+    function abrirModal(foco) {
+        materialSelecionado = foco;
+
+        const spanTexto = document.getElementById('texto-material');
+        if (spanTexto) {
+            spanTexto.textContent = materialSelecionado;
+        }
+
+        document.getElementById('modalLead').style.display = 'flex';
+    }
+
+    function fecharModal() {
+        document.getElementById('modalLead').style.display = 'none';
+    }
+
+    document.getElementById('form-lead-materiais').addEventListener('submit', function(e) {
+        const nome  = encodeURIComponent(this.querySelector('[name="nome"]').value);
+        const email = encodeURIComponent(this.querySelector('[name="email"]').value);
+        const oab   = encodeURIComponent(this.querySelector('[name="oab"]').value);
+
+        this.action = `obrigadomateriais.html?foco=${encodeURIComponent(materialSelecionado)}&nome=${nome}&email=${email}&oab=${oab}`;
+    });
+</script>
+<script>
+    let materialSelecionado = '';
+
+    function abrirModal(foco) {
+        materialSelecionado = foco;
+        const spanTexto = document.getElementById('texto-material');
+        if (spanTexto) {
+            spanTexto.textContent = materialSelecionado;
+        }
+        document.getElementById('modalLead').style.display = 'flex';
+    }
+
+    function fecharModal() {
+        document.getElementById('modalLead').style.display = 'none';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const formLead = document.getElementById('form-lead-materiais');
+
+        formLead.addEventListener('submit', function (e) {
+            const nome  = encodeURIComponent(this.querySelector('[name="nome"]').value);
+            const email = encodeURIComponent(this.querySelector('[name="email"]').value);
+            const oab   = encodeURIComponent(this.querySelector('[name="oab"]').value);
+
+            this.action = `obrigadomateriais.html?foco=${encodeURIComponent(materialSelecionado)}&nome=${nome}&email=${email}&oab=${oab}`;
+        });
+    });
+</script>
+<script>
+    let materialSelecionado = '';
+
+    function abrirModal(foco) {
+        materialSelecionado = foco;
+        const spanTexto = document.getElementById('texto-material');
+        if (spanTexto) {
+            spanTexto.textContent = materialSelecionado;
+        }
+        document.getElementById('modalLead').style.display = 'flex';
+    }
+
+    function fecharModal() {
+        document.getElementById('modalLead').style.display = 'none';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const formLead = document.getElementById('form-lead-materiais');
+        console.log('formLead encontrado?', formLead);
+
+        formLead.addEventListener('submit', function (e) {
+            console.log('SUBMIT DISPARADO, materialSelecionado =', materialSelecionado);
+
+            const nome  = encodeURIComponent(this.querySelector('[name="nome"]').value);
+            const email = encodeURIComponent(this.querySelector('[name="email"]').value);
+            const oab   = encodeURIComponent(this.querySelector('[name="oab"]').value);
+
+            //this.action = `obrigadomateriais.html?foco=${encodeURIComponent(materialSelecionado)}&nome=${nome}&email=${email}&oab=${oab}`;
+        });
+    });
+</script>
+-->
+
+<!-- <form id="form-lead-materiais" action="obrigadomateriais.html" method="GET">
+						<input type="text" name="nome" placeholder="Seu Nome" required style="width:100%; padding:12px; margin-bottom:10px; border:1px solid #ddd; border-radius:4px;">
+						<input type="email" name="email" placeholder="E-mail Profissional" required style="width:100%; padding:12px; margin-bottom:10px; border:1px solid #ddd; border-radius:4px;">
+						<input type="text" name="oab" placeholder="OAB ou Área de Atuação" required style="width:100%; padding:12px; margin-bottom:15px; border:1px solid #ddd; border-radius:4px;">
+						
+						<button type="submit" class="btn-download" style="width:100%; border:none;">Liberar Download Agora</button>
+					</form> -->
+					<!-- <form id="form-lead-materiais" method="POST" action="https://formsubmit.co/lincoln.sposito@linspti.com.br">
+						
+						<input type="hidden" name="_next" value="https://spositol.github.io/pericia.judicial/obrigadomateriais.html">
+						<input type="hidden" name="_subject" id="email-subject" value="Novo Pedido de Material">
+						<input type="hidden" name="_captcha" value="false">
+
+						<input type="hidden" name="material_solicitado" id="material_solicitado_input">
+
+						<div class="form-group">
+							<label>Nome Completo:</label>
+							<input type="text" name="nome" placeholder="Seu nome profissional" required>
+						</div>
+						<div class="form-group">
+							<label>E-mail Profissional:</label>
+							<input type="email" name="email" placeholder="email@escritorio.com.br" required>
+						</div>
+						<div class="form-group">
+							<label>OAB e Área de atuação:</label>
+							<input type="email" name="email" placeholder="email@escritorio.com.br" required>
+						</div>
+						<button type="submit" class="btn-primary" style="width: 100%; border: none; cursor: pointer;">
+							Receber material por e-mail
+						</button>
+					</form>	 -->
+					
+<!--             <article class="material-card" style="border-top: 4px solid var(--primary);">
+                <div class="card-content">
+                    <span style="font-size: 0.8rem; color: var(--accent); font-weight: bold; text-transform: uppercase;">Saúde Suplementar</span>
+                    <h2>Checklist: Produto 445 (Qualicorp)</h2>
+                    <p>Filtros de viabilidade para reajustes por VCMH e Sinistralidade em planos coletivos.</p>
+					<button onclick="abrirModal('saude')" class="btn-download" style="cursor: pointer; border: none;">
+					   📋 Acessar Checklist Produto 445
+					</button>					
+                </div>
+            </article> 
+
+            <article class="material-card" style="border-top: 4px solid var(--accent);">
+                <div class="card-content">
+                    <span style="font-size: 0.8rem; color: var(--accent); font-weight: bold; text-transform: uppercase;">Bancário / CDC</span>
+                    <h2>Checklist: Revisional de Veículos</h2>
+                    <p>Pontos de auditoria para taxas de terceiros, seguros e capitalização em contratos de financiamento.</p>
+                    
+					<button onclick="abrirModal('veiculos')" class="btn-download" style="cursor: pointer; border: none;">
+					   📋 Acessar Checklist Revisional
+					</button>					
+                </div>
+            </article>
+
+            <article class="material-card" style="border-top: 4px solid var(--primary);">
+                <div class="card-content">
+                    <span style="font-size: 0.8rem; color: var(--accent); font-weight: bold; text-transform: uppercase;">Matemática Financeira</span>
+                    <h2>Checklist: Tabela Price vs. Gauss</h2>
+                    <p>Critérios técnicos para identificação de anatocismo e tese de transparência algorítmica.</p>
+                    
+					<button onclick="abrirModal('financeiro')" class="btn-download" style="cursor: pointer; border: none;">
+					   📋 Acessar Checklist Price vs. Gauss
+					</button>
+                </div>
+            </article>
+
+			<article class="material-card" style="border-top: 4px solid #c5a059;">
+				<div class="card-content">
+					<span style="font-size: 0.8rem; color: #666; font-weight: bold; text-transform: uppercase;">Checklist Técnico</span>
+					<h2>Revisão SFH - Contratos 1988</h2>
+					<p>Guia de admissibilidade documental para teses de expurgo do Plano Verão e descumprimento do PES.</p>
+					
+					<button onclick="abrirModal('1988')" class="btn-download" style="cursor: pointer; border: none;">
+					   📂 Acessar Checklist SFH
+					</button>
+				</div>
+			</article>
+			
+			<article class="material-card" style="border-top: 4px solid #666;">
+				<div class="card-content">
+					<span style="font-size: 0.8rem; color: #666; font-weight: bold; text-transform: uppercase;">Modelos Processuais</span>
+					<h2>Quesitos para Perícia Bancária</h2>
+					<p>Sugestões estratégicas de quesitos para apuração de juros e recálculo de saldo devedor.</p>
+					
+					<a href="javascript:void(0)" onclick="abrirModal('quesitos')" class="btn-primary">📋 Solicitar Acesso Gratuito</a>
+				</div>
+			</article>			
+			-->
