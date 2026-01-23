@@ -253,8 +253,19 @@
         document.getElementById('email-subject').value = `Solicitação de Material: ${nome}`;
 
         // 3. Configura a Resposta Automática que o Solicitante recebe
-        const mensagemAuto = `Olá! \n\nObrigado por solicitar o material técnico. Você pode baixar o seu "${nome}" clicando no link abaixo:\n\n${link}\n\nEspero que seja útil para a sua instrução processual.\n\nAtenciosamente,\nDr. Lincoln Sposito`;
-        document.getElementById('autoresponse_message').value = mensagemAuto;
+        //const mensagemAuto = `Olá! \n\nObrigado por solicitar o material técnico. Você pode baixar o seu "${nome}" clicando no link //abaixo:\n\n${link}\n\nEspero que seja útil para a sua instrução processual.\n\nAtenciosamente,\nDr. Lincoln Sposito`;
+        //document.getElementById('autoresponse_message').value = mensagemAuto;
+		const linkDownload = link; //downloads[materialId];
+
+		if (linkDownload) {
+			// 3. Cria um link temporário e dispara o download
+			const link1 = document.createElement('a');
+			link1.href = linkDownload;
+			link1.download = ''; // Força o download
+			document.body.appendChild(link1);
+			link1.click();
+			document.body.removeChild(link1);
+		}
 
         // 4. Exibe o modal (usa FLEX para centralizar conforme seu estilo)
         document.getElementById('modalLead').style.display = 'flex';
