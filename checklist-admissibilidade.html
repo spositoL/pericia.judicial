@@ -146,6 +146,7 @@
 				</h1>
 				<p style="margin-top: 12px; opacity: 0.9; text-align: left; color:white;">
 					Reduza a improcedência e filtre os melhores casos de reajuste de plano de saúde e contratos bancários antes de protocolar a inicial.
+					Bonus: Tecnologia da Informação & Dados
 				</p>
 			</div>						
 		</div>
@@ -192,6 +193,7 @@
 								<option value="Price-Gauss">Checklist: Tabela Price vs. Gauss</option>
 								<option value="Saude-445">Checklist: Plano de Saúde (Produto 445)</option>
 								<option value="SFH-1988">Checklist: Sistema Financeiro da Habitação (Ano 1988)</option>								
+								<option value="TI&Dados">Checklist: 10 Indicadores De Risco Em Sistemas De Dados </option>								
 								<!-- <option value="Ambos">Todos</option>								 -->
 							</select>
                         </div>
@@ -224,6 +226,7 @@
         if (foco === 'veiculos') selectMaterial.value = 'Veiculos';
         if (foco === 'financeiro') selectMaterial.value = 'Price-Gauss';
         if (foco === '1988') selectMaterial.value = 'SFH-1988';
+		if (foco === 'dados') selectMaterial.value = 'TI&Dados';		
     });
 
     // 2. Função de Processamento
@@ -242,6 +245,7 @@
             'Price-Gauss': 'arquivos/checklist-tabela-price-gauss-lincoln-sposito.pdf',
             'Saude-445': 'arquivos/checklist-saude-produto-445-lincoln-sposito.pdf',
             'SFH-1988': 'arquivos/checklist-revisao-contrato-1988-SFH-lincoln-sposito.pdf',
+			'TI&Dados': 'arquivos/checklist-indicadores-risco-dados-lincoln-sposito.pdf',			
             'Ambos': 'materiais.html'
         };
 
