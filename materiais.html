@@ -67,6 +67,13 @@
     <section class="download-section">
         <h1>Materiais Técnicos Gratuitos</h1>
         <p>Recursos exclusivos para advogados instruírem petições com fundamentação administrativa e financeira de alto rigor.</p>
+		
+	<div class="filter-container" style="text-align: center; margin-bottom: 40px;">
+		<button class="btn-filtro active" data-filter="todos">Todos</button>
+		<button class="btn-filtro" data-filter="ti">TI Forense</button>
+		<button class="btn-filtro" data-filter="financeiro">Bancário/SFH</button>
+		<button class="btn-filtro" data-filter="saude">Saúde Suplementar</button>
+	</div>		
 
         <div class="materials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-top: 40px;">            
 			<article class="material-card" style="border-top: 4px solid var(--primary);">
@@ -151,7 +158,24 @@
 						📋 Solicitar quesitos via E-mail
 					</a>	
 				</div>
-			</article>			
+			</article>		
+
+			<article class="material-card" style="border-top: 4px solid #666;">
+				<div class="card-content">
+					<span style="font-size: 0.8rem; color: #666; font-weight: bold; text-transform: uppercase;">Checklist Técnico</span>
+					<h2>Auditoria de Dados Forense</h2>
+					<p>Checklist de 10 indicadores de risco estrutural</p>
+					
+					<!-- <a href="javascript:void(0)" onclick="abrirModal('quesitos')" class="btn-primary">📋 Solicitar Acesso Gratuito</a> -->
+					<a href="javascript:void(0)" 
+					   onclick="abrirModal('ti forense')" 
+					   class="btn-primary" 
+					   style="display: inline-block; text-decoration: none; text-align: center; width: 100%; box-sizing: border-box;">
+						📋 Solicitar Checklist via E-mail
+					</a>	
+				</div>
+			</article>	
+			
 				
 			<div id="modalLead" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
 				<div style="background:#fff; padding:40px; border-radius:12px; max-width:450px; width:90%; position:relative; box-shadow: 0 20px 40px rgba(0,0,0,0.2); text-align: left;">
@@ -229,7 +253,8 @@ function abrirModal(foco) {
         'veiculos': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-revisional-veiculos-cdc-lincoln-sposito.pdf',
         'financeiro': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-tabela-price-gauss-lincoln-sposito.pdf',
         '1988': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-revisao-contrato-1988-SFH-lincoln-sposito.pdf',
-        'quesitos': 'https://spositol.github.io/pericia.judicial/arquivos/modelo-quesitos-bancarios-lincoln-sposito.pdf'
+        'quesitos': 'https://spositol.github.io/pericia.judicial/arquivos/modelo-quesitos-bancarios-lincoln-sposito.pdf',
+        'ti forense': 'https://spositol.github.io/pericia.judicial/arquivos/checklist-indicadores-risco-dados-lincoln-sposito.pdf'		
     };
 
     const nomesMateriais = {
@@ -237,7 +262,8 @@ function abrirModal(foco) {
         'veiculos': 'Checklist Revisional Veículos',
         'financeiro': 'Checklist Tabela Price vs Gauss',
         '1988': 'Checklist SFH 1988',
-        'quesitos': 'Modelo de Quesitos Bancários'
+        'quesitos': 'Modelo de Quesitos Bancários',
+		'ti forense': 'Checklist: 10 Indicadores De Risco Em Sistemas De Dados'
     };
 
     const link = linksMateriais[foco];
