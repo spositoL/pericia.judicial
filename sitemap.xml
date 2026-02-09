@@ -2,62 +2,68 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://spositol.github.io/pericia.judicial/index.html</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-02-09</lastmod>
     <priority>1.00</priority>
   </url>
 
   <url>
     <loc>https://spositol.github.io/pericia.judicial/sobre.html</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-02-09</lastmod>
     <priority>0.80</priority>
   </url>
 
   <url>
     <loc>https://spositol.github.io/pericia.judicial/materiais.html</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-02-09</lastmod>
     <priority>0.50</priority>
   </url>
 
   <url>
     <loc>https://spositol.github.io/pericia.judicial/artigo-jurisprudencia-planos-saude.html</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-02-09</lastmod>
     <priority>0.70</priority>
   </url>
 
   <url>
     <loc>https://spositol.github.io/pericia.judicial/artigo-plano-saude-445.html</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-02-09</lastmod>
     <priority>0.70</priority>
   </url>
 
   <url>
     <loc>https://spositol.github.io/pericia.judicial/artigo-pericia-financeira.html</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-02-09</lastmod>
     <priority>0.70</priority>
   </url>
   
   <url>
     <loc>https://spositol.github.io/pericia.judicial/artigo-vcmh-caixa-preta.html</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-02-09</lastmod>
     <priority>0.70</priority>
   </url>
   
   <url>
     <loc>https://spositol.github.io/pericia.judicial/artigo-pericia-cdc-abusividade.html</loc>
-    <lastmod>2026-01-20</lastmod>
+    <lastmod>2026-02-09</lastmod>
     <priority>0.70</priority>
   </url>
 
   <url>
     <loc>https://spositol.github.io/pericia.judicial/artigo-pericia-financeira-revisao-contrato-1988.html</loc>
-    <lastmod>2026-01-23</lastmod>
+    <lastmod>2026-02-09</lastmod>
     <priority>0.70</priority>
   </url>  
 
   <url>
     <loc>https://spositol.github.io/pericia.judicial/casos-emblematicos.html</loc>
-    <lastmod>2026-01-23</lastmod>
+    <lastmod>2026-02-09</lastmod>
     <priority>0.70</priority>
-  </url>    
+  </url> 
+
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/artigo-modelagem-dados-forense.html</loc>
+    <lastmod>2026-02-09</lastmod>
+    <priority>0.70</priority>
+  </url>      
   
 </urlset>

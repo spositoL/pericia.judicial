@@ -511,3 +511,317 @@ img {
 }
 
 .tag-saude { background: #1a2a3a; }
+
+
+ /*artigo-pericia-financeira-revisao-contrato-1988.html*/
+.article-container { max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.8; color: #333; }
+.article-header { text-align: center; margin-bottom: 40px; }
+.article-capa { width: 100%; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.article-content h2 { font-family: 'Playfair Display', serif; color: #1a2a3a; margin-top: 40px; border-left: 5px solid #c5a059; padding-left: 15px; }
+.article-content p { margin-bottom: 20px; font-size: 1.1rem; text-align: justify; }
+.article-meta { font-style: italic; color: #666; margin-bottom: 10px; display: block; }
+.highlight-box { background: #f9f9f9; border: 1px solid #e0e0e0; padding: 25px; border-radius: 8px; margin: 30px 0; }
+
+/* Estilização da Tabela Padrão Lincoln Sposito */
+.table-wrapper { overflow-x: auto; margin: 30px 0; }
+table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; }
+th { background: #1a2a3a; color: #fff; padding: 15px; text-align: center; }
+td { border: 1px solid #eee; padding: 12px; text-align: center; }
+tr:nth-child(even) { background: #fcfcfc; }
+.table-caption { display: block; margin-bottom: 10px; font-weight: bold; color: #1a2a3a; }
+
+.author-box { background: #1a2a3a; color: white; padding: 30px; border-radius: 8px; margin-top: 60px; display: flex; align-items: center; gap: 20px; }
+.author-box img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #c5a059; object-fit: cover; }
+
+.list-styled { list-style: none; padding-left: 0; }
+.list-styled li { margin-bottom: 15px; padding-left: 25px; position: relative; }
+.list-styled li::before { content: "→"; color: #c5a059; position: absolute; left: 0; font-weight: bold; }
+
+@media (max-width: 600px) {
+	.author-box { flex-direction: column; text-align: center; }
+}
+
+
+/*materiais.html*/
+/* Estilos específicos para a seção de downloads para complementar o seu style.css */
+.download-section { padding: 60px 0; text-align: center; min-height: 70vh; }
+.material-card { 
+	background: #fff; 
+	padding: 40px; 
+	border-radius: 8px; 
+	box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+	max-width: 700px; 
+	margin: 40px auto; 
+	border-top: 5px solid #c5a059; /* Cor de destaque (Dourado/Bronze) */
+}
+.btn-download {
+	display: inline-block;
+	background: #1a2a3a;
+	color: #fff;
+	padding: 15px 30px;
+	text-decoration: none;
+	border-radius: 4px;
+	font-weight: bold;
+	margin-top: 20px;
+	transition: background 0.3s;
+}
+.btn-download:hover { background: #c5a059; }
+
+/*checklist-admissibilidade.html*/
+:root {
+	--bg-gradient: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
+}
+
+body {
+	background-color: #f4f7f9;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.lp-header {
+	background: var(--bg-gradient);
+	color: white;
+	padding: 40px 0;
+	text-align: center;
+}
+
+.lp-header img.logo-lp {
+	width: 180px;
+	margin-bottom: 20px;
+}
+
+.main-content {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	padding: 50px 0;
+}
+
+.grid-container {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 40px;
+	align-items: center;
+}
+
+.benefit-list {
+	list-style: none;
+	padding: 0;
+}
+
+.benefit-list li {
+	margin-bottom: 20px;
+	font-size: 1.1rem;
+	display: flex;
+	align-items: flex-start;
+	gap: 15px;
+}
+
+.benefit-list li::before {
+	content: "✓";
+	background: var(--accent);
+	color: white;
+	width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	font-size: 0.8rem;
+	font-weight: bold;
+}
+
+.lead-card {
+	background: white;
+	padding: 40px;
+	border-radius: 12px;
+	box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+	border-top: 5px solid var(--accent);
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+.form-group label {
+	display: block;
+	margin-bottom: 8px;
+	font-weight: 600;
+	color: var(--primary);
+}
+
+.form-group input, .form-group select {
+	width: 100%;
+	padding: 12px;
+	border: 1px solid #ddd;
+	border-radius: 6px;
+	font-family: 'Inter', sans-serif;
+}
+
+.btn-submit {
+	width: 100%;
+	background: var(--accent);
+	color: white;
+	padding: 18px;
+	border: none;
+	border-radius: 6px;
+	font-weight: bold;
+	font-size: 1.1rem;
+	cursor: pointer;
+	transition: transform 0.2s, background 0.3s;
+}
+
+.btn-submit:hover {
+	background: #b08d4a;
+	transform: translateY(-2px);
+}
+
+footer {
+	text-align: center;
+	padding: 30px;
+	font-size: 0.9rem;
+	color: #666;
+}
+
+@media (max-width: 768px) {
+	.grid-container { grid-template-columns: 1fr; }
+	.lp-header h1 { font-size: 1.8rem; }
+}
+
+/*artigo-pericia-cdc-abusividade.html*/
+.article-container { max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.8; color: #333; }
+.article-header { text-align: center; margin-bottom: 40px; }
+.article-capa { width: 100%; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.article-content h2 { font-family: 'Playfair Display', serif; color: #1a2a3a; margin-top: 40px; border-left: 5px solid #c5a059; padding-left: 15px; }
+.article-content p { margin-bottom: 20px; font-size: 1.1rem; text-align: justify; }
+.article-meta { font-style: italic; color: #666; margin-bottom: 10px; display: block; }
+.highlight-box { background: #f9f9f9; border: 1px solid #e0e0e0; padding: 25px; border-radius: 8px; margin: 30px 0; }
+
+/* Estilização da Tabela Padrão Lincoln Sposito */
+.table-wrapper { overflow-x: auto; margin: 30px 0; }
+table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; }
+th { background: #1a2a3a; color: #fff; padding: 15px; text-align: center; }
+td { border: 1px solid #eee; padding: 12px; text-align: center; }
+tr:nth-child(even) { background: #fcfcfc; }
+.table-caption { display: block; margin-bottom: 10px; font-weight: bold; color: #1a2a3a; }
+
+.author-box { background: #1a2a3a; color: white; padding: 30px; border-radius: 8px; margin-top: 60px; display: flex; align-items: center; gap: 20px; }
+.author-box img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #c5a059; object-fit: cover; }
+
+.list-styled { list-style: none; padding-left: 0; }
+.list-styled li { margin-bottom: 15px; padding-left: 25px; position: relative; }
+.list-styled li::before { content: "→"; color: #c5a059; position: absolute; left: 0; font-weight: bold; }
+
+@media (max-width: 600px) {
+	.author-box { flex-direction: column; text-align: center; }
+}
+
+/*artigo-plano-saude-445.html*/
+.article-container { max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.8; color: #333; }
+.article-header { text-align: center; margin-bottom: 40px; }
+.article-capa { width: 100%; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.article-content h2 { font-family: 'Playfair Display', serif; color: #1a2a3a; margin-top: 40px; border-left: 5px solid #c5a059; padding-left: 15px; }
+.article-content p { margin-bottom: 20px; font-size: 1.1rem; text-align: justify; }
+.article-meta { font-style: italic; color: #666; margin-bottom: 10px; display: block; }
+.highlight-box { background: #f9f9f9; border: 1px solid #e0e0e0; padding: 25px; border-radius: 8px; margin: 30px 0; }
+
+/* Estilização da Tabela Padrão Lincoln Sposito */
+.table-wrapper { overflow-x: auto; margin: 30px 0; }
+table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; }
+th { background: #1a2a3a; color: #fff; padding: 15px; text-align: center; }
+td { border: 1px solid #eee; padding: 12px; text-align: center; }
+tr:nth-child(even) { background: #fcfcfc; }
+.table-caption { display: block; margin-bottom: 10px; font-weight: bold; color: #1a2a3a; }
+
+.author-box { background: #1a2a3a; color: white; padding: 30px; border-radius: 8px; margin-top: 60px; display: flex; align-items: center; gap: 20px; }
+.author-box img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #c5a059; object-fit: cover; }
+
+.list-styled { list-style: none; padding-left: 0; }
+.list-styled li { margin-bottom: 15px; padding-left: 25px; position: relative; }
+.list-styled li::before { content: "→"; color: #c5a059; position: absolute; left: 0; font-weight: bold; }
+
+@media (max-width: 600px) {
+	.author-box { flex-direction: column; text-align: center; }
+}
+
+/*artigo-vcmh-caixa-preta.html*/
+.article-container { max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.8; color: #333; }
+.article-header { text-align: center; margin-bottom: 40px; }
+.article-capa { width: 100%; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.article-content h2 { font-family: 'Playfair Display', serif; color: #1a2a3a; margin-top: 40px; border-left: 5px solid #c5a059; padding-left: 15px; }
+.article-content p { margin-bottom: 20px; font-size: 1.1rem; text-align: justify; }
+.article-meta { font-style: italic; color: #666; margin-bottom: 10px; display: block; }
+.highlight-box { background: #f9f9f9; border: 1px solid #e0e0e0; padding: 25px; border-radius: 8px; margin: 30px 0; }
+
+/* Estilização da Tabela Padrão Lincoln Sposito */
+.table-wrapper { overflow-x: auto; margin: 30px 0; }
+table { width: 100%; border-collapse: collapse; font-family: 'Inter', sans-serif; }
+th { background: #1a2a3a; color: #fff; padding: 15px; text-align: center; }
+td { border: 1px solid #eee; padding: 12px; text-align: center; }
+tr:nth-child(even) { background: #fcfcfc; }
+.table-caption { display: block; margin-bottom: 10px; font-weight: bold; color: #1a2a3a; }
+
+.author-box { background: #1a2a3a; color: white; padding: 30px; border-radius: 8px; margin-top: 60px; display: flex; align-items: center; gap: 20px; }
+.author-box img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #c5a059; object-fit: cover; }
+
+.list-styled { list-style: none; padding-left: 0; }
+.list-styled li { margin-bottom: 15px; padding-left: 25px; position: relative; }
+.list-styled li::before { content: "→"; color: #c5a059; position: absolute; left: 0; font-weight: bold; }
+
+@media (max-width: 600px) {
+	.author-box { flex-direction: column; text-align: center; }
+}
+
+
+/*artigo-jurisprudencia-planos-saude.html*/
+.article-container { max-width: 900px; margin: 40px auto; padding: 0 20px; line-height: 1.8; color: #333; }
+.article-header { text-align: center; margin-bottom: 50px; }
+.article-capa { width: 100%; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.article-content h2 { font-family: 'Playfair Display', serif; color: #1a2a3a; margin-top: 45px; border-left: 5px solid #c5a059; padding-left: 20px; font-size: 1.8rem; }
+.article-content h3 { font-family: 'Inter', sans-serif; color: #2c5282; margin-top: 30px; font-size: 1.3rem; }
+.article-content p { margin-bottom: 25px; font-size: 1.15rem; text-align: justify; }
+.article-meta { font-style: italic; color: #666; margin-bottom: 15px; display: block; }
+.highlight-box { background: #f0f4f8; border-right: 5px solid #1a2a3a; padding: 30px; border-radius: 4px; margin: 40px 0; font-style: italic; }
+.inner-image { width: 100%; border-radius: 8px; margin: 30px 0; }
+.image-caption { display: block; text-align: center; font-size: 0.9rem; color: #666; margin-top: -20px; margin-bottom: 30px; }
+.author-box { background: #1a2a3a; color: white; padding: 40px; border-radius: 8px; margin-top: 80px; display: flex; align-items: center; gap: 30px; }
+.author-box img { width: 120px; height: 120px; border-radius: 50%; border: 3px solid #c5a059; object-fit: cover; }
+.ref-section { background: #f8f9fa; padding: 30px; border-radius: 8px; margin-top: 50px; font-size: 0.95rem; }
+.ref-section h4 { border-bottom: 2px solid #c5a059; display: inline-block; margin-bottom: 20px; }
+
+@media (max-width: 768px) {
+.author-box { flex-direction: column; text-align: center; }
+}
+
+/*artigo-pericia-financeira.html*/
+.article-container { max-width: 800px; margin: 40px auto; padding: 0 20px; line-height: 1.8; color: #333; }
+.article-header { text-align: center; margin-bottom: 40px; }
+.article-capa { width: 100%; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+.article-content h2 { font-family: 'Playfair Display', serif; color: #1a2a3a; margin-top: 40px; border-left: 5px solid #c5a059; padding-left: 15px; }
+.article-content p { margin-bottom: 20px; font-size: 1.1rem; text-align: justify; }
+.article-meta { font-style: italic; color: #666; margin-bottom: 10px; display: block; }
+.highlight-box { background: #f9f9f9; border: 1px solid #e0e0e0; padding: 25px; border-radius: 8px; margin: 30px 0; }
+.author-box { background: #1a2a3a; color: white; padding: 30px; border-radius: 8px; margin-top: 60px; display: flex; align-items: center; gap: 20px; }
+.author-box img { width: 100px; height: 100px; border-radius: 50%; border: 3px solid #c5a059; object-fit: cover; }
+
+.img_principal_capa {
+	width: 100%; 
+	border-radius: 8px; 
+	margin-bottom: 40px;
+}
+
+
+/* Tags de categoria no Portal Linsp TI */
+.tag-categoria {
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.tag-digital { background-color: #2c3e50; color: #fff; }    /* Azul Marinho Escuro */
+.tag-financeiro { background-color: #c5a059; color: #fff; } /* Dourado (seu padrão) */
+.tag-saude { background-color: #27ae60; color: #fff; }     /* Verde Esperança/Saúde */
