@@ -379,58 +379,6 @@
     <p>&copy; 2026 Dr. Lincoln Sposito - Perícia Judicial. Todos os direitos reservados.</p>
 </footer>
 
-<!--
-<script>
-	let currentIndex = 0;
-
-	function moveSlide(direction) {
-		const track = document.getElementById('carouselTrack');
-		const cards = document.querySelectorAll('.blog-card');
-		const totalCards = cards.length;
-		
-		// Calcula quantos cards mostrar com base na largura da tela
-		const cardsVisible = window.innerWidth <= 768 ? 1 : 3;
-		const maxIndex = totalCards - cardsVisible;
-
-		currentIndex += direction;
-
-		// Lógica para não passar do limite
-		if (currentIndex < 0) currentIndex = 0;
-		if (currentIndex > maxIndex) currentIndex = maxIndex;
-
-		const percentage = currentIndex * (100 / cardsVisible);
-		track.style.transform = `translateX(-${percentage}%)`;
-	}
-</script>
-
-<script>
-	let currentIndex = 0;
-
-	function moveSlide(direction) {
-		const track = document.getElementById('carouselTrack');
-		const cards = document.querySelectorAll('.blog-card');
-		const totalCards = cards.length;
-		
-		// Detecta quantos cards estão visíveis agora
-		const cardsVisible = window.innerWidth <= 768 ? 1 : 3;
-		const maxIndex = totalCards - cardsVisible;
-
-		currentIndex += direction;
-
-		// Impede de ir antes do primeiro ou depois do último
-		if (currentIndex < 0) {
-			currentIndex = 0;
-		} else if (currentIndex > maxIndex) {
-			currentIndex = maxIndex;
-		}
-
-		// Calcula o deslocamento
-		// Usamos a largura do card + o gap (20px)
-		const cardWidth = cards[0].offsetWidth + 20; 
-		track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
-	}
-</script>
--->
 <script>
 	let currentIndex = 0;
 
@@ -478,28 +426,6 @@
     // Você pode adicionar botões de Próximo/Anterior e manipular o track.style.transform
 </script>
 
-<!--
-<script>
-	document.getElementById('form-hibrido').addEventListener('submit', function(e) {
-    // Pegamos os valores dos campos
-    const nome = document.getElementById('nome').value;
-    const assunto = document.getElementById('assunto').value;
-    const mensagem = document.getElementById('mensagem').value;
-    
-    // Seu número de WhatsApp (substitua os zeros)
-    const telefone = "5511914612603"; 
-    
-    // Formatamos a mensagem para o WhatsApp
-    const textoZap = `Olá Dr. Lincoln, meu nome é ${nome}. Gostaria de tratar sobre ${assunto}. Detalhes: ${mensagem}`;
-    const urlZap = `https://wa.me/${telefone}?text=${encodeURIComponent(textoZap)}`;
-
-    // Pequeno delay para garantir que o FormSubmit capture o envio antes de redirecionar
-    setTimeout(function() {
-        window.open(urlZap, '_blank');
-    }, 500);
-});
-</script>
--->
 <script>
 	document.getElementById('form-hibrido').addEventListener('submit', function(e) {
 		// 1. Captura os dados
@@ -520,6 +446,9 @@
 	});
 </script>
 
+<script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="uFEke3ZP9R3S3o5CFSMyh";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script>
 
 </body>
 </html>

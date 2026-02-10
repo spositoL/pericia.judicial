@@ -279,62 +279,9 @@
 	}
 </script>
 
-<!-- <script>
-let categoriaAtual = 'todos';
-
-function setCategoria(cat) {
-    categoriaAtual = cat;
-    
-    // Atualiza botões
-    document.querySelectorAll('.btn-filtro').forEach(btn => {
-        btn.classList.remove('active');
-        if(btn.getAttribute('data-categoria') === cat) btn.classList.add('active');
-    });
-    
-    filtrarGeral();
-}
-
-function filtrarGeral() {
-    const termoBusca = document.getElementById('inputBusca').value.toLowerCase();
-    const cards = document.querySelectorAll('.caso-box');
-
-    cards.forEach(card => {
-        const textoCard = card.innerText.toLowerCase();
-        const matchesBusca = textoCard.includes(termoBusca);
-        const matchesCategoria = (categoriaAtual === 'todos' || card.classList.contains('filtro-' + categoriaAtual));
-
-        if (matchesBusca && matchesCategoria) {
-            card.classList.remove('hidden');
-        } else {
-            card.classList.add('hidden');
-        }
-    });
-}
-</script> -->
-
-<!-- <script>
-function filtrarCasos(categoria) {
-    // Atualiza a aparência dos botões
-    const botoes = document.querySelectorAll('.btn-filtro');
-    botoes.forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-
-    // Filtra os cards
-    const cards = document.querySelectorAll('.caso-box');
-    
-    cards.forEach(card => {
-        if (categoria === 'todos') {
-            card.classList.remove('hidden');
-        } else {
-            if (card.classList.contains('filtro-' + categoria)) {
-                card.classList.remove('hidden');
-            } else {
-                card.classList.add('hidden');
-            }
-        }
-    });
-}
-</script> -->
+<script>
+(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="uFEke3ZP9R3S3o5CFSMyh";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+</script>
 
 </body>
 </html>
