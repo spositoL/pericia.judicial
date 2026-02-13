@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Análise técnica pericial sobre contratos de 1988 e a reconstrução de saldos devedores em períodos de hiperinflação. Dr. Lincoln Sposito analisa o rigor matemático necessário.">
     <title>O Enigma Financeiro de 1988: Perícia e Reconstrução de Contratos | Dr. Lincoln Sposito</title>
-    <link rel="canonical" href="https://spositol.github.io/pericia.judicial/artigo-pericia-financeira-revisao-contrato-1988.html" />
-    
-    <meta property="og:type" content="article">
-	<meta property="og:url" content="https://spositol.github.io/pericia.judicial/artigo-pericia-financeira-revisao-contrato-1988.html">
-    <meta property="og:title" content="O Enigma Financeiro de 1988: A Perícia na Reconstrução de Contratos Históricos">
-    <meta property="og:description" content="Como restabelecer o equilíbrio contratual de 1988 através do rigor matemático e da reconstrução histórica.">
-    <meta property="og:image" content="img/capa-artigo-revisao-contrato-1988-SFH.webp">
+    <link rel="canonical" href="https://spositol.github.io/pericia.judicial/artigo-modelagem-dados-forense.html" />
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://spositol.github.io/pericia.judicial/artigo-modelagem-dados-forense.html">
+	<meta property="og:title" content="Modelagem de Dados Forense: Da Arquitetura Relacional à Prova Material">
+	<meta property="og:description" content="Como a estruturação de dados e o rigor da modelagem transformam bancos de dados complexos em evidências periciais incontestáveis.">
+	<meta property="og:image" content="img/capa-artigo-modelagem-dados-forense.webp">
 
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,16 +19,19 @@
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
 	<script type="application/ld+json">
+	{
+	  "@context": "https://schema.org",
+	  "@graph": [
 		{
-		  "@context": "https://schema.org",
 		  "@type": "Article",
+		  "@id": "https://spositol.github.io/pericia.judicial/artigo-modelagem-dados-forense.html#article",
 		  "headline": "Modelagem de Dados Forense: Da Arquitetura Relacional à Prova Material Judicial",
-		  "description": "Análise técnica sobre a reconstrução de saldos devedores e o impacto da hiperinflação em contratos bancários de 1988.",
-		  "image": "img/capa-artigo-revisao-contrato-1988-SFH.webp",
+		  "description": "Exploração técnica sobre o papel da engenharia de dados e sistemas na construção de provas periciais baseadas em registros digitais.",
+		  "image": "https://spositol.github.io/pericia.judicial/img/capa-artigo-modelagem-dados-forense.webp",
 		  "author": {
 			"@type": "Person",
 			"name": "Dr. Lincoln Sposito",
-			"jobTitle": "Perito Judicial e Assistente Técnico",
+			"jobTitle": "Analista de Sistemas",
 			"url": "https://spositol.github.io/pericia.judicial/"
 		  },
 		  "publisher": {
@@ -37,39 +39,45 @@
 			"name": "Linsp TI - Perícia e Estratégia",
 			"logo": {
 			  "@type": "ImageObject",
-			  "url": "https://linspti.com.br/logo.png"
+			  "url": "https://spositol.github.io/pericia.judicial/img/grafico.svg"
 			}
 		  },
 		  "mainEntityOfPage": {
 			"@type": "WebPage",
-			"@id": "https://spositol.github.io/pericia.judicial/artigo-pericia-financeira-revisao-contrato-1988.html"
+			"@id": "https://spositol.github.io/pericia.judicial/artigo-modelagem-dados-forense.html"
 		  }
-		}
-	</script>
-
-	<script type="application/ld+json">
+		},
 		{
-		  "@context": "https://schema.org",
 		  "@type": "FAQPage",
 		  "mainEntity": [
 			{
 			  "@type": "Question",
-			  "name": "Por que contratos de 1988 exigem reconstrução pericial?",
+			  "name": "O que é modelagem de dados forense?",
 			  "acceptedAnswer": {
 				"@type": "Answer",
-				"text": "Devido à sucessão de planos econômicos e períodos de hiperinflação, onde os expurgos e critérios de amortização da época muitas vezes desequilibraram o saldo devedor original."
+				"text": "É a aplicação de técnicas de engenharia de software e análise de bancos de dados para reconstruir eventos digitais e extrair evidências materiais incontestáveis em processos judiciais."
 			  }
 			},
 			{
 			  "@type": "Question",
-			  "name": "O que é o Método de Equivalência em Juros Simples (MEJS)?",
+			  "name": "Como a arquitetura relacional auxilia na perícia?",
 			  "acceptedAnswer": {
 				"@type": "Answer",
-				"text": "É uma metodologia pericial utilizada para afastar a capitalização composta de juros (anatocismo) em contratos bancários, aplicando o rigor da matemática financeira para garantir o equilíbrio contratual."
+				"text": "A arquitetura relacional garante a integridade referencial dos dados. Na perícia, isso permite rastrear a origem de cada informação e garantir que a prova não foi manipulada."
+			  }
+			},
+			{
+			  "@type": "Question",
+			  "name": "Qual o papel do perito de TI na modelagem forense?",
+			  "acceptedAnswer": {
+				"@type": "Answer",
+				"text": "O perito atua na decodificação de estruturas de dados complexas, transformando registros brutos em relatórios inteligíveis para o juízo, mantendo a cadeia de custódia digital."
 			  }
 			}
 		  ]
 		}
+	  ]
+	}
 	</script>
 	
 </head>
@@ -78,13 +86,14 @@
 	<header style="background-color: #1a2a3a; padding: 15px 0; border-bottom: 2px solid #c5a059;">
 		<div class="container" style="display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
 			<a href="index.html" style="text-decoration: none; display: block; width: 220px;">
-				<!--<img src="grafico.svg">--><img src="grafico.svg" width="220" height="60" alt="Logo Dr. Lincoln Sposito">				
+				<img src="grafico.svg" width="220" height="60" alt="Logo Dr. Lincoln Sposito">				
 			</a>
 			<nav>
 				<ul style="list-style: none; display: flex; gap: 20px; margin: 0; padding: 0;">
 					<li><a href="index.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Início</a></li>
 					<li><a href="sobre.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Sobre</a></li>
 					<li><a href="index.html#servicos" class="btn-nav">Serviços</a></li>
+					<li><a href="pericia-dados.html" class="btn-nav">Perícia de Dados</a></li>
 					<li><a href="index.html#blog"     class="btn-nav">Artigos</a></li>
 					<li><a href="casos-emblematicos.html"     class="btn-nav">Casos emblemáticos</a></li>
 					<li><a href="materiais.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Materiais</a></li>
@@ -102,6 +111,7 @@
 			<a href="index.html#blog" style="text-decoration: none; color: var(--accent); font-weight: bold;">&larr; Ver outros artigos sobre Perícia Judicial e Planos de Saúde</a>
 			
             <h1>Modelagem de Dados Forense: Da Arquitetura Relacional à Prova Material Judicial</h1>
+			
 			<p class="subtitle">A compreensão da modelagem não se limita a diagramas; é uma auditoria na lógica de negócio que governa a verdade.</p>
             			
 		</header>
@@ -295,9 +305,6 @@
         <p>&copy; 2026 Dr. Lincoln Sposito - Perícia Judicial Especializada</p>
     </footer>
 
-<!-- <script>
-(function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="uFEke3ZP9R3S3o5CFSMyh";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
-</script> -->
 <script>
 	(function(){
 		if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>

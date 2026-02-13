@@ -64,6 +64,12 @@
     <loc>https://spositol.github.io/pericia.judicial/artigo-modelagem-dados-forense.html</loc>
     <lastmod>2026-02-09</lastmod>
     <priority>0.70</priority>
-  </url>      
+  </url>  
+
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/pericia-dados.html  </loc>
+    <lastmod>2026-02-12</lastmod>
+    <priority>0.70</priority>
+  </url>  
   
 </urlset>
