@@ -540,6 +540,23 @@ img {
     transform: translateY(-5px);
 }
 
+/* Tags de categoria dentro dos cards 
+.tag-categoria {
+    display: inline-block;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.tag-standar { background: var(--primary); }
+.tag-saude { background: #4D050E; }
+.tag-bancario { background: #27ae60; }
+.tag-revisional { background: #8e44ad; }
+.tag-tidados  { background: #191970;} */
 /* Tags de categoria dentro dos cards */
 .tag-categoria {
     display: inline-block;
@@ -552,9 +569,20 @@ img {
     margin-bottom: 15px;
 }
 
-.tag-saude { background: var(--primary); }
-.tag-bancario { background: #27ae60; }
+/* 1. Saúde: Use o Verde Esmeralda (Simboliza vitalidade) */
+.tag-saude { background: #27ae60; } 
+
+/* 2. Bancário: Use o Azul Marinho ou Vinho (Transmite seriedade/finanças) */
+.tag-bancario { background: #191970; } 
+
+/* 3. Revisional: Use o Roxo (Destaque para revisão jurídica) */
 .tag-revisional { background: #8e44ad; }
+
+/* 4. TI/Dados: Use o Azul Deep Navy ou Petróleo */
+.tag-tidados { background: #16a085; }
+
+/* 5. Padrão/Geral: O Vinho Escuro que você gostou fica ótimo aqui */
+.tag-standard { background: #4D050E; }
 
 /* Classe utilitária para o filtro JavaScript */
 .hidden {
