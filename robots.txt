@@ -1,8 +1,7 @@
 User-agent: *
-Allow: /
+Allow: /checklist-admissibilidade.html
 Disallow: /404.html
 Disallow: /obrigado.html
 Disallow: /obrigadomateriais.html
-Disallow: /checklist-admissibilidade.html
 
 Sitemap: https://spositol.github.io/pericia.judicial/sitemap.xml
