@@ -91,12 +91,13 @@
 <body>
 
 	<header style="background-color: #1a2a3a; padding: 15px 0; border-bottom: 2px solid #c5a059;">
-		<div class="container" style="display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+		<div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
 			<a href="index.html" style="text-decoration: none; display: block; width: 220px;">
 				<img src="grafico.svg" width="220" height="60" alt="Logo Dr. Lincoln Sposito">				
 			</a>
 			<nav>
-				<ul style="list-style: none; display: flex; gap: 20px; margin: 0; padding: 0;">
+				<!-- <ul style="list-style: none; display: flex; gap: 20px; margin: 0; padding: 0;"> -->
+				<ul style="list-style: none; display: flex; gap: 10px; margin: 0; padding: 0; flex-wrap: wrap; justify-content: center;">
 					<li><a href="index.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Início</a></li>
 					<li><a href="sobre.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Sobre</a></li>
 					<li><a href="index.html#servicos" class="btn-nav">Serviços</a></li>
@@ -147,49 +148,50 @@
 			<h2>Resultados Periciais: O Relato do Excesso Invisível</h2>
 			<p>A investigação pericial sobre contratos de instituições financeiras de médio porte, muitas vezes operando com sistemas de TI menos flexíveis ou configurados para maximizar o spread diário, revela resultados numéricos contundentes. No caso estudado, a instituição financeira utilizou um intervalo de carência que não guardava relação com a taxa mensal informada no contrato, gerando um resíduo financeiro que se propagou por todas as parcelas subsequentes.</p>
 			<p>A tabela abaixo demonstra a evolução do saldo devedor e a diferença entre o cenário pactuado (transparente) e o cenário executado (com carência opaca):</p>
-
-			<table style="width:100%; border-collapse: collapse; margin: 20px 0; font-family: 'Inter', sans-serif;">
-				<thead>
-					<tr style="background-color: #1a2a3a; color: white;">
-						<th style="padding: 10px; border: 1px solid #ddd;">Evento Cronológico</th>
-						<th style="padding: 10px; border: 1px solid #ddd;">Cenário Pactuado</th>
-						<th style="padding: 10px; border: 1px solid #ddd;">Cenário Executado</th>
-						<th style="padding: 10px; border: 1px solid #ddd;">Divergência</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td style="padding: 10px; border: 1px solid #ddd;">Assinatura</td>
-						<td style="padding: 10px; border: 1px solid #ddd;">R$ 32.500,00</td>
-						<td style="padding: 10px; border: 1px solid #ddd;">R$ 32.500,00</td>
-						<td style="padding: 10px; border: 1px solid #ddd;">R$ 0,00</td>
-					</tr>
-					<tr style="background-color: #f2f2f2;">
-						<td style="padding: 10px; border: 1px solid #ddd;">Juros Carência</td>
-						<td style="padding: 10px; border: 1px solid #ddd;">R$ 0,00</td>
-						<td style="padding: 10px; border: 1px solid #ddd;">R$ 310,45</td>
-						<td style="padding: 10px; border: 1px solid #ddd;">+ R$ 310,45</td>
-					</tr>
-					<tr>
-						<td style="padding: 10px; border: 1px solid #ddd;">Saldo Deved. 1ªParc</td>
-						<td style="padding: 10px; border: 1px solid #ddd;">R$ 32.500,00</td>
-						<td style="padding: 10px; border: 1px solid #ddd;">R$ 32.810,45</td>
-						<td style="padding: 10px; border: 1px solid #ddd;">+ R$ 310,45</td>
-					</tr>
-					<tr style="background-color: #f2f2f2;">
-						<td style="padding: 10px; border: 1px solid #ddd;">Parcela (Price)</td>
-						<td style="padding: 10px; border: 1px solid #ddd;">R$ 1.129,88</td>
-						<td style="padding: 10px; border: 1px solid #ddd;">R$ 1.250,64</td>
-						<td style="padding: 10px; border: 1px solid #ddd;">+ R$ 120,76</td>
-					</tr>
-					<tr>
-						<td style="padding: 10px; border: 1px solid #ddd;">Custo Final</td>
-						<td style="padding: 10px; border: 1px solid #ddd;">R$ 54.234,24</td>
-						<td style="padding: 10px; border: 1px solid #ddd;">R$ 60.030,72</td>
-						<td style="padding: 10px; border: 1px solid #ddd;">R$ 5.796,48</td>
-					</tr>
-				</tbody>
-			</table>
+			<div style="width: 100%; overflow-x: auto; margin: 20px 0; border: 1px solid #eee; border-radius: 8px;">
+				<table style="width:100%; min-width: 600px; border-collapse: collapse;">					
+					<thead>
+						<tr style="background-color: #1a2a3a; color: white;">
+							<th style="padding: 10px; border: 1px solid #ddd;">Evento Cronológico</th>
+							<th style="padding: 10px; border: 1px solid #ddd;">Cenário Pactuado</th>
+							<th style="padding: 10px; border: 1px solid #ddd;">Cenário Executado</th>
+							<th style="padding: 10px; border: 1px solid #ddd;">Divergência</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="padding: 10px; border: 1px solid #ddd;">Assinatura</td>
+							<td style="padding: 10px; border: 1px solid #ddd;">R$ 32.500,00</td>
+							<td style="padding: 10px; border: 1px solid #ddd;">R$ 32.500,00</td>
+							<td style="padding: 10px; border: 1px solid #ddd;">R$ 0,00</td>
+						</tr>
+						<tr style="background-color: #f2f2f2;">
+							<td style="padding: 10px; border: 1px solid #ddd;">Juros Carência</td>
+							<td style="padding: 10px; border: 1px solid #ddd;">R$ 0,00</td>
+							<td style="padding: 10px; border: 1px solid #ddd;">R$ 310,45</td>
+							<td style="padding: 10px; border: 1px solid #ddd;">+ R$ 310,45</td>
+						</tr>
+						<tr>
+							<td style="padding: 10px; border: 1px solid #ddd;">Saldo Deved. 1ªParc</td>
+							<td style="padding: 10px; border: 1px solid #ddd;">R$ 32.500,00</td>
+							<td style="padding: 10px; border: 1px solid #ddd;">R$ 32.810,45</td>
+							<td style="padding: 10px; border: 1px solid #ddd;">+ R$ 310,45</td>
+						</tr>
+						<tr style="background-color: #f2f2f2;">
+							<td style="padding: 10px; border: 1px solid #ddd;">Parcela (Price)</td>
+							<td style="padding: 10px; border: 1px solid #ddd;">R$ 1.129,88</td>
+							<td style="padding: 10px; border: 1px solid #ddd;">R$ 1.250,64</td>
+							<td style="padding: 10px; border: 1px solid #ddd;">+ R$ 120,76</td>
+						</tr>
+						<tr>
+							<td style="padding: 10px; border: 1px solid #ddd;">Custo Final</td>
+							<td style="padding: 10px; border: 1px solid #ddd;">R$ 54.234,24</td>
+							<td style="padding: 10px; border: 1px solid #ddd;">R$ 60.030,72</td>
+							<td style="padding: 10px; border: 1px solid #ddd;">R$ 5.796,48</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 			<p>A análise do gráfico de divergência permite constatar que o erro de carência atua como um "pedágio inicial". O valor da parcela salta de R$ 1.129,88 para R$ 1.250,64 não apenas por um erro de cálculo direto na prestação, mas porque a base de cálculo foi corrompida no período de carência. A instituição financeira aproveita a vulnerabilidade técnica do consumidor para inserir datas de vencimento que favorecem o acúmulo de juros diários, muitas vezes ignorando feriados ou utilizando a convenção de dias corridos em detrimento do mês comercial de 30 dias quando isso lhe é mais lucrativo.
 			</p>
 			<hr style="border: 1px solid #000;">
