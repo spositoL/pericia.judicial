@@ -286,6 +286,16 @@
 				<button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
 				<div class="blog-grid">
 					<div class="carousel-track" id="carouselTrack">
+
+						<article class="blog-card">
+							<img 	src="img/capa-artigo-armadilha-carencia.webp" 
+									alt="Ilustração de juros bancários e calendário de carência">
+							<div class="card-body">
+								<h3 class="section-title">A Armadilha da Carência: Distorção do CET</h3>
+								<p>Como o intervalo entre a assinatura e o vencimento pode esconder juros capitalizados e elevar o saldo devedor de forma opaca.</p>
+								<a href="artigo-armadilha-carencia-bancaria.html" class="read-more">Ler Artigo</a>
+							</div>
+						</article>					
 						<article class="blog-card">
 							<img src="img/capa-artigo-modelagem-dados-forense.webp" 
 								 alt="Modelagem de Dados Forense e Prova Material Digital">
@@ -432,7 +442,7 @@
 	}
 </script>
 
-<script>
+<!-- <script>
     function searchBlog() {
         let input = document.getElementById('blogSearch').value.toLowerCase();
         let cards = document.querySelectorAll('.blog-card');
@@ -450,6 +460,56 @@
     // Lógica para carrossel (Opcional: Avançar cards)
     const track = document.querySelector('.carousel-track');
     // Você pode adicionar botões de Próximo/Anterior e manipular o track.style.transform
+</script> -->
+<script>
+function searchBlog() {
+    // 1. Captura a entrada e os elementos principais
+    let input = document.getElementById('blogSearch').value.toLowerCase().trim();
+    let cards = document.querySelectorAll('.blog-card');
+    let track = document.getElementById('carouselTrack');
+    let btnNext = document.querySelector('.carousel-btn.next');
+    let btnPrev = document.querySelector('.carousel-btn.prev');
+
+    // 2. Filtra os cards
+    cards.forEach(card => {
+        // Uso de opcionais (?.) para evitar erro caso o elemento não exista
+        let title = card.querySelector('h3')?.innerText.toLowerCase() || "";
+        let paragraph = card.querySelector('p')?.innerText.toLowerCase() || "";
+        
+        if (title.includes(input) || paragraph.includes(input)) {
+            card.style.display = ""; // Restaura o layout (flex/block) definido no CSS
+            card.style.opacity = "1";
+        } else {
+            card.style.display = "none";
+        }
+    });
+
+    // 3. Gerencia o comportamento do Carrossel durante a busca
+    if (input !== "") {
+        // Reseta a posição para o início para mostrar os resultados encontrados
+        if (track) track.style.transform = 'translateX(0)';
+        
+        // Esconde os botões e DESATIVA o clique (pointer-events)
+        if (btnNext) {
+            btnNext.style.opacity = "0";
+            btnNext.style.pointerEvents = "none";
+        }
+        if (btnPrev) {
+            btnPrev.style.opacity = "0";
+            btnPrev.style.pointerEvents = "none";
+        }
+    } else {
+        // Restaura a visibilidade e a funcionalidade dos botões
+        if (btnNext) {
+            btnNext.style.opacity = "1";
+            btnNext.style.pointerEvents = "auto";
+        }
+        if (btnPrev) {
+            btnPrev.style.opacity = "1";
+            btnPrev.style.pointerEvents = "auto";
+        }
+    }
+}
 </script>
 
 <script>
