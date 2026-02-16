@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Análise pericial sobre o erro no cálculo do IOF e do valor da parcela em contratos bancários. Entenda o impacto do Gross Up indevido.">
+    <title>O Erro no Cálculo do IOF e do Valor da Parcela | Dr. Lincoln Sposito</title>
+    
+	<link rel="canonical" href="https://spositol.github.io/pericia.judicial/artigo-erro-calculo-iof-parcela.html" />    
+    <meta property="og:type" content="article">
+	<meta property="og:url" content="https://spositol.github.io/pericia.judicial/artigo-erro-calculo-iof-parcela.html">
+	<meta property="og:title" content="O Erro no Cálculo do IOF e do Valor da Parcela: Quando o Sistema Bancário Falha">
+	<meta property="og:description" content="Como a manipulação indevida do método Gross Up e falhas algorítmicas distorcem as prestações mensais e geram enriquecimento sem causa.">
+	<meta property="og:image" content="img/capa-artigo-erro-iof.webp">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>	
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+	<script type="application/ld+json">
+	{
+	  "@context": "https://schema.org",
+	  "@graph": [
+		{
+		  "@type": "Article",
+		  "@id": "https://spositol.github.io/pericia.judicial/artigo-erro-calculo-iof-parcela.html#article",
+		  "headline": "O Erro no Cálculo do IOF e do Valor da Parcela: Quando o Sistema Bancário Falha",
+		  "description": "Artigo técnico sobre a anatomia do erro sistêmico no cálculo do IOF via Gross Up e a discrepância nas parcelas de CCBs.",
+		  "image": "https://spositol.github.io/pericia.judicial/img/capa-artigo-erro-iof.webp",
+		  "datePublished": "2026-02-15T08:00:00-03:00",
+		  "dateModified": "2026-02-15T08:00:00-03:00",
+		  "author": {
+			"@type": "Person",
+			"name": "Dr. Lincoln Sposito",
+			"jobTitle": "Perito Judicial e Doutor em Administração",
+			"url": "https://spositol.github.io/pericia.judicial/",
+			"sameAs": [
+			  "https://www.linkedin.com/in/lincolnsposito/",
+			  "http://lattes.cnpq.br/4917125955922920"
+			]
+		  },
+		  "publisher": {
+			"@type": "Organization",
+			"name": "Linsp TI - Perícia e Estratégia",
+			"logo": {
+			  "@type": "ImageObject",
+			  "url": "https://spositol.github.io/pericia.judicial/img/grafico.svg"
+			}
+		  },
+		  "keywords": "Perícia Bancária, IOF, Gross Up, Erro de Cálculo, CCB, Sistema Bancário",
+		  "mainEntityOfPage": {
+			"@type": "WebPage",
+			"@id": "https://spositol.github.io/pericia.judicial/artigo-erro-calculo-iof-parcela.html"
+		  }
+		},
+		{
+		  "@type": "FAQPage",
+		  "mainEntity": [
+			{
+			  "@type": "Question",
+			  "name": "O que causa a diferença entre a parcela do banco e a calculada?",
+			  "acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Geralmente decorre de erros na parametrização do Gross Up ou inclusão de taxas e impostos sobre bases de cálculo infladas, não previstas na fórmula matemática do contrato."
+			  }
+			},
+			{
+			  "@type": "Question",
+			  "name": "Posso pedir a devolução dos valores pagos a mais?",
+			  "acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Sim. Se comprovada a divergência aritmética através de perícia financeira, o consumidor tem direito à revisão das parcelas e à repetição do indébito (devolução do excesso)."
+			  }
+			}
+		  ]
+		}
+	  ]
+	}
+	</script>
+</head>
+<body>
+
+	<header style="background-color: #1a2a3a; padding: 15px 0; border-bottom: 2px solid #c5a059;">
+		<div class="container" style="display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+			<a href="index.html" style="text-decoration: none; display: block; width: 220px;">
+				<img src="grafico.svg" width="220" height="60" alt="Logo Dr. Lincoln Sposito">				
+			</a>
+			<nav>
+				<ul style="list-style: none; display: flex; gap: 20px; margin: 0; padding: 0;">
+					<li><a href="index.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Início</a></li>
+					<li><a href="sobre.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Sobre</a></li>
+					<li><a href="index.html#servicos" class="btn-nav">Serviços</a></li>
+					<li><a href="pericia-dados.html" class="btn-nav">Perícia de Dados</a></li>
+					<li><a href="index.html#blog"     class="btn-nav">Artigos</a></li>
+					<li><a href="casos-emblematicos.html"     class="btn-nav">Casos emblemáticos</a></li>
+					<li><a href="materiais.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Materiais</a></li>
+					<li><a href="index.html#contato"  class="btn-nav">Contato</a></li>				
+				</ul>
+			</nav>		
+		</div>
+	</header>	
+			
+	<article class="article-container">
+		<header class="article-header" style="background-color: #ffffff; padding: 40px 20px; border-bottom: 1px solid #eeeeee; text-align: center;">
+			<span class="tag-categoria tag-bancario">Perícia Bancária</span>
+			<span class="article-meta">Publicado em 15 de Fevereiro de 2026 • Auditoria Financeira</span>
+			
+			<a href="index.html#blog" style="text-decoration: none; color: var(--accent); font-weight: bold;">&larr; Ver outros artigos sobre Perícia Judicial</a>
+			
+            <h1>O Erro no Cálculo do IOF e do Valor da Parcela: Quando o Sistema Bancário Falha</h1>
+			
+			<p class="subtitle">Como a manipulação indevida do método Gross Up transforma operações comuns em cenários de enriquecimento sem causa.</p>
+		</header>
+		
+		<img src="img/capa-artigo-erro-iof.webp" alt="Gráficos financeiros e análise de cálculos periciais." class="img_principal_capa">		
+
+		<div class="article-content">
+			<h2>Introdução</h2>
+			<p>A sistemática do crédito bancário no Brasil repousa sobre a <strong>presunção de exatidão dos algoritmos das instituições financeiras</strong>. No entanto, a prática pericial revela que essa confiança pode ser temerária. Em operações estruturadas por meio de <strong>Cédulas de Crédito Bancário (CCB)</strong>, especialmente aquelas oriundas de instituições de médio porte com forte atuação regional e foco em crédito direto ao consumidor, a automação dos cálculos muitas vezes atropela o rigor matemático e a transparência tributária. O presente artigo analisa as vísceras de um erro sistêmico comum: a manipulação indevida do método <em>Gross Up</em> no <strong>cálculo do IOF</strong> e a consequente distorção no valor das prestações mensais, transformando uma operação financeira comum em um cenário de enriquecimento sem causa por parte do credor.</p>
+			<hr style="border: 1px solid #000;">
+			
+            <h2>A Gênese do Erro: A Opacidade no Método <em>Gross Up</em></h2>
+			<p>Para que o tomador de crédito receba exatamente o <strong>valor líquido de que necessita</strong>, as instituições financeiras utilizam o mecanismo de <em>Gross Up</em>, que consiste em <strong>"porcentualizar"</strong> os encargos tributários e as tarifas para que estes sejam financiados dentro do <strong>valor bruto da operação</strong>. O <strong>Imposto sobre Operações Financeiras (IOF)</strong> é o protagonista desta etapa. Todavia, a complexidade matemática dessa internalização é o terreno onde florescem as <strong>maiores divergências periciais</strong>. O erro não nasce de uma simples alíquota equivocada, mas da <strong>base de cálculo</strong> sobre a qual o imposto incide.</p>
+			<p>Muitas instituições, ao operarem sistemas de crédito em escala, falham em segregar o que é <strong>capital principal</strong>, o que é tarifa e o que é o próprio imposto, gerando o <strong>fenômeno da incidência tributária</strong> sobre o próprio tributo de forma assistemática. Quando o banco infla o valor bruto para comportar o IOF, ele frequentemente utiliza <strong>fórmulas proprietárias</strong> que não respeitam a linearidade exigida pela Receita Federal. O resultado é um valor bruto contratual superior ao necessário para atender ao líquido solicitado, criando um excedente de capital que passa a render juros remuneratórios para a instituição financeira desde o dia zero da operação.</p>
+			<hr style="border: 1px solid #000;">
+
+			<h2>A Discrepância na Parcela e a Ineficiência Algorítmica</h2>
+			<p>A consequência imediata e mais visível da falha na gestão do IOF é a <strong>distorção do valor da prestação mensal</strong>. No caso analisado, observa-se um fenômeno alarmante: o quadro resumo do contrato ostenta uma <strong>taxa de juros e um valor principal</strong> que, quando submetidos ao sistema de amortização francês (Tabela Price), deveriam resultar em uma parcela determinada. No entanto, a <strong>"Parcela Cobrada"</strong> sistemicamente pelo banco desvia-se significativamente da <strong>"Parcela Calculada"</strong> matematicamente.</p>
+			<p>Essa divergência ocorre porque o <strong>motor de cálculo da instituição financeira</strong> — muitas vezes um software legado ou uma plataforma de terceiros utilizada por bancos de médio porte — insere <strong>variáveis não descritas no custo efetivo total</strong>. Há uma desconexão entre o que o <strong>jurídico do banco estabelece como norma contratual</strong> e o que o <strong>departamento de tecnologia implementa no fluxo de caixa real</strong>. Para o advogado ou magistrado, é essencial compreender que o banco não está apenas aplicando juros altos; ele está, muitas vezes, <strong>cobrando um valor de parcela que não possui respaldo na fórmula matemática</strong> que rege o contrato de adesão.</p>
+			<hr style="border: 1px solid #000;">
+
+			<h2>Resultados Obtidos: A Anatomia da Diferença em Números</h2>
+			<p>A perícia financeira atua como um exame de imagem sobre o fluxo de caixa. Ao reconstruir o contrato a partir dos valores líquidos liberados e das taxas pactuadas, a discrepância torna-se incontestável. No caso que fundamenta esta análise, a instituição financeira, sediada em um polo financeiro em expansão no sudeste brasileiro e conhecida pela agilidade na concessão de crédito, apresentou resultados que divergem drasticamente da realidade aritmética.
+			<p>Abaixo, a tabela de resultados consolida as divergências apuradas, demonstrando como o erro de cálculo se propaga do valor bruto até o desembolso mensal:</p>
+
+			<div style="width: 100%; overflow-x: auto; margin: 20px 0; border: 1px solid #eee; border-radius: 8px;">
+				<table style="width:100%; min-width: 600px; border-collapse: collapse;">					
+					<thead>
+						<tr style="background-color: #1a2a3a; color: white;">
+							<th style="padding: 12px; border: 1px solid #ddd;">Elemento do Cálculo</th>
+							<th style="padding: 12px; border: 1px solid #ddd;">Valor pelo Banco</th>
+							<th style="padding: 12px; border: 1px solid #ddd;">Valor Real (Perícia)</th>
+							<th style="padding: 12px; border: 1px solid #ddd;">Prejuízo ao Cliente</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="padding: 12px; border: 1px solid #ddd;">Valor Bruto do Crédito</td>
+							<td style="padding: 12px; border: 1px solid #ddd;">R$ 34.660,40</td>
+							<td style="padding: 12px; border: 1px solid #ddd;">R$ 32.500,00</td>
+							<td style="padding: 12px; border: 1px solid #ddd; color: #d9534f;">R$ 2.160,40</td>
+						</tr>
+						<tr style="background-color: #f9f9f9;">
+							<td style="padding: 12px; border: 1px solid #ddd;">Imposto (IOF)</td>
+							<td style="padding: 12px; border: 1px solid #ddd;">R$ 1.940,25</td>
+							<td style="padding: 12px; border: 1px solid #ddd;">R$ 1.620,10</td>
+							<td style="padding: 12px; border: 1px solid #ddd; color: #d9534f;">R$ 320,15</td>
+						</tr>
+						<tr>
+							<td style="padding: 12px; border: 1px solid #ddd;">Valor da Parcela Mensal</td>
+							<td style="padding: 12px; border: 1px solid #ddd;">R$ 1.250,64</td>
+							<td style="padding: 12px; border: 1px solid #ddd;">R$ 1.129,88</td>
+							<td style="padding: 12px; border: 1px solid #ddd; color: #d9534f;">R$ 120,76</td>
+						</tr>
+						<tr style="background-color: #f9f9f9;">
+							<td style="padding: 12px; border: 1px solid #ddd;">Total (48 meses)</td>
+							<td style="padding: 12px; border: 1px solid #ddd;">R$ 60.030,72</td>
+							<td style="padding: 12px; border: 1px solid #ddd;">R$ 54.234,24</td>
+							<td style="padding: 12px; border: 1px solid #ddd; color: #d9534f;">R$ 5.796,48</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+            <p>O gráfico que apresenta a evolução do saldo devedor, conforme se segue:</p>
+			<img src="img\artigo-erro-calculo-IOF-evolução-saldo-devedor.webp"
+				alt="gráfico de linha que demonstra a evolução do saldo devedor entre as curvas do cálculo do banco e a do cálculo revisado pela ação per4icial, sendo representados por uma linha vermelha (fluxo original do contrato) e por uma linha azul (fluxo revisado), ambas em queda" 
+				style="width: 100%; display: block; margin: 20px auto; border-radius: 8px; mix-blend-mode: multiply;">
+			
+			<p>revela que a <strong>curva de amortização do banco corre sempre "acima" da curva real</strong>. No vigésimo mês de contrato, a diferença acumulada já ultrapassa o <strong>valor de duas parcelas inteiras</strong>. Isso significa que o tomador de crédito, ao chegar na metade do contrato, já pagou um montante que deveria ter <strong>quitado uma fatia muito maior do capital principal</strong>. A <strong>"Parcela Cobrada"</strong> de R$ 1.250,64, comparada à <strong>"Parcela Calculada"</strong> de R$ 1.129,88, representa um <strong>sobrecusto mensal de mais de 10%</strong>, sem qualquer justificativa contratual transparente.</p>
+			<hr style="border: 1px solid #000;">
+			
+			<h2>Fundamentação Jurídica e a Violação da Boa-fé Objetiva</h2>
+			<p>Do ponto de vista jurídico, a falha no cálculo do IOF e da parcela <strong>fere mortalmente o princípio da transparência</strong> e o dever de informar, previstos no <strong>Artigo 6º, inciso III, do Código de Defesa do Consumidor</strong>. Quando uma instituição financeira apresenta um quadro resumo com dados que não se sustentam em uma conferência aritmética simples, ela incorre em <strong>vício de consentimento e violação da boa-fé objetiva (Art. 422 do Código Civil)</strong>.</p>
+			<p>A utilização de um <em>Gross Up</em> inflado para financiamento de imposto configura, ainda, uma forma velada de anatocismo (capitalização de juros sobre valores indevidos), uma vez que <strong>juros remuneratórios estão incidindo sobre uma base de cálculo de IOF</strong> que sequer deveria existir. O <strong>Superior Tribunal de Justiça</strong>, embora aceite a capitalização de juros em periodicidade inferior à anual quando pactuada, <strong>exige que as taxas sejam claras e que o cálculo reflita o que foi contratado</strong>. A divergência entre a parcela pactuada e a cobrada é, por si só, <strong>fundamento para a repetição do indébito em dobro</strong>, conforme o parágrafo único do <strong>Art. 42 do CDC</strong>, dada a ausência de erro justificável por parte de um ente que detém o <strong>monopólio da técnica financeira</strong>.</p>
+			<hr style="border: 1px solid #000;">
+			
+			<h2>Recomendações Técnicas e Estratégicas</h2>
+			<p>Para os advogados que atuam na defesa dos tomadores de crédito, a recomendação primordial é <strong>não se limitar à discussão genérica sobre "juros abusivos"</strong>. O sucesso da tese revisional reside na <strong>prova técnica da divergência de cálculo</strong>. É indispensável a apresentação de uma contraprova pericial que exponha o valor real da parcela com base no valor líquido liberado.			</p>
+			<p>Para os magistrados e promotores, sugere-se a <strong>exigência de que a instituição financeira apresente a "Memória de Cálculo do IOF" e o "Log de Parametrização do Sistema"</strong>. Muitas vezes, o banco defende-se alegando que o cálculo é automático, mas esquece que o algoritmo é de sua <strong>inteira responsabilidade</strong>. A perícia deve ser utilizada para desmistificar a <strong>infalibilidade bancária</strong>, demonstrando que o erro sistêmico é uma realidade presente em uma parcela considerável das CCBs emitidas por instituições que buscam lucro rápido através da automação agressiva.			</p>
+			<hr style="border: 1px solid #000;">
+			
+			<h2>Conclusão: O Resgate do Equilíbrio Contratual</h2>
+			<p>O erro no cálculo do IOF e do valor da parcela <strong>não é uma falha inofensiva</strong>; é o sintoma de um sistema financeiro que, em busca de escala, <strong>sacrificou a exatidão em prol da velocidade</strong>. A diferença de R$ 120,76 apurada mensalmente neste caso é a prova material de que o <strong>equilíbrio contratual foi rompido</strong> no exato momento em que o sistema do banco processou o contrato.</p>
+			<p>A perícia financeira realizada pelo Dr. Lincoln Sposito demonstra que, sem a conferência <strong>técnica rigorosa</strong>, o consumidor permanece à mercê de fórmulas opacas. Restabelecer a <strong>verdade aritmética</strong> não é apenas uma questão de números, mas de justiça econômica. Somente através da auditoria detalhada de cada cláusula e de cada fórmula de <em>Gross Up</em> é que se pode garantir que o contrato executado seja, de fato, o contrato assinado, protegendo assim a integridade do sistema jurídico e o patrimônio das partes envolvidas.</p>
+			<hr style="border: 1px solid #000;">
+        </div>
+		
+        <section class="faq-section" style="margin-top: 50px; padding: 40px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+			<h2 style="text-align: left; color: #1e293b; margin-bottom: 30px; font-size: 1.8em; border-bottom: 2px solid #c5a059; padding-bottom: 10px; display: inline-block;">Perguntas Frequentes sobre Erros de IOF</h2>
+            
+<!-- 			<div class="faq-item" style="margin-bottom: 30px;">
+				<h3 style="color: #c5a059; font-size: 1.25em; margin-bottom: 10px;">1. O que causa a diferença entre a parcela do banco e a calculada?</h3>
+                <p style="color: #475569; line-height: 1.7;">Geralmente decorre de erros na parametrização do Gross Up ou inclusão de taxas e impostos sobre bases de cálculo infladas, não previstas na fórmula matemática do contrato.</p>
+            </div>
+			
+            <div class="faq-item" style="margin-bottom: 30px;">
+				<h3 style="color: #c5a059; font-size: 1.25em; margin-bottom: 10px;">2. Posso pedir a devolução dos valores pagos a mais?</h3>
+                <p style="color: #475569; line-height: 1.7;">Sim. Se comprovada a divergência aritmética, o consumidor tem direito à revisão das parcelas e à repetição do indébito (devolução do excesso).</p>
+            </div> -->
+			<div class="faq-item" style="margin-bottom: 30px;">
+				<h3 style="color: #c5a059; font-size: 1.25em; margin-bottom: 10px;">1. Como o método "Gross Up" pode gerar um prejuízo financeiro?</h3>
+				<p style="color: #475569; line-height: 1.7;">O erro ocorre quando a instituição utiliza fórmulas proprietárias que não segregam corretamente o capital, as tarifas e o imposto. Isso resulta num valor bruto superior ao necessário, sobre o qual incidem juros remuneratórios desde o início da operação, configurando um enriquecimento sem causa do credor.</p>
+			</div>
+
+			<div class="faq-item" style="margin-bottom: 30px;">
+				<h3 style="color: #c5a059; font-size: 1.25em; margin-bottom: 10px;">2. Por que a parcela cobrada é diferente da parcela calculada matematicamente?</h3>
+				<p style="color: #475569; line-height: 1.7;">Muitas vezes, existe uma desconexão entre as cláusulas contratuais e a implementação no software bancário. O "motor de cálculo" do banco pode inserir variáveis ou taxas ocultas que não constam no Custo Efetivo Total (CET), desviando-se da fórmula da Tabela Price pactuada.</p>
+			</div>
+
+			<div class="faq-item" style="margin-bottom: 30px;">
+				<h3 style="color: #c5a059; font-size: 1.25em; margin-bottom: 10px;">3. Quais são as bases jurídicas para contestar estes erros?</h3>
+				<p style="color: #475569; line-height: 1.7;">A falha viola o princípio da transparência e o dever de informar (Art. 6º, III do CDC). Além disso, a cobrança de valores sem respaldo na fórmula matemática do contrato fere a boa-fé objetiva e pode fundamentar o pedido de repetição do indébito em dobro.</p>
+			</div>
+
+			<div class="faq-item" style="margin-bottom: 30px;">
+				<h3 style="color: #c5a059; font-size: 1.25em; margin-bottom: 10px;">4. Qual é o papel da perícia financeira nestes casos?</h3>
+				<p style="color: #475569; line-height: 1.7;">A perícia atua como um "exame de imagem" do fluxo de caixa, reconstruindo o contrato a partir do valor líquido efetivamente liberado. É a prova técnica indispensável para desmistificar a suposta infalibilidade dos algoritmos bancários e expor a divergência real em números.</p>
+			</div>
+
+			<div class="faq-item" style="margin-bottom: 0;">
+				<h3 style="color: #c5a059; font-size: 1.25em; margin-bottom: 10px;">5. É possível identificar este erro sem um especialista?</h3>
+				<p style="color: #475569; line-height: 1.7;">Embora discrepâncias grosseiras possam ser notadas, o erro sistêmico no IOF é tecnicamente complexo e muitas vezes oculto por fórmulas de "Gross Up". A análise detalhada de cada cláusula e da memória de cálculo é essencial para garantir o equilíbrio contratual.</p>
+			</div>
+        </section>        
+
+        <section class="author-box bg-dark">
+            <img src="img/perito-judicial-administracao-lincoln-sposito.webp" alt="Retrato do Dr. Lincoln Sposito, Doutor em Administração e Perito Judicial especializado em saúde suplementar e finanças.">
+            <div>
+                <h3><a href="https://www.linkedin.com/in/lincolnsposito/" target="_blank" class="author-link">Dr. Lincoln Sposito</a></h3>
+                <p><a href="http://lattes.cnpq.br/4917125955922920" target="_blank" class="author-link">Doutor em Administração</a> e Perito Judicial. Especialista em auditoria de contratos bancários e análise de dados financeiros complexos.</p>								
+            </div>
+        </section>
+		
+		<div class="cta-box" style="background: var(--bg-light); padding: 40px; border-radius: 12px; border-left: 5px solid var(--accent); margin-top: 30px;">
+            <h3 style="color: var(--primary);">Precisa de Auditoria em Contratos Bancários?</h3>
+            <p>A diferença entre um contrato equilibrado e uma dívida impagável muitas vezes está escondida em cláusulas de carência e cálculos de CET mal formulados.</p>
+            
+            <div class="checklist-preview" style="background: #fff; padding: 20px; border-radius: 8px; margin: 20px 0; border: 1px solid #eee;">
+                <h4 style="margin-top: 0;">O que você encontrará na Análise Pericial:</h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;">🔍 <strong>Recálculo do CET:</strong> Verificação da taxa real efetiva paga pelo cliente.</li>
+                    <li style="margin-bottom: 10px;">🔍 <strong>Expurgo de Anatocismo:</strong> Identificação de juros sobre juros não pactuados na origem.</li>
+                    <li style="margin-bottom: 10px;">🔍 <strong>Análise de Carência:</strong> Isolamento do impacto financeiro dos dias extras de hiato.</li>
+                </ul>
+            </div>
+
+            <a href="index.html#contato" class="btn-download" style="background: var(--accent); color: white; padding: 14px 28px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block;">
+                Solicitar Parecer Técnico Financeiro
+            </a>
+        </div>
+		
+        <div class="cta-box-checklist" style="border: 2px solid var(--accent); padding: 30px; border-radius: 12px; margin: 40px 0; background: #fff; position: relative;">
+			<span style="position: absolute; top: -15px; right: 20px; background: var(--accent); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8em; font-weight: bold;">ANÁLISE TÉCNICA</span>
+			<h3 style="color: var(--primary); margin-top: 0;">Checklist: Auditoria de Cálculo de IOF e Parcela</h3>
+			<p style="color: #555;">Descubra se o seu contrato possui erros sistêmicos que elevaram o custo do seu financiamento indevidamente.</p>
+			
+			<a href="checklist-admissibilidade.html?foco=iof" style="display: inline-block; background: var(--accent); color: white; padding: 14px 28px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+				Receber Guia de Auditoria
+			</a>            
+		</div>
+
+		<div class="checklist-preview" style="background: #fff; border: 1px solid #ddd; padding: 25px; border-radius: 8px; margin-top: 20px;">
+			<h4 style="color: var(--primary); border-bottom: 2px solid var(--accent); padding-bottom: 10px;">Destaques da Auditoria:</h4>
+			<ul style="list-style: none; padding-left: 0; color: #444;">
+				<li style="margin-bottom: 12px;">✅ <strong>Verificação de Gross Up:</strong> Identificação de inflação artificial do valor bruto.</li>
+				<li style="margin-bottom: 12px;">✅ <strong>Divergência de Parcela:</strong> Comparativo entre parcela contratual e real.</li>
+				<li style="margin-bottom: 12px;">✅ <strong>Memória de Cálculo:</strong> Como exigir o log de parametrização do banco.</li>
+			</ul>
+		</div>
+    </article>
+
+<footer>
+    <p>&copy; 2026 Dr. Lincoln Sposito | Perícia Judicial e Assistência Técnica. </p>
+	<p>Todos os direitos reservados.</p>
+</footer>
+
+</body>
+</html>
