@@ -122,13 +122,19 @@
     
   <url>
     <loc>https://spositol.github.io/pericia.judicial/artigo-armadilha-carencia-bancaria.html</loc>
-    <lastmod>2026-01-13</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <priority>0.60</priority>
   </url>
   
    <url>
     <loc>https://spositol.github.io/pericia.judicial/artigo-falha-gestao-ccb.html</loc>
-    <lastmod>2026-01-14</lastmod>
+    <lastmod>2026-02-14</lastmod>
+    <priority>0.60</priority>
+  </url>
+  
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/artigo-erro-calculo-iof-parcela.html</loc>
+    <lastmod>2026-02-15</lastmod>
     <priority>0.60</priority>
   </url>
   
