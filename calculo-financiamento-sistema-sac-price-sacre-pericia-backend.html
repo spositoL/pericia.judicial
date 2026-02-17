@@ -227,6 +227,10 @@
 
 			// Substitua sua função processarCalculo por esta:
 			async function processarCalculo() {
+
+				// 1. O senhor decide aqui o modo de teste (Mude para 'N' se quiser voltar ao modo antigo)
+				const modoHibrido = 'Y';
+
 				// 1. Captura e Tratamento de Dados (Mapeando IDs Corretos)
 				const dados = {
 					nome: document.getElementById('nome')?.value || "Não informado",
@@ -237,15 +241,19 @@
 					sistema: document.getElementById('sistema').value,
 					
 					// Conversão de moeda/percentual para números puros
-					pvTotal: parseMoeda(document.getElementById('valorTotal').value),
+					pvBem: parseMoeda(document.getElementById('valorBem').value),
+					pvEntrada: parseMoeda(document.getElementById('valorEntrada').value),
 					pvPrin: parseMoeda(document.getElementById('valorPrincipal').value),
-					n: parseInt(document.getElementById('parcelas').value) || 0,
-					iNom: parsePercentual(document.getElementById('taxaNominal').value) / 100,
+					despesas: parseMoeda(document.getElementById('despesas').value),
+					pvTotal: parseMoeda(document.getElementById('valorTotal').value),
 					pmtInfo: parseMoeda(document.getElementById('valorParcelaInformado').value) || 0,
-					
-					// Metadados adicionais
+					iNom: parsePercentual(document.getElementById('taxaNominal').value) / 100,
+					iEfetiva: parsePercentual(document.getElementById('taxaEfetiva').value) / 100,
+					n: parseInt(document.getElementById('parcelas').value) || 0,
+					carencia: document.getElementById('carencia').value,
 					dataCelebracao: document.getElementById('dataCelebracao').value,
-					carencia: document.getElementById('carencia').value
+					dataPrimeiroVenc: document.getElementById('dataVencimento').value,
+					tipoSimulacao: document.querySelector('input[name="tipoVisao"]:checked')?.value || "banco"					
 				};
 
 				// Validação básica antes de enviar ao Render
@@ -276,21 +284,30 @@
 					const resJson = await response.json();
 					console.log("Dados recebidos:", resJson); // Isso ajudará a diagnosticar no F12
 
-					if (resJson.sucesso && resJson.auditoriaBanco) {
-						// Verifique se a função abaixo existe no seu HTML
-						renderizarLaudoUnificado(
-							resJson.auditoriaBanco, // O objeto completo vindo do motor
-							null, 
-							dados, 
-							'banco', 
-							dados.sistema, 
-							resJson.cetCalculado, 
-							0
-						);
-					} else {
-						areaResultado.innerHTML = `<p style="color:red;">Erro no motor: ${resJson.erro}</p>`;
-					}
+					if (resJson.sucesso && (resJson.laudoHTML || resJson.auditoriaBanco)) {
+    					const area = document.getElementById('resultado-area');
+						area.style.display = 'block';
 
+						// 2. LÓGICA HÍBRIDA DE APRESENTAÇÃO
+						if (modoHibrido === 'Y' && resJson.laudoHTML) {
+							// MODO SERVIDOR: Apenas injeta o HTML pronto que veio do index.js
+							area.innerHTML = resJson.laudoHTML;
+							area.scrollIntoView({ behavior: 'smooth' });
+							console.log("Renderizado via Servidor (Modo Y)");
+						} else {
+							// MODO CLIENTE: Usa a função local renderizarLaudoUnificado
+							renderizarLaudoUnificado(
+								resJson.auditoriaBanco, 
+								resJson.auditoriaPerito, 
+								dados, 
+								dados.tipoSimulacao, 
+								dados.sistema.toUpperCase(), 
+								resJson.cetCalculado, 
+								resJson.taxaRevisada   // A taxa nominal que validamos agora há pouco);
+							);
+							console.log("Renderizado via Cliente (Modo N)");
+						}
+					}
 				} catch (error) {
 					console.error("Erro de conexão:", error);
 					// DICA: Em vez de alert, podemos usar a própria área de resultado para uma experiência melhor
