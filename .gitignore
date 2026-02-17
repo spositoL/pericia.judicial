@@ -1,0 +1,6 @@
+# Google Sheets
+*.gsheet
+
+# OS files
+.DS_Store
+Thumbs.db
