@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Financiamento Judicial | Dr. Lincoln Sposito</title>
+    <meta name="description" content="Simulador online de amortização para perícia judicial. Calcule sistemas SAC, Price e SACRE.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar" style="background-color: #1a2a3a; padding: 15px 0; border-bottom: 2px solid #c5a059;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+            <div class="logo-wrapper">
+                <a href="index.html" style="text-decoration: none; display: block; width: 220px;">
+                    <img src="grafico.svg" width="220" height="60" alt="Logo Dr. Lincoln Sposito">
+                </a>                
+            </div>
+            <a href="index.html" class="btn-primary">Voltar ao Início</a>
+        </div>
+    </nav>  
+
+		
+	<header class="hero-subpage" style="padding: 30px 0; background: var(--bg-light); border-bottom: 1px solid #ddd; text-align: center;">
+		<div class="container">
+			<h1>
+			<!-- style="margin-bottom: 5px; color: #1a2a3a; font-family: 'Playfair Display', serif; font-size: 2.2rem;" -->
+				Validador de Cálculos de Financiamento
+			</h1>       
+		</div>
+		<div class="container">
+			<h3 style="margin-top: 0; color: #666; font-size: 1.5rem; font-weight: 400; font-family: 'Inter', sans-serif;">
+				<!-- <strong><i>Calculadora de Amortização e Financiamento - Ferramenta técnica para análise de contratos e verificação de encargos financeiros.</i>
+				</strong> -->
+				<strong><i>Triagem técnica para identificação imediata de divergências em contratos bancários.</i></strong>
+			</h3>
+		</div>
+	</header>	
+
+	<section class="calc-section" style="padding: 50px 0;">
+		<div class="container">
+			
+			<div class="info-box" style="margin-bottom: 40px; background: #eef2f7; padding: 25px; border-radius: 8px; border-left: 5px solid #c5a059;">
+				<h3 style="margin-top: 0; color: #1a2a3a;">Como funciona?</h3>
+				<!-- <p>Esta ferramenta identifica divergências entre o contratado e o aplicado matematicamente, essencial para perícias de busca e apreensão ou revisão contratual.</p> -->
+				<p>Este validador realiza uma conferência matemática ágil entre os dados pactuados e os valores aplicados no financiamento. É uma ferramenta de diagnóstico preliminar projetada para identificar indícios de divergências e erros de cálculo, servindo como suporte inicial para a análise de viabilidade de revisões contratuais.</p>
+			</div>
+
+			<div class="calc-grid" style="display: grid; grid-template-columns: 0.75fr 1.25fr; gap: 25px; align-items: start;">
+				
+				<div class="calc-inputs" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 4px solid #1a2a3a;">			
+					<h2 style="font-size: 1.4rem; margin-top: 0; margin-bottom: 25px; height: 30px; display: flex; align-items: center; color: #1a2a3a;">Dados de Contato</h2>															
+					<div class="input-group"><label for="nome">Nome Completo</label><input type="text" id="nome"></div>
+					<div class="input-group"><label for="documento">CPF ou CNPJ</label><input type="text" id="documento"></div>
+					<div class="input-group"><label for="email">E-mail</label><input type="email" id="email"></div>
+					<div class="input-group"><label for="whatsapp">WhatsApp</label><input type="text" id="whatsapp"></div>					
+				</div>
+
+				<div class="calc-inputs" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 4px solid #c5a059;">
+					<h2 style="font-size: 1.4rem; margin-top: 0; margin-bottom: 25px; height: 30px; display: flex; align-items: center; color: #1a2a3a;">Parâmetros do Cálculo</h2>
+					
+					<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+						<div class="input-group">
+							<label for="tipoFinanciamento">Tipo de Financiamento</label>
+							<select id="tipoFinanciamento">
+								<option value="Veículo">Financiamento de Veículo</option>
+								<option value="SFH">SFH (Habitacional)</option>
+								<option value="Empréstimo">Empréstimo Pessoal/Consignado</option>
+								<option value="Outro">Outro</option>
+							</select>
+						</div>
+						<div class="input-group">
+							<label>Sistema de Amortização</label>
+							<select id="sistema" class="form-control">
+								<option value="price" selected>Amortização Crescente (Price)</option>
+								<option value="sac">Amortização Constante (SAC)</option>
+								<option value="sacre">Amortização Híbrida (SACRE)</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="grid-triplo">
+						<div class="input-group"><label>Valor do Bem</label><input type="text" id="valorBem" class="mask-money" value="0,00" oninput="calcularFinanciamento()"></div>
+						<div class="input-group"><label>Entrada</label><input type="text" id="valorEntrada" class="mask-money" value="0,00" oninput="calcularFinanciamento()"></div>
+						<div class="input-group"><label>Financiamento</label><input type="text" id="valorPrincipal" class="mask-money" value="0,00" oninput="calcularTotalFinanciado()"></div>
+					</div>
+
+					<div class="grid-triplo">
+						<div class="input-group"><label>Total Despesas</label><input type="text" id="despesas" class="mask-money" value="0,00" oninput="calcularTotalFinanciado()"></div>
+						<div class="input-group"><label>Total (Princ+Desp)</label><input type="text" id="valorTotal" class="mask-money" value="0,00" style="background: #f0f4f8; font-weight: bold;" readonly></div>
+						<div class="input-group"><label>Parcela (Inf.)</label><input type="text" id="valorParcelaInformado" class="mask-money" placeholder="Ex: 933,33"></div>
+					</div>
+
+					<div class="grid-triplo">
+						<div class="input-group"><label>Taxa Nom. (% a.m.)</label><input type="text" id="taxaNominal" class="mask-percent" value="2,0000000000"></div>
+						<div class="input-group"><label>Taxa Efet. (% a.m.)</label><input type="text" id="taxaEfetiva" class="mask-percent" value="2,0000000000"></div>
+						<div class="input-group"><label>Nº Parcelas</label><input type="number" id="parcelas" value="1" min="1"></div>
+					</div>
+
+					<div class="grid-triplo" style="margin-bottom: 20px;">
+						<div class="input-group"><label>Data Contrato</label><input type="date" id="dataCelebracao" onchange="calcularCarencia()"></div>
+						<div class="input-group"><label>1º Vencimento</label><input type="date" id="dataVencimento" onchange="calcularCarencia()"></div>
+						<div class="input-group"><label>Carência (Dias)</label><input type="text" id="carencia" readonly style="background: #f8f9fa;"></div>
+					</div>
+					
+					<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; align-items: stretch;">
+						<div class="input-group" style="background: #fff9e6; padding: 10px; border-radius: 8px; border: 1px solid #c5a059; margin: 0; display: flex; flex-direction: column; justify-content: center;">
+							<label style="color: #1a2a3a; font-weight: bold; font-size: 0.85rem; margin-bottom: 5px; display: block;">Tipo de Simulação:</label>
+							<div style="display: flex; gap: 15px; font-size: 0.85rem; align-items: center;">
+								<label style="font-weight: normal; cursor: pointer; margin: 0; display: flex; align-items: center; gap: 5px;">
+									<input type="radio" name="tipoVisao" value="banco" checked style="width: auto; height: auto; margin: 0;"> Banco
+								</label>
+								<label style="font-weight: normal; cursor: pointer; margin: 0; display: flex; align-items: center; gap: 5px;">
+									<input type="radio" name="tipoVisao" value="revisado" style="width: auto; height: auto; margin: 0;"> Pericial
+								</label>
+							</div>
+						</div>
+						<button onclick="processarCalculo()" class="btn-primary" style="width: 100%; padding: 10px; font-weight: bold; text-transform: uppercase; font-size: 0.85rem; border-radius: 8px; cursor: pointer; height: 100%;">
+							Gerar Laudo e Insights
+						</button>
+					</div>
+				</div>
+			</div>
+			
+			<div id="resultado-area" style="margin-top: 50px; display: none; background: #fff; padding: 30px; border: 1px solid #ddd; border-radius: 8px;">
+			</div>			
+			
+		</div>
+	</section>
+
+	<style>
+		/* CSS UNIFICADO PARA ALINHAMENTO PERFEITO */
+		.input-group { margin-bottom: 15px; }
+		
+		/* Todos os labels agora têm o mesmo tamanho e estilo */
+		.input-group label { 
+			display: block; 
+			font-weight: 600; 
+			font-size: 0.85rem; 
+			margin-bottom: 8px; 
+			color: #1a2a3a; 
+			white-space: nowrap;
+		}
+
+		/* Todos os inputs e selects com a mesma altura e padding */
+		.form-control, input, select { 
+			width: 100%; 
+			padding: 10px; 
+			border: 1px solid #ccc; 
+			border-radius: 4px; 
+			font-family: 'Inter', sans-serif;
+			font-size: 0.9rem;
+			height: 42px; /* Altura fixa para garantir alinhamento horizontal */
+			box-sizing: border-box;
+		}
+
+		/* Grid de 3 colunas sem diminuir a fonte do label */
+		.grid-triplo { 
+			display: grid; 
+			grid-template-columns: repeat(3, 1fr); 
+			gap: 15px; 
+			margin-bottom: 0px; 
+		}
+
+		@media (max-width: 768px) {
+			.calc-grid { grid-template-columns: 1fr !important; }
+			.grid-triplo { grid-template-columns: 1fr !important; }
+		}
+
+		.input-group input:focus { border-color: #c5a059; outline: none; box-shadow: 0 0 5px rgba(197, 160, 89, 0.3); }
+	</style>
+ 	
+	<script>
+		async function validarCamposObrigatorios() {
+			const nome = document.getElementById('nome').value.trim();
+			const documento = document.getElementById('documento').value.replace(/\D/g, ''); 
+			const email = document.getElementById('email').value.trim();
+			const whatsapp = document.getElementById('whatsapp').value.replace(/\D/g, '');
+
+			// 1. Validar Nome (Local)
+			if (nome.length < 3) {
+				alert("Por favor, informe seu nome completo.");
+				document.getElementById('nome').focus();
+				return false;
+			}
+
+			// 2. Validar CPF ou CNPJ (Local - quantidade de dígitos)
+			if (documento.length !== 11 && documento.length !== 14) {
+				alert("CPF deve ter 11 dígitos ou CNPJ deve ter 14 dígitos.");
+				document.getElementById('documento').focus();
+				return false;
+			}
+
+			// 3. Validar Sintaxe do E-mail (Local - Regex)
+			const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (!emailRegex.test(email)) {
+				alert("Por favor, insira um e-mail com formato válido.");
+				document.getElementById('email').focus();
+				return false;
+			}
+
+			// 4. Validar WhatsApp (Local)
+			if (whatsapp.length < 10) {
+				alert("Por favor, insira um WhatsApp válido com DDD.");
+				document.getElementById('whatsapp').focus();
+				return false;
+			}
+
+			// 5. NOVA VALIDAÇÃO DE DOMÍNIO (Remota via Render)
+			// Esta parte verifica se o domínio (@gmail.com, etc) realmente existe e recebe e-mails
+			try {
+				const response = await fetch('https://pericia-backend.onrender.com/validar-email', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ email: email })
+				});
+				
+				const resultado = await response.json();
+
+				if (resultado.valido === false) {
+					alert(resultado.mensagem);
+					document.getElementById('email').focus();
+					return false;
+				}
+			} catch (error) {
+				console.error("Erro na validação de DNS:", error);
+				// Se o servidor estiver fora do ar ou demorar, permitimos o cálculo 
+				// para não frustrar o usuário legítimo.
+			}
+
+			return true; 
+		}
+	</script>	
+ 
+	<!-- ESTE SCRIPT FUNCIONAVA ANTES DA IMPLEMENTAÇÃO DA VALIDAÇÃO DO CET-->
+	<script>
+		// --- 1. FUNÇÕES DE INTERFACE E MÁSCARAS ---
+		window.onload = function() {
+			const hoje = new Date();
+			const vencimento = new Date();
+			vencimento.setDate(hoje.getDate() + 30);
+			document.getElementById('dataCelebracao').value = hoje.toISOString().split('T')[0];
+			document.getElementById('dataVencimento').value = vencimento.toISOString().split('T')[0];
+			calcularCarencia();
+		};
+
+		// --- MÁSCARAS EM TEMPO REAL ---
+		// Máscara para CPF/CNPJ Dinâmica (oninput)
+		document.getElementById('documento').addEventListener('input', function(e) {
+			let v = e.target.value.replace(/\D/g, ''); // Remove tudo que não é número
+			
+			if (v.length <= 11) {
+				// CPF: 000.000.000-00
+				v = v.replace(/(\d{3})(\d)/, '$1.$2');
+				v = v.replace(/(\d{3})(\d)/, '$1.$2');
+				v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+			} else {
+				// CNPJ: 00.000.000/0000-00
+				v = v.slice(0, 14); // Limita a 14 números
+				v = v.replace(/^(\d{2})(\d)/, '$1.$2');
+				v = v.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+				v = v.replace(/\.(\d{3})(\d)/, '.$1/$2');
+				v = v.replace(/(\d{4})(\d)/, '$1-$2');
+			}
+			e.target.value = v;
+		});
+
+		// Máscara para WhatsApp (oninput)
+		document.getElementById('whatsapp').addEventListener('input', function(e) {
+			let v = e.target.value.replace(/\D/g, ''); // Remove tudo que não é número
+			v = v.slice(0, 11); // Limita a 11 números (DDD + 9 dígitos)
+
+			if (v.length > 2) {
+				v = v.replace(/^(\d{2})(\d)/, '($1) $2');
+			}
+			if (v.length > 7) {
+				// Se tem 11 dígitos, é celular: (11) 99999-9999
+				// Se tem 10 dígitos, é fixo: (11) 9999-9999
+				if (v.length === 11) {
+					v = v.replace(/(\d{5})(\d{4})$/, '$1-$2');
+				} else {
+					v = v.replace(/(\d{4})(\d{4})$/, '$1-$2');
+				}
+			}
+			e.target.value = v;
+		});
+		
+		//function parseMoeda(v) { return parseFloat(v.replace(/\./g, '').replace(',', '.')) || 0; }
+		function parseMoeda(v) {
+			if (typeof v !== 'string') return v || 0;
+			// Remove tudo o que não é número, ponto ou vírgula
+			let limpo = v.replace(/[^\d.,]/g, ''); 
+			// Remove pontos de milhar e troca vírgula por ponto
+			return parseFloat(limpo.replace(/\./g, '').replace(',', '.')) || 0;
+		}		
+		function parsePercentual(v) { 
+			if(!v) return 0;
+			let limpo = v.replace('%', '').trim().replace(/\./g, '').replace(',', '.');
+			return parseFloat(limpo) || 0; 
+		}
+		function formatarMoeda(v) { return v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+
+		function calcularFinanciamento() {
+			// Obtém os valores dos campos usando o parseMoeda robusto
+			const valorBem = parseMoeda(document.getElementById('valorBem').value);
+			const entrada = parseMoeda(document.getElementById('valorEntrada').value);
+			
+			// Calcula o valor principal (Bem - Entrada)
+			const principal = Math.max(0, valorBem - entrada);
+			
+			// Atualiza o campo visível formatado
+			document.getElementById('valorPrincipal').value = formatarMoeda(principal);
+			
+			// Dispara o cálculo do total (Principal + Despesas)
+			calcularTotalFinanciado();
+		}
+
+		function calcularTotalFinanciado() {
+			const principal = parseMoeda(document.getElementById('valorPrincipal').value);
+			const despesas = parseMoeda(document.getElementById('despesas').value);
+			
+			const total = principal + despesas;
+			
+			// Atualiza o campo Total Final
+			document.getElementById('valorTotal').value = formatarMoeda(total);
+		}
+
+		function calcularCarencia() {
+			const d1 = new Date(document.getElementById('dataCelebracao').value);
+			const d2 = new Date(document.getElementById('dataVencimento').value);
+			if (d1 && d2) document.getElementById('carencia').value = Math.ceil(Math.abs(d2 - d1) / (1000 * 60 * 60 * 24));
+		}
+
+		document.querySelectorAll('.mask-money').forEach(i => i.addEventListener('blur', function() { this.value = formatarMoeda(parseMoeda(this.value)); }));
+		document.querySelectorAll('.mask-percent').forEach(i => i.addEventListener('blur', function() { 
+			let v = parsePercentual(this.value);
+			this.value = v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 10 }) + '%'; 
+		}));
+		
+		document.getElementById('sistema').addEventListener('change', function() {
+			const label = document.getElementById('labelParcela');
+			const avisoArea = document.getElementById('chatbase-integration');
+			if (this.value === 'price') {
+				label.innerHTML = 'Valor da Parcela Fixa (Contrato)';
+				if(avisoArea) avisoArea.innerHTML = '<p style="font-size: 0.8rem; color: #666;">Sistema Price: Prestações constantes.</p>';
+			} else if (this.value === 'sac') {
+				label.innerHTML = 'Valor da <strong>1ª Parcela</strong> (Contrato)';
+				if(avisoArea) avisoArea.innerHTML = '<p style="font-size: 0.8rem; color: #666;">Sistema SAC: Amortização constante.</p>';
+			} else if (this.value === 'sacre') {
+				label.innerHTML = 'Valor da <strong>1ª Parcela</strong> (Contrato)';
+				if(avisoArea) avisoArea.innerHTML = '<div style="background:#e7f3ff; color:#0056b3; padding:10px; border-radius:5px; font-size:0.8rem;"><strong>Nota BACEN:</strong> O SACRE utiliza projeção de inflação fixa em 4% a.a. para fins de auditoria pericial.</div>';
+			}
+		});
+	</script>	
+
+	<script>
+		// Substitua sua função processarCalculo por esta:
+		async function processarCalculo() {
+			// 1. O senhor decide aqui o modo de teste (Mude para 'N' se quiser voltar ao modo antigo)
+			const modoHibrido = 'Y';
+			
+			const btn = document.querySelector('button[onclick="processarCalculo()"]');
+			const textoOriginal = "Gerar Laudo e Insights"; // Texto padrão do seu botão
+
+			// 1. Feedback visual de início
+			btn.disabled = true;
+			btn.innerText = "Validando dados...";
+
+			try {
+				// 2. Chama a validação (que agora inclui o fetch de e-mail)
+				const eValido = await validarCamposObrigatorios();
+
+				if (!eValido) {
+					// Se a validação falhou (local ou servidor), resetamos o botão e paramos
+					btn.disabled = false;
+					btn.innerText = textoOriginal;
+					console.log("Falha na validação do domínio do email...");	
+					return;
+				}
+
+				// 3. Se chegou aqui, os dados estão OK. Prossegue com o processamento.
+				btn.innerText = "Processando Laudo...";
+
+				// 1. Captura e Tratamento de Dados (Mapeando IDs Corretos)
+				const dados = {
+					nome: document.getElementById('nome')?.value || "Não informado",
+					documento: document.getElementById('documento')?.value || "Não informado",
+					email: document.getElementById('email')?.value || "Não informado",
+					whatsapp: document.getElementById('whatsapp')?.value || "Não informado",
+					tipoFinanciamento: document.getElementById('tipoFinanciamento').value,
+					sistema: document.getElementById('sistema').value,
+					
+					// Conversão de moeda/percentual para números puros
+					pvBem: parseMoeda(document.getElementById('valorBem').value),
+					pvEntrada: parseMoeda(document.getElementById('valorEntrada').value),
+					pvPrin: parseMoeda(document.getElementById('valorPrincipal').value),
+					despesas: parseMoeda(document.getElementById('despesas').value),
+					pvTotal: parseMoeda(document.getElementById('valorTotal').value),
+					pmtInfo: parseMoeda(document.getElementById('valorParcelaInformado').value) || 0,
+					iNom: parsePercentual(document.getElementById('taxaNominal').value) / 100,
+					iEfetiva: parsePercentual(document.getElementById('taxaEfetiva').value) / 100,
+					n: parseInt(document.getElementById('parcelas').value) || 0,
+					carencia: document.getElementById('carencia').value,
+					dataCelebracao: document.getElementById('dataCelebracao').value,
+					dataPrimeiroVenc: document.getElementById('dataVencimento').value,
+					tipoSimulacao: document.querySelector('input[name="tipoVisao"]:checked')?.value || "banco"					
+				};
+
+				// Validação básica antes de enviar ao Render
+				if (dados.pvTotal <= 0 || dados.n <= 0) {
+					alert("Por favor, preencha os valores de financiamento e parcelas.");
+					return;
+				}
+
+				const areaResultado = document.getElementById('resultado-area');
+				
+				if (!areaResultado) {
+					console.error("Erro: Não encontrei o elemento 'resultado-area' no seu HTML.");
+					return;
+				}
+				
+				// Se chegou aqui, os campos estão OK. Segue com o cálculo...
+				console.log("Iniciando diagnóstico preliminar...");			
+				
+				const displayRes = document.getElementById('insights-cards'); // Usando área interna para feedback
+				
+				areaResultado.style.display = 'block';
+				areaResultado.innerHTML = '<p style="padding:20px; color: #c5a059;">O motor pericial está processando os dados no Render... por favor, aguarde.</p>';
+
+				try {
+					const response = await fetch("https://pericia-backend.onrender.com/calcular", {
+						method: "POST",
+						headers: { "Content-Type": "application/json" },
+						body: JSON.stringify(dados)
+					});
+
+					const resJson = await response.json();
+					console.log("Dados recebidos:", resJson); // Isso ajudará a diagnosticar no F12
+					console.log("Verificação de dados:", {
+						sucesso: resJson.sucesso,
+						temLaudoHTML: !!resJson.laudoHTML,
+						temAuditoriaBanco: !!resJson.auditoriaBanco,
+						temAuditoriaPerito: !!resJson.auditoriaPerito
+					});
+
+					if (resJson.sucesso && (resJson.laudoHTML || resJson.auditoriaBanco)) {
+						const area = document.getElementById('resultado-area');
+						area.style.display = 'block';
+
+						// 2. LÓGICA HÍBRIDA DE APRESENTAÇÃO
+						if (modoHibrido === 'Y' && resJson.laudoHTML) {
+							// MODO SERVIDOR: Apenas injeta o HTML pronto que veio do index.js
+							area.innerHTML = resJson.laudoHTML;
+							area.scrollIntoView({ behavior: 'smooth' });
+							console.log("Renderizado via Servidor (Modo Y)");
+						} else if (resJson.auditoriaBanco) {
+							// VALIDAÇÃO: auditoriaBanco é obrigatório, auditoriaPerito é opcional
+							// MODO CLIENTE: Usa a função local renderizarLaudoUnificado
+							renderizarLaudoUnificado(
+								resJson.auditoriaBanco, 
+								resJson.auditoriaPerito, 
+								dados, 
+								dados.tipoSimulacao, 
+								dados.sistema.toUpperCase(), 
+								resJson.cetCalculado, 
+								resJson.taxaRevisada   // A taxa nominal que validamos agora há pouco);
+							);
+							console.log("Renderizado via Cliente (Modo N)");
+						} else {
+							console.error("Dados incompletos recebidos do servidor:", resJson);
+							area.innerHTML = '<p style="color:red; padding:20px;">Erro: O servidor retornou dados incompletos (auditoriaBanco ausente).</p>';
+						}
+					}
+				} catch (error) {
+					console.error("Erro de conexão:", error);
+					// DICA: Em vez de alert, podemos usar a própria área de resultado para uma experiência melhor
+					areaResultado.innerHTML = `<p style="color:orange;">O motor está acordando. Por favor, clique em Calcular novamente em 20 segundos.</p>`;
+				}
+			} catch (error) {
+				// 4. Captura qualquer erro de rede ou processamento
+				console.error("Erro detectado:", error);
+				alert("Ocorreu um erro na comunicação com o servidor. Verifique sua conexão e tente novamente.");
+			} finally {
+				// 5. O finally sempre executa, garantindo que o botão volte ao normal
+				btn.disabled = false;
+				btn.innerText = textoOriginal;
+			}
+		}
+	</script>	
+	
+	<script>			
+			// --- 6. RENDERIZAÇÃO UNIFICADA (COM ATALHO PERICIAL E BYPASS SACRE) ---
+			//function renderizarLaudoUnificado(banco, revisado, p, visao, nomeSistema) {
+			function renderizarLaudoUnificado(banco, revisado, p, visao, nomeSistema, cetCalc, taxaRevisada) {
+				const area = document.getElementById('resultado-area');
+				area.style.display = 'block';
+				
+				// 1. CÁLCULOS DE AUDITORIA
+				const saldoF_Abs = Math.abs(banco.saldoFinal);
+				const taxaReal = taxaRevisada //calcularTaxaImplicita(p.pvTotal, p.pmtInfo, p.n, nomeSistema);
+				cetInfo = p.iEfetiva
+				const difCET = Math.abs(cetCalc - cetInfo);
+				
+				// 2. LÓGICA DE VALIDAÇÃO (ATALHO PERICIAL)
+				let taxaDivergente;
+				if (nomeSistema === "SACRE") {
+					const diferencaParcela = Math.abs(p.pmtInfo - banco.pmtRef);
+					taxaDivergente = diferencaParcela > 0.01; 
+				} else {
+					const diferencaTaxa = Math.abs(taxaReal - p.iNom);
+					taxaDivergente = diferencaTaxa > 0.00001;
+				}
+
+				// 3. HIERARQUIA DE VEREDITOS E CORES
+				let status, cor, msg;
+				let labelResiduo = (nomeSistema === "SACRE") ? "SALDO RESIDUAL INFLACIONÁRIO" : "RESÍDUO EM ABERTO";
+
+				if (cetInfo > 0 && difCET > 0.0001) {
+					status = "INCONSISTÊNCIA DE CUSTO (CET)";
+					cor = "#d9534f"; 
+					msg = `Divergência Documental: O contrato declara CET de ${(cetInfo*100).toFixed(6)}%, mas o custo real apurado é de ${(cetCalc*100).toFixed(6)}%.`;
+				} else if (taxaDivergente) {
+					status = "PLANO INCORRETO / INCONSISTÊNCIA";
+					cor = "#d9534f"; 
+					msg = nomeSistema === "SACRE" 
+						? `A 1ª parcela de R$ ${formatarMoeda(p.pmtInfo)} diverge do cálculo técnico para a taxa de ${(p.iNom*100).toFixed(4)}%.`
+						: `A taxa nominal de ${(p.iNom*100).toFixed(4)}% não condiz matematicamente com a parcela de R$ ${formatarMoeda(p.pmtInfo)}.`;
+				} else if (nomeSistema === "SACRE" && saldoF_Abs > 0.10) {
+					status = "DIVERGÊNCIA DE RECOMPOSIÇÃO";
+					cor = "#31708f"; 
+					msg = "O plano apresenta saldo residual decorrente da meta de inflação projetada (4% a.a.).";
+				} else if (saldoF_Abs > 0.10) {
+					status = "PLANO INCORRETO";
+					cor = "#d9534f";
+					msg = "O fluxo de pagamentos informado é insuficiente para liquidar o saldo devedor no prazo contratado.";
+				} else if (saldoF_Abs >= 0.05) {
+					status = "PLANO ACEITÁVEL";
+					cor = "#ffc107"; 
+					msg = "O plano do banco possui oscilação mínima aceitável decorrente de arredondamentos.";
+				} else {
+					status = "PLANO VALIDADO";
+					cor = "#28a745"; 
+					msg = "O plano do banco apresenta conformidade técnica.";
+				}
+
+				const dadosExibir = (visao === 'banco') ? banco : revisado;
+				const tituloVisao = (visao === 'banco') ? "Plano do Banco (Auditado)" : "Plano Revisado (Correto)";
+
+				let tableHeader = `<th>Nº</th><th>Parcela</th><th>Juros</th><th>Amortização</th><th>Saldo</th>`;
+				if (nomeSistema === "SACRE") {
+					tableHeader = `<th>Nº</th><th>Saldo Corrigido (CM)</th><th>Parcela</th><th>Juros</th><th>Amortização</th><th>Saldo Final</th>`;
+				}
+
+				area.innerHTML = `
+					<div id="laudo-container" style="border: 1px solid #ddd; border-radius: 8px; background: #fff; overflow:hidden;">
+						<div style="background-color: #1a2a3a; padding: 30px; border-bottom: 4px solid #c5a059; text-align: center; color: white;">
+							<img src="https://spositol.github.io/pericia.judicial/grafico.svg" alt="Dr. Lincoln Sposito" style="width: 250px;">
+							<h2 style="font-family: 'Playfair Display', serif; margin-top:10px;">Laudo Pericial: Sistema ${nomeSistema}</h2>
+						</div>
+						
+						<div style="padding: 30px;">
+							<div class="info-box" style="border-left: 8px solid ${cor}; background: #fdfdfd; padding: 25px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+								<h4 style="color: ${cor}; text-transform: uppercase; margin-top:0; font-weight:800;">${status}</h4>
+								<p style="color: #333; font-size: 1.05rem;">${msg}</p>
+								
+								<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 20px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 15px 0;">
+									<div><small>TOTAL PAGO (BANCO)</small><br><strong>R$ ${formatarMoeda(banco.tPmt)}</strong></div>
+									<div><small>JUROS ACUMULADOS</small><br><strong>R$ ${formatarMoeda(banco.tJur)}</strong></div>
+									<div><small>AMORTIZAÇÃO REAL</small><br><strong>R$ ${formatarMoeda(banco.tAmort)}</strong></div>
+								</div>
+
+								<p style="font-size: 0.95rem; line-height: 1.6; background: #f8f9fa; padding: 15px; border-radius: 4px; border: 1px solid #eee;">
+									<strong>Parâmetros de Auditoria:</strong><br>
+									<hr style="border:0; border-top: 1px solid #e0e0e0; margin: 8px 0;">
+									• Parcela Informada (Banco): <strong>R$ ${formatarMoeda(p.pmtInfo)}</strong><br>
+									• Parcela Revisada (Técnica): <strong>R$ ${formatarMoeda(banco.pmtRef)}</strong><br>
+									<hr style="border:0; border-top: 1px solid #e0e0e0; margin: 8px 0;">
+									• Taxa Nominal Contratada: <strong>${(p.iNom*100).toFixed(6)}%</strong><br>
+									• Taxa Revisada (em função da parcela): <strong style="color:#d9534f;">${(taxaReal*100).toFixed(6)}%</strong><br>
+									<hr style="border:0; border-top: 1px solid #e0e0e0; margin: 8px 0;">
+									• CET Declarado: ${(cetInfo*100).toFixed(6)}%<br>
+									• CET Pericial (em função do capital líquido): <strong>${(cetCalc*100).toFixed(6)}%</strong>
+								</p>
+
+								<p style="font-size: 1.1rem; margin-top: 15px; color: ${cor}; font-weight: bold;">
+									${banco.saldoFinal < -0.01 ? `PAGAMENTO INDÉBITO DETECTADO: R$ ${formatarMoeda(Math.abs(banco.saldoFinal))}` : `${labelResiduo}: R$ ${formatarMoeda(banco.saldoFinal)}`}
+								</p>
+							</div>
+
+							<h3 style="color: #1a2a3a; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px;">Exibindo: ${tituloVisao}</h3>
+							<div class="table-container" style="overflow-x: auto;">
+								<table class="table-pericia" style="width:100%; border-collapse: collapse;">
+									<thead><tr>${tableHeader}</tr></thead>
+									<tbody>
+										${dadosExibir.tabela.map(it => {
+											if (nomeSistema === "SACRE") {
+												return `<tr>
+													<td>${it.n}</td>
+													<td style="background:#f0f7ff;">R$ ${formatarMoeda(it.saldoCorrigido)}</td>
+													<td>R$ ${formatarMoeda(it.pmt)}</td>
+													<td>R$ ${formatarMoeda(it.jur)}</td>
+													<td>R$ ${formatarMoeda(it.amort)}</td>
+													<td>R$ ${formatarMoeda(it.saldo)}</td>
+												</tr>`;
+											} else {
+												return `<tr>
+													<td>${it.n}</td>
+													<td>R$ ${formatarMoeda(it.pmt)}</td>
+													<td>R$ ${formatarMoeda(it.jur)}</td>
+													<td>R$ ${formatarMoeda(it.amort)}</td>
+													<td ${it.n === p.n && saldoF_Abs > 0.1 ? 'style="color:red; font-weight:bold;"' : ''}>R$ ${formatarMoeda(it.saldo)}</td>
+												</tr>`;
+											}
+										}).join('')}
+										<tr style="background:#f8f9fa; font-weight:bold;">
+											<td>TOTAIS</td>
+											${nomeSistema === "SACRE" ? "<td>---</td>" : ""}
+											<td>R$ ${formatarMoeda(dadosExibir.tPmt)}</td>
+											<td>R$ ${formatarMoeda(dadosExibir.tJur)}</td>
+											<td>R$ ${formatarMoeda(dadosExibir.tAmort)}</td>
+											<td>---</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div id="cta-pericial" style="margin-top: 40px; padding: 30px; background: #fdf8ef; border: 2px dashed #c5a059; border-radius: 8px; text-align: center;">
+								<h3 style="font-family: 'Playfair Display', serif; color: #1a2a3a; margin-bottom: 15px;">Deseja uma análise jurídica detalhada deste contrato?</h3>
+								<p style="color: #666; margin-bottom: 25px;">Nossa equipe de especialistas em direito bancário pode ajudar você a recuperar valores pagos indevidamente.</p>
+								<a href="https://wa.me/11914612603" target="_blank" class="btn-primary" style="padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius:5px; display: inline-block;">Falar com Dr Lincoln agora</a>
+							</div>                        
+						</div>
+					</div>`;
+				area.scrollIntoView({ behavior: 'smooth' });
+			}
+	</script>	
+	
+	<script>
+		(function(){
+			if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>
+				{if(!window.chatbase.q){window.chatbase.q=[]}
+				window.chatbase.q.push(arguments)
+			};
+			window.chatbase=new Proxy(window.chatbase,{
+				get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}
+				})
+			}
+			const onLoad=function(){
+				const script=document.createElement("script");
+				script.src="https://www.chatbase.co/embed.min.js";
+				script.id="uFEke3ZP9R3S3o5CFSMyh";
+				script.domain="www.chatbase.co";
+				script.async = true; 
+				script.defer = true;
+				script.setAttribute('data-priority', 'low');
+				document.body.appendChild(script)
+			};
+			if(document.readyState==="complete"){
+				onLoad()
+			}else{
+				window.addEventListener("load",onLoad)
+			}
+		})();
+	</script>	
+</body>
+</html>
