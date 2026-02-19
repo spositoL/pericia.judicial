@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Financiamento Judicial | Dr. Lincoln Sposito</title>
+    <meta name="description" content="Simulador online de amortização para perícia judicial. Calcule sistemas SAC, Price e SACRE.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+	<section class="calc-section" style="padding: 50px 0; width: 100%;">
+		<div style="width: 100vw; max-width: 100vw; padding: 0 40px; box-sizing: border-box; margin-left: auto; margin-right: auto;">
+			<div class="calc-grid" style="display: grid; grid-template-columns: 1fr; gap: 25px; align-items: start; width: 100%;">			
+				<div class="calc-inputs" style="background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 4px solid #c5a059; width: 100%; max-width: 1100px; margin: 0 auto; box-sizing: border-box;">
+					<h2 style="font-size: 1.4rem; margin-top: 0; margin-bottom: 25px; height: 30px; display: flex; align-items: center; color: #1a2a3a;">Parâmetros do Cálculo</h2>
+					
+					<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+						<div class="input-group">
+							<label for="tipoFinanciamento">Tipo de Financiamento</label>
+							<select id="tipoFinanciamento">
+								<option value="Veículo">Financiamento de Veículo</option>
+								<option value="SFH">SFH (Habitacional)</option>
+								<option value="Empréstimo">Empréstimo Pessoal/Consignado</option>
+								<option value="Outro">Outro</option>
+							</select>
+						</div>
+						<div class="input-group">
+							<label>Sistema de Amortização</label>
+							<select id="sistema" class="form-control">
+								<option value="price" selected>Amortização Crescente (Price)</option>
+								<option value="sac">Amortização Constante (SAC)</option>
+								<option value="sacre">Amortização Híbrida (SACRE)</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="grid-triplo">
+						<div class="input-group"><label>Valor do Bem</label><input type="text" id="valorBem" class="mask-money" value="0,00" oninput="calcularFinanciamento()"></div>
+						<div class="input-group"><label>Entrada</label><input type="text" id="valorEntrada" class="mask-money" value="0,00" oninput="calcularFinanciamento()"></div>
+						<div class="input-group"><label>Financiamento</label><input type="text" id="valorPrincipal" class="mask-money" value="0,00" oninput="calcularTotalFinanciado()"></div>
+					</div>
+
+					<div class="grid-triplo">
+						<div class="input-group"><label>Total Despesas</label><input type="text" id="despesas" class="mask-money" value="0,00" oninput="calcularTotalFinanciado()"></div>
+						<div class="input-group"><label>Total (Princ+Desp)</label><input type="text" id="valorTotal" class="mask-money" value="0,00" style="background: #f0f4f8; font-weight: bold;" readonly></div>
+						<div class="input-group"><label>Parcela (Inf.)</label><input type="text" id="valorParcelaInformado" class="mask-money" placeholder="Ex: 933,33"></div>
+					</div>
+
+					<div class="grid-triplo">
+						<div class="input-group"><label>Taxa Nom. (% a.m.)</label><input type="text" id="taxaNominal" class="mask-percent" value="2,0000000000"></div>
+						<div class="input-group"><label>Taxa Efet. (% a.m.)</label><input type="text" id="taxaEfetiva" class="mask-percent" value="2,0000000000"></div>
+						<div class="input-group"><label>Nº Parcelas</label><input type="number" id="parcelas" value="1" min="1"></div>
+					</div>
+
+					<div class="grid-triplo" style="margin-bottom: 20px;">
+						<div class="input-group"><label>Data Contrato</label><input type="date" id="dataCelebracao" onchange="calcularCarencia()"></div>
+						<div class="input-group"><label>1º Vencimento</label><input type="date" id="dataVencimento" onchange="calcularCarencia()"></div>
+						<div class="input-group"><label>Carência (Dias)</label><input type="text" id="carencia" readonly style="background: #f8f9fa;"></div>
+					</div>
+
+					<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; align-items: stretch; width: 100%;">
+						<div class="input-group" style="background: #fff9e6; padding: 5px 15px; border-radius: 8px; border: 1px solid #c5a059; margin: 0; display: flex; flex-direction: column; justify-content: center; height: 60px; box-sizing: border-box;">
+							<label style="color: #1a2a3a; font-weight: bold; font-size: 0.75rem; margin-bottom: 2px; line-height: 1; display: block;">Tipo de Simulação:</label>
+							<div style="display: flex; gap: 15px; font-size: 0.85rem; align-items: center; flex-grow: 1;">
+								<label style="font-weight: normal; cursor: pointer; margin: 0; display: flex; align-items: center; gap: 5px; color: #1a2a3a;">
+									<input type="radio" name="tipoVisao" value="banco" checked style="margin:0; width: auto; height: auto;"> Banco
+								</label>
+								<label style="font-weight: normal; cursor: pointer; margin: 0; display: flex; align-items: center; gap: 5px; color: #1a2a3a;">
+									<input type="radio" name="tipoVisao" value="revisado" style="margin:0; width: auto; height: auto;"> Pericial
+								</label>
+							</div>
+						</div>
+
+						<button onclick="processarCalculo()" class="btn-primary" style="width: 100%; height: 60px; font-weight: bold; text-transform: uppercase; font-size: 0.85rem; border-radius: 8px; cursor: pointer; border: none; background-color: #1a2a3a; color: #c5a059; display: flex; align-items: center; justify-content: center; margin: 0;">
+							Gerar Laudo e Insights
+						</button>
+					</div>					
+				</div>
+			</div>
+			<div id="resultado-area" style="margin: 50px auto 0 auto; display: none; background: #fff; padding: 30px; border: 1px solid #ddd; border-radius: 8px; max-width: 1200px; width: 100%;">
+			</div>
+			
+		</div>
+	</section>	
+
+	<style>
+		/* 1. ROMPER O CONTAINER: Técnica para expandir até a borda da tela */
+		.calc-section {
+			width: 100vw !important;
+			position: relative;
+			margin-left: calc(-5vw + 5%) !important;
+			margin-right: calc(-5vw + 5%) !important;
+			padding: 50px 0;
+			box-sizing: border-box;
+			overflow-x: hidden;
+		}
+
+		/* 2. AJUSTE DO CONTEÚDO INTERNO: Para não encostar no vidro */
+		.calc-section > div {
+			width: 100% !important;
+			max-width: 100% !important;
+			padding: 0 40px !important; /* Respiro lateral para os campos não colarem na borda */
+			box-sizing: border-box;
+		}
+
+		/* 3. GRID DA CALCULADORA */
+		.calc-grid {
+			display: grid;
+			grid-template-columns: 1fr;
+			width: 100% !important;
+			max-width: 100% !important;
+			justify-items: center; /* ISSO centraliza o conteúdo horizontalmente no grid */
+			
+		}
+
+		/* 4. ALINHAMENTO DOS CAMPOS */
+		.input-group { margin-bottom: 15px; }
+
+		.input-group label {
+			display: block;
+			font-weight: 600;
+			font-size: 0.85rem;
+			margin-bottom: 8px;
+			color: #1a2a3a;
+			white-space: nowrap;
+		}
+
+		.form-control, input, select {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			font-family: 'Inter', sans-serif;
+			font-size: 0.9rem;
+			height: 42px;
+			box-sizing: border-box;
+		}
+
+		/* 5. GRID TRIPLO (3 colunas por linha) */
+		.grid-triplo {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 20px;
+			width: 100%;
+			margin-bottom: 15px;
+		}
+
+		/* 6. RESPONSIVIDADE (Celular) */
+		@media (max-width: 768px) {
+			.calc-section {
+				margin-left: 0 !important;
+				margin-right: 0 !important;
+				width: 100% !important;
+			}
+			.grid-triplo { 
+				grid-template-columns: 1fr !important; 
+			}
+			.calc-section > div {
+				padding: 0 20px !important;
+			}
+		}
+
+		.input-group input:focus { 
+			border-color: #c5a059; 
+			outline: none; 
+			box-shadow: 0 0 5px rgba(197, 160, 89, 0.3); 
+		}
+	</style>
+
+	<script>
+			// --- 1. FUNÇÕES DE INTERFACE E MÁSCARAS ---
+			window.onload = function() {
+				const hoje = new Date();
+				const vencimento = new Date();
+				vencimento.setDate(hoje.getDate() + 30);
+				document.getElementById('dataCelebracao').value = hoje.toISOString().split('T')[0];
+				document.getElementById('dataVencimento').value = vencimento.toISOString().split('T')[0];
+				calcularCarencia();
+			};
+
+			function parseMoeda(v) { return parseFloat(v.replace(/\./g, '').replace(',', '.')) || 0; }
+			function parsePercentual(v) { 
+				if(!v) return 0;
+				let limpo = v.replace('%', '').trim().replace(/\./g, '').replace(',', '.');
+				return parseFloat(limpo) || 0; 
+			}
+			function formatarMoeda(v) { return v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+
+			function calcularFinanciamento() {
+				const principal = Math.max(0, parseMoeda(document.getElementById('valorBem').value) - parseMoeda(document.getElementById('valorEntrada').value));
+				document.getElementById('valorPrincipal').value = formatarMoeda(principal);
+				calcularTotalFinanciado();
+			}
+
+			function calcularTotalFinanciado() {
+				const total = parseMoeda(document.getElementById('valorPrincipal').value) + parseMoeda(document.getElementById('despesas').value);
+				document.getElementById('valorTotal').value = formatarMoeda(total);
+			}
+
+			function calcularCarencia() {
+				const d1 = new Date(document.getElementById('dataCelebracao').value);
+				const d2 = new Date(document.getElementById('dataVencimento').value);
+				if (d1 && d2) document.getElementById('carencia').value = Math.ceil(Math.abs(d2 - d1) / (1000 * 60 * 60 * 24));
+			}
+
+			document.querySelectorAll('.mask-money').forEach(i => i.addEventListener('blur', function() { this.value = formatarMoeda(parseMoeda(this.value)); }));
+			document.querySelectorAll('.mask-percent').forEach(i => i.addEventListener('blur', function() { 
+				let v = parsePercentual(this.value);
+				this.value = v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 10 }) + '%'; 
+			}));
+			
+			document.getElementById('sistema').addEventListener('change', function() {
+				const label = document.getElementById('labelParcela');
+				const avisoArea = document.getElementById('chatbase-integration');
+				if (this.value === 'price') {
+					label.innerHTML = 'Valor da Parcela Fixa (Contrato)';
+					if(avisoArea) avisoArea.innerHTML = '<p style="font-size: 0.8rem; color: #666;">Sistema Price: Prestações constantes.</p>';
+				} else if (this.value === 'sac') {
+					label.innerHTML = 'Valor da <strong>1ª Parcela</strong> (Contrato)';
+					if(avisoArea) avisoArea.innerHTML = '<p style="font-size: 0.8rem; color: #666;">Sistema SAC: Amortização constante.</p>';
+				} else if (this.value === 'sacre') {
+					label.innerHTML = 'Valor da <strong>1ª Parcela</strong> (Contrato)';
+					if(avisoArea) avisoArea.innerHTML = '<div style="background:#e7f3ff; color:#0056b3; padding:10px; border-radius:5px; font-size:0.8rem;"><strong>Nota BACEN:</strong> O SACRE utiliza projeção de inflação fixa em 4% a.a. para fins de auditoria pericial.</div>';
+				}
+			});
+
+			// --- 2. MOTOR DE CÁLCULO (DISPATCHER) ---
+			function processarCalculo() {
+				try {
+					const sistema = document.getElementById('sistema').value;
+					const visao = document.querySelector('input[name="tipoVisao"]:checked').value;
+					const p = {
+						n: parseInt(document.getElementById('parcelas').value),
+						iNom: parsePercentual(document.getElementById('taxaNominal').value) / 100,
+						pvPrin: parseMoeda(document.getElementById('valorPrincipal').value),
+						desp: parseMoeda(document.getElementById('despesas').value),
+						pmtInfo: parseMoeda(document.getElementById('valorParcelaInformado').value)
+					};
+					p.pvTotal = p.pvPrin + p.desp;
+					
+					if (p.pvTotal <= 0 || p.n <= 0 || p.iNom <= 0) { alert("Dados incompletos."); return; }
+
+					const cetCalculado = calcularCET_Real(p, sistema.toUpperCase());
+					const cetInformado = parsePercentual(document.getElementById('taxaEfetiva').value) / 100;
+
+					let auditoriaBanco, planoRevisado;
+
+					if (sistema === 'price') {
+						auditoriaBanco = motorPrice(p, 'banco');
+						planoRevisado = motorPrice(p, 'revisado');
+						renderizarLaudoUnificado(auditoriaBanco, planoRevisado, p, visao, "PRICE", cetCalculado, cetInformado);
+					} 
+					else if (sistema === 'sac') {
+						auditoriaBanco = motorSAC(p, 'banco');
+						planoRevisado = motorSAC(p, 'revisado');
+						renderizarLaudoUnificado(auditoriaBanco, planoRevisado, p, visao, "SAC", cetCalculado, cetInformado);
+					} 
+					else if (sistema === 'sacre') {
+						auditoriaBanco = motorSACRE(p, 'banco');
+						planoRevisado = motorSACRE(p, 'revisado');
+						renderizarLaudoUnificado(auditoriaBanco, planoRevisado, p, visao, "SACRE", cetCalculado, cetInformado);
+					}
+
+				} catch (e) { console.error(e); }
+			}
+
+			// --- 3. ENCAPSULAMENTO PRICE ---
+			function motorPrice(p, tipo) {
+				let pmtCorreta = p.pvTotal * ( (p.iNom * Math.pow(1 + p.iNom, p.n)) / (Math.pow(1 + p.iNom, p.n) - 1) );
+				let pmtUso = (tipo === 'banco' && p.pmtInfo > 0) ? p.pmtInfo : pmtCorreta;
+				let saldo = p.pvTotal, tPmt = 0, tJur = 0, tAmort = 0, tabela = [];
+
+				for (let i = 1; i <= p.n; i++) {
+					let jur = saldo * p.iNom;
+					let amort = pmtUso - jur;
+					saldo -= amort;
+					tPmt += pmtUso; tJur += jur; tAmort += amort;
+					tabela.push({ n: i, pmt: pmtUso, jur: jur, amort: amort, saldo: saldo });
+				}
+				return { tabela, pmtRef: pmtCorreta, tPmt, tJur, tAmort, saldoFinal: saldo };
+			}
+
+			// --- 4. ENCAPSULAMENTO SAC ---
+			function motorSAC(p, tipo) {
+				const amortConstante = p.pvTotal / p.n;
+				const pmtPrimeiraCorreta = amortConstante + (p.pvTotal * p.iNom);
+				const decrescimoMensal = amortConstante * p.iNom;
+				let pmtBase = (tipo === 'banco' && p.pmtInfo > 0) ? p.pmtInfo : pmtPrimeiraCorreta;
+				let saldo = p.pvTotal, tPmt = 0, tJur = 0, tAmort = 0, tabela = [];
+
+				for (let i = 1; i <= p.n; i++) {
+					let jur = saldo * p.iNom;
+					let pmtNoMes = pmtBase - (decrescimoMensal * (i - 1));
+					let amort = pmtNoMes - jur;
+					saldo -= amort;
+					tPmt += pmtNoMes; tJur += jur; tAmort += amort;
+					tabela.push({ n: i, pmt: pmtNoMes, jur: jur, amort: amort, saldo: saldo });
+				}
+				return { tabela, pmtRef: pmtPrimeiraCorreta, tPmt, tJur, tAmort, saldoFinal: saldo };
+			}
+
+			// --- 5. ENCAPSULAMENTO SACRE (AUDITORIA PERICIAL) ---
+			// --- 5. ENCAPSULAMENTO SACRE (ALINHADO COM EXCEL PERICIAL) ---
+			function motorSACRE(p, tipo) {
+				// Fator exato do Excel para evitar desvios: 1,00327374
+				const inflacaoMensal = 0.00327374; 
+				let saldo = p.pvTotal;
+				let tPmt = 0, tJur = 0, tAmort = 0, tabela = [];
+
+				// Cálculo da 1ª Parcela Técnica (Referência)
+				let primeiroSaldoCM = p.pvTotal * (1 + inflacaoMensal);
+				let pmtTecnica = (primeiroSaldoCM / p.n) + (primeiroSaldoCM * p.iNom);
+
+				for (let i = 1; i <= p.n; i++) {
+					let prazoRemanescente = p.n - i + 1;
+					let saldoCorrigido = saldo * (1 + inflacaoMensal);
+					let jur = saldoCorrigido * p.iNom;
+					
+					let pmtAtual;
+					if (tipo === 'banco' && i === 1 && p.pmtInfo > 0) {
+						// No modo BANCO, respeitamos a entrada do usuário para testar a taxa
+						pmtAtual = p.pmtInfo;
+					} else {
+						// No REVISADO ou a partir da 2ª do banco, segue o SACRE Estrito
+						pmtAtual = (saldoCorrigido / prazoRemanescente) + jur;
+					}
+
+					let amort = pmtAtual - jur;
+					saldo = saldoCorrigido - amort;
+
+					tPmt += pmtAtual; tJur += jur; tAmort += amort;
+
+					tabela.push({
+						n: i,
+						saldoCorrigido: saldoCorrigido,
+						pmt: pmtAtual,
+						jur: jur,
+						amort: amort,
+						saldo: Math.abs(saldo) < 0.01 ? 0 : saldo 
+					});
+				}
+
+				return { 
+					tabela, 
+					pmtRef: pmtTecnica, 
+					tPmt, 
+					tJur, 
+					tAmort, 
+					saldoFinal: Math.abs(saldo) < 0.05 ? 0 : saldo 
+				};
+			}
+
+			// --- 6. RENDERIZAÇÃO UNIFICADA (COM ATALHO PERICIAL E BYPASS SACRE) ---
+			//function renderizarLaudoUnificado(banco, revisado, p, visao, nomeSistema) {
+			function renderizarLaudoUnificado(banco, revisado, p, visao, nomeSistema, cetCalc, cetInfo) {
+				const area = document.getElementById('resultado-area');
+				area.style.display = 'block';
+				
+				// 1. CÁLCULOS DE AUDITORIA
+				const saldoF_Abs = Math.abs(banco.saldoFinal);
+				const taxaReal = calcularTaxaImplicita(p.pvTotal, p.pmtInfo, p.n, nomeSistema);
+				const difCET = Math.abs(cetCalc - cetInfo);
+				
+				// 2. LÓGICA DE VALIDAÇÃO (ATALHO PERICIAL)
+				let taxaDivergente;
+				if (nomeSistema === "SACRE") {
+					const diferencaParcela = Math.abs(p.pmtInfo - banco.pmtRef);
+					taxaDivergente = diferencaParcela > 0.01; 
+				} else {
+					const diferencaTaxa = Math.abs(taxaReal - p.iNom);
+					taxaDivergente = diferencaTaxa > 0.00001;
+				}
+
+				// 3. HIERARQUIA DE VEREDITOS E CORES
+				let status, cor, msg;
+				let labelResiduo = (nomeSistema === "SACRE") ? "SALDO RESIDUAL INFLACIONÁRIO" : "RESÍDUO EM ABERTO";
+
+				if (cetInfo > 0 && difCET > 0.0001) {
+					status = "INCONSISTÊNCIA DE CUSTO (CET)";
+					cor = "#d9534f"; 
+					msg = `Divergência Documental: O contrato declara CET de ${(cetInfo*100).toFixed(6)}%, mas o custo real apurado é de ${(cetCalc*100).toFixed(6)}%.`;
+				} else if (taxaDivergente) {
+					status = "PLANO INCORRETO / INCONSISTÊNCIA";
+					cor = "#d9534f"; 
+					msg = nomeSistema === "SACRE" 
+						? `A 1ª parcela de R$ ${formatarMoeda(p.pmtInfo)} diverge do cálculo técnico para a taxa de ${(p.iNom*100).toFixed(4)}%.`
+						: `A taxa nominal de ${(p.iNom*100).toFixed(4)}% não condiz matematicamente com a parcela de R$ ${formatarMoeda(p.pmtInfo)}.`;
+				} else if (nomeSistema === "SACRE" && saldoF_Abs > 0.10) {
+					status = "DIVERGÊNCIA DE RECOMPOSIÇÃO";
+					cor = "#31708f"; 
+					msg = "O plano apresenta saldo residual decorrente da meta de inflação projetada (4% a.a.).";
+				} else if (saldoF_Abs > 0.10) {
+					status = "PLANO INCORRETO";
+					cor = "#d9534f";
+					msg = "O fluxo de pagamentos informado é insuficiente para liquidar o saldo devedor no prazo contratado.";
+				} else if (saldoF_Abs >= 0.05) {
+					status = "PLANO ACEITÁVEL";
+					cor = "#ffc107"; 
+					msg = "O plano do banco possui oscilação mínima aceitável decorrente de arredondamentos.";
+				} else {
+					status = "PLANO VALIDADO";
+					cor = "#28a745"; 
+					msg = "O plano do banco apresenta conformidade técnica.";
+				}
+
+				const dadosExibir = (visao === 'banco') ? banco : revisado;
+				const tituloVisao = (visao === 'banco') ? "Plano do Banco (Auditado)" : "Plano Revisado (Correto)";
+
+				let tableHeader = `<th>Nº</th><th>Parcela</th><th>Juros</th><th>Amortização</th><th>Saldo</th>`;
+				if (nomeSistema === "SACRE") {
+					tableHeader = `<th>Nº</th><th>Saldo Corrigido (CM)</th><th>Parcela</th><th>Juros</th><th>Amortização</th><th>Saldo Final</th>`;
+				}
+
+				area.innerHTML = `
+					<div id="laudo-container" style="border: 1px solid #ddd; border-radius: 8px; background: #fff; overflow:hidden;">
+						<!-- <div style="background-color: #1a2a3a; padding: 30px; border-bottom: 4px solid #c5a059; text-align: center; color: white;"> -->
+							<!-- <img src="https://spositol.github.io/pericia.judicial/grafico.svg" alt="Dr. Lincoln Sposito" style="width: 250px;"> -->
+							<!-- <h2 style="font-family: 'Playfair Display', serif; margin-top:15px; color: #ffffff; font-size: 1.8rem;"> -->
+								<!-- Laudo Pericial: <span style="color: #c5a059;">Sistema ${nomeSistema}</span> -->
+							<!-- </h2> -->
+						<!-- </div> -->
+						
+						<div style="padding: 30px;">
+							<div class="info-box" style="border-left: 8px solid ${cor}; background: #fdfdfd; padding: 25px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+								<h4 style="color: ${cor}; text-transform: uppercase; margin-top:0; font-weight:800;">${status}</h4>
+								<p style="color: #333; font-size: 1.05rem;">${msg}</p>
+								
+								<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 20px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 15px 0;">
+									<div><small>TOTAL PAGO (BANCO)</small><br><strong>R$ ${formatarMoeda(banco.tPmt)}</strong></div>
+									<div><small>JUROS ACUMULADOS</small><br><strong>R$ ${formatarMoeda(banco.tJur)}</strong></div>
+									<div><small>AMORTIZAÇÃO REAL</small><br><strong>R$ ${formatarMoeda(banco.tAmort)}</strong></div>
+								</div>
+
+								<p style="font-size: 0.95rem; line-height: 1.6; background: #f8f9fa; padding: 15px; border-radius: 4px; border: 1px solid #eee;">
+									<strong>Parâmetros de Auditoria:</strong><br>
+									<hr style="border:0; border-top: 1px solid #e0e0e0; margin: 8px 0;">
+									• Parcela Informada (Banco): <strong>R$ ${formatarMoeda(p.pmtInfo)}</strong><br>
+									• Parcela Revisada (Técnica): <strong>R$ ${formatarMoeda(banco.pmtRef)}</strong><br>
+									<hr style="border:0; border-top: 1px solid #e0e0e0; margin: 8px 0;">
+									• Taxa Nominal Contratada: <strong>${(p.iNom*100).toFixed(6)}%</strong><br>
+									• Taxa Revisada (em função da parcela): <strong style="color:#d9534f;">${(taxaReal*100).toFixed(6)}%</strong><br>
+									<hr style="border:0; border-top: 1px solid #e0e0e0; margin: 8px 0;">
+									• CET Declarado: ${(cetInfo*100).toFixed(6)}%<br>
+									• CET Pericial (em função do capital líquido): <strong>${(cetCalc*100).toFixed(6)}%</strong>
+								</p>
+
+								<p style="font-size: 1.1rem; margin-top: 15px; color: ${cor}; font-weight: bold;">								
+									${banco.saldoFinal < -0.01 ? `PAGAMENTO INDÉBITO DETECTADO: R$ ${formatarMoeda(Math.abs(banco.saldoFinal))}` : `${labelResiduo}: R$ ${formatarMoeda(banco.saldoFinal)}`}
+								</p>
+							</div>
+
+							<div style="background-color: #1a2a3a; padding: 20px; display: flex; align-items: center; border-bottom: 4px solid #c5a059;">
+								<img src="https://spositol.github.io/pericia.judicial/grafico.svg" 
+									 alt="Dr. Lincoln Sposito" 
+									 style="width: 150px; flex-shrink: 0;">
+
+								<h3 style="color: #ffffff; margin: 0 0 0 30px; font-family: 'Playfair Display', serif; font-size: 1.4rem; border-left: 2px solid #c5a059; padding-left: 20px; flex-grow: 1; line-height: 1.2;">
+									Exibindo: <span style="color: #c5a059;">${tituloVisao}</span> <br>
+									<small style="font-size: 0.9rem; font-weight: normal; opacity: 0.8;">Sistema ${nomeSistema}</small>
+								</h3>
+							</div>							
+							<div class="table-container" style="overflow-x: auto;">
+								<table class="table-pericia" style="width:100%; border-collapse: collapse;">
+									<thead><tr>${tableHeader}</tr></thead>
+									<tbody>
+										${dadosExibir.tabela.map(it => {
+											if (nomeSistema === "SACRE") {
+												return `<tr>
+													<td>${it.n}</td>
+													<td style="background:#f0f7ff;">R$ ${formatarMoeda(it.saldoCorrigido)}</td>
+													<td>R$ ${formatarMoeda(it.pmt)}</td>
+													<td>R$ ${formatarMoeda(it.jur)}</td>
+													<td>R$ ${formatarMoeda(it.amort)}</td>
+													<td>R$ ${formatarMoeda(it.saldo)}</td>
+												</tr>`;
+											} else {
+												return `<tr>
+													<td>${it.n}</td>
+													<td>R$ ${formatarMoeda(it.pmt)}</td>
+													<td>R$ ${formatarMoeda(it.jur)}</td>
+													<td>R$ ${formatarMoeda(it.amort)}</td>
+													<td ${it.n === p.n && saldoF_Abs > 0.1 ? 'style="color:red; font-weight:bold;"' : ''}>R$ ${formatarMoeda(it.saldo)}</td>
+												</tr>`;
+											}
+										}).join('')}
+										<tr style="background:#f8f9fa; font-weight:bold;">
+											<td>TOTAIS</td>
+											${nomeSistema === "SACRE" ? "<td>---</td>" : ""}
+											<td>R$ ${formatarMoeda(dadosExibir.tPmt)}</td>
+											<td>R$ ${formatarMoeda(dadosExibir.tJur)}</td>
+											<td>R$ ${formatarMoeda(dadosExibir.tAmort)}</td>
+											<td>---</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							                      
+						</div>
+					</div>`;
+				area.scrollIntoView({ behavior: 'smooth' });
+			}
+
+			function calcularTaxaImplicita(pv, pmt, n, sistema) {
+				if (sistema !== 'PRICE') {
+					const amort = pv / n;
+					return (pmt - amort) / pv;
+				}
+				let i = 0.01;
+				for (let x = 0; x < 30; x++) {
+					let f = pmt * (1 - Math.pow(1 + i, -n)) / i - pv;
+					let df = pmt * (n * Math.pow(1 + i, -n - 1) * i - (1 - Math.pow(1 + i, -n))) / (i * i);
+					i = i - f / (df || 1);
+				}
+				return i;
+			}
+
+			function calcularCET_Real(p, sistema) {
+				const pvLiquido = p.pvPrin;
+				const n = p.n;
+				const iNom = p.iNom;
+				const pvTotal = p.pvTotal;
+
+				// Se for PRICE, usamos a fórmula de Newton-Raphson para parcelas fixas
+				if (sistema === 'PRICE') {
+					let i = 0.01;
+					const pmt = p.pmtInfo;
+					for (let x = 0; x < 40; x++) {
+						let pot = Math.pow(1 + i, -n);
+						let f = pmt * (1 - pot) / i - pvLiquido;
+						let df = pmt * ((n * pot) / (i * (1 + i)) - (1 - pot) / (i * i));
+						i = i - f / (df || 1);
+					}
+					return i;
+				}
+
+				// Se for SAC ou SACRE, iteramos sobre o fluxo decrescente real
+				let iCET = 0.01; 
+				const amortizacao = pvTotal / n;
+
+				for (let x = 0; x < 60; x++) {
+					let f = -pvLiquido;
+					let df = 0;
+
+					for (let t = 1; t <= n; t++) {
+						// Reconstrói a parcela t do SAC/SACRE para confrontar com o valor líquido
+						let saldoDevedorAnterior = pvTotal - (amortizacao * (t - 1));
+						let pmt_t = amortizacao + (saldoDevedorAnterior * iNom);
+						
+						let pot = Math.pow(1 + iCET, -t);
+						f += pmt_t * pot;
+						df -= t * pmt_t * Math.pow(1 + iCET, -t - 1);
+					}
+
+					iCET = iCET - f / (df || 1);
+					if (Math.abs(f) < 0.0000001) break; 
+				}
+				return iCET;
+			}
+	</script> 
+
+</body>
+</html>
