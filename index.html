@@ -427,14 +427,41 @@
 				<input type="hidden" name="_template" value="table">
 				<input type="hidden" name="_next" value="https://spositol.github.io/pericia.judicial/obrigado.html"> 
 				<div style="margin-bottom: 20px;">
-					<label style="display: block; margin-bottom: 5px; font-weight: 600; color: #1a2a3a;">Nome Completo / Escritório</label>
-					<input type="text" name="name" id="nome" placeholder="Ex: Silva & Advogados" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;">
+					<label for="nome" style="display: block; margin-bottom: 5px; font-weight: 600; color: #1a2a3a;">Nome Completo / Escritório</label>
+					<input type="text" 
+						   name="name" 
+						   id="nome" 
+						   autocomplete="name" 
+						   placeholder="Ex: Dr. João Silva" 
+						   required 
+						   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;">
+				</div>				
+				<div style="display: flex; gap: 20px; margin-bottom: 20px; flex-wrap: wrap;">
+					<div style="flex: 1; min-width: 280px;">
+						<label for="email" style="display: block; margin-bottom: 5px; font-weight: 600; color: #1a2a3a;">E-mail</label>
+						<input type="email" 
+							   name="email" 
+							   id="email" 
+							   autocomplete="email" 
+							   required 
+							   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;">
+					</div>
+					<div style="flex: 1; min-width: 280px;">
+						<label for="telefone" style="display: block; margin-bottom: 5px; font-weight: 600; color: #1a2a3a;">WhatsApp/Telefone</label>
+						<input type="tel" 
+							   name="tel" 
+							   id="telefone" 
+							   autocomplete="tel" 
+							   required 
+							   oninput="mascaraTelefone(this)"
+							   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box;">
+					</div>
 				</div>
-
 				<div style="margin-bottom: 20px;">
 					<label style="display: block; margin-bottom: 5px; font-weight: 600; color: #1a2a3a;">Área de Interesse</label>
-					<select name="assunto" id="assunto" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; background: white;">
+					<select name="assunto" id="area" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; background: white;">
 						<option value="">Selecione a área...</option>
+						<option value="Superendividamento">Superendividamento (Lei 14.181/21)</option>
 						<option value="Financiamento Imobiliário">Financiamento Imobiliário</option>
 						<option value="Financiamento de Veículos">Financiamento de Veículos</option>
 						<option value="Cheque especial">Cheque especial</option>
@@ -448,7 +475,10 @@
 						<option value="Outros">Outras Demandas</option>
 					</select>
 				</div>
-
+				<div style="margin-bottom: 25px;">
+					<label style="display: block; margin-bottom: 5px; font-weight: 600; color: #1a2a3a;">Assunto</label>
+					<textarea name="message" id="assunto" rows="1" placeholder="Sobre o que quer falar?" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
+				</div>
 				<div style="margin-bottom: 25px;">
 					<label style="display: block; margin-bottom: 5px; font-weight: 600; color: #1a2a3a;">Breve descrição do caso</label>
 					<textarea name="message" id="mensagem" rows="4" placeholder="Como posso ajudar no seu processo?" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;"></textarea>
@@ -465,6 +495,131 @@
     <p>&copy; 2026 Dr. Lincoln Sposito | Perícia Judicial e Assistência Técnica. </p>
 	<p>Todos os direitos reservados.</p>
 </footer>
+
+<script>
+window.addEventListener('load', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tema = urlParams.get('tema');
+    const areaParam = urlParams.get('area');
+    const assuntoParam = urlParams.get('assunto');
+
+    // Mapeamento dos IDs atualizados
+    const campoNome = document.getElementById('nome');
+    const campoArea = document.getElementById('area');
+    const campoAssunto = document.getElementById('assunto');
+    const campoMensagem = document.getElementById('mensagem');
+
+    if (tema === 'CarenciaBancaria') {
+        if (campoArea && areaParam) campoArea.value = areaParam;
+        if (campoAssunto && assuntoParam) campoAssunto.value = assuntoParam;
+        if (campoMensagem) {
+            campoMensagem.value = "Dr. Lincoln, li seu artigo sobre Capitalização na Carência e gostaria de obter informações ou um parecer para um caso em que estou trabalhando.";
+        }
+        if (campoNome) {
+            setTimeout(() => { campoNome.focus(); }, 600);
+        }
+    } 
+    else if (tema === 'MetodoGauss') {
+        if (campoArea && areaParam) campoArea.value = areaParam;
+        if (campoAssunto && assuntoParam) campoAssunto.value = assuntoParam;
+        if (campoMensagem) {
+            campoMensagem.value = "Dr. Lincoln, li o seu artigo sobre o Legado de Gauss e o anatocismo no Brasil. Gostaria de solicitar uma análise técnica ou parecer prévio para fundamentar uma petição inicial em que estou a trabalhar.";
+        }
+        if (campoNome) {
+            setTimeout(() => { campoNome.focus(); }, 600);
+        }
+    }
+	else if (tema === 'ErroIOF') {
+        if (campoArea && areaParam) campoArea.value = areaParam;
+        if (campoAssunto && assuntoParam) campoAssunto.value = assuntoParam;
+        if (campoMensagem) {
+            campoMensagem.value = "Dr. Lincoln, li o seu artigo sobre Erro de Cálculo de IOF (Gross Up). Gostaria de uma análise de viabilidade pericial sobre a divergência de encargos em um financiamento específico.";
+        }
+        if (campoNome) {
+            setTimeout(() => { campoNome.focus(); }, 600);
+        }
+    }
+	else if (tema === 'GestaoCCB') {
+        if (campoArea && areaParam) campoArea.value = areaParam;
+        if (campoAssunto && assuntoParam) campoAssunto.value = assuntoParam;
+        if (campoMensagem) {
+            campoMensagem.value = "Dr. Lincoln, li o seu artigo sobre Erro de Cálculo de IOF (Gross Up). Gostaria de uma análise de viabilidade pericial sobre a divergência de encargos em um financiamento específico.";
+        }
+        if (campoNome) {
+            setTimeout(() => { campoNome.focus(); }, 600);
+        }
+    }
+	else if (tema === 'TabelaPrice') {
+		// 1. Preenche a Área e o Assunto vindos da URL
+		if (campoArea && areaParam) campoArea.value = areaParam;
+		if (campoAssunto && assuntoParam) campoAssunto.value = assuntoParam;
+		
+		// 2. Mensagem personalizada focada em Anatocismo e Gauss
+		if (campoMensagem) {
+			campoMensagem.value = "Dr. Lincoln, li o seu artigo sobre a Tabela Price e a Ocultação do Anatocismo. Gostaria de uma análise pericial para identificar a capitalização composta e avaliar a viabilidade de substituição pelo Método de Gauss neste contrato.";
+		}
+		
+		// 3. Foco automático no campo nome para iniciar o preenchimento
+		if (campoNome) {
+			setTimeout(() => { campoNome.focus(); }, 600);
+		}
+	} else if (tema === 'CDC') {
+		// 1. Preenche a Área e o Assunto vindos da URL
+		if (campoArea && areaParam) campoArea.value = areaParam;
+		if (campoAssunto && assuntoParam) campoAssunto.value = assuntoParam;
+		
+		// 2. Mensagem personalizada focada em Superendividamento e Mínimo Existencial
+		if (campoMensagem) {
+			campoMensagem.value = "Dr. Lincoln, li o seu artigo sobre Perícia em CDC e Superendividamento. Gostaria de uma análise técnica para identificar o Erro Material no CET e avaliar a viabilidade de um plano de repactuação com foco no Mínimo Existencial.";
+		}
+		
+		// 3. Foco automático no campo nome para iniciar o preenchimento
+		if (campoNome) {
+			setTimeout(() => { campoNome.focus(); }, 600);
+		}
+	}// <-- Aqui faltava fechar esta chave!
+}); // <-- Agora o fechamento do EventListener está correto
+</script>
+
+<script>
+function mascaraTelefone(input) {
+    let value = input.value;
+
+    if (value.startsWith('+')) {
+        // Remove tudo que não é número, exceto o + inicial
+        let numeros = value.replace(/\D/g, "");
+        
+        // LIMITAÇÃO E.164: Máximo de 15 dígitos numéricos
+        numeros = numeros.substring(0, 15);
+
+        if (numeros.startsWith('55')) {
+            // Se for Brasil com DDI informado (+55)
+            let ddi = "+55";
+            let resto = numeros.substring(2);
+            if (resto.length <= 10) {
+                resto = resto.replace(/^(\d{2})(\d{4})(\d{0,4})/, " ($1) $2-$3");
+            } else {
+                resto = resto.replace(/^(\d{2})(\d{5})(\d{0,4})/, " ($1) $2-$3");
+            }
+            input.value = ddi + resto;
+        } else {
+            // Para outros países: +DDI XXXXX XXXXX (Agrupamento genérico)
+            // Formata: +1 222 667 779
+            let formatado = "+" + numeros.replace(/(\d{1,3})(?=\d)/g, "$1 ");
+            input.value = formatado;
+        }
+    } else {
+        // Padrão nacional sem DDI (Brasil)
+        value = value.replace(/\D/g, "").substring(0, 11);
+        if (value.length <= 10) {
+            value = value.replace(/^(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3");
+        } else {
+            value = value.replace(/^(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3");
+        }
+        input.value = value;
+    }
+}
+</script>
 
 <script>
 	let currentIndex = 0;
@@ -494,31 +649,6 @@
 		track.style.transform = `translateX(-${scrollAmount}px)`;
 	}
 </script>
-
-<!--
-function moveSlide(direction) {
-		const track = document.getElementById('carouselTrack');
-		const cards = document.querySelectorAll('.blog-card');
-		const totalCards = cards.length;
-		
-		// Verifica quantos cards estão visíveis agora (1 no mobile, 3 no desktop)
-		const cardsVisible = window.innerWidth <= 768 ? 1 : 3;
-		const maxIndex = totalCards - cardsVisible;
-
-		currentIndex += direction;
-
-		// Trava nos limites
-		if (currentIndex < 0) currentIndex = 0;
-		if (currentIndex > maxIndex) currentIndex = maxIndex;
-
-		// Cálculo exato: largura de um card + o espaço entre eles
-		// No mobile o gap é 0 como definimos no CSS acima
-		const gap = window.innerWidth <= 768 ? 0 : 20;
-		const scrollAmount = (cards[0].offsetWidth + gap) * currentIndex;
-
-		track.style.transform = `translateX(-${scrollAmount}px)`;
-	}
--->
 
 <script>
 function searchBlog() {
@@ -575,12 +705,15 @@ function searchBlog() {
 	document.getElementById('form-hibrido').addEventListener('submit', function(e) {
 		// 1. Captura os dados
 		const nome = document.getElementById('nome').value;
+		const email = document.getElementById('email').value;
+		const telefoneUser = document.getElementById('telefone').value;
+		const area = document.getElementById('area').value;
 		const assunto = document.getElementById('assunto').value;
 		const mensagem = document.getElementById('mensagem').value;
 		
 		// 2. Configura o WhatsApp (coloque seu número real aqui)
 		const telefone = "5511914612603"; 
-		const textoZap = `Olá Dr. Lincoln, meu nome é ${nome}. Gostaria de tratar sobre ${assunto}. Detalhes: ${mensagem}`;
+		const textoZap = `Olá Dr. Lincoln, meu nome é ${nome}. Gostaria de tratar sobre ${assunto}, referente à ${area}. Detalhes - meus contatos: ${email} e ${telefoneUser} | Mensagem enviada por email: ${mensagem}` ;
 		const urlZap = `https://wa.me/${telefone}?text=${encodeURIComponent(textoZap)}`;
 
 		// 3. ABRE O WHATSAPP IMEDIATAMENTE (O navegador permite pois é um clique direto)
