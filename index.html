@@ -608,6 +608,21 @@ window.addEventListener('load', function() {
 		if (campoNome) {
 			setTimeout(() => { campoNome.focus(); }, 600);
 		}
+	}
+	else if (tema === 'Saude') {
+		// 1. Preenche a Área e o Assunto vindos da URL (Saúde Suplementar)
+		if (campoArea && areaParam) campoArea.value = areaParam;
+		if (campoAssunto && assuntoParam) campoAssunto.value = assuntoParam;
+		
+		// 2. Mensagem personalizada focada no Tema 1016 e Omissão de Dados
+		if (campoMensagem) {
+			campoMensagem.value = "Dr. Lincoln, li o seu artigo sobre o Tema 1016 do STJ. Gostaria de uma análise técnica sobre o reajuste de um contrato coletivo (Produto 445). Meu objetivo é identificar a falta de transparência na sinistralidade e a ausência de extratos pormenorizados para fundamentar uma ação revisional.";
+		}
+		
+		// 3. Foco automático no campo nome para iniciar o preenchimento
+		if (campoNome) {
+			setTimeout(() => { campoNome.focus(); }, 600);
+		}
 	}// <-- Aqui faltava fechar esta chave!
 }); // <-- Agora o fechamento do EventListener está correto
 </script>
