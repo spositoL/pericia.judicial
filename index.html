@@ -623,6 +623,21 @@ window.addEventListener('load', function() {
 		if (campoNome) {
 			setTimeout(() => { campoNome.focus(); }, 600);
 		}
+	}
+	else if (tema === 'Saude445') {
+		// 1. Preenche a Área e o Assunto específicos para o nicho Qualicorp
+		if (campoArea) campoArea.value = areaParam;
+		if (campoAssunto) campoAssunto.value = assuntoParam;
+		
+		// 2. Mensagem personalizada focada na dor do Produto 445 e Tema 1016
+		if (campoMensagem) {
+			campoMensagem.value = "Dr. Lincoln, li o seu artigo sobre o Produto 445 da Qualicorp. Gostaria de uma análise técnica sobre o reajuste por sinistralidade do meu contrato. Meu foco é a aplicação do Tema 1016 do STJ para identificar a omissão de extratos pormenorizados e fundamentar o pedido de liminar.";
+		}
+		
+		// 3. Foco automático no campo nome
+		if (campoNome) {
+			setTimeout(() => { campoNome.focus(); }, 600);
+		}
 	}// <-- Aqui faltava fechar esta chave!
 }); // <-- Agora o fechamento do EventListener está correto
 </script>
