@@ -593,6 +593,21 @@ window.addEventListener('load', function() {
 		if (campoNome) {
 			setTimeout(() => { campoNome.focus(); }, 600);
 		}
+	}
+	else if (tema === 'Veiculos') {
+		// 1. Preenche a Área e o Assunto vindos da URL (Financiamento de Veículos)
+		if (campoArea && areaParam) campoArea.value = areaParam;
+		if (campoAssunto && assuntoParam) campoAssunto.value = assuntoParam;
+		
+		// 2. Mensagem personalizada focada em CET e Erro Material
+		if (campoMensagem) {
+			campoMensagem.value = "Dr. Lincoln, li o seu artigo sobre Erro Material no financiamento de veículos. Gostaria de uma análise técnica sobre o Custo Efetivo Total (CET) do meu contrato para identificar possíveis divergências algorítmicas e a presença de encargos ocultos (Gross Up).";
+		}
+		
+		// 3. Foco automático no campo nome para iniciar o preenchimento
+		if (campoNome) {
+			setTimeout(() => { campoNome.focus(); }, 600);
+		}
 	}// <-- Aqui faltava fechar esta chave!
 }); // <-- Agora o fechamento do EventListener está correto
 </script>
