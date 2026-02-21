@@ -563,7 +563,8 @@ window.addEventListener('load', function() {
 		if (campoNome) {
 			setTimeout(() => { campoNome.focus(); }, 600);
 		}
-	} else if (tema === 'CDC') {
+	} 
+	else if (tema === 'CDC') {
 		// 1. Preenche a Área e o Assunto vindos da URL
 		if (campoArea && areaParam) campoArea.value = areaParam;
 		if (campoAssunto && assuntoParam) campoAssunto.value = assuntoParam;
@@ -577,7 +578,22 @@ window.addEventListener('load', function() {
 		if (campoNome) {
 			setTimeout(() => { campoNome.focus(); }, 600);
 		}
-	}// <-- Aqui faltava fechar esta chave!
+	}
+	else if (tema === 'Gauss') {
+		// 1. Preenche a Área e o Assunto vindos da URL
+		if (campoArea && areaParam) campoArea.value = areaParam;
+		if (campoAssunto && assuntoParam) campoAssunto.value = assuntoParam;
+		
+		// 2. Mensagem personalizada focada em Substituição de Sistema e Juros Simples
+		if (campoMensagem) {
+			campoMensagem.value = "Dr. Lincoln, li o seu artigo sobre a Substituição da Tabela Price pelo Método de Gauss. Gostaria de uma análise técnica sobre a viabilidade de aplicar o regime de juros simples (linear) e identificar o erro material algorítmico neste contrato sob a ótica da Lei 14.181.";
+		}
+		
+		// 3. Foco automático no campo nome para iniciar o preenchimento
+		if (campoNome) {
+			setTimeout(() => { campoNome.focus(); }, 600);
+		}
+	} // <-- Aqui faltava fechar esta chave!
 }); // <-- Agora o fechamento do EventListener está correto
 </script>
 
