@@ -579,21 +579,21 @@ window.addEventListener('load', function() {
 			setTimeout(() => { campoNome.focus(); }, 600);
 		}
 	}
-	else if (tema === 'Gauss') {
-		// 1. Preenche a Área e o Assunto vindos da URL
+	else if (tema === 'SFH') {
+		// 1. Preenche a Área e o Assunto vindos da URL (SFH & Contratos Históricos)
 		if (campoArea && areaParam) campoArea.value = areaParam;
 		if (campoAssunto && assuntoParam) campoAssunto.value = assuntoParam;
 		
-		// 2. Mensagem personalizada focada em Substituição de Sistema e Juros Simples
+		// 2. Mensagem personalizada focada em Reconstrução Histórica e Quitação
 		if (campoMensagem) {
-			campoMensagem.value = "Dr. Lincoln, li o seu artigo sobre a Substituição da Tabela Price pelo Método de Gauss. Gostaria de uma análise técnica sobre a viabilidade de aplicar o regime de juros simples (linear) e identificar o erro material algorítmico neste contrato sob a ótica da Lei 14.181.";
+			campoMensagem.value = "Dr. Lincoln, li o seu artigo sobre a Perícia em Contratos do SFH de 1988. Gostaria de uma análise técnica para a reconstrução histórica do saldo devedor, com foco na identificação de erros materiais nos planos econômicos e na viabilidade de quitação do resíduo (FCVS).";
 		}
 		
 		// 3. Foco automático no campo nome para iniciar o preenchimento
 		if (campoNome) {
 			setTimeout(() => { campoNome.focus(); }, 600);
 		}
-	} // <-- Aqui faltava fechar esta chave!
+	}// <-- Aqui faltava fechar esta chave!
 }); // <-- Agora o fechamento do EventListener está correto
 </script>
 
