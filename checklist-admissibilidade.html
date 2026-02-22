@@ -27,167 +27,54 @@
 
   gtag('config', 'G-5F1FGJ25TK');
 </script>
-	
-	<script type="application/ld+json">
-		{
-		  "@context": "https://schema.org",
-		  "@type": "Service",
-		  "serviceType": "Perícia Judicial e Admissibilidade Técnica",
-		  "provider": {
-			"@type": "Person",
-			"name": "Dr. Lincoln Sposito",
-			"jobTitle": "Perito Judicial e Doutor em Administração",
-			"url": "https://spositol.github.io/pericia.judicial/sobre.html"
-		  },
-		  "name": "Checklist de Admissibilidade Técnica para Advogados",
-		  "description": "Ferramenta técnica para análise de viabilidade de perícias financeiras, tributárias e de TI.",
-		  "offers": {
-			"@type": "Offer",
-			"availability": "https://schema.org/InStock",
-			"price": "0",
-			"priceCurrency": "BRL"
-		  },
-		  "areaServed": "Brasil",
-		  "hasOfferCatalog": {
-			"@type": "OfferCatalog",
-			"name": "Recursos Gratuitos para Advogados",
-			"itemListElement": [
-			  {
-				"@type": "ListItem",
-				"position": 1,
-				"item": {
-				  "@type": "CreativeWork",
-				  "name": "Checklist de Admissibilidade PDF"
-				}
-			  }
-			]
-		  }
-		}
-	</script>	
-    
-    <!-- <style>
-        :root {
-            --bg-gradient: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
-        }
 
-        body {
-            background-color: #f4f7f9;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Service",
+          "serviceType": "Perícia Judicial e Admissibilidade Técnica",
+          "provider": {
+            "@type": "Person",
+            "name": "Dr. Lincoln Sposito",
+            "jobTitle": "Perito Judicial e Doutor em Administração",
+            "url": "https://spositol.github.io/pericia.judicial/index.html"
+          },
+          "name": "Checklist de Admissibilidade Técnica para Advogados",
+          "description": "Ferramenta técnica para análise de viabilidade de perícias financeiras, tributárias e de TI, ajudando advogados a mitigar riscos processuais.",
+          "areaServed": "Brasil",
+          "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Recursos Gratuitos para Advogados",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                  "@type": "CreativeWork",
+                  "name": "Checklist de Admissibilidade em PDF (Financeiro, Saúde e Veículos)"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "@type": "WebApplication",
+          "name": "Calculadora de Admissibilidade Técnica",
+          "url": "https://spositol.github.io/pericia.judicial/checklist-admissibilidade.html",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "BRL"
+          }
         }
-
-        .lp-header {
-            background: var(--bg-gradient);
-            color: white;
-            padding: 40px 0;
-            text-align: center;
-        }
-
-        .lp-header img.logo-lp {
-            width: 180px;
-            margin-bottom: 20px;
-        }
-
-        .main-content {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            padding: 50px 0;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .benefit-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .benefit-list li {
-            margin-bottom: 20px;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-        }
-
-        .benefit-list li::before {
-            content: "✓";
-            background: var(--accent);
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
-        .lead-card {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            border-top: 5px solid var(--accent);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .btn-submit {
-            width: 100%;
-            background: var(--accent);
-            color: white;
-            padding: 18px;
-            border: none;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: transform 0.2s, background 0.3s;
-        }
-
-        .btn-submit:hover {
-            background: #b08d4a;
-            transform: translateY(-2px);
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        @media (max-width: 768px) {
-            .grid-container { grid-template-columns: 1fr; }
-            .lp-header h1 { font-size: 1.8rem; }
-        }
-    </style> -->
+      ]
+    }
+</script>
+	    
 </head>
 <body>
 	<header style="background-color: #1a2a3a; padding: 15px 0; border-bottom: 2px solid #c5a059;">
