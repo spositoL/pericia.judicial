@@ -147,8 +147,7 @@
 								<option value="TI&Dados">Checklist: 10 Indicadores De Risco Em Sistemas De Dados </option>
 								<option value="IOF">Checklist: Auditoria de Cálculo de IOF e Parcela</option>
 								<option value="Lei149052024">Checklist Conformidade com a Lei 14.9052024</option>
-								
-								<!-- <option value="Ambos">Todos</option>								 -->
+								<option value="ReformaTributaria">Checklist de Conformidade: Transição Tributária 2026</option>
 							</select>
                         </div>
 
@@ -187,6 +186,7 @@
 		if (foco === 'dados') selectMaterial.value = 'TI&Dados';		
 		if (foco === 'iof') selectMaterial.value = 'IOF';
 		if (foco === 'lei14905') selectMaterial.value = 'Lei149052024';
+		if (foco === 'reftributaria') selectMaterial.value = 'ReformaTributaria';
     });
 
     // 2. Função de Processamento
@@ -207,6 +207,8 @@
             'SFH-1988': 'arquivos/checklist-revisao-contrato-1988-SFH-lincoln-sposito.pdf',
 			'TI&Dados': 'arquivos/checklist-indicadores-risco-dados-lincoln-sposito.pdf',			
 			'IOF': 'arquivos/Guia-Auditoria-IOF-Dr-Lincoln-Sposito.pdf',
+			'Lei149052024':'arquivos/checklist-conformidade-com-a-lei-14905-2024.pdf',
+			'ReformaTributaria':'arquivos/checklist-reforma-tributaria-2026-pericia-dr-lincoln-sposito.pdf',
             'Ambos': 'materiais.html'
         };
 
@@ -232,46 +234,6 @@
         }, 500);
     }
 </script>
-
-<!--<script>
-		// 1. Lógica para capturar o parâmetro 'foco' da URL e selecionar o material
-		window.addEventListener('DOMContentLoaded', (event) => {
-			const urlParams = new URLSearchParams(window.location.search);
-			const foco = urlParams.get('foco');
-			const selectMaterial = document.getElementById('material');
-
-			if (foco === 'saude') selectMaterial.value = 'Saude-445';
-			if (foco === 'veiculos') selectMaterial.value = 'Veiculos';
-			if (foco === 'financeiro') selectMaterial.value = 'Price-Gauss';
-			if (foco === '1988') selectMaterial.value = 'SFH-1988';
-		});
-
-		// 2. Lógica de submissão do formulário
-		document.getElementById('form-checklist').addEventListener('submit', function(e) {
-			const nome = document.getElementById('nome').value;
-			const material = document.getElementById('material').value;
-			
-			// Mapeamento exato dos arquivos na sua pasta /arquivos
-			const arquivos = {
-				'Veiculos': 'arquivos/checklist-revisional-veiculos-cdc-lincoln-sposito.pdf',
-				'Price-Gauss': 'arquivos/checklist-tabela-price-gauss-lincoln-sposito.pdf',
-				'Saude-445': 'arquivos/checklist-saude-produto-445-lincoln-sposito.pdf',
-				'SFH-1988': 'arquivos/checklist-revisao-contrato-1988-SFH-lincoln-sposito.pdf',
-				'Ambos': 'materiais.html'
-			};
-
-			const linkPDF = arquivos[material] || 'materiais.html';
-			
-			const telefone = "5511914612603";
-			const textoZap = `Olá Dr. Lincoln, sou o(a) ${nome}. Acabei de baixar o seu Checklist sobre ${material} e gostaria de uma análise técnica sobre um caso.`;
-			const urlZap = `https://wa.me/${telefone}?text=${encodeURIComponent(textoZap)}`;
-
-			// Abre WhatsApp e inicia download
-			setTimeout(function() {
-				window.open(urlZap, '_blank');
-				window.location.href = linkPDF;
-			}, 500);
-		});
-</script> -->	
+	
 </body>
 </html>

@@ -745,6 +745,21 @@ window.addEventListener('load', function() {
 		if (campoNome) {
 			setTimeout(() => { campoNome.focus(); }, 600);
 		}
+	}	
+	else if (tema === 'Tributario') {
+		// 1. Preenche a Área e o Assunto dinamicamente vindos da URL
+		if (campoArea) campoArea.value = areaParam || "Perícia Financeira";
+		if (campoAssunto) campoAssunto.value = assuntoParam || "Auditoria Lei 14.905/24";
+		
+		// 2. Mensagem personalizada focada na dor do advogado (Erro de Cálculo e Lei 14.905)
+		if (campoMensagem) {
+			campoMensagem.value = "Dr. Lincoln, li o seu artigo sobre a Lei 14.905/2024 e o impacto do novo cálculo Selic-IPCA. Preciso de uma auditoria técnica em um processo de " + (areaParam || "financiamento") + " para identificar possível excesso de execução e erro material na aplicação dos juros de mora e do Piso Zero. Gostaria de solicitar um parecer para fundamentar minha impugnação.";
+		}
+		
+		// 3. Foco automático para acelerar o preenchimento do lead
+		if (campoNome) {
+			setTimeout(() => { campoNome.focus(); }, 600);
+		}
 	}// <-- Aqui faltava fechar esta chave!
 }); // <-- Agora o fechamento do EventListener está correto
 </script>
