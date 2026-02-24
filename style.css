@@ -1124,7 +1124,7 @@ iframe#chatbase-bubble-window {
     /* gap: 8px; /* Espaço entre o ícone e o texto */ */
 /* } */
 
-Adiciona o ícone de check apenas no primeiro botão (Quesitos)
+/*Adiciona o ícone de check apenas no primeiro botão (Quesitos)*/
 /* .tab-btn:first-child::before { */
     /* content: '✓' /* Ícone de check */ */
     /* font-weight: bold; */

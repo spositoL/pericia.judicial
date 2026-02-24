@@ -338,6 +338,16 @@
 				<div class="blog-grid">
 					<div class="carousel-track" id="carouselTrack">
 						<article class="blog-card">
+							<img src="img/capa-artigo-reforma-tributaria-2026-pericia-aliquota-teste-dr-lincoln-sposito.webp" 
+								loading="lazy"
+								alt="Capa do artigo sobre Reforma Tributária 2026: Gráficos de transição tributária, moedas do IVA Dual (IBS/CBS) e engrenagens de sistemas de ERP.">
+							<div class="card-body">
+								<h3 class="section-title">Reforma Tributária 2026: Sua Empresa Está Preparada Para A Alíquota De 1%?</h3>
+								<p>A transição para o IVA Dual exige mais que contabilidade: requer uma <strong>Revisão da Engenharia de Dados do seu ERP</strong>. Descubra como a perícia técnica evita a bitributação e utilize nosso <strong>Termômetro de Risco Tributário</strong> exclusivo.</p>
+								<a href="artigo-reforma-tributaria-2026-pericia-aliquota-teste.html" class="read-more">Ler Artigo Completo</a>
+							</div>
+						</article>
+						<article class="blog-card">
 							<img src="img/capa-artigo-reforma-tributaria-2026-pericia-aliquota-teste-dr-lincoln-sposito.webp" loading="lazy"
 								alt="Capa do artigo sobre Reforma Tributária 2026: Gráficos de transição tributária, moedas do IVA Dual (IBS/CBS) e engrenagens de sistemas de ERP.">
 							<div class="card-body">
@@ -755,16 +765,25 @@ window.addEventListener('load', function() {
 		}
 	}	
 	else if (tema === 'Tributario') {
-		// 1. Preenche a Área e o Assunto dinamicamente vindos da URL
-		if (campoArea) campoArea.value = areaParam || "Perícia Financeira";
-		if (campoAssunto) campoAssunto.value = assuntoParam || "Auditoria Lei 14.905/24";
+		// 1. Identifica se o interesse é específico na Reforma Tributária ou Geral
+		const isReforma = areaParam && areaParam.includes('Reforma');
 		
-		// 2. Mensagem personalizada focada na dor do advogado (Erro de Cálculo e Lei 14.905)
+		// 2. Preenche a Área e o Assunto dinamicamente
+		if (campoArea) campoArea.value = "Questões tributárias" /*areaParam || "Perícia Tributária";*/
+		if (campoAssunto) campoAssunto.value = assuntoParam || "Auditoria De Transição 2026";
+		
+		// 3. Mensagem personalizada baseada na área específica
 		if (campoMensagem) {
-			campoMensagem.value = "Dr. Lincoln, li o seu artigo sobre a Lei 14.905/2024 e o impacto do novo cálculo Selic-IPCA. Preciso de uma auditoria técnica em um processo de " + (areaParam || "financiamento") + " para identificar possível excesso de execução e erro material na aplicação dos juros de mora e do Piso Zero. Gostaria de solicitar um parecer para fundamentar minha impugnação.";
+			if (isReforma) {
+				// Mensagem focada na dor do Artigo de 2026 (Bitributação e Engenharia de Dados)
+				campoMensagem.value = "Dr. Lincoln, li o seu artigo sobre a Reforma Tributária 2026 e o risco da Alíquota Teste de 1%. Preciso de uma auditoria de Engenharia de Dados em um cenário de " + (areaParam || "transição tributária") + " para identificar possível bitributação no abatimento do PIS/COFINS e garantir a integridade dos créditos. Gostaria de solicitar um parecer técnico.";
+			} else {
+				// Mensagem padrão para outros temas tributários
+				campoMensagem.value = "Dr. Lincoln, li o seu material sobre Perícia Tributária. Preciso de uma auditoria técnica em um processo de " + (areaParam || "financiamento") + " para identificar possível excesso de execução e erro material nos cálculos. Gostaria de solicitar um parecer para fundamentar minha impugnação.";
+			}
 		}
 		
-		// 3. Foco automático para acelerar o preenchimento do lead
+		// 4. Foco automático para acelerar o preenchimento
 		if (campoNome) {
 			setTimeout(() => { campoNome.focus(); }, 600);
 		}
