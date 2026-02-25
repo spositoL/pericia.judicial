@@ -170,26 +170,9 @@ footer p {
     margin-bottom: 15px;
 }
 
-
-/* Estilos do Blog
-.blog-section { padding: 80px 0; background: #f4f7f9; }
-.search-container { max-width: 600px; margin: 0 auto 40px; display: flex; gap: 10px; }
-#blogSearch { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 4px; }
-.btn-search { background: #1a2a3a; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
- */
-/* Carrossel Simples 
-.carousel-container { overflow: hidden; position: relative; }
-.carousel-track { display: flex; gap: 20px; transition: transform 0.5s ease; padding: 20px 0; }
-.blog-card { min-width: 300px; background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; }
-.blog-card img { width: 100%; height: 180px; object-fit: cover; }
-.card-body { padding: 20px; }
-.card-body h3 { font-size: 1.2rem; color: #1a2a3a; margin-bottom: 10px; }
-.read-more { color: #c5a059; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 15px; }
-*/
-
 /*inicio do ajuste do blog*/
 /* --- Estilos da Seção Blog --- */
-.blog-section { padding: 80px 0; background: #f4f7f9; }
+.blog-section { padding: 10px 0; background: #f4f7f9; }
 
 .search-container { 
     max-width: 600px; margin: 0 auto 40px; 
@@ -1199,4 +1182,225 @@ iframe#chatbase-bubble-window {
     background-color: #b08d4a; /* Tom levemente mais escuro para contraste */
     box-shadow: 0 8px 25px rgba(197, 160, 89, 0.6);
     border-color: #ffffff;
+}
+
+/* Estilização do Fichário Dinâmico - Roteiro 6.1 */
+.tabs-container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.tabs-menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.tab-link {
+    background: #1a2a3a;
+    color: #fff;
+    border: 1px solid #c5a059;
+    padding: 12px 25px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+}
+
+.tab-link.active, .tab-link:hover {
+    background: #c5a059;
+    color: #1a2a3a;
+}
+
+.tab-content {
+    display: none;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border-top: 4px solid #c5a059;
+    animation: fadeIn 0.5s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+/* Hub de Serviços - Roteiro 6.1 */
+.tab-btn {
+    background: #e1e8ed;
+    color: #1a2a3a;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+}
+
+.tab-btn.active {
+    background: #c5a059;
+    color: #1a2a3a;
+    border-color: #c5a059;
+    box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3);
+}
+
+.tab-content {
+    display: none;
+    background: #fff;
+    padding: 30px;
+    border-radius: 0 0 10px 10px;
+    animation: slideUp 0.4s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.lista-check {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.lista-check li::before {
+    content: "✓";
+    color: #c5a059;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .sticky-panel { position: static !important; }
+}
+
+/* Ajuste do Ciclo de 16 segundos para 4 depoimentos */
+/* Ajuste para 6 depoimentos - Ciclo de 24 segundos */
+/* Ajuste para 7 Depoimentos - Ciclo de 28 segundos */
+.testimonial-fade {
+    animation: fadeInOut 28s infinite;
+    opacity: 0;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    width: auto;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(10px); }
+    1.2% { opacity: 1; transform: translateY(0); }
+    13% { opacity: 1; }
+    14.2% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 0; }
+}
+
+.hero-split {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    text-align: left !important;
+}
+
+@media (max-width: 992px) {
+    .hero-split { flex-direction: column; text-align: center !important; }
+    .hero-testimonials { display: none; } /* Oculta no mobile para focar no CTA */
+}
+
+
+/* Indicador de Scroll Animado - Roteiro 6.1 */
+/* .scroll-indicator { */
+    /* position: absolute; */
+    /* bottom: 30px; */
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* align-items: center; */
+    /* gap: 8px; */
+    /* color: rgba(255, 255, 255, 0.6); */
+    /* text-decoration: none; */
+    /* transition: 0.3s; */
+    /* z-index: 10; */
+/* } */
+
+/* .scroll-indicator:hover { */
+    /* color: #c5a059; */
+/* } */
+
+/* .scroll-indicator span { */
+    /* font-size: 0.7rem; */
+    /* text-transform: uppercase; */
+    /* letter-spacing: 2px; */
+    /* font-weight: 600; */
+/* } */
+
+/* .scroll-indicator i { */
+    /* font-size: 1.2rem; */
+    /* animation: bounce 2s infinite; */
+/* } */
+
+/* @keyframes bounce { */
+    /* 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} */
+    /* 40% {transform: translateY(-10px);} */
+    /* 60% {transform: translateY(-5px);} */
+/* } */
+
+/* Ocultar no mobile para não sobrepor elementos se necessário */
+/* @media (max-width: 768px) { */
+    /* .scroll-indicator { display: none; } */
+/* } */
+
+/* Indicador de Scroll "Anti-Falha" */
+.scroll-indicator {
+    position: absolute;
+    bottom: 20px; /* Ajustado para não sumir na barra de tarefas */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    color: #c5a059; /* Usando seu dourado padrão */
+    text-decoration: none;
+    z-index: 999;
+    cursor: pointer;
+}
+
+.scroll-indicator span {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.scroll-arrow {
+    font-size: 24px;
+    line-height: 1;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-8px); }
+    60% { transform: translateY(-4px); }
 }
