@@ -586,7 +586,7 @@
 
                 <div style="margin-bottom: 20px;">
                     <label style="display: block; margin-bottom: 5px; font-weight: 600;">Área Técnica Requisitada</label>
-                    <select name="assunto" id="assunto" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; background: #f9f9f9;">
+                    <select name="assunto" id="area" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; background: #f9f9f9;">
                         <option value="">Selecione a área...</option>
 						<option value="Superendividamento">Superendividamento (Lei 14.181/21)</option>
 						<option value="Financiamento Imobiliário">Financiamento Imobiliário</option>
@@ -599,6 +599,7 @@
 						<option value="Verbas trabalhistas">Verbas trabalhistas</option>
 						<option value="Questões tributárias">Questões tributárias</option>						
 						<option value="Perícia em TI">Perícia relacionada a Tecnologia da Informação</option>
+						<option value="Perícia em Resolução 4.966">Perícia em Resolução 4.966</option>
 						<option value="Outros">Outras Demandas</option>
                     </select>
                 </div>
@@ -886,6 +887,30 @@ window.addEventListener('load', function() {
 		}
 		
 		// 4. Foco automático para acelerar o preenchimento
+		if (campoNome) {
+			setTimeout(() => { campoNome.focus(); }, 600);
+		}
+	}
+	else if (tema === 'Res4966') {
+		// 1. Decodifica os parâmetros da URL para tratar acentos e espaços
+		const areaDecodificada = areaParam ? decodeURIComponent(areaParam) : "Resolução 4966";
+		const assuntoDecodificado = assuntoParam ? decodeURIComponent(assuntoParam) : "Resolução 4966 / IFRS9";
+
+		// 2. Preenche a Área e o Assunto
+		if (campoArea) {
+			// Importante: areaDecodificada deve ser exatamente "Perícia em Resolução 4.966"
+			campoArea.value = areaDecodificada;
+		}
+		if (campoAssunto) {
+			campoAssunto.value = assuntoDecodificado;
+		}
+		
+		// 3. Mensagem personalizada focada na Resolução 4.966 / IFRS 9
+		if (campoMensagem) {
+			campoMensagem.value = "Dr. Lincoln, li sua especialidade em Resolução 4.966 e IFRS 9. Preciso de uma auditoria técnica sobre a modelagem de perda esperada (ECL) e integridade de dados para um caso de provisionamento bancário. Gostaria de solicitar um parecer técnico.";
+		}
+		
+		// 4. Foco automático no campo nome para conversão imediata
 		if (campoNome) {
 			setTimeout(() => { campoNome.focus(); }, 600);
 		}

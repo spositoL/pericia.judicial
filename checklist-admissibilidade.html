@@ -147,7 +147,9 @@
 								<option value="TI&Dados">Checklist: 10 Indicadores De Risco Em Sistemas De Dados </option>
 								<option value="IOF">Checklist: Auditoria de Cálculo de IOF e Parcela</option>
 								<option value="Lei149052024">Checklist Conformidade com a Lei 14.9052024</option>
+								<option value="Quesitos4966">Modelo de Quesitos - Resolução 4.966 / IFRS 9</option>
 								<option value="ReformaTributaria">Checklist de Conformidade: Transição Tributária 2026</option>
+								<option value="QuesitosAML">Modelo de Quesitos: Auditoria de AML/KYC (Fircosoft)</option>
 							</select>
                         </div>
 
@@ -187,6 +189,8 @@
 		if (foco === 'iof') selectMaterial.value = 'IOF';
 		if (foco === 'lei14905') selectMaterial.value = 'Lei149052024';
 		if (foco === 'reftributaria') selectMaterial.value = 'ReformaTributaria';
+		if (foco === 'Quesitos4966') selectMaterial.value = 'Quesitos4966';		
+		if (foco === 'QuesitosAML') selectMaterial.value = 'QuesitosAML';
     });
 
     // 2. Função de Processamento
@@ -199,6 +203,17 @@
             alert("Por favor, preencha seu nome e e-mail.");
             return;
         }
+		
+		// 2. DISPARO GA4 - ROTEIRO 7.0 (Local Ideal)
+		// Registra a conversão assim que os dados são validados
+		if (typeof gtag === 'function') {
+			gtag('event', 'download_material', {
+				'file_name': material,
+				'user_email': email,
+				'event_category': 'Conversão',
+				'event_label': 'Download Checklist/Quesitos'
+			});
+		}
 
         const arquivos = {
             'Veiculos': 'arquivos/checklist-revisional-veiculos-cdc-lincoln-sposito.pdf',
@@ -209,6 +224,8 @@
 			'IOF': 'arquivos/Guia-Auditoria-IOF-Dr-Lincoln-Sposito.pdf',
 			'Lei149052024':'arquivos/checklist-conformidade-com-a-lei-14905-2024.pdf',
 			'ReformaTributaria':'arquivos/checklist-reforma-tributaria-2026-pericia-dr-lincoln-sposito.pdf',
+			'Quesitos4966': 'arquivos/modelo-quesitos-resolucao-4966-dr-lincoln-sposito.pdf', // Certifique-se de subir este PDF
+			'QuesitosAML': 'arquivos/modelo-quesitos-aml-kyc-dr-lincoln-sposito.pdf',									 
             'Ambos': 'materiais.html'
         };
 

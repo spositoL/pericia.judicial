@@ -192,11 +192,22 @@
 	  <priority>0.60</priority>
 	</url>	  
 
-<url>
+  <url>
 	  <loc>https://spositol.github.io/pericia.judicial/artigo-pericia-reforma-tributaria-2026-aliquota-teste.html</loc>
 	  <lastmod>2026-02-23</lastmod>
 	  <priority>0.50</priority>
 	</url>	  
-  
+
+  <url>
+	  <loc>https://spositol.github.io/pericia.judicial/pericia-resolucao-4966.html</loc>
+	  <lastmod>2026-02-25</lastmod>
+	  <priority>1.00</priority>
+	</url>	  
+
+  <url>
+	  <loc>https://spositol.github.io/pericia.judicial/pericia-aml-kyc.html</loc>
+	  <lastmod>2026-02-25</lastmod>
+	  <priority>1.00</priority>
+	</url>	  
 
 </urlset>
