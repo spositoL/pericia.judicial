@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas Distribuídos - Portal da Disciplina | Dr. Lincoln Sposito</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5F1FGJ25TK');
+
+      // Função de log customizada para Sistemas Distribuídos
+      function logAcesso(status, ref, aula) {
+          gtag('event', 'presenca_aula', {
+              'disciplina': 'Sistemas_Distribuidos',
+              'status_presenca': status,
+              'origem': ref,
+              'aula_referencia': aula 
+          });
+      }
+    </script>
+
+    <style>
+        /* Ajuste de Identidade Visual: Azul Técnico e Laranja de Conectividade */
+        :root { 
+            --navy: #001529; 
+            --white: #ffffff; 
+            --accent: #ff7a45; /* Laranja técnico para Sistemas Distribuídos */
+            --warning: #ffc107; 
+            --card-bg: #002140; 
+        }
+        
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--navy); color: var(--white); margin: 0; text-align: center; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        
+        /* Ritual de Entrada - Estilizado para destaque no Laboratório */
+        #portal-entrada { background: white; padding: 30px; border-radius: 20px; display: none; margin: 20px auto; color: var(--navy); max-width: 400px; box-shadow: 0 10px 40px rgba(0,0,0,0.6); border: 4px solid var(--accent); }
+        #qrcode { display: flex; justify-content: center; margin: 20px 0; }
+        
+        #aula-em-curso { display: none; background: var(--card-bg); padding: 20px; border-radius: 15px; border: 2px dashed var(--warning); margin: 20px 0; }
+        
+        /* Tabela de Aulas */
+        .tabela-aulas { width: 100%; border-collapse: collapse; margin-top: 30px; background: var(--card-bg); border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .tabela-aulas th, .tabela-aulas td { padding: 18px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: left; }
+        .tabela-aulas th { background: rgba(0,0,0,0.4); color: var(--accent); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+        
+        .btn-link { color: var(--white); text-decoration: none; font-weight: bold; border: 1px solid var(--accent); padding: 8px 15px; border-radius: 5px; display: inline-block; transition: 0.3s; }
+        .btn-link:hover { background: var(--accent); color: var(--navy); }
+        .atrasado-lock { opacity: 0.5; cursor: not-allowed; color: var(--warning); font-style: italic; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div style="font-size: 50px; margin-top: 20px;"><img src="../img/grafico.svg" alt="Logo" style="height: 60px; margin-top: 20px;">🌐</div>
+        <h1>Sistemas Distribuídos</h1>
+        <p>Portal de Acompanhamento Acadêmico | Dr. Lincoln Sposito</p>
+    </header>
+
+    <div id="portal-entrada">
+        <h2 style="margin-top:0">RITUAL DE ENTRADA</h2>
+        <div id="qrcode"></div> 
+        <p><strong>Aponte para confirmar presença em Sistemas Distribuídos.</strong></p>
+    </div>
+
+    <div id="aula-em-curso">
+        <h3>⚠️ Aula em Curso (Acesso Restrito)</h3>
+        <p>O acesso inicial foi encerrado. Se você chegou agora, utilize o QR Code projetado no slide para registrar seu ingresso tardio no laboratório.</p>
+    </div>
+
+    <table class="tabela-aulas" id="tabelaAulas">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Início</th>
+                <th>Unidade de Aula</th>
+                <th>Status / Acesso</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-date="2026-03-01" data-start="07:57" data-url="aula-02-03-2026.html" data-title="Fundamentos_e_Protocolos">
+                <td>02/03/2026</td>
+                <td>19:00</td>
+                <td>01. Fundamentos, HTTP/REST e JSON vs XML</td>
+                <td class="col-link"></td>
+            </tr>
+            <tr data-date="2026-03-09" data-start="19:00" data-url="aula-09-03-2026.html" data-title="Arquitetura_Servicos">
+                <td>09/03/2026</td>
+                <td>19:00</td>
+                <td>02. Arquitetura: Monólitos vs Serviços</td>
+                <td class="col-link"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function gerirFluxoSD() {
+        const agora = new Date();
+        const offset = agora.getTimezoneOffset();
+        const hojeLocal = new Date(agora.getTime() - (offset*60*1000)).toISOString().split('T')[0];
+        
+        const horaAtual = agora.getHours();
+        const minAtual = agora.getMinutes();
+        const tempoAtualMin = (horaAtual * 60) + minAtual;
+
+        const rows = document.querySelectorAll('#tabelaAulas tbody tr');
+
+        rows.forEach(row => {
+            const dataAula = row.getAttribute('data-date');
+            const horaInicioRaw = row.getAttribute('data-start');
+            const urlAula = row.getAttribute('data-url');
+            const aulaTitle = row.getAttribute('data-title');
+            const linkCell = row.querySelector('.col-link');
+
+            if (dataAula === hojeLocal && horaInicioRaw) {
+                const [h, m] = horaInicioRaw.split(':').map(Number);
+                const tempoInicioMin = (h * 60) + m;
+                const limitePontual = tempoInicioMin + 17;
+
+                // 1. Janela de Presença Pontual (Ritual de Entrada)
+                if (tempoAtualMin >= tempoInicioMin && tempoAtualMin <= limitePontual) {
+                    const urlFinal = window.location.origin + window.location.pathname.replace('index.html', '') + urlAula + "?ref=index_sd";
+                    
+                    document.getElementById('portal-entrada').style.display = 'block';
+                    
+                    document.getElementById("qrcode").innerHTML = "";
+                    new QRCode(document.getElementById("qrcode"), {
+                        text: urlFinal,
+                        width: 200, height: 200,
+                        colorDark : "#001529", colorLight : "#ffffff"
+                    });
+
+                    if(linkCell) linkCell.innerHTML = `<a href="${urlAula}?ref=pontual" class="btn-link" onclick="logAcesso('pontual', 'index', '${aulaTitle}')">Confirmar Entrada</a>`;
+                } 
+                // 2. Janela de Atraso (Bloqueio de Index)
+                else if (tempoAtualMin > limitePontual && tempoAtualMin <= (tempoInicioMin + 180)) {
+                    document.getElementById('aula-em-curso').style.display = 'block';
+                    if(linkCell) linkCell.innerHTML = `<span class="atrasado-lock">Acesso via Projeção</span>`;
+                }
+                // 3. Após a aula (Disponibilização de material)
+                else if (tempoAtualMin > (tempoInicioMin + 180)) {
+                    if(linkCell) linkCell.innerHTML = `<a href="${urlAula}?ref=pos_aula" class="btn-link" onclick="logAcesso('pos_aula', 'index', '${aulaTitle}')">Estudar Material</a>`;
+                }
+            } else {
+                // Modo Revisão para datas passadas ou futuras
+                if(linkCell) linkCell.innerHTML = `<a href="${urlAula}?ref=revisao" class="btn-link" onclick="logAcesso('revisao', 'index', '${aulaTitle}')">Revisar</a>`;
+            }
+        });
+    }
+
+    window.onload = function() {
+        setTimeout(gerirFluxoSD, 500);
+    };
+</script>
+</body>
+</html>
+
+<!-- <!DOCTYPE html> -->
+<!-- <html lang="pt-br"> -->
+<!-- <head> -->
+    <!-- <meta charset="UTF-8"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <!-- <title>Sistemas Distribuídos - Portal | Dr. Lincoln Sposito</title> -->
+    
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script> -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script> -->
+    <!-- <script> -->
+      <!-- window.dataLayer = window.dataLayer || []; -->
+      <!-- function gtag(){dataLayer.push(arguments);} -->
+      <!-- gtag('js', new Date()); -->
+      <!-- gtag('config', 'G-5F1FGJ25TK'); -->
+
+      <!-- function logAcesso(status, ref, aula) { -->
+          <!-- gtag('event', 'presenca_aula', { -->
+              <!-- 'disciplina': 'Sistemas_Distribuidos', -->
+              <!-- 'status_presenca': status, -->
+              <!-- 'origem': ref, -->
+              <!-- 'aula_referencia': aula -->
+          <!-- }); -->
+      <!-- } -->
+    <!-- </script> -->
+
+    <!-- <style> -->
+        <!-- :root { -->
+            <!-- --primary: #003366; /* Azul Marinho Técnico */ -->
+            <!-- --accent: #ff6600;  /* Laranja para Destaque de Fluxo/Rede */ -->
+            <!-- --bg: #f4f7f6; -->
+            <!-- --text: #333; -->
+        <!-- } -->
+        <!-- body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; padding: 0; } -->
+        <!-- header { background: var(--primary); color: white; padding: 2rem; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); } -->
+        <!-- .container { max-width: 900px; margin: 20px auto; padding: 20px; } -->
+        <!-- .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); margin-bottom: 20px; } -->
+        <!-- h1 { margin: 0; font-size: 1.8rem; } -->
+        <!-- table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; border-radius: 10px; overflow: hidden; } -->
+        <!-- th { background: var(--primary); color: white; padding: 15px; text-align: left; } -->
+        <!-- td { padding: 15px; border-bottom: 1px solid #eee; } -->
+        <!-- .btn-link { background: var(--accent); color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: 0.3s; display: inline-block; } -->
+        <!-- .btn-link:hover { opacity: 0.8; transform: translateY(-2px); } -->
+        <!-- .status-badge { padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; } -->
+        <!-- .status-hoje { background: #e3f2fd; color: #1976d2; border: 1px solid #2196f3; } -->
+        <!-- #portal-entrada { display: none; text-align: center; border: 2px solid var(--accent); } -->
+        <!-- #qrcode { margin: 15px auto; padding: 10px; background: white; display: inline-block; } -->
+    <!-- </style> -->
+<!-- </head> -->
+<!-- <body> -->
+
+<!-- <header> -->
+    <!-- <h1>Sistemas Distribuídos</h1> -->
+    <!-- <p>Prof. Dr. Lincoln Sposito | Semestre 2026/1</p> -->
+<!-- </header> -->
+
+<!-- <div class="container"> -->
+    
+    <!-- <div id="portal-entrada" class="card"> -->
+        <!-- <h3 style="color: var(--accent);">📡 Aula em Curso: Fundamentos e HTTP</h3> -->
+        <!-- <p>Aponte a câmera ou clique no botão para registrar sua presença pontual.</p> -->
+        <!-- <div id="qrcode"></div> -->
+        <!-- <br> -->
+        <!-- <div id="link-direto-presenca"></div> -->
+    <!-- </div> -->
+
+    <!-- <div class="card"> -->
+        <!-- <h3>Cronograma de Aulas</h3> -->
+        <!-- <table> -->
+            <!-- <thead> -->
+                <!-- <tr> -->
+                    <!-- <th>Data</th> -->
+                    <!-- <th>Unidade de Aula</th> -->
+                    <!-- <th>Acesso</th> -->
+                <!-- </tr> -->
+            <!-- </thead> -->
+            <!-- <tbody id="lista-aulas"> -->
+                <!-- <tr id="aula-2026-03-02"> -->
+                    <!-- <td>02/03</td> -->
+                    <!-- <td> -->
+                        <!-- <strong>01. Fundamentos e Protocolos Web</strong><br> -->
+                        <!-- <small>Coulouris (2013) | Tanenbaum (2007)</small> -->
+                    <!-- </td> -->
+                    <!-- <td id="cell-02-03"> -->
+                        <!-- </td> -->
+                <!-- </tr> -->
+            <!-- </tbody> -->
+        <!-- </table> -->
+    <!-- </div> -->
+<!-- </div> -->
+
+<!-- <script> -->
+    <!-- function gerenciarAcesso() { -->
+        <!-- const agora = new Date(); -->
+        <!-- const diaSemana = agora.getDay(); // 1 = Segunda -->
+        <!-- const horaAtual = agora.getHours(); -->
+        <!-- const minAtual = agora.getMinutes(); -->
+        <!-- const tempoAtualMin = (horaAtual * 60) + minAtual; -->
+
+        <!-- // Configuração: Segundas das 19h00 às 21h30 -->
+        <!-- const tempoInicioMin = 19 * 60; -->
+        <!-- const tempoFimMin = 21 * 60 + 30; -->
+        <!-- const dataHoje = agora.toISOString().split('T')[0]; -->
+
+        <!-- const urlAula = "aula-02-03-2026.html"; -->
+        <!-- const linkCell = document.getElementById('cell-02-03'); -->
+
+        <!-- // Lógica para aula do dia 02/03/2026 -->
+        <!-- if (dataHoje === "2026-03-02" && diaSemana === 1) { -->
+            <!-- if (tempoAtualMin >= (tempoInicioMin - 15) && tempoAtualMin <= (tempoInicioMin + 20)) { -->
+                <!-- // Acesso Pontual Liberado -->
+                <!-- document.getElementById('portal-entrada').style.display = 'block'; -->
+                <!-- const urlCompleta = window.location.href.replace('index.html', urlAula) + '?ref=portal_index'; -->
+                
+                <!-- // Gerar QR Code -->
+                <!-- new QRCode(document.getElementById("qrcode"), { -->
+                    <!-- text: urlCompleta, -->
+                    <!-- width: 150, -->
+                    <!-- height: 150 -->
+                <!-- }); -->
+
+                <!-- document.getElementById('link-direto-presenca').innerHTML =  -->
+                    <!-- `<a href="${urlAula}?ref=btn_pontual" class="btn-link" onclick="logAcesso('pontual', 'index', 'Fundamentos_Distribuidos')">Entrar na Aula</a>`; -->
+                
+                <!-- linkCell.innerHTML = `<span class="status-badge status-hoje">AULA AO VIVO</span>`; -->
+            <!-- } else { -->
+                <!-- linkCell.innerHTML = `<a href="${urlAula}?ref=pos_aula" class="btn-link">Ver Material</a>`; -->
+            <!-- } -->
+        <!-- } else { -->
+            <!-- // Modo Estudo (Fora do horário de aula) -->
+            <!-- linkCell.innerHTML = `<a href="${urlAula}?ref=estudo" class="btn-link" onclick="logAcesso('revisão', 'index', 'Fundamentos_Distribuidos')">Revisar Material</a>`; -->
+        <!-- } -->
+    <!-- } -->
+
+    <!-- window.onload = gerenciarAcesso; -->
+<!-- </script> -->
+
+<!-- </body> -->
+<!-- </html> -->
