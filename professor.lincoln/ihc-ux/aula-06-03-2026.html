@@ -156,12 +156,34 @@
             border-radius: 10px; font-size: 1.2rem; cursor: pointer; transition: 0.3s;
         }
         .btn-engajamento:hover { transform: scale(1.05); filter: brightness(1.1); }
+		
+		.btn-voltar {
+			margin-left: auto; /* Empurra o botão para a direita */
+			color: var(--white);
+			text-decoration: none;
+			font-size: 1rem;
+			font-weight: bold;
+			padding: 8px 15px;
+			border: 1px solid rgba(255,255,255,0.3);
+			border-radius: 8px;
+			transition: 0.3s;
+			background: rgba(255,255,255,0.05);
+		}
+
+		.btn-voltar:hover {
+			background: var(--accent);
+			border-color: var(--accent);
+			transform: translateX(-5px); /* Efeito visual de retorno */
+		}
+		
     </style>
 </head>
 <body>
 
     <header>
         <img src="../img/grafico.svg" alt="Logo" style="height: 70px;">
+		<a href="index.html" class="btn-voltar" onclick="logInteracao('navegacao', 'retorno_portal', 'header')">← Voltar ao Portal da Disciplina</a>
+		<a href="../../index.html" class="btn-voltar">Conheça meu trabalho como perito</a><br>
     </header>
 
     <div id="floating-atraso">
