@@ -216,4 +216,22 @@
 	  <priority>0.50</priority>
 	</url>	  
 
+  <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/index.html</loc>
+      <lastmod>2026-03-01</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/ihc-ux/index.html</loc>
+      <lastmod>2026-03-01</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://sposito.github.io/pericia.judicial/professor.lincoln/ihc-ux/aula-06-03-2026.html</loc>
+      <lastmod>2026-03-01</lastmod>
+      <priority>0.60</priority>
+    </url>
+
 </urlset>
