@@ -143,6 +143,10 @@ html, body {
     .content-box {
         padding: 1.5rem; /* Reduz padding interno do box no mobile */
     }
+	
+	#floating-atraso {
+        display: none !important; /* Esconde o QR Code no celular vertical */
+    }
 }
 
 /* Celular na Horizontal (Landscape) - Redução maior para evitar transbordo */
@@ -161,6 +165,10 @@ html, body {
     html, body {
         scroll-snap-type: none;
     }
+	#floating-atraso {
+        display: none !important; /* Esconde o QR Code no celular horizontal */
+    }
+	
 }
         h1 { color: var(--accent); font-size: var(--font-titulo); text-transform: uppercase; margin-bottom: 1.5rem; }
         p { font-size: var(--font-corpo); line-height: 1.5; max-width: 1100px; }
