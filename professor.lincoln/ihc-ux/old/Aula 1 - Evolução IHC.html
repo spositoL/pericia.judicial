@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evolução da IHC e UX - Aula 01</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+    <style>
+        /* ── Base ───────────────────────────────────────────── */
+        body { font-family: 'Inter', sans-serif; overflow: hidden; background: #0f172a; color: white; }
+
+        /* ── Slide system ───────────────────────────────────── */
+        .slide {
+            display: none; height: 100vh; width: 100vw;
+            padding: 2.5rem 3rem; flex-direction: column;
+            justify-content: center; align-items: center;
+            position: absolute; top: 0; left: 0;
+        }
+        .slide.active { display: flex; }
+
+        /* ── Slide transitions ──────────────────────────────── */
+        .slide.enter-right { animation: enterFromRight 0.42s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+        .slide.enter-left  { animation: enterFromLeft  0.42s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+        .slide.exit-left   { animation: exitToLeft     0.42s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+        .slide.exit-right  { animation: exitToRight    0.42s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+
+        @keyframes enterFromRight { from { opacity:0; transform:translateX(60px);  } to { opacity:1; transform:translateX(0); } }
+        @keyframes enterFromLeft  { from { opacity:0; transform:translateX(-60px); } to { opacity:1; transform:translateX(0); } }
+        @keyframes exitToLeft     { from { opacity:1; transform:translateX(0); } to { opacity:0; transform:translateX(-60px); } }
+        @keyframes exitToRight    { from { opacity:1; transform:translateX(0); } to { opacity:0; transform:translateX(60px);  } }
+
+        /* ── Stagger animations ─────────────────────────────── */
+        .stagger > * { opacity:0; animation: fadeUp 0.5s ease forwards; }
+        .stagger > *:nth-child(1) { animation-delay:0.08s; }
+        .stagger > *:nth-child(2) { animation-delay:0.20s; }
+        .stagger > *:nth-child(3) { animation-delay:0.32s; }
+        .stagger > *:nth-child(4) { animation-delay:0.44s; }
+        .stagger > *:nth-child(5) { animation-delay:0.56s; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+
+        /* ── Card ───────────────────────────────────────────── */
+        .card {
+            background: rgba(30,41,59,0.8); backdrop-filter:blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 1.5rem; padding: 2rem;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        /* ── Progress bar ───────────────────────────────────── */
+        .progress-bar { position:fixed; bottom:0; left:0; height:5px; background:linear-gradient(90deg,#ef4444,#f97316,#a855f7); transition:width 0.35s ease; z-index:50; }
+
+        /* ── Nav buttons ────────────────────────────────────── */
+        .nav-btn {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius:50%; width:48px; height:48px;
+            display:flex; align-items:center; justify-content:center;
+            transition:all 0.2s; cursor:pointer;
+        }
+        .nav-btn:hover { background:#ef4444; transform:scale(1.1); }
+
+        /* ── Slide counter ──────────────────────────────────── */
+        .slide-counter {
+            position:fixed; top:1.5rem; right:1.5rem;
+            background:rgba(15,23,42,0.85); border:1px solid rgba(255,255,255,0.1);
+            border-radius:999px; padding:0.4rem 1rem;
+            font-size:0.8rem; font-family:'Fira Code',monospace; color:#94a3b8;
+            z-index:50; backdrop-filter:blur(8px);
+        }
+
+        /* ── Dot navigation ─────────────────────────────────── */
+        .dot-nav { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%); display:flex; gap:7px; z-index:50; }
+        .dot { width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,0.2); cursor:pointer; transition:all 0.3s; border:none; padding:0; }
+        .dot.active { background:#ef4444; transform:scale(1.5); }
+        .dot:hover { background:rgba(255,255,255,0.5); }
+
+        /* ── Fullscreen btn ─────────────────────────────────── */
+        .fullscreen-btn {
+            position:fixed; top:1.5rem; left:1.5rem;
+            background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
+            border-radius:0.5rem; padding:0.4rem 0.8rem;
+            font-size:0.75rem; color:#64748b; cursor:pointer;
+            z-index:50; transition:all 0.2s; backdrop-filter:blur(8px);
+        }
+        .fullscreen-btn:hover { color:white; background:rgba(255,255,255,0.1); }
+
+        /* ── Presenter notes ────────────────────────────────── */
+        .notes-overlay {
+            display:none; position:fixed; bottom:5rem; left:50%; transform:translateX(-50%);
+            background:rgba(15,23,42,0.97); border:1px solid rgba(239,68,68,0.4);
+            border-radius:1rem; padding:1rem 1.5rem; max-width:720px; width:90%;
+            z-index:100; font-size:0.85rem; color:#94a3b8; backdrop-filter:blur(12px);
+        }
+        .notes-overlay.visible { display:block; animation:fadeUp 0.3s ease forwards; }
+        .notes-overlay h4 { color:#ef4444; font-weight:700; margin-bottom:0.5rem; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; }
+
+        /* ── Misc ───────────────────────────────────────────── */
+        .hero-img { border-radius:1.5rem; width:100%; height:270px; object-fit:cover; margin-bottom:1.5rem; box-shadow:0 10px 30px rgba(0,0,0,0.5); }
+        .skeuo { background:linear-gradient(145deg,#e6e6e6,#ffffff); border:4px solid #999; border-radius:20px; box-shadow:5px 5px 15px #aaa,-5px -5px 15px #fff; width:80px; height:80px; }
+        .flat  { background:#3b82f6; border-radius:8px; width:80px; height:80px; }
+
+        /* ── Timeline ───────────────────────────────────────── */
+        .timeline-item { position:relative; display:flex; flex-direction:column; align-items:center; flex:1; cursor:pointer; }
+        .timeline-item:hover .tl-card { background:rgba(239,68,68,0.12); border-color:rgba(239,68,68,0.4); transform:translateY(-5px); }
+        .tl-dot { width:20px; height:20px; border-radius:50%; border:3px solid currentColor; background:#0f172a; z-index:2; transition:transform 0.2s; }
+        .timeline-item:hover .tl-dot { transform:scale(1.5); }
+        .tl-card { background:rgba(30,41,59,0.6); border:1px solid rgba(255,255,255,0.1); border-radius:0.75rem; padding:0.75rem; font-size:0.75rem; text-align:center; transition:all 0.2s; margin-top:0.5rem; width:100%; }
+
+        /* ── Persona flip cards ─────────────────────────────── */
+        .persona-card { perspective:1000px; cursor:pointer; }
+        .persona-inner { transition:transform 0.6s; transform-style:preserve-3d; position:relative; }
+        .persona-card.flipped .persona-inner { transform:rotateY(180deg); }
+        .persona-front, .persona-back { backface-visibility:hidden; -webkit-backface-visibility:hidden; }
+        .persona-back { position:absolute; top:0; left:0; width:100%; height:100%; transform:rotateY(180deg); }
+
+        /* ── Quiz ───────────────────────────────────────────── */
+        .quiz-option {
+            background:rgba(30,41,59,0.8); border:2px solid rgba(255,255,255,0.1);
+            border-radius:1rem; padding:1rem 1.5rem; cursor:pointer;
+            transition:all 0.25s; text-align:left; width:100%;
+            font-size:1rem; color:white;
+        }
+        .quiz-option:hover:not(:disabled) { border-color:rgba(255,255,255,0.35); background:rgba(51,65,85,0.8); transform:translateX(5px); }
+        .quiz-option.correct { border-color:#22c55e; background:rgba(34,197,94,0.15); }
+        .quiz-option.wrong   { border-color:#ef4444; background:rgba(239,68,68,0.15); }
+        .quiz-option:disabled { cursor:default; transform:none; }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar" id="progress"></div>
+    <div class="slide-counter" id="slideCounter">1 / 14</div>
+    <div class="dot-nav" id="dotNav"></div>
+    <button class="fullscreen-btn" id="fsBtn" onclick="toggleFullscreen()">⛶ Tela Cheia  (F)</button>
+
+    <!-- Notes overlay -->
+    <div class="notes-overlay" id="notesOverlay">
+        <h4>📋 Notas do Professor  —  pressione N para fechar</h4>
+        <p id="notesText"></p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Slide 1 · Capa                                            -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="slide active"
+        data-notes="Apresentar o objetivo da aula: compreender como a relação humano-máquina evoluiu ao longo das décadas. Perguntar: quem aqui já usou linha de comando?">
+        <div class="max-w-5xl text-center stagger">
+            <img src="https://images.unsplash.com/photo-1555066931-4365d14431b9?w=1200&h=400&fit=crop" alt="Evolução da IHC" class="hero-img">
+            <h1 class="text-6xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400">
+                Evolução da IHC e UX
+            </h1>
+            <p class="text-2xl text-slate-400">Uma jornada da mecânica à inteligência</p>
+            <div class="mt-8 text-slate-500 font-mono bg-slate-800/50 inline-block px-4 py-2 rounded">
+                Aula 01 • Prof. Wilson Andrade
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Slide 2 · Batch (Anos 40-50)                              -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="slide"
+        data-notes="Contextualizar: os computadores eram enormes e caros. Apenas grandes empresas e universidades tinham acesso. O ciclo de cartão perfurado podia levar DIAS. Não havia como corrigir erros na hora.">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-4xl font-bold mb-8 flex items-center gap-4">
+                <span class="bg-red-500 text-white w-12 h-12 flex items-center justify-center rounded-full text-2xl shrink-0">1</span>
+                Anos 40–50: Processamento em Lote
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center stagger">
+                <div class="card border-l-4 border-red-500">
+                    <h3 class="text-2xl font-bold mb-4">O Paradigma do Cartão</h3>
+                    <ul class="space-y-4 text-lg text-slate-300">
+                        <li class="flex gap-3"><span class="text-red-400">→</span> Nenhuma interação em tempo real.</li>
+                        <li class="flex gap-3"><span class="text-red-400">→</span> Ciclo: Programar → Perfurar → Esperar.</li>
+                        <li class="flex gap-3"><span class="text-red-400">→</span> Usuário era um <strong class="text-white">especialista matemático</strong>.</li>
+                        <li class="flex gap-3"><span class="text-red-400">→</span> Um erro = reiniciar o processo inteiro.</li>
+                    </ul>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <div class="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 text-center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Used_Punchcard_%285151286161%29.jpg/640px-Used_Punchcard_%285151286161%29.jpg"
+                             alt="Cartão Perfurado IBM" class="w-full h-44 object-cover">
+                        <p class="text-sm text-slate-400 italic py-2">Cartão Perfurado IBM — anos 1950</p>
+                    </div>
+                    <div class="card text-center bg-red-900/10 border-red-900/30">
+                        <p class="text-red-400 text-sm font-mono">IHC Score: <strong class="text-white">0 / 10</strong></p>
+                        <p class="text-xs text-slate-500 mt-1">Não havia "interface" — apenas instrução direta à máquina.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Slide 3 · CLI (Anos 60-70)                                -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="slide"
+        data-notes="Destacar: CLI ainda existe hoje! Devs e sysadmins usam diariamente. A diferença para o lote é a interatividade — a máquina responde imediatamente. Perguntar: quem usa terminal no dia a dia?">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-4xl font-bold mb-6 flex items-center gap-4">
+                <span class="bg-green-500 text-white w-12 h-12 flex items-center justify-center rounded-full text-2xl shrink-0">2</span>
+                Anos 60–70: Linha de Comando (CLI)
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="space-y-4 stagger">
+                    <p class="text-xl text-slate-300">Pela primeira vez, humanos <em class="text-green-400">"conversam"</em> com a máquina via texto.</p>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/DEC_VT100_terminal.jpg/640px-DEC_VT100_terminal.jpg"
+                         alt="Terminal DEC VT100" class="w-full h-32 object-cover rounded-xl border border-green-900">
+                    <div class="card bg-black border-green-900 font-mono text-green-500 text-sm">
+                        <p class="text-xs opacity-50 mb-1">// System 360 Kernel — Ready</p>
+                        <p>$ mkdir novo_projeto</p>
+                        <p>$ cp config.sys ./dist</p>
+                        <p>$ run compile --target=human</p>
+                        <p class="text-green-300">Compiled: 1 warning, 0 errors</p>
+                        <p class="animate-pulse mt-1">_</p>
+                    </div>
+                </div>
+                <div class="card bg-slate-800/50 stagger">
+                    <h3 class="text-xl font-bold mb-6 text-green-400">Impacto na IHC:</h3>
+                    <ul class="space-y-4">
+                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg">
+                            <span>⚠️</span>
+                            <div><strong>Carga Cognitiva Alta</strong><br><span class="text-sm text-slate-400">Memorizar comandos exatos é obrigatório.</span></div>
+                        </li>
+                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg">
+                            <span>⚡</span>
+                            <div><strong>Feedback Imediato</strong><br><span class="text-sm text-slate-400">Mas técnico e sem orientação visual.</span></div>
+                        </li>
+                        <li class="flex gap-3 p-3 bg-white/5 rounded-lg">
+                            <span>👥</span>
+                            <div><strong>Usuário: Especialista</strong><br><span class="text-sm text-slate-400">Programadores e operadores treinados.</span></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Slide 4 · GUI (Anos 80)                                   -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="slide"
+        data-notes="Marco histórico: o Xerox PARC criou o conceito GUI nos anos 70, mas foi a Apple em 1984 com o Macintosh que popularizou. A metáfora de escritório foi estratégica — usuários já sabiam usar mesa, pasta e lixeira.">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-4xl font-bold mb-3 text-blue-400 flex items-center gap-4">
+                <span class="bg-blue-500 text-white w-12 h-12 flex items-center justify-center rounded-full text-2xl shrink-0">3</span>
+                Era GUI (1980s): Desktop Metaphor
+            </h2>
+            <div class="flex justify-center mb-4">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Macintosh_128k_transparency.png/300px-Macintosh_128k_transparency.png"
+                     alt="Apple Macintosh 1984" class="h-24 object-contain">
+            </div>
+            <div class="grid grid-cols-3 gap-6">
+                <div class="col-span-2 card grid grid-cols-2 gap-4 stagger">
+                    <div class="text-center p-4 border border-white/5 rounded-xl hover:border-blue-500/40 hover:bg-blue-900/10 transition-all cursor-default">
+                        <span class="text-5xl block mb-2">🖱️</span>
+                        <h4 class="font-bold">O Mouse</h4>
+                        <p class="text-sm text-slate-400">Manipulação Direta</p>
+                    </div>
+                    <div class="text-center p-4 border border-white/5 rounded-xl hover:border-blue-500/40 hover:bg-blue-900/10 transition-all cursor-default">
+                        <span class="text-5xl block mb-2">🗑️</span>
+                        <h4 class="font-bold">Lixeira</h4>
+                        <p class="text-sm text-slate-400">Metáfora de Escritório</p>
+                    </div>
+                    <div class="text-center p-4 border border-white/5 rounded-xl hover:border-blue-500/40 hover:bg-blue-900/10 transition-all cursor-default">
+                        <span class="text-5xl block mb-2">📁</span>
+                        <h4 class="font-bold">Pastas</h4>
+                        <p class="text-sm text-slate-400">Organização Visual</p>
+                    </div>
+                    <div class="text-center p-4 border border-white/5 rounded-xl hover:border-blue-500/40 hover:bg-blue-900/10 transition-all cursor-default">
+                        <span class="text-5xl block mb-2">💾</span>
+                        <h4 class="font-bold">Salvar</h4>
+                        <p class="text-sm text-slate-400">Ícone de Disquete</p>
+                    </div>
+                </div>
+                <div class="card flex flex-col justify-center text-center bg-blue-900/20 border-blue-800/40">
+                    <p class="text-5xl font-bold text-blue-400 mb-3">WIMP</p>
+                    <div class="space-y-1 text-slate-300 text-sm">
+                        <p class="flex justify-between px-3"><span>W</span><span class="text-slate-500">Windows</span></p>
+                        <p class="flex justify-between px-3"><span>I</span><span class="text-slate-500">Icons</span></p>
+                        <p class="flex justify-between px-3"><span>M</span><span class="text-slate-500">Menus</span></p>
+                        <p class="flex justify-between px-3"><span>P</span><span class="text-slate-500">Pointer</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Slide 5 · Linha do Tempo Interativa  (NEW)                -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="slide"
+        data-notes="Use este slide para recapitular visualmente tudo até aqui. Peça aos alunos: qual era acham mais difícil de usar? Note que algumas eras coexistem — CLI ainda é usado profissionalmente hoje.">
+        <div class="max-w-6xl w-full">
+            <h2 class="text-4xl font-bold mb-10 text-center">📅 Linha do Tempo da IHC</h2>
+            <div class="relative">
+                <div class="absolute top-[38px] left-0 right-0 h-1 bg-gradient-to-r from-red-500 via-green-500 via-blue-500 via-yellow-400 via-pink-500 via-purple-400 to-cyan-400 rounded-full"></div>
+                <div class="flex justify-between px-2 stagger">
+                    <div class="timeline-item">
+                        <div class="tl-dot text-red-400 border-red-400"></div>
+                        <div class="tl-card"><p class="text-red-400 font-bold">1940–50s</p><p class="text-slate-300 mt-1">🗂️ Batch</p><p class="text-slate-500 mt-1 text-xs">Cartões<br>Perfurados</p></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="tl-dot text-green-400 border-green-400"></div>
+                        <div class="tl-card"><p class="text-green-400 font-bold">1960–70s</p><p class="text-slate-300 mt-1">⌨️ CLI</p><p class="text-slate-500 mt-1 text-xs">Linha de<br>Comando</p></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="tl-dot text-blue-400 border-blue-400"></div>
+                        <div class="tl-card"><p class="text-blue-400 font-bold">1980–90s</p><p class="text-slate-300 mt-1">🖥️ GUI</p><p class="text-slate-500 mt-1 text-xs">WIMP +<br>Desktop</p></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="tl-dot text-yellow-400 border-yellow-400"></div>
+                        <div class="tl-card"><p class="text-yellow-400 font-bold">2000s</p><p class="text-slate-300 mt-1">🌐 Web</p><p class="text-slate-500 mt-1 text-xs">HTML/CSS<br>Usabilidade</p></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="tl-dot text-pink-400 border-pink-400"></div>
+                        <div class="tl-card"><p class="text-pink-400 font-bold">2007–15</p><p class="text-slate-300 mt-1">📱 Mobile</p><p class="text-slate-500 mt-1 text-xs">Touch +<br>NUI</p></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="tl-dot text-purple-400 border-purple-400"></div>
+                        <div class="tl-card"><p class="text-purple-400 font-bold">2016–22</p><p class="text-slate-300 mt-1">🤖 UCD/VUI</p><p class="text-slate-500 mt-1 text-xs">Voz +<br>Acessib.</p></div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="tl-dot text-cyan-400 border-cyan-400"></div>
+                        <div class="tl-card"><p class="text-cyan-400 font-bold">2023→</p><p class="text-slate-300 mt-1">✨ Zero UI</p><p class="text-slate-500 mt-1 text-xs">IA +<br>Spatial</p></div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-slate-600 mt-8 text-sm">Passe o cursor sobre cada era para destacar</p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Slide 6 · Evolução da Estética                            -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="slide"
+        data-notes="Ponto importante: o Skeuomorphismo não era 'feio' — era pedagogicamente necessário. Com Flat Design (iOS 7, Windows 8) assumiu-se que o usuário já sabe que botão é clicável.">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-4xl font-bold mb-6 text-center">A Evolução da Estética Visual</h2>
+            <div class="grid grid-cols-2 gap-10 stagger">
+                <div class="card flex flex-col items-center gap-4">
+                    <h3 class="text-xl font-bold text-yellow-400">Esqueumorfismo (2000–2012)</h3>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/IOS6.png/320px-IOS6.png"
+                         alt="iOS 6 Skeuomorphism" class="w-full h-36 object-cover rounded-xl border border-white/10">
+                    <div class="skeuo flex items-center justify-center text-slate-700 font-bold text-sm">Botão</div>
+                    <ul class="text-sm text-slate-400 space-y-1 w-full">
+                        <li class="flex gap-2">✅ Curva de aprendizado baixa</li>
+                        <li class="flex gap-2">✅ Intuitivo para novos usuários</li>
+                        <li class="flex gap-2">❌ Pesado visualmente</li>
+                        <li class="flex gap-2">❌ Difícil de adaptar responsivamente</li>
+                    </ul>
+                </div>
+                <div class="card flex flex-col items-center gap-4">
+                    <h3 class="text-xl font-bold text-blue-400">Flat Design (2013–Hoje)</h3>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/IOS_7_Homescreen.png/320px-IOS_7_Homescreen.png"
+                         alt="iOS 7 Flat Design" class="w-full h-36 object-cover rounded-xl border border-white/10">
+                    <div class="flat flex items-center justify-center text-white font-bold text-sm">Botão</div>
+                    <ul class="text-sm text-slate-400 space-y-1 w-full">
+                        <li class="flex gap-2">✅ Limpo e escalável</li>
+                        <li class="flex gap-2">✅ Consistente em múltiplas plataformas</li>
+                        <li class="flex gap-2">❌ Pode ser ambíguo (o que é clicável?)</li>
+                        <li class="flex gap-2">❌ Exige usuário letrado digitalmente</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Slide 7 · UCD                                             -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="slide"
+        data-notes="UCD foi formalizado por Don Norman nos anos 80. Seu livro 'The Design of Everyday Things' é referência obrigatória. A ideia central: o sistema se adapta ao humano, nunca o contrário. Perguntar: já usaram um produto mal projetado?">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-4xl font-bold mb-6 text-pink-400">O Paradigma Atual: Design Centrado no Usuário</h2>
+            <div class="grid grid-cols-3 gap-6 items-center">
+                <div class="col-span-2">
+                    <div class="relative flex justify-center" style="height:310px;">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-56 h-56 border-2 border-dashed border-pink-500/20 rounded-full animate-[spin_25s_linear_infinite]"></div>
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="w-80 h-80 border border-dashed border-pink-500/10 rounded-full animate-[spin_38s_linear_infinite_reverse]"></div>
+                        </div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="card text-center border-pink-500/50 bg-pink-900/20 z-10 px-6 py-4">
+                                <span class="text-4xl block mb-1">👤</span>
+                                <p class="font-bold text-lg">USUÁRIO</p>
+                                <p class="text-xs text-slate-400">Necessidades · Dores · Desejos</p>
+                            </div>
+                        </div>
+                        <span class="absolute top-4 bg-slate-700 px-4 py-1.5 rounded-full border border-pink-500/40 text-sm">🔍 Pesquisa</span>
+                        <span class="absolute bottom-4 bg-slate-700 px-4 py-1.5 rounded-full border border-pink-500/40 text-sm">🧪 Testes</span>
+                        <span class="absolute left-0 bg-slate-700 px-3 py-1.5 rounded-full border border-pink-500/40 text-sm">📐 Prototipagem</span>
+                        <span class="absolute right-0 bg-slate-700 px-4 py-1.5 rounded-full border border-pink-500/40 text-sm">💙 Empatia</span>
+                    </div>
+                </div>
+                <div class="space-y-4 stagger">
+                    <div class="card bg-pink-900/10 border-pink-800/30">
+                        <p class="text-xs text-pink-400 font-bold mb-1 uppercase tracking-widest">Princípio</p>
+                        <p class="text-sm text-slate-300">"O sistema deve se adaptar ao usuário, nunca o contrário."</p>
+                        <p class="text-xs text-slate-500 mt-1">— Don Norman</p>
+                    </div>
+                    <div class="card bg-pink-900/10 border-pink-800/30">
+                        <p class="text-xs text-pink-400 font-bold mb-2 uppercase tracking-widest">Ferramentas UCD</p>
+                        <div class="flex flex-wrap gap-1 text-xs">
+                            <span class="bg-slate-700 px-2 py-1 rounded">Entrevistas</span>
+                            <span class="bg-slate-700 px-2 py-1 rounded">Personas</span>
+                            <span class="bg-slate-700 px-2 py-1 rounded">Journey Map</span>
+                            <span class="bg-slate-700 px-2 py-1 rounded">A/B Testing</span>
+                            <span class="bg-slate-700 px-2 py-1 rounded">Heurísticas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Slide 8 · Personas  (NEW)                                 -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="slide"
+        data-notes="Personas são personagens fictícios criados a partir de dados reais. Elas evitam que o designer projete 'para si mesmo'. Perguntar: quem seria o usuário de um app do INSS? E de um jogo mobile?">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-4xl font-bold mb-2">Quem é o Usuário? → <span class="text-pink-400">Personas</span></h2>
+            <p class="text-slate-400 mb-5 text-sm">Clique nos cards para revelar dores e objetivos →</p>
+            <div class="grid grid-cols-3 gap-6">
+
+                <!-- Persona 1 — Ana -->
+                <div class="persona-card h-64" onclick="this.classList.toggle('flipped')">
+                    <div class="persona-inner h-full">
+                        <div class="persona-front card h-full flex flex-col items-center justify-center text-center bg-gradient-to-b from-blue-900/30 to-slate-800/80 border-blue-700/30">
+                            <span class="text-6xl mb-3">👩‍💼</span>
+                            <h3 class="text-xl font-bold">Ana, 42</h3>
+                            <p class="text-slate-400 text-sm">Gerente de RH</p>
+                            <div class="mt-3 flex gap-1 flex-wrap justify-center">
+                                <span class="text-xs bg-blue-700/30 px-2 py-0.5 rounded">Não-técnica</span>
+                                <span class="text-xs bg-blue-700/30 px-2 py-0.5 rounded">Mobile-first</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mt-3">← clique para ver mais</p>
+                        </div>
+                        <div class="persona-back card h-full flex flex-col justify-center bg-blue-900/30 border-blue-700/50 text-sm">
+                            <p class="font-bold text-blue-400 mb-2">🎯 Objetivo</p>
+                            <p class="text-slate-300 mb-4">Aprovar férias da equipe pelo celular sem precisar abrir o computador.</p>
+                            <p class="font-bold text-red-400 mb-2">😤 Dor Principal</p>
+                            <p class="text-slate-300">Sistemas legados cheios de menus e siglas que nunca entende.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Persona 2 — Lucas -->
+                <div class="persona-card h-64" onclick="this.classList.toggle('flipped')">
+                    <div class="persona-inner h-full">
+                        <div class="persona-front card h-full flex flex-col items-center justify-center text-center bg-gradient-to-b from-green-900/30 to-slate-800/80 border-green-700/30">
+                            <span class="text-6xl mb-3">👨‍💻</span>
+                            <h3 class="text-xl font-bold">Lucas, 24</h3>
+                            <p class="text-slate-400 text-sm">Dev Backend</p>
+                            <div class="mt-3 flex gap-1 flex-wrap justify-center">
+                                <span class="text-xs bg-green-700/30 px-2 py-0.5 rounded">Power User</span>
+                                <span class="text-xs bg-green-700/30 px-2 py-0.5 rounded">CLI-first</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mt-3">← clique para ver mais</p>
+                        </div>
+                        <div class="persona-back card h-full flex flex-col justify-center bg-green-900/30 border-green-700/50 text-sm">
+                            <p class="font-bold text-green-400 mb-2">🎯 Objetivo</p>
+                            <p class="text-slate-300 mb-4">Deploy rápido e monitoramento de logs sem sair do terminal.</p>
+                            <p class="font-bold text-red-400 mb-2">😤 Dor Principal</p>
+                            <p class="text-slate-300">Dashboards que escondem dados técnicos atrás de "interfaces amigáveis".</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Persona 3 — José -->
+                <div class="persona-card h-64" onclick="this.classList.toggle('flipped')">
+                    <div class="persona-inner h-full">
+                        <div class="persona-front card h-full flex flex-col items-center justify-center text-center bg-gradient-to-b from-orange-900/30 to-slate-800/80 border-orange-700/30">
+                            <span class="text-6xl mb-3">👴</span>
+                            <h3 class="text-xl font-bold">José, 68</h3>
+                            <p class="text-slate-400 text-sm">Aposentado</p>
+                            <div class="mt-3 flex gap-1 flex-wrap justify-center">
+                                <span class="text-xs bg-orange-700/30 px-2 py-0.5 rounded">Iniciante</span>
+                                <span class="text-xs bg-orange-700/30 px-2 py-0.5 rounded">Acessibilidade</span>
+                            </div>
+                            <p class="text-xs text-slate-600 mt-3">← clique para ver mais</p>
+                        </div>
+                        <div class="persona-back card h-full flex flex-col justify-center bg-orange-900/30 border-orange-700/50 text-sm">
+                            <p class="font-bold text-orange-400 mb-2">🎯 Objetivo</p>
+                            <p class="text-slate-300 mb-4">Acessar extrato do INSS e pagar boleto pelo app do banco.</p>
+                            <p class="font-bold text-red-400 mb-2">😤 Dor Principal</p>
+                            <p class="text-slate-300">Fontes pequenas, botões invisíveis e autenticação em múltiplos passos.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <p class="text-xs text-slate-600 text-center mt-4">O mesmo sistema precisa servir a todos esses perfis — esse é o desafio da IHC.</p>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Slide 9 · NUI / Mobile                                    -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="slide"
+        data-notes="O iPhone de 2007 foi o divisor de águas. Pela primeira vez, uma interface precisava funcionar sem mouse e sem teclado físico. Hoje 60%+ do tráfego web vem de dispositivos móveis.">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-4xl font-bold mb-6 flex items-center gap-4">
+                <span class="bg-indigo-500 text-white w-12 h-12 flex items-center justify-center rounded-full text-2xl shrink-0">4</span>
+                NUI: Natural User Interfaces
+            </h2>
+            <div class="grid grid-cols-2 gap-8 items-start stagger">
+                <div class="card bg-indigo-900/20 border-indigo-800/40">
+                    <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=200&fit=crop"
+                         alt="Smartphones e touch" class="w-full h-32 object-cover rounded-xl mb-4">
+                    <h3 class="text-xl font-bold mb-3">A Tela é o Sensor</h3>
+                    <p class="text-slate-300 text-sm mb-4">Multitoque, gestos e biometria eliminam os intermediários físicos (mouse/teclado).</p>
+                    <div class="flex justify-center gap-3 flex-wrap">
+                        <span class="p-2 bg-white/10 rounded-lg text-sm">🖐️ Pinch</span>
+                        <span class="p-2 bg-white/10 rounded-lg text-sm">👆 Tap</span>
+                        <span class="p-2 bg-white/10 rounded-lg text-sm">↔️ Swipe</span>
+                        <span class="p-2 bg-white/10 rounded-lg text-sm">🔄 Rotate</span>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="card">
+                        <h3 class="text-lg font-bold mb-3">IHC Ubíqua</h3>
+                        <p class="text-slate-400 italic text-sm">"O melhor computador é aquele que você não percebe que está usando."</p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="text-xs bg-slate-700 px-2 py-1 rounded">⌚ Smartwatches</span>
+                            <span class="text-xs bg-slate-700 px-2 py-1 rounded">🏠 Smart Home</span>
+                            <span class="text-xs bg-slate-700 px-2 py-1 rounded">🌡️ IoT</span>
+                            <span class="text-xs bg-slate-700 px-2 py-1 rounded">🚗 HUDs</span>
+                        </div>
+                    </div>
+                    <div class="card bg-indigo-900/10 border-indigo-800/30">
+                        <p class="text-xs text-indigo-400 font-bold uppercase tracking-widest mb-2">Novo Desafio</p>
+                        <p class="text-sm text-slate-300">Interface deve funcionar com um polegar, em movimento, à luz do sol, e se adaptar a interrupções a qualquer momento.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Slide 10 · WIMP vs Touch  (NEW)                           -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="slide"
+        data-notes="Nenhum paradigma é melhor universalmente — cada um serve a um contexto diferente. Perguntar: para editar um vídeo, qual preferem? E para pedir comida?">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-4xl font-bold mb-8 text-center">WIMP <span class="text-slate-500 text-3xl mx-2">vs</span> Touch</h2>
+            <div class="grid grid-cols-2 gap-8 stagger">
+                <div class="card border-t-4 border-blue-500">
+                    <h3 class="text-2xl font-bold text-blue-400 mb-5 text-center">🖥️ WIMP / Desktop</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex gap-3"><span class="text-green-400 shrink-0">✓</span> Precisão pixel: ideal para edição e CAD</li>
+                        <li class="flex gap-3"><span class="text-green-400 shrink-0">✓</span> Multitarefa visível com janelas</li>
+                        <li class="flex gap-3"><span class="text-green-400 shrink-0">✓</span> Atalhos de teclado = alta velocidade</li>
+                        <li class="flex gap-3"><span class="text-red-400 shrink-0">✗</span> Não portátil por padrão</li>
+                        <li class="flex gap-3"><span class="text-red-400 shrink-0">✗</span> Exige hardware específico (mouse)</li>
+                        <li class="flex gap-3"><span class="text-red-400 shrink-0">✗</span> Curva de aprendizado mais alta</li>
+                    </ul>
+                    <div class="mt-5 text-center text-xs text-blue-400 bg-blue-900/20 rounded-lg p-2">
+                        🏆 Melhor para: Trabalho profissional, produtividade
+                    </div>
+                </div>
+                <div class="card border-t-4 border-orange-500">
+                    <h3 class="text-2xl font-bold text-orange-400 mb-5 text-center">📱 Touch / Mobile</h3>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex gap-3"><span class="text-green-400 shrink-0">✓</span> Sempre na mão — onipresente</li>
+                        <li class="flex gap-3"><span class="text-green-400 shrink-0">✓</span> Gestos naturais e intuitivos</li>
+                        <li class="flex gap-3"><span class="text-green-400 shrink-0">✓</span> Contexto: GPS, câmera, sensores</li>
+                        <li class="flex gap-3"><span class="text-red-400 shrink-0">✗</span> Área de toque mínima (44 × 44px)</li>
+                        <li class="flex gap-3"><span class="text-red-400 shrink-0">✗</span> "Fat finger" problem</li>
+                        <li class="flex gap-3"><span class="text-red-400 shrink-0">✗</span> Tela pequena = hierarquia complexa</li>
+                    </ul>
+                    <div class="mt-5 text-center text-xs text-orange-400 bg-orange-900/20 rounded-lg p-2">
+                        🏆 Melhor para: Consumo, mobilidade, notificações
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Slide 11 · Quiz  (NEW)                                    -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="slide"
+        data-notes="Quiz de fixação. Dê 30 segundos para os alunos pensarem antes de revelar a resposta. A resposta correta é B — a Apple popularizou, mas o Xerox PARC inventou em 1973 com o computador Alto.">
+        <div class="max-w-3xl w-full text-center">
+            <div class="mb-5">
+                <span class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 px-4 py-1.5 rounded-full text-sm font-bold">⚡ Quiz Rápido</span>
+            </div>
+            <h2 class="text-3xl font-bold mb-2">Qual empresa <em class="text-yellow-400">inventou</em> a interface gráfica (GUI)?</h2>
+            <p class="text-slate-500 text-sm mb-7">Dica: foi nos anos 70, em um laboratório famoso.</p>
+            <div id="quizOptions" class="space-y-3 text-left">
+                <button class="quiz-option" onclick="answerQuiz(this, false)">A) Apple — com o Macintosh em 1984</button>
+                <button class="quiz-option" onclick="answerQuiz(this, true)">B) Xerox PARC — com o Alto em 1973</button>
+                <button class="quiz-option" onclick="answerQuiz(this, false)">C) Microsoft — com o Windows 1.0 em 1985</button>
+                <button class="quiz-option" onclick="answerQuiz(this, false)">D) IBM — com o PC em 1981</button>
+            </div>
+            <div id="quizFeedback" class="hidden mt-6 card bg-green-900/20 border-green-700/40 text-left">
+                <p class="text-green-400 font-bold mb-1">✅ Resposta correta: B</p>
+                <p class="text-slate-300 text-sm">O <strong class="text-white">Xerox PARC</strong> desenvolveu o Alto em 1973 com janelas, ícones e mouse. A Apple "pegou emprestado" o conceito e o popularizou com o Macintosh em 1984.</p>
+            </div>
+            <div id="quizWrong" class="hidden mt-6 card bg-red-900/20 border-red-700/40 text-left">
+                <p class="text-red-400 font-bold mb-1">❌ Quase lá!</p>
+                <p class="text-slate-300 text-sm">A resposta certa é <strong class="text-white">B — Xerox PARC (1973)</strong>. A Apple popularizou com o Mac em 1984, mas não foi a inventora.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Slide 12 · Futuro das Interfaces                          -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="slide"
+        data-notes="Spatial Computing: Apple Vision Pro. Meta Quest 3 torna a XR mais acessível. Zero UI: o GPT-4 já antecipa intenções. Perguntar: qual dessas vocês acham que vai dominar em 10 anos?">
+        <div class="max-w-5xl w-full text-center">
+            <h2 class="text-5xl font-bold mb-7 text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-purple-400 to-cyan-400">
+                O Futuro das Interfaces
+            </h2>
+            <div class="grid grid-cols-3 gap-6 stagger">
+                <div class="card border-t-4 border-yellow-500 hover:scale-105 transition-transform">
+                    <img src="https://images.unsplash.com/photo-1589254065878-42c9da997008?w=400&h=160&fit=crop"
+                         alt="Voice User Interface" class="w-full h-24 object-cover rounded-xl mb-3">
+                    <span class="text-4xl mb-2 block">🗣️</span>
+                    <h3 class="font-bold text-xl mb-2 text-yellow-400">VUI</h3>
+                    <p class="text-slate-400 text-sm">Voice User Interface: Alexa, Siri, Google Assistant</p>
+                    <p class="text-xs text-slate-600 mt-3 italic">"Alexa, o que vem depois das telas?"</p>
+                </div>
+                <div class="card border-t-4 border-purple-500 hover:scale-105 transition-transform">
+                    <img src="https://images.unsplash.com/photo-1617802690658-1173a812650d?w=400&h=160&fit=crop"
+                         alt="Realidade Aumentada" class="w-full h-24 object-cover rounded-xl mb-3">
+                    <span class="text-4xl mb-2 block">🕶️</span>
+                    <h3 class="font-bold text-xl mb-2 text-purple-400">Spatial Computing</h3>
+                    <p class="text-slate-400 text-sm">Realidade Aumentada — Apple Vision Pro, Meta Quest</p>
+                </div>
+                <div class="card border-t-4 border-cyan-500 hover:scale-105 transition-transform">
+                    <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=160&fit=crop"
+                         alt="Inteligência Artificial" class="w-full h-24 object-cover rounded-xl mb-3">
+                    <span class="text-4xl mb-2 block">✨</span>
+                    <h3 class="font-bold text-xl mb-2 text-cyan-400">Zero UI</h3>
+                    <p class="text-slate-400 text-sm">IA Antecipatória: o sistema age antes do comando.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Slide 13 · Hoje no Mercado  (NEW)                         -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="slide"
+        data-notes="Cases concretos ajudam os alunos a conectar teoria com prática. Perguntar: qual empresa vocês acham que tem a melhor UX? Por quê? Discutir 2 minutos.">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-4xl font-bold mb-5">🏢 IHC e UX Hoje no Mercado</h2>
+            <div class="grid grid-cols-3 gap-5 stagger">
+                <div class="card border-l-4 border-slate-400 hover:border-white transition-all">
+                    <div class="flex items-center gap-3 mb-3"><span class="text-3xl">🍎</span><h3 class="font-bold text-lg">Apple</h3></div>
+                    <p class="text-slate-400 text-sm mb-3">Human Interface Guidelines (HIG): consistência é lei. Qualquer app na App Store segue as mesmas regras de interação.</p>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="text-xs bg-slate-700 px-2 py-0.5 rounded">Spatial UI</span>
+                        <span class="text-xs bg-slate-700 px-2 py-0.5 rounded">Acessibilidade</span>
+                        <span class="text-xs bg-slate-700 px-2 py-0.5 rounded">Vision Pro</span>
+                    </div>
+                </div>
+                <div class="card border-l-4 border-blue-500 hover:border-blue-300 transition-all">
+                    <div class="flex items-center gap-3 mb-3"><span class="text-3xl">🔵</span><h3 class="font-bold text-lg">Google</h3></div>
+                    <p class="text-slate-400 text-sm mb-3">Material Design: sistema de design open-source baseado em física (sombras, elevação). Usado por 3+ bilhões de dispositivos Android.</p>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="text-xs bg-blue-900/40 px-2 py-0.5 rounded">Material 3</span>
+                        <span class="text-xs bg-blue-900/40 px-2 py-0.5 rounded">AI Overview</span>
+                        <span class="text-xs bg-blue-900/40 px-2 py-0.5 rounded">Gemini UI</span>
+                    </div>
+                </div>
+                <div class="card border-l-4 border-purple-500 hover:border-purple-300 transition-all">
+                    <div class="flex items-center gap-3 mb-3"><span class="text-3xl">🌐</span><h3 class="font-bold text-lg">Meta</h3></div>
+                    <p class="text-slate-400 text-sm mb-3">Pioneira em Spatial Computing social. Como criar ergonomia em ambiente 3D sem tela física? Novo campo, novas regras.</p>
+                    <div class="flex flex-wrap gap-1">
+                        <span class="text-xs bg-purple-900/40 px-2 py-0.5 rounded">Quest 3</span>
+                        <span class="text-xs bg-purple-900/40 px-2 py-0.5 rounded">Metaverso</span>
+                        <span class="text-xs bg-purple-900/40 px-2 py-0.5 rounded">Hand Tracking</span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5 card bg-yellow-900/10 border-yellow-700/30">
+                <p class="text-sm text-slate-300">💼 <strong class="text-yellow-400">Mercado de trabalho:</strong> UX Designer está entre as profissões mais requisitadas segundo o LinkedIn Jobs 2025. Salário médio Brasil: R$ 5.000–12.000/mês.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Slide 14 · Resumo + Próxima Aula  (NEW)                   -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section class="slide"
+        data-notes="Encerramento: reforçar que IHC não é só 'deixar bonito' — é uma disciplina científica com métricas, testes e metodologia. Anunciar: próxima aula entraremos em Usabilidade e as 10 Heurísticas de Nielsen.">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-4xl font-bold mb-6 text-center">Resumo da Aula 01</h2>
+            <div class="grid grid-cols-2 gap-8">
+                <div class="space-y-3 stagger">
+                    <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">O que vimos hoje</h3>
+                    <div class="flex gap-3 items-start p-3 bg-white/5 rounded-xl"><span class="text-red-400 shrink-0 text-lg">①</span><p class="text-sm text-slate-300">Batch (anos 40-50): sem interação, cartões perfurados</p></div>
+                    <div class="flex gap-3 items-start p-3 bg-white/5 rounded-xl"><span class="text-green-400 shrink-0 text-lg">②</span><p class="text-sm text-slate-300">CLI (anos 60-70): texto, feedback imediato, exige memorização</p></div>
+                    <div class="flex gap-3 items-start p-3 bg-white/5 rounded-xl"><span class="text-blue-400 shrink-0 text-lg">③</span><p class="text-sm text-slate-300">GUI (anos 80): metáforas visuais, WIMP, democratização</p></div>
+                    <div class="flex gap-3 items-start p-3 bg-white/5 rounded-xl"><span class="text-pink-400 shrink-0 text-lg">④</span><p class="text-sm text-slate-300">UCD: o usuário no centro — pesquisa, prototipagem, testes</p></div>
+                    <div class="flex gap-3 items-start p-3 bg-white/5 rounded-xl"><span class="text-cyan-400 shrink-0 text-lg">⑤</span><p class="text-sm text-slate-300">NUI + Zero UI: toque, voz e IA antecipam intenções</p></div>
+                </div>
+                <div class="card border-t-4 border-orange-500 bg-orange-900/10 flex flex-col justify-between">
+                    <div>
+                        <p class="text-xs text-orange-400 font-bold uppercase tracking-widest mb-2">📖 Próxima Aula</p>
+                        <h3 class="text-2xl font-bold mb-4">Aula 02: Usabilidade e Acessibilidade</h3>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li class="flex gap-2">→ As 10 Heurísticas de Jakob Nielsen</li>
+                            <li class="flex gap-2">→ WCAG e acessibilidade na prática</li>
+                            <li class="flex gap-2">→ Testes de Usabilidade: como conduzir</li>
+                            <li class="flex gap-2">→ Case: redesign de interface real</li>
+                        </ul>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <div class="inline-block bg-slate-800 border border-slate-700 rounded-xl px-5 py-3 font-mono text-sm text-slate-400">
+                            Aula 01 / 8 &nbsp;•&nbsp; IHC 2026 &nbsp;•&nbsp; Prof. Wilson Andrade
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5 text-center text-slate-600 italic text-sm">"Design is not just what it looks like and feels like. Design is how it works." — Steve Jobs</div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- Controles                                                  -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div class="fixed bottom-8 right-8 flex gap-3 z-50">
+        <button onclick="prevSlide()" class="nav-btn" title="Anterior (←)">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+        </button>
+        <button onclick="nextSlide()" class="nav-btn" title="Próximo (→)">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+            </svg>
+        </button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        let isAnimating = false;
+        let quizAnswered = false;
+        let notesVisible = false;
+
+        const slides = document.querySelectorAll('.slide');
+        const progress = document.getElementById('progress');
+        const slideCounter = document.getElementById('slideCounter');
+        const dotNav = document.getElementById('dotNav');
+        const notesOverlay = document.getElementById('notesOverlay');
+        const notesText = document.getElementById('notesText');
+
+        // ── Criar dots de navegação ──────────────────────────────
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.title = `Slide ${i + 1}`;
+            dot.onclick = () => goToSlide(i);
+            dotNav.appendChild(dot);
+        });
+
+        // ── Actualizar UI após troca de slide ────────────────────
+        function updateUI() {
+            const pct = ((currentSlide + 1) / slides.length) * 100;
+            progress.style.width = pct + '%';
+            slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+            dotNav.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+            notesText.textContent = slides[currentSlide].dataset.notes || 'Sem notas para este slide.';
+        }
+
+        // ── Navegar para slide com animação direcional ───────────
+        function goToSlide(index, dir) {
+            if (isAnimating || index === currentSlide || index < 0 || index >= slides.length) return;
+            isAnimating = true;
+            const direction = dir !== undefined ? dir : (index > currentSlide ? 1 : -1);
+            const prev = slides[currentSlide];
+            const next = slides[index];
+
+            prev.style.display = 'flex';
+            next.style.display = 'flex';
+            prev.classList.add(direction > 0 ? 'exit-left' : 'exit-right');
+            next.classList.add(direction > 0 ? 'enter-right' : 'enter-left');
+
+            setTimeout(() => {
+                prev.classList.remove('active', 'exit-left', 'exit-right');
+                prev.style.display = '';
+                next.classList.remove('enter-right', 'enter-left');
+                next.classList.add('active');
+                currentSlide = index;
+                isAnimating = false;
+                updateUI();
+                // Re-dispara stagger no slide que entrou
+                next.querySelectorAll('.stagger').forEach(el => {
+                    el.querySelectorAll(':scope > *').forEach(child => {
+                        child.style.animation = 'none';
+                        void child.offsetHeight;
+                        child.style.animation = '';
+                    });
+                });
+            }, 430);
+        }
+
+        function nextSlide() { if (currentSlide < slides.length - 1) goToSlide(currentSlide + 1, 1); }
+        function prevSlide() { if (currentSlide > 0) goToSlide(currentSlide - 1, -1); }
+
+        // ── Tela cheia ───────────────────────────────────────────
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+                document.getElementById('fsBtn').textContent = '✕ Sair  (F)';
+            } else {
+                document.exitFullscreen();
+                document.getElementById('fsBtn').textContent = '⛶ Tela Cheia  (F)';
+            }
+        }
+
+        // ── Notas do professor ───────────────────────────────────
+        function toggleNotes() {
+            notesVisible = !notesVisible;
+            notesOverlay.classList.toggle('visible', notesVisible);
+        }
+
+        // ── Quiz ─────────────────────────────────────────────────
+        function answerQuiz(btn, isCorrect) {
+            if (quizAnswered) return;
+            quizAnswered = true;
+            document.querySelectorAll('.quiz-option').forEach(o => o.disabled = true);
+            if (isCorrect) {
+                btn.classList.add('correct');
+                document.getElementById('quizFeedback').classList.remove('hidden');
+            } else {
+                btn.classList.add('wrong');
+                document.getElementById('quizWrong').classList.remove('hidden');
+                document.querySelectorAll('.quiz-option')[1].classList.add('correct');
+            }
+        }
+
+        // ── Teclado ──────────────────────────────────────────────
+        window.addEventListener('keydown', e => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { e.preventDefault(); nextSlide(); }
+            if (e.key === 'ArrowLeft'  || e.key === 'PageUp')                    { e.preventDefault(); prevSlide(); }
+            if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+            if (e.key === 'n' || e.key === 'N') toggleNotes();
+            if (e.key === 'Escape' && notesVisible) toggleNotes();
+        });
+
+        document.addEventListener('fullscreenchange', () => {
+            if (!document.fullscreenElement) document.getElementById('fsBtn').textContent = '⛶ Tela Cheia  (F)';
+        });
+
+        updateUI();
+    </script>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Acadêmico | Dr. Lincoln Sposito</title>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5F1FGJ25TK');
+    </script>
+
+    <style>
+        :root {
+            --navy: #002147; /* Azul Marinho */
+            --white: #ffffff;
+            --accent: #28a745;
+            --card-bg: #003366; /* Azul um pouco mais claro para os cards */
+            --shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--navy);
+            color: var(--white);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar com Logo */
+        nav {
+            display: flex;
+            align-items: center;
+            padding: 1rem 5%;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        nav img {
+            height: 50px;
+            margin-right: 20px;
+        }
+
+        /* Hero e Busca */
+        header {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        .search-container {
+            margin: 2rem auto;
+            max-width: 600px;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 15px 25px;
+            border-radius: 30px;
+            border: none;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow);
+            outline: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 50px 20px;
+        }
+
+        /* Grid de Disciplinas: 3 por linha no Desktop */
+        .grid-disciplinas {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            text-decoration: none;
+            color: var(--white);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            background: #004080;
+            border-color: var(--accent);
+        }
+
+        .card .ano-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--accent);
+            font-size: 0.75rem;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .card h3 { margin: 15px 0 10px 0; font-size: 1.3rem; }
+        .card p { font-size: 0.9rem; opacity: 0.8; margin: 0; }
+
+        /* Responsividade */
+        @media (max-width: 992px) {
+            .grid-disciplinas { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            .grid-disciplinas { grid-template-columns: 1fr; }
+            nav { justify-content: center; }
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(0,0,0,0.3);
+            font-size: 0.9rem;
+        }
+
+        .btn-perito {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--accent);
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <img src="img/grafico.svg" alt="Dr. Lincoln Sposito Logo">
+    <div>
+        <strong>Dr. Lincoln Sposito</strong><br>
+        <span style="font-size: 0.8rem; opacity: 0.7;">Portal Acadêmico e Consultoria</span>
+    </div>
+</nav>
+
+<header>
+    <h1>Minhas Disciplinas</h1>
+    <p>Selecione sua disciplina para acessar os roteiros de aula e materiais.</p>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Pesquisar disciplina ou ano (ex: 2026)..." onkeyup="filterCards()">
+    </div>
+</header>
+
+<div class="container">
+    <div class="grid-disciplinas" id="disciplinasGrid">
+        
+        <a href="ihc-ux/index.html" class="card" data-title="ihc ux interação humano computador">
+            <span class="ano-badge">2026/1</span>
+            <div style="font-size: 2.5rem;">📱</div>
+            <h3>IHC e UX</h3>
+            <p>Interação Humano Computador</p>
+        </a>
+
+        <a href="seguranca/index.html" class="card" data-title="segurança sistemas computacionais">
+            <span class="ano-badge">2026/1</span>
+            <div style="font-size: 2.5rem;">🛡️</div>
+            <h3>Sistemas e Segurança</h3>
+            <p>Arquitetura e Proteção de Dados</p>
+        </a>
+
+        <a href="sistemas-distribuidos/index.html" class="card" data-title="sistemas distribuídos cloud nuvem">
+            <span class="ano-badge">2026/1</span>
+            <div style="font-size: 2.5rem;">🌐</div>
+            <h3>Sistemas Distribuídos</h3>
+            <p>Protocolos e Cloud Computing</p>
+        </a>
+
+        <a href="web-mobile/index.html" class="card" data-title="web mobile jogos desenvolvimento">
+            <span class="ano-badge">2026/1</span>
+            <div style="font-size: 2.5rem;">💻</div>
+            <h3>Web, Mobile e Jogos</h3>
+            <p>Desenvolvimento e Usabilidade</p>
+        </a>
+
+        <a href="#" class="card" data-title="gestão de projetos administração">
+            <span class="ano-badge">2025/2</span>
+            <div style="font-size: 2.5rem;">📊</div>
+            <h3>Gestão de Projetos</h3>
+            <p>Metodologias Ágeis e PMBOK</p>
+        </a>
+
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 Dr. Lincoln Sposito - PhD em Gestão de Projetos e Perito Judicial</p>
+    <a href="../index.html" class="btn-perito">Acesse o Portal de Perícia Judicial</a>
+</footer>
+
+<script>
+    function filterCards() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const grid = document.getElementById('disciplinasGrid');
+        const cards = grid.getElementsByClassName('card');
+
+        for (let i = 0; i < cards.length; i++) {
+            let title = cards[i].getAttribute('data-title');
+            let year = cards[i].querySelector('.ano-badge').innerText.toLowerCase();
+            
+            if (title.includes(input) || year.includes(input)) {
+                cards[i].style.display = "flex";
+            } else {
+                cards[i].style.display = "none";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

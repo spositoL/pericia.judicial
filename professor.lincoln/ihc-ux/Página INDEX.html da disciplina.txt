@@ -1,0 +1,25 @@
+Página INDEX.html da disciplina
+FEITO 1) Reparei que a tabela de aulas da index está em ordem crescente de data, deve ser decrescente. 
+2) O aluno vai chegar no dia da aula na sala e eu estarei com o QRCODE aberto para ele acessar a página até 19h15, com tolerância de 2 minutos. 
+3) Neste caso, quem acessar pelo qrcode deve ser computado como presente e no horário. 
+4) Quem chegar depois das 19h17 será computado como em atraso;
+5) Acesso no mesmo dia mas após as 21h30 será considerado ausente. 
+6) Início da aula. Após este horário das 19h17, a página da aula será aberta automaticamente para eu iniciar a aula ou pelo meu comando manual. 
+7) No entanto, alunos que chegarem atrasado não terão acesso a página da aula. Neste caso, no slide da aula que eu estarei dando deve ter o QRCODE para acessar a página da aula, ai já computando o aluno em atraso. 
+8) Outro porém é que haverá alunos que simplesmente acompanharão a aula sem acessar a página da aula, o que significa que os números não necessariamente representam a presença ou atraso ou ausência efetiva. Precisamos ter este conceito claro, mas para fins de KPI de engajamento da aula presencial e do formato pode ser mantido. 
+9) Outro ponto de controle será o acesso a página da aula fora do dia da aula pelos alunos que terão de ter acesso para avaliação, para resolver exercícios, e demais atividades. Desta forma, temos de ter um KPI no ga4 para mensurar estes acessos;
+10) podemos chamar o primeiro KPI de presenca_aula (ligado aos eventos 3, 4, 5)
+11) o outro kpi seria o de engajamento aula (ligado ao evento 8). 
+
+Página da aula-06-03-2026.html 
+12) O formato da aula com tela grande, estilo slide está bom, para melhorar peço que aumente a fonte para que alunos possam enxergar melhor. 
+13) Peço que tenha header (logo do dr lincoln) e footer (Prof. Dr Lincoln Sposito, Todos os direitos reservados) fixos durante a transição de cada "slide" que é uma section;
+14) Com o QRCode funcionando como controle de presença, na primeira section desta forma não precia mais do CONFIRMAR PRESENÇA DIGITAL
+15) Seção 1:A primeira section poderia ir para o "Boas vindas a aula "nome da aula e disciplina", com as minhas informações de apresentação "Prof. Dr. Lincoln Sposito" e a data do dia da aula.
+16) Seção 2:A segunda section seria a "AGENDA" com o conteúdo da aula: 1 - Revisão da aula anterior; 2 - Correção do exercício da semana;3 - Pesquisa do você aprendeu (S/N)?; 4 - Aula expositiva do dia; 5 - Explicação do exercício da semana e qrcode do google forms; 6 - Recapitulação da aula do dia (resumo);
+17) Seção 3: 1 - Revisão da aula anterior, com a repetição do slide de fundamentação teórica da aula anterior
+18) Seção 4: 2 - Correção do exercício da semana (Gabarito do google forms, estatística das múltiplas escolhas, nuvem de palavras das respostas qualitativas e as respostas corretas em termos de conceito de cada questão descritiva; e para fechar a nuvem de palavras do parecer técnico das entrevistas realizadas pelos alunos para discussão da percepção dos leigos)
+19) Seção 5: 3 - Pesquisa do você aprendeu ERGONOMIA (S/N)? com o indicador realtime puxado do GA4;
+20) Seção 6: 4 - Aula expositiva do dia, aqui vem um conjunto de slides para explicar o conteúdo do dia então podem ser N Seções) vamos manter um padrão de 7 slides para explicar, o que nos leva a próxima seção 14;
+21) Seção 14: 5 - Explicação do exercício da semana e qrcode do google forms, com uma section explicando o que será a atividade da semana o link do google form e QRCode do link do google form. (2 seções neste caso, um para explicar e outro para o aluno acessar)
+22) Seção 16: 6 - Recapitulação da aula do dia (resumo) e reforço das datas e avisos quando necessário. Fechando com um OBRIGADO! e até a próxima aula.

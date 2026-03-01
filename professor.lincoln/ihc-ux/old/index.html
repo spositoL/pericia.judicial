@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IHC e UX - Portal de Aulas | Dr. Lincoln Sposito</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        :root { --navy: #002147; --white: #ffffff; --accent: #28a745; --card-bg: #003366; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--navy); color: var(--white); margin: 0; text-align: center; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        
+        /* Container do QR Code */
+        #ritual-entrada {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            display: none; /* Inicia escondido e aparece via JS */
+            margin: 20px auto;
+            color: #333;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        #qrcode { margin: 20px auto; display: flex; justify-content: center; }
+        
+        /* Tabela Estilizada */
+        .agenda-aulas { width: 100%; border-collapse: collapse; margin-top: 40px; background: var(--card-bg); border-radius: 10px; overflow: hidden; }
+        .agenda-aulas th, .agenda-aulas td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; }
+        .agenda-aulas th { background: rgba(0,0,0,0.4); color: var(--accent); }
+        .hoje { background: rgba(40, 167, 69, 0.3) !important; font-weight: bold; border-left: 5px solid var(--accent); }
+        
+        .btn-aula { background: var(--accent); color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; transition: 0.3s; }
+        .btn-aula:hover { opacity: 0.8; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header style="margin-top: 20px;">
+        <img src="../img/grafico.svg" alt="Logo" style="height: 60px; margin-bottom: 10px;">
+        <h1>IHC e UX - Cronograma 2026</h1>
+    </header>
+
+    <div id="ritual-entrada">
+        <h3 style="margin-top:0">Escaneie para a aula de hoje:</h3>
+        <div id="qrcode"></div>
+        <p id="nome-aula-hoje" style="font-weight:bold; color: var(--navy)"></p>
+        <small id="debug-url" style="color: #666; font-size: 10px;"></small>
+    </div>
+
+    <table class="agenda-aulas" id="tabelaAulas">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Conteúdo da Aula</th>
+                <th>Acesso</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-date="2026-02-28" data-url="aula-27-02-2026.html">
+                <td>28/02/2026</td>
+                <td>Introdução ao IHC e Design Centrado no Usuário</td>
+                <td><a href="aula-27-02-2026.html" class="btn-aula">Abrir Aula</a></td>
+            </tr>
+            <tr data-date="2026-03-06" data-url="aula-06-03-2026.html">
+                <td>06/03/2026</td>
+                <td>Ergonomia Cognitiva e Carga Mental</td>
+                <td><a href="aula-06-03-2026.html" class="btn-aula">Abrir Aula</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function gerarQR() {
+        // 1. Pega a data atual no fuso local (corrigindo problemas de fuso horário)
+        const agora = new Date();
+        const offset = agora.getTimezoneOffset();
+        const hojeLocal = new Date(agora.getTime() - (offset*60*1000)).toISOString().split('T')[0];
+        
+        console.log("Data verificada pelo sistema:", hojeLocal);
+
+        const rows = document.querySelectorAll('#tabelaAulas tbody tr');
+        let aulaEncontrada = null;
+
+        rows.forEach(row => {
+            if (row.getAttribute('data-date') === hojeLocal) {
+                aulaEncontrada = row;
+            }
+        });
+
+        if (aulaEncontrada) {
+            const urlFinal = window.location.origin + window.location.pathname.replace('index.html', '') + aulaEncontrada.getAttribute('data-url');
+            
+            // Exibe o container
+            document.getElementById('ritual-entrada').style.display = 'block';
+            document.getElementById('nome-aula-hoje').innerText = aulaEncontrada.cells[1].innerText;
+            document.getElementById('debug-url').innerText = urlFinal;
+            aulaEncontrada.classList.add('hoje');
+
+            // Limpa o QR anterior se existir e gera o novo
+            document.getElementById("qrcode").innerHTML = "";
+            new QRCode(document.getElementById("qrcode"), {
+                text: urlFinal,
+                width: 200,
+                height: 200,
+                colorDark : "#002147",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+            console.log("QR Code gerado com sucesso para:", urlFinal);
+        } else {
+            console.log("Nenhuma aula agendada para hoje no sistema.");
+        }
+    }
+
+    // Executa assim que a página e a biblioteca QRCode carregarem
+    window.onload = function() {
+        setTimeout(gerarQR, 500); // Pequeno atraso para garantir que o DOM e a lib estão prontos
+    };
+</script>
+
+</body>
+</html>
+
+<!-- <!DOCTYPE html> -->
+<!-- <html lang="pt-br"> -->
+<!-- <head> -->
+    <!-- <meta charset="UTF-8"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <!-- <title>IHC e UX - Cronograma | Dr. Lincoln Sposito</title> -->
+    
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script> -->
+
+    <!-- <style> -->
+        <!-- :root { -->
+            <!-- --navy: #002147; -->
+            <!-- --white: #ffffff; -->
+            <!-- --accent: #28a745; -->
+            <!-- --card-bg: #003366; -->
+        <!-- } -->
+
+        <!-- body { -->
+            <!-- font-family: 'Segoe UI', sans-serif; -->
+            <!-- background-color: var(--navy); -->
+            <!-- color: var(--white); -->
+            <!-- margin: 0; padding: 0; -->
+            <!-- text-align: center; -->
+        <!-- } -->
+
+        <!-- .container { max-width: 800px; margin: 0 auto; padding: 20px; } -->
+
+        <!-- /* Estilo do QR Code Gigante para Projeção */ -->
+        <!-- #ritual-entrada { -->
+            <!-- background: white; -->
+            <!-- padding: 30px; -->
+            <!-- border-radius: 20px; -->
+            <!-- display: inline-block; -->
+            <!-- margin: 20px 0; -->
+            <!-- color: #333; -->
+        <!-- } -->
+
+        <!-- #qrcode { margin: 20px auto; } -->
+
+        <!-- /* Tabela de Aulas */ -->
+        <!-- .agenda-aulas { -->
+            <!-- width: 100%; -->
+            <!-- border-collapse: collapse; -->
+            <!-- margin-top: 40px; -->
+            <!-- background: var(--card-bg); -->
+            <!-- border-radius: 10px; -->
+            <!-- overflow: hidden; -->
+        <!-- } -->
+
+        <!-- .agenda-aulas th, .agenda-aulas td { -->
+            <!-- padding: 15px; -->
+            <!-- border-bottom: 1px solid rgba(255,255,255,0.1); -->
+            <!-- text-align: left; -->
+        <!-- } -->
+
+        <!-- .agenda-aulas th { background: rgba(0,0,0,0.2); color: var(--accent); } -->
+
+        <!-- .btn-aula { -->
+            <!-- background: var(--accent); -->
+            <!-- color: white; -->
+            <!-- padding: 8px 15px; -->
+            <!-- text-decoration: none; -->
+            <!-- border-radius: 5px; -->
+            <!-- font-size: 0.9rem; -->
+        <!-- } -->
+
+        <!-- .hoje { background: rgba(40, 167, 69, 0.2); border-left: 5px solid var(--accent); } -->
+    <!-- </style> -->
+<!-- </head> -->
+<!-- <body> -->
+
+<!-- <div class="container"> -->
+    <!-- <header> -->
+        <!-- <img src="../img/grafico.svg" alt="Logo" style="height: 60px;"> -->
+        <!-- <h1>IHC e UX - 2026/1</h1> -->
+        <!-- <p>Aponte o celular para acessar o material da aula de hoje:</p> -->
+    <!-- </header> -->
+
+    <!-- <div id="ritual-entrada"> -->
+        <!-- <h2 id="titulo-hoje">Aguardando aula...</h2> -->
+        <!-- <div id="qrcode"></div> -->
+        <!-- <p><small id="url-texto"></small></p> -->
+    <!-- </div> -->
+
+    <!-- <hr style="opacity: 0.2; margin: 40px 0;"> -->
+
+    <!-- <h3>Cronograma Completo</h3> -->
+    <!-- <table class="agenda-aulas" id="tabelaAulas"> -->
+        <!-- <thead> -->
+            <!-- <tr> -->
+                <!-- <th>Data</th> -->
+                <!-- <th>Título da Aula</th> -->
+                <!-- <th>Acesso</th> -->
+            <!-- </tr> -->
+        <!-- </thead> -->
+        <!-- <tbody> -->
+            <!-- <tr data-url="aula-27-02-2026.html" data-date="2026-02-27"> -->
+                <!-- <td>27/02/2026</td> -->
+                <!-- <td>Introdução ao IHC e UX</td> -->
+                <!-- <td><a href="aula-27-02-2026.html" class="btn-aula">Ver Aula</a></td> -->
+            <!-- </tr> -->
+            <!-- <tr data-url="aula-06-03-2026.html" data-date="2026-03-06"> -->
+                <!-- <td>06/03/2026</td> -->
+                <!-- <td>Ergonomia Cognitiva e Carga Mental</td> -->
+                <!-- <td><a href="aula-06-03-2026.html" class="btn-aula">Ver Aula</a></td> -->
+            <!-- </tr> -->
+            <!-- </tbody> -->
+    <!-- </table> -->
+<!-- </div> -->
+
+<!-- <script> -->
+    <!-- function inicializarAula() { -->
+        <!-- const hoje = new Date().toISOString().split('T')[0]; // Formato YYYY-MM-DD -->
+        <!-- const rows = document.querySelectorAll('#tabelaAulas tbody tr'); -->
+        <!-- let aulaEncontrada = false; -->
+
+        <!-- rows.forEach(row => { -->
+            <!-- const dataAula = row.getAttribute('data-date'); -->
+            <!-- const urlAula = window.location.href.replace('index.html', '') + row.getAttribute('data-url'); -->
+            
+            <!-- if (dataAula === hoje) { -->
+                <!-- aulaEncontrada = true; -->
+                <!-- row.classList.add('hoje'); -->
+                <!-- document.getElementById('titulo-hoje').innerText = "AULA DE HOJE: " + row.cells[1].innerText; -->
+                <!-- document.getElementById('url-texto').innerText = urlAula; -->
+
+                <!-- // GERA O QR CODE DINAMICAMENTE -->
+                <!-- new QRCode(document.getElementById("qrcode"), { -->
+                    <!-- text: urlAula, -->
+                    <!-- width: 250, -->
+                    <!-- height: 250, -->
+                    <!-- colorDark : "#002147", -->
+                    <!-- colorLight : "#ffffff", -->
+                    <!-- correctLevel : QRCode.CorrectLevel.H -->
+                <!-- }); -->
+            <!-- } -->
+        <!-- }); -->
+
+        <!-- if (!aulaEncontrada) { -->
+            <!-- document.getElementById('ritual-entrada').style.display = 'none'; -->
+        <!-- } -->
+    <!-- } -->
+
+    <!-- window.onload = inicializarAula; -->
+<!-- </script> -->
+
+<!-- </body> -->
+<!-- </html> -->

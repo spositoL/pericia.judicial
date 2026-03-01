@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula 02: Usabilidade e Acessibilidade</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; overflow: hidden; background: #0f172a; color: white; }
+        .slide { display: none; height: 100vh; width: 100vw; padding: 3rem; flex-direction: column; justify-content: center; align-items: center; transition: all 0.5s ease; position: relative; }
+        .slide.active { display: flex; animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        
+        .card { background: rgba(30, 41, 59, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); border-radius: 1.5rem; padding: 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .progress-bar { position: fixed; bottom: 0; left: 0; height: 6px; background: linear-gradient(90deg, #3b82f6, #06b6d4); transition: width 0.3s ease; z-index: 50; }
+        .nav-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+        .nav-btn:hover { background: #3b82f6; transform: scale(1.1); }
+        
+        .hero-img { border-radius: 1.5rem; width: 100%; height: 280px; object-fit: cover; margin-bottom: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .example-box { border-top: 4px solid #3b82f6; background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 0.75rem; font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar" id="progress"></div>
+
+    <!-- Slide 1: Capa -->
+    <section class="slide active">
+        <div class="max-w-5xl text-center">
+            <div class="relative inline-block">
+                <img src="https://images.unsplash.com/photo-1586717791821-3f44a563eb4c?w=1200&h=400&fit=crop" alt="Interface de Usuário Acessível" class="hero-img">
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-transparent"></div>
+            </div>
+            <h1 class="text-6xl font-extrabold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300">
+                Usabilidade e Acessibilidade
+            </h1>
+            <p class="text-2xl text-slate-400">Fundamentos, Métricas e Exemplos Práticos</p>
+            <div class="mt-8 text-slate-500 font-mono bg-slate-800/50 inline-block px-4 py-2 rounded border border-white/5">Aula 02 • Prof. Wilson Andrade</div>
+        </div>
+    </section>
+
+    <!-- Slide 2: O que é Usabilidade? -->
+    <section class="slide">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-5xl font-bold mb-8 flex items-center gap-4 text-blue-400">A Definição ISO 9241</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="card border-l-4 border-blue-500">
+                    <p class="text-3xl italic text-slate-200 mb-6">"Medida na qual um produto permite atingir objetivos com eficácia, eficiência e satisfação."</p>
+                    <p class="text-right text-slate-500">— ISO 9241-11</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl">
+                        <span class="text-4xl">🎯</span>
+                        <div class="text-lg"><strong>Eficácia:</strong> Completar a tarefa corretamente.</div>
+                    </div>
+                    <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl">
+                        <span class="text-4xl">⚡</span>
+                        <div class="text-lg"><strong>Eficiência:</strong> Recursos/tempo gastos para concluir.</div>
+                    </div>
+                    <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl">
+                        <span class="text-4xl">😊</span>
+                        <div class="text-lg"><strong>Satisfação:</strong> Atitude positiva do usuário.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 2.5: Enquete de Abertura -->
+    <section class="slide">
+        <div class="max-w-5xl w-full text-center">
+            <h2 class="text-6xl font-bold mb-6 text-blue-400">💬 Enquete Rápida</h2>
+            <p class="text-3xl text-slate-300 mb-6">Você já abandonou um site ou app por pura frustração?</p>
+            <div class="flex gap-12 items-center justify-center">
+                <!-- QR Code centralizado e grande -->
+                <div class="flex flex-col items-center gap-3">
+                    <div class="bg-white p-4 rounded-3xl shadow-2xl">
+                        <img src="Enquete-Aula-Usabilidade.png" alt="QR Code da Enquete" class="w-64 h-64 object-contain">
+                    </div>
+                    <p class="text-base text-slate-400 font-semibold">📱 Escaneie e vote no celular</p>
+                </div>
+                <!-- Votação manual (professor) -->
+                <div class="flex-1 max-w-sm">
+                    <p class="text-sm text-slate-500 mb-4 uppercase tracking-widest font-bold">Ou vote aqui (professor)</p>
+                    <div class="flex justify-center gap-8 mb-8">
+                        <button onclick="votePoll('sim')" class="px-12 py-6 text-3xl font-bold rounded-2xl border-2 border-green-500 bg-green-500/10 hover:bg-green-500/30 active:scale-95 transition-all">
+                            👍 Sim
+                        </button>
+                        <button onclick="votePoll('nao')" class="px-12 py-6 text-3xl font-bold rounded-2xl border-2 border-red-500 bg-red-500/10 hover:bg-red-500/30 active:scale-95 transition-all">
+                            👎 Não
+                        </button>
+                    </div>
+                    <div class="space-y-4 text-left">
+                        <div>
+                            <div class="flex justify-between mb-1 text-base font-semibold">
+                                <span class="text-green-400">👍 Sim</span>
+                                <span id="sim-count" class="text-green-400">0 votos (0%)</span>
+                            </div>
+                            <div class="bg-white/10 rounded-full h-8 overflow-hidden">
+                                <div id="sim-bar" class="bg-green-500 h-8 rounded-full transition-all duration-700" style="width:0%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1 text-base font-semibold">
+                                <span class="text-red-400">👎 Não</span>
+                                <span id="nao-count" class="text-red-400">0 votos (0%)</span>
+                            </div>
+                            <div class="bg-white/10 rounded-full h-8 overflow-hidden">
+                                <div id="nao-bar" class="bg-red-500 h-8 rounded-full transition-all duration-700" style="width:0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <p id="poll-insight" class="hidden mt-5 text-lg text-slate-400 italic">Isso é usabilidade sendo testada na prática! 🎯</p>
+                    <button onclick="resetPoll()" class="mt-4 text-sm text-slate-600 hover:text-slate-400 transition-all">↺ Reiniciar votação</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: Os 5 Pilares de Nielsen (COM EXEMPLOS) -->
+    <section class="slide overflow-y-auto">
+        <div class="max-w-6xl w-full py-10">
+            <h2 class="text-5xl font-bold mb-8 text-center">Os 5 Pilares da Usabilidade (Jakob Nielsen)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                <div class="card p-4 flex flex-col gap-3">
+                    <h4 class="font-bold text-blue-400 text-lg">1. Aprendizado</h4>
+                    <p class="text-base text-slate-400 font-semibold">Facilidade no primeiro contato.</p>
+                    <div class="example-box text-base font-semibold">Ex: Ícones universais (Lupa para busca, Carrinho para compras).</div>
+                </div>
+                <div class="card p-4 flex flex-col gap-3">
+                    <h4 class="font-bold text-blue-400">2. Eficiência</h4>
+                    <p class="text-xs text-slate-400">Velocidade após aprender.</p>
+                    <div class="example-box">Ex: Atalhos de teclado (Ctrl+C) ou preenchimento automático.</div>
+                </div>
+                <div class="card p-4 flex flex-col gap-3">
+                    <h4 class="font-bold text-blue-400">3. Memorização</h4>
+                    <p class="text-xs text-slate-400">Facilidade de retornar após tempo fora.</p>
+                    <div class="example-box">Ex: Menus que nunca mudam de posição entre as páginas.</div>
+                </div>
+                <div class="card p-4 flex flex-col gap-3">
+                    <h4 class="font-bold text-blue-400">4. Erros</h4>
+                    <p class="text-xs text-slate-400">Frequência e recuperação de erros.</p>
+                    <div class="example-box">Ex: "Você quis dizer..." do Google ou validação de formulário em tempo real.</div>
+                </div>
+                <div class="card p-4 flex flex-col gap-3">
+                    <h4 class="font-bold text-blue-400">5. Satisfação</h4>
+                    <p class="text-xs text-slate-400">Prazer subjetivo no uso.</p>
+                    <div class="example-box">Ex: Microinterações e feedbacks visuais suaves.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3.5: Quiz - Qual Pilar foi Violado? -->
+    <section class="slide overflow-y-auto">
+        <div class="max-w-5xl w-full py-8">
+            <h2 class="text-5xl font-bold mb-2 text-center text-yellow-400">🎯 Quiz: Qual Pilar foi Violado?</h2>
+            <p class="text-center text-slate-400 mb-6 text-base font-semibold">Identifique qual dos 5 pilares de Nielsen foi quebrado em cada situação:</p>
+            <div class="space-y-5">
+                <div class="card" id="q1">
+                    <p class="font-bold mb-3 text-lg">📱 Cenário 1: <span class="font-normal text-slate-300">"O botão Salvar mudou de lugar depois da atualização do app."</span></p>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="answerQuiz(1,'Aprendizado')" class="quiz-opt px-5 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-base transition-all font-semibold">Aprendizado</button>
+                        <button onclick="answerQuiz(1,'Eficiência')" class="quiz-opt px-5 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-base transition-all font-semibold">Eficiência</button>
+                        <button onclick="answerQuiz(1,'Memorização')" class="quiz-opt px-5 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-base transition-all font-semibold">Memorização</button>
+                        <button onclick="answerQuiz(1,'Erros')" class="quiz-opt px-5 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-base transition-all font-semibold">Erros</button>
+                        <button onclick="answerQuiz(1,'Satisfação')" class="quiz-opt px-5 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-base transition-all font-semibold">Satisfação</button>
+                    </div>
+                    <div id="q1-feedback" class="hidden mt-3 text-base p-3 rounded-lg"></div>
+                </div>
+                <div class="card" id="q2">
+                    <p class="font-bold mb-3 text-lg">🔐 Cenário 2: <span class="font-normal text-slate-300">"Errei a senha e o sistema bloqueou minha conta sem dizer o motivo."</span></p>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="answerQuiz(2,'Aprendizado')" class="quiz-opt px-5 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-base transition-all font-semibold">Aprendizado</button>
+                        <button onclick="answerQuiz(2,'Eficiência')" class="quiz-opt px-5 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-base transition-all font-semibold">Eficiência</button>
+                        <button onclick="answerQuiz(2,'Memorização')" class="quiz-opt px-5 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-base transition-all font-semibold">Memorização</button>
+                        <button onclick="answerQuiz(2,'Erros')" class="quiz-opt px-5 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-base transition-all font-semibold">Erros</button>
+                        <button onclick="answerQuiz(2,'Satisfação')" class="quiz-opt px-5 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-base transition-all font-semibold">Satisfação</button>
+                    </div>
+                    <div id="q2-feedback" class="hidden mt-3 text-base p-3 rounded-lg"></div>
+                </div>
+                <div class="card" id="q3">
+                    <p class="font-bold mb-3">🛒 Cenário 3: <span class="font-normal text-slate-300">"Comprei pela primeira vez num e-commerce e levei 15 min para achar o campo de cupom de desconto."</span></p>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="answerQuiz(3,'Aprendizado')" class="quiz-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all">Aprendizado</button>
+                        <button onclick="answerQuiz(3,'Eficiência')" class="quiz-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all">Eficiência</button>
+                        <button onclick="answerQuiz(3,'Memorização')" class="quiz-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all">Memorização</button>
+                        <button onclick="answerQuiz(3,'Erros')" class="quiz-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all">Erros</button>
+                        <button onclick="answerQuiz(3,'Satisfação')" class="quiz-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all">Satisfação</button>
+                    </div>
+                    <div id="q3-feedback" class="hidden mt-3 text-sm p-3 rounded-lg"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide H0: Introdução às 10 Heurísticas -->
+    <section class="slide">
+        <div class="max-w-5xl w-full text-center">
+            <p class="text-cyan-400 font-bold text-lg uppercase tracking-widest mb-4">Jakob Nielsen — 1994</p>
+            <h2 class="text-6xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+                As 10 Heurísticas de Usabilidade
+            </h2>
+            <p class="text-2xl text-slate-300 mb-8 max-w-3xl mx-auto">Princípios gerais de design de interface usados para avaliar e guiar a criação de sistemas mais usáveis — base das <strong>avaliações heurísticas</strong>.</p>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 text-sm">
+                <div class="bg-white/5 border border-white/10 rounded-xl p-3"><span class="text-blue-400 font-extrabold text-lg block">H1</span>Visibilidade do Status</div>
+                <div class="bg-white/5 border border-white/10 rounded-xl p-3"><span class="text-blue-400 font-extrabold text-lg block">H2</span>Mundo Real</div>
+                <div class="bg-white/5 border border-white/10 rounded-xl p-3"><span class="text-blue-400 font-extrabold text-lg block">H3</span>Controle do Usuário</div>
+                <div class="bg-white/5 border border-white/10 rounded-xl p-3"><span class="text-blue-400 font-extrabold text-lg block">H4</span>Consistência</div>
+                <div class="bg-white/5 border border-white/10 rounded-xl p-3"><span class="text-blue-400 font-extrabold text-lg block">H5</span>Prevenção de Erros</div>
+                <div class="bg-white/5 border border-white/10 rounded-xl p-3"><span class="text-purple-400 font-extrabold text-lg block">H6</span>Reconhecimento</div>
+                <div class="bg-white/5 border border-white/10 rounded-xl p-3"><span class="text-purple-400 font-extrabold text-lg block">H7</span>Flexibilidade</div>
+                <div class="bg-white/5 border border-white/10 rounded-xl p-3"><span class="text-purple-400 font-extrabold text-lg block">H8</span>Design Minimalista</div>
+                <div class="bg-white/5 border border-white/10 rounded-xl p-3"><span class="text-purple-400 font-extrabold text-lg block">H9</span>Recuperação de Erros</div>
+                <div class="bg-white/5 border border-white/10 rounded-xl p-3"><span class="text-purple-400 font-extrabold text-lg block">H10</span>Ajuda e Docs</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide H1-5: Heurísticas 1 a 5 -->
+    <section class="slide overflow-y-auto">
+        <div class="max-w-6xl w-full py-8">
+            <h2 class="text-4xl font-bold mb-6 text-center text-blue-400">Heurísticas 1 a 5</h2>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+
+                <div class="card flex flex-col gap-3">
+                    <div class="text-4xl text-center">📡</div>
+                    <p class="text-blue-400 font-extrabold text-center text-lg">H1</p>
+                    <h4 class="font-bold text-center text-base">Visibilidade do Status do Sistema</h4>
+                    <p class="text-slate-400 text-sm text-center">O sistema deve sempre manter o usuário informado sobre o que está acontecendo, por meio de feedback oportuno e adequado.</p>
+                    <div class="example-box text-xs mt-auto">Ex: Barra de progresso de upload; indicador "Enviando…" em formulários; botão fica em estado "Loading" ao clicar.</div>
+                </div>
+
+                <div class="card flex flex-col gap-3">
+                    <div class="text-4xl text-center">🌍</div>
+                    <p class="text-blue-400 font-extrabold text-center text-lg">H2</p>
+                    <h4 class="font-bold text-center text-base">Compatibilidade com o Mundo Real</h4>
+                    <p class="text-slate-400 text-sm text-center">Use a linguagem do usuário — palavras, frases e conceitos familiares ao invés do jargão técnico do sistema.</p>
+                    <div class="example-box text-xs mt-auto">Ex: Ícone de "lixeira" para deletar; "Carrinho de compras" em vez de "buffer de pedidos temporários".</div>
+                </div>
+
+                <div class="card flex flex-col gap-3">
+                    <div class="text-4xl text-center">↩️</div>
+                    <p class="text-blue-400 font-extrabold text-center text-lg">H3</p>
+                    <h4 class="font-bold text-center text-base">Controle e Liberdade do Usuário</h4>
+                    <p class="text-slate-400 text-sm text-center">Usuários cometem ações erradas e precisam de uma "saída de emergência" clara — desfazer e refazer.</p>
+                    <div class="example-box text-xs mt-auto">Ex: Ctrl+Z / Ctrl+Y no editor; botão "Desfazer envio" no Gmail; cancelar exclusão com pop-up de confirmação.</div>
+                </div>
+
+                <div class="card flex flex-col gap-3">
+                    <div class="text-4xl text-center">🔄</div>
+                    <p class="text-blue-400 font-extrabold text-center text-lg">H4</p>
+                    <h4 class="font-bold text-center text-base">Consistência e Padrões</h4>
+                    <p class="text-slate-400 text-sm text-center">Usuários não devem se questionar se palavras, situações ou ações diferentes significam a mesma coisa. Siga convenções da plataforma.</p>
+                    <div class="example-box text-xs mt-auto">Ex: Botão "OK" sempre à direita; ícone de hambúrguer (☰) sempre abre o menu lateral; cores padrão de alerta.</div>
+                </div>
+
+                <div class="card flex flex-col gap-3">
+                    <div class="text-4xl text-center">🛡️</div>
+                    <p class="text-blue-400 font-extrabold text-center text-lg">H5</p>
+                    <h4 class="font-bold text-center text-base">Prevenção de Erros</h4>
+                    <p class="text-slate-400 text-sm text-center">Melhor do que boas mensagens de erro é um design cuidadoso que previne o problema antes que ele ocorra.</p>
+                    <div class="example-box text-xs mt-auto">Ex: Desabilitar o botão "Enviar" até todos os campos obrigatórios serem preenchidos; confirmação antes de deletar.</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide H6-10: Heurísticas 6 a 10 -->
+    <section class="slide overflow-y-auto">
+        <div class="max-w-6xl w-full py-8">
+            <h2 class="text-4xl font-bold mb-6 text-center text-purple-400">Heurísticas 6 a 10</h2>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+
+                <div class="card flex flex-col gap-3">
+                    <div class="text-4xl text-center">👁️</div>
+                    <p class="text-purple-400 font-extrabold text-center text-lg">H6</p>
+                    <h4 class="font-bold text-center text-base">Reconhecimento em vez de Recordação</h4>
+                    <p class="text-slate-400 text-sm text-center">Minimize a carga de memória do usuário. Objetos, ações e opções devem estar visíveis — o usuário não deve ter que memorizar informações.</p>
+                    <div class="example-box text-xs mt-auto">Ex: Histórico de buscas recentes; pré-visualização de arquivos; menus com ícones e labels visíveis.</div>
+                </div>
+
+                <div class="card flex flex-col gap-3">
+                    <div class="text-4xl text-center">⚡</div>
+                    <p class="text-purple-400 font-extrabold text-center text-lg">H7</p>
+                    <h4 class="font-bold text-center text-base">Flexibilidade e Eficiência de Uso</h4>
+                    <p class="text-slate-400 text-sm text-center">Atalhos — invisíveis para novatos — aceleram a interação para especialistas. O sistema serve tanto iniciantes quanto avançados.</p>
+                    <div class="example-box text-xs mt-auto">Ex: Atalhos de teclado (Ctrl+S); gestos avançados no mobile; macros configuráveis no Excel.</div>
+                </div>
+
+                <div class="card flex flex-col gap-3">
+                    <div class="text-4xl text-center">✨</div>
+                    <p class="text-purple-400 font-extrabold text-center text-lg">H8</p>
+                    <h4 class="font-bold text-center text-base">Estética e Design Minimalista</h4>
+                    <p class="text-slate-400 text-sm text-center">Diálogos não devem conter informação irrelevante ou raramente necessária. Cada unidade extra de informação compete com informações relevantes.</p>
+                    <div class="example-box text-xs mt-auto">Ex: Apple.com — muito espaço em branco e foco no produto; evitar pop-ups e banners que não agregam valor.</div>
+                </div>
+
+                <div class="card flex flex-col gap-3">
+                    <div class="text-4xl text-center">🔧</div>
+                    <p class="text-purple-400 font-extrabold text-center text-lg">H9</p>
+                    <h4 class="font-bold text-center text-base">Ajude a Reconhecer e Recuperar Erros</h4>
+                    <p class="text-slate-400 text-sm text-center">Mensagens de erro devem ser expressas em linguagem simples (sem código de erro), indicar o problema com precisão e sugerir uma solução.</p>
+                    <div class="example-box text-xs mt-auto">Ex: "Senha incorreta. Verifique se o Caps Lock está ativado." em vez de "Erro 401 — Auth failed".</div>
+                </div>
+
+                <div class="card flex flex-col gap-3">
+                    <div class="text-4xl text-center">📚</div>
+                    <p class="text-purple-400 font-extrabold text-center text-lg">H10</p>
+                    <h4 class="font-bold text-center text-base">Ajuda e Documentação</h4>
+                    <p class="text-slate-400 text-sm text-center">Mesmo que o ideal seja usar sem ajuda, é importante fornecer documentação fácil de encontrar, orientada à tarefa e com passos concisos.</p>
+                    <div class="example-box text-xs mt-auto">Ex: Tooltips contextuais; "?" inline que explica o campo; FAQ voltado a cenários reais do usuário.</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide H-Quiz: Qual Heurística foi Violada? -->
+    <section class="slide overflow-y-auto">
+        <div class="max-w-5xl w-full py-8">
+            <h2 class="text-5xl font-bold mb-2 text-center text-yellow-400">🎯 Quiz: Qual Heurística foi Violada?</h2>
+            <p class="text-center text-slate-400 mb-5 text-base font-semibold">Identifique a heurística de Nielsen quebrada em cada situação:</p>
+            <div class="space-y-4">
+
+                <div class="card" id="hq1">
+                    <p class="font-bold mb-3 text-base">💾 Cenário 1: <span class="font-normal text-slate-300">"Cliquei em 'Enviar' mas não aconteceu nada. Não sei se funcionou ou não."</span></p>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="answerHQ(1,'H1')" class="hq-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all font-semibold">H1 – Visibilidade do Status</button>
+                        <button onclick="answerHQ(1,'H3')" class="hq-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all font-semibold">H3 – Controle do Usuário</button>
+                        <button onclick="answerHQ(1,'H5')" class="hq-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all font-semibold">H5 – Prevenção de Erros</button>
+                        <button onclick="answerHQ(1,'H9')" class="hq-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all font-semibold">H9 – Recuperação de Erros</button>
+                    </div>
+                    <div id="hq1-feedback" class="hidden mt-3 text-sm p-3 rounded-lg"></div>
+                </div>
+
+                <div class="card" id="hq2">
+                    <p class="font-bold mb-3 text-base">🗑️ Cenário 2: <span class="font-normal text-slate-300">"Deletei o arquivo sem querer e não tem nenhuma opção de desfazer ou lixeira."</span></p>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="answerHQ(2,'H1')" class="hq-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all font-semibold">H1 – Visibilidade do Status</button>
+                        <button onclick="answerHQ(2,'H3')" class="hq-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all font-semibold">H3 – Controle do Usuário</button>
+                        <button onclick="answerHQ(2,'H6')" class="hq-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all font-semibold">H6 – Reconhecimento</button>
+                        <button onclick="answerHQ(2,'H8')" class="hq-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all font-semibold">H8 – Minimalismo</button>
+                    </div>
+                    <div id="hq2-feedback" class="hidden mt-3 text-sm p-3 rounded-lg"></div>
+                </div>
+
+                <div class="card" id="hq3">
+                    <p class="font-bold mb-3 text-base">💻 Cenário 3: <span class="font-normal text-slate-300">"A mensagem de erro diz apenas: 'Falha na operação – código 0x80070005'. Não sei o que fazer."</span></p>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="answerHQ(3,'H2')" class="hq-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all font-semibold">H2 – Mundo Real</button>
+                        <button onclick="answerHQ(3,'H4')" class="hq-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all font-semibold">H4 – Consistência</button>
+                        <button onclick="answerHQ(3,'H7')" class="hq-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all font-semibold">H7 – Flexibilidade</button>
+                        <button onclick="answerHQ(3,'H9')" class="hq-opt px-4 py-2 rounded-lg border border-white/20 hover:bg-white/10 text-sm transition-all font-semibold">H9 – Recuperação de Erros</button>
+                    </div>
+                    <div id="hq3-feedback" class="hidden mt-3 text-sm p-3 rounded-lg"></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4: Acessibilidade (POUR) -->
+    <section class="slide">
+        <div class="max-w-5xl w-full">
+            <h2 class="text-5xl font-bold mb-8 text-cyan-400">Acessibilidade: Princípios POUR</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="card p-4 text-center">
+                    <h3 class="text-4xl font-bold text-cyan-300 mb-2">P</h3>
+                    <p class="font-bold text-lg mb-2">Perceptível</p>
+                    <p class="text-base text-slate-400">Informações visíveis aos sentidos (ex: Alt text em imagens).</p>
+                </div>
+                <div class="card p-4 text-center">
+                    <h3 class="text-4xl font-bold text-cyan-300 mb-2">O</h3>
+                    <p class="font-bold text-lg mb-2">Operável</p>
+                    <p class="text-base text-slate-400">Navigável via teclado ou voz. Sem armadilhas de foco.</p>
+                </div>
+                <div class="card p-4 text-center">
+                    <h3 class="text-4xl font-bold text-cyan-300 mb-2">U</h3>
+                    <p class="font-bold text-lg mb-2">Understandable</p>
+                    <p class="text-base text-slate-400">Compreensível. Linguagem clara e previsibilidade.</p>
+                </div>
+                <div class="card p-4 text-center">
+                    <h3 class="text-4xl font-bold text-cyan-300 mb-2">R</h3>
+                    <p class="font-bold text-lg mb-2">Robusto</p>
+                    <p class="text-base text-slate-400">Compatível com tecnologias assistivas (Leitores de tela).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4.5: Teste de Contraste -->
+    <section class="slide">
+        <div class="max-w-4xl w-full">
+            <h2 class="text-5xl font-bold mb-2 text-center text-cyan-400">👁️ Teste de Contraste</h2>
+            <p class="text-center text-slate-400 mb-8 text-lg font-semibold">Antes de ver o resultado: esse texto <strong>passa</strong> ou <strong>reprova</strong> no padrão WCAG AA?</p>
+            <div class="card mb-4">
+                <div class="p-8 rounded-xl mb-6" style="background:#f0f0f0">
+                    <p style="color:#aaaaaa; font-size:1.5rem; line-height:1.8">Promoção especial para novos assinantes.<br>Clique aqui para ver as ofertas exclusivas de hoje.</p>
+                </div>
+                <div class="flex justify-center gap-6 mb-4">
+                    <button onclick="judgeContrast('pass')" class="px-8 py-3 rounded-xl border-2 border-green-500 bg-green-500/10 hover:bg-green-500/30 font-bold text-green-400 transition-all text-lg">✅ Passa (WCAG AA)</button>
+                    <button onclick="judgeContrast('fail')" class="px-8 py-3 rounded-xl border-2 border-red-500 bg-red-500/10 hover:bg-red-500/30 font-bold text-red-400 transition-all text-lg">❌ Reprova</button>
+                </div>
+                <div id="contrast-verdict" class="hidden p-4 rounded-xl text-center"></div>
+            </div>
+            <div id="contrast-compare" class="hidden">
+                <div class="grid grid-cols-2 gap-4 text-base">
+                    <div class="p-5 rounded-xl" style="background:#f0f0f0">
+                        <p class="text-sm text-slate-500 mb-2 font-bold">❌ Insuficiente — ratio 2.2:1</p>
+                        <p style="color:#aaaaaa; font-size:1.125rem">Texto difícil de ler para muitos usuários.</p>
+                    </div>
+                    <div class="p-5 rounded-xl" style="background:#f0f0f0">
+                        <p class="text-sm text-slate-500 mb-2 font-bold">✅ WCAG AA — ratio 7.5:1</p>
+                        <p style="color:#333333; font-size:1.125rem">Texto legível e acessível para todos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: Métricas Quantitativas -->
+    <section class="slide">
+        <div class="max-w-6xl w-full">
+            <h2 class="text-5xl font-bold mb-8">Como medir a Usabilidade?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- TCT -->
+                <div class="card flex flex-col gap-4 border-t-4 border-blue-500">
+                    <div class="flex items-center gap-3">
+                        <span class="text-4xl">⏱️</span>
+                        <div>
+                            <h4 class="text-blue-400 font-bold text-2xl">TCT</h4>
+                            <p class="text-slate-400 text-sm font-semibold">Task Completion Time</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 text-base">Mede o <strong>tempo gasto</strong> para o usuário completar uma tarefa específica.</p>
+                    <div class="bg-black/30 rounded-lg p-3 text-sm text-slate-400 space-y-1">
+                        <p>🔬 <strong>Como:</strong> Cronometra-se do início ao fim da tarefa durante um teste moderado.</p>
+                        <p>📌 <strong>Exemplo:</strong> "Usuário levou 48s para achar o botão de cancelar assinatura — meta era 20s."</p>
+                    </div>
+                    <div class="mt-auto text-center bg-blue-500/10 rounded-lg py-2">
+                        <span class="text-2xl font-bold text-blue-300">Resultado: segundos / min</span>
+                    </div>
+                </div>
+
+                <!-- Taxa de Sucesso -->
+                <div class="card flex flex-col gap-4 border-t-4 border-green-500">
+                    <div class="flex items-center gap-3">
+                        <span class="text-4xl">✅</span>
+                        <div>
+                            <h4 class="text-green-400 font-bold text-2xl">Taxa de Sucesso</h4>
+                            <p class="text-slate-400 text-sm font-semibold">Task Success Rate</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 text-base">Percentual de usuários que <strong>completaram a tarefa com êxito</strong>, sem ajuda externa.</p>
+                    <div class="bg-black/30 rounded-lg p-3 text-sm text-slate-400 space-y-1">
+                        <p>🔬 <strong>Como:</strong> (nº de sucessos ÷ total de tentativas) × 100.</p>
+                        <p>📌 <strong>Referência:</strong> Abaixo de 78% indica problema grave de usabilidade (Nielsen Norman).</p>
+                    </div>
+                    <div class="mt-auto text-center bg-green-500/10 rounded-lg py-2">
+                        <span class="text-2xl font-bold text-green-300">Resultado: % (0–100)</span>
+                    </div>
+                </div>
+
+                <!-- SUS -->
+                <div class="card flex flex-col gap-4 border-t-4 border-purple-500">
+                    <div class="flex items-center gap-3">
+                        <span class="text-4xl">📊</span>
+                        <div>
+                            <h4 class="text-purple-400 font-bold text-2xl">SUS Score</h4>
+                            <p class="text-slate-400 text-sm font-semibold">System Usability Scale</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 text-base">Questionário padronizado de <strong>10 perguntas</strong> que mede a percepção subjetiva do usuário.</p>
+                    <div class="bg-black/30 rounded-lg p-3 text-sm text-slate-400 space-y-1">
+                        <p>🔬 <strong>Como:</strong> Respondido após o teste; cada item de 1–5; fórmula gera nota de 0 a 100.</p>
+                        <p>📌 <strong>Referência:</strong> ≥ 68 = aceitável · ≥ 85 = excelente (Bangor, 2008).</p>
+                    </div>
+                    <div class="mt-auto grid grid-cols-4 gap-1 text-xs text-center font-bold">
+                        <div class="bg-red-500/30 text-red-300 rounded py-1">Poor<br>&lt;51</div>
+                        <div class="bg-yellow-500/30 text-yellow-300 rounded py-1">OK<br>51–70</div>
+                        <div class="bg-blue-500/30 text-blue-300 rounded py-1">Good<br>71–84</div>
+                        <div class="bg-green-500/30 text-green-300 rounded py-1">Best<br>≥85</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5.5: Calculadora SUS -->
+    <section class="slide overflow-y-auto">
+        <div class="max-w-5xl w-full py-8">
+            <h2 class="text-5xl font-bold mb-1 text-center text-blue-400">📊 Calculadora SUS</h2>
+            <p class="text-center text-slate-400 mb-5 text-base font-semibold">Pense num app que você usa todo dia. Avalie de 1 (discordo totalmente) a 5 (concordo totalmente):</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-base">
+                <div class="bg-white/5 p-4 rounded-xl"><p class="mb-3 text-slate-100 font-semibold">1. Usaria esse sistema com frequência.</p><div class="flex gap-2 sus-opts" data-q="1"></div></div>
+                <div class="bg-white/5 p-4 rounded-xl"><p class="mb-3 text-slate-100 font-semibold">2. Achei o sistema desnecessariamente complexo.</p><div class="flex gap-2 sus-opts" data-q="2"></div></div>
+                <div class="bg-white/5 p-4 rounded-xl"><p class="mb-3 text-slate-100 font-semibold">3. O sistema foi fácil de usar.</p><div class="flex gap-2 sus-opts" data-q="3"></div></div>
+                <div class="bg-white/5 p-4 rounded-xl"><p class="mb-3 text-slate-100 font-semibold">4. Precisaria de ajuda técnica para usar o sistema.</p><div class="flex gap-2 sus-opts" data-q="4"></div></div>
+                <div class="bg-white/5 p-4 rounded-xl"><p class="mb-3 text-slate-100 font-semibold">5. As funções do sistema estavam bem integradas.</p><div class="flex gap-2 sus-opts" data-q="5"></div></div>
+                <div class="bg-white/5 p-4 rounded-xl"><p class="mb-3 text-slate-100 font-semibold">6. Havia muitas inconsistências no sistema.</p><div class="flex gap-2 sus-opts" data-q="6"></div></div>
+                <div class="bg-white/5 p-4 rounded-xl"><p class="mb-3 text-slate-100 font-semibold">7. Qualquer pessoa aprenderia a usar rapidamente.</p><div class="flex gap-2 sus-opts" data-q="7"></div></div>
+                <div class="bg-white/5 p-4 rounded-xl"><p class="mb-3 text-slate-100 font-semibold">8. O sistema era muito difícil de usar.</p><div class="flex gap-2 sus-opts" data-q="8"></div></div>
+                <div class="bg-white/5 p-4 rounded-xl"><p class="mb-3 text-slate-100 font-semibold">9. Me senti confiante ao usar o sistema.</p><div class="flex gap-2 sus-opts" data-q="9"></div></div>
+                <div class="bg-white/5 p-4 rounded-xl"><p class="mb-3 text-slate-100 font-semibold">10. Precisei aprender muitas coisas antes de começar.</p><div class="flex gap-2 sus-opts" data-q="10"></div></div>
+            </div>
+            <div class="text-center mt-5 flex gap-4 justify-center">
+                <button onclick="calcSUS()" class="px-8 py-3 bg-blue-500 hover:bg-blue-600 rounded-xl font-bold transition-all">Calcular Score</button>
+                <button onclick="resetSUS()" class="px-6 py-3 bg-white/10 hover:bg-white/20 rounded-xl font-bold transition-all text-sm">↺ Limpar</button>
+            </div>
+            <div id="sus-result" class="hidden mt-5 card text-center">
+                <p class="text-sm text-slate-400 mb-1">Seu SUS Score:</p>
+                <p id="sus-score" class="text-6xl font-extrabold text-blue-400 mb-1">0</p>
+                <p id="sus-label" class="text-xl font-bold mb-1"></p>
+                <p id="sus-desc" class="text-slate-400 text-sm"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 6: Batalha de Gigantes (Globo vs UOL) -->
+    <section class="slide">
+        <div class="max-w-6xl w-full">
+            <h2 class="text-5xl font-bold mb-8 text-orange-400 text-center">Duelo de Portais: Globo.com vs UOL</h2>
+            <div class="grid grid-cols-2 gap-8">
+                <div class="card border-t-4 border-blue-500">
+                    <h3 class="text-3xl font-bold mb-4">Globo.com</h3>
+                    <ul class="text-lg space-y-3 text-slate-300">
+                        <li>🔵 Foco em hierarquia visual por blocos.</li>
+                        <li>🔵 Espaçamento (Whitespace) mais generoso.</li>
+                        <li>🔵 Cores institucionais fortes para separação de editorias (G1, GE, GShow).</li>
+                    </ul>
+                </div>
+                <div class="card border-t-4 border-slate-500">
+                    <h3 class="text-3xl font-bold mb-4">UOL.com.br</h3>
+                    <ul class="text-lg space-y-3 text-slate-300">
+                        <li>⚪ Alta densidade de informação (muitos links).</li>
+                        <li>⚪ Tradicionalmente mais texto do que imagem.</li>
+                        <li>⚪ Menu lateral persistente e robusto.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 7: Desafio Prático Comparativo -->
+    <section class="slide">
+        <div class="max-w-5xl w-full">
+            <div class="card bg-gradient-to-br from-blue-900/40 to-cyan-900/40 border-blue-400">
+                <div class="flex items-start justify-between mb-6">
+                    <h2 class="text-5xl font-bold">🏆 Desafio: Auditoria Relâmpago</h2>
+                    <div class="text-center ml-8 flex-shrink-0">
+                        <div id="timer-display" class="text-8xl font-extrabold font-mono text-white mb-2">20:00</div>
+                        <div class="flex gap-2 justify-center">
+                            <button onclick="toggleTimer()" id="timer-btn" class="px-4 py-2 bg-blue-500 hover:bg-blue-600 rounded-lg font-bold text-sm transition-all">▶ Iniciar</button>
+                            <button onclick="resetTimer()" class="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg font-bold text-sm transition-all">↺ Reset</button>
+                        </div>
+                    </div>
+                </div>
+                <p class="mb-2 text-xl font-semibold">Dividam-se em 2 grupos. Um analisa o <strong>Globo.com</strong>, o outro o <strong>UOL.com.br</strong>.</p>
+                <p class="text-sm text-slate-400 mb-5 font-semibold">⌨️ Regra: <strong>não usem o mouse</strong>. Naveguem apenas com <kbd class="bg-white/10 px-2 py-0.5 rounded">Tab</kbd>, <kbd class="bg-white/10 px-2 py-0.5 rounded">Shift+Tab</kbd>, <kbd class="bg-white/10 px-2 py-0.5 rounded">Enter</kbd> e <kbd class="bg-white/10 px-2 py-0.5 rounded">Espaço</kbd>.</p>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-base">
+                    <div class="bg-black/30 p-4 rounded-lg border-t-2 border-blue-400">
+                        <h4 class="font-bold text-blue-300 mb-2 text-lg">1. Foco Visível</h4>
+                        <p class="text-slate-300 text-base">Pressione <kbd class="bg-white/10 px-1 rounded">Tab</kbd> 10 vezes. Você consegue ver claramente <strong>qual elemento está selecionado</strong>?</p>
+                        <p class="text-slate-500 mt-2 text-sm">Critério WCAG 2.4.7: Focus Visible.</p>
+                    </div>
+                    <div class="bg-black/30 p-4 rounded-lg border-t-2 border-cyan-400">
+                        <h4 class="font-bold text-cyan-300 mb-2 text-lg">2. Ordem Lógica</h4>
+                        <p class="text-slate-300 text-base">A ordem do <kbd class="bg-white/10 px-1 rounded">Tab</kbd> faz sentido? Segue a leitura de cima → baixo, esquerda → direita?</p>
+                        <p class="text-slate-500 mt-2 text-sm">Critério WCAG 1.3.2: Meaningful Sequence.</p>
+                    </div>
+                    <div class="bg-black/30 p-4 rounded-lg border-t-2 border-purple-400">
+                        <h4 class="font-bold text-purple-300 mb-2 text-lg">3. Armadilha de Foco</h4>
+                        <p class="text-slate-300 text-base">Abra um menu ou modal. Você consegue <strong>sair de lá</strong> usando apenas o teclado (sem Esc/mouse)?</p>
+                        <p class="text-slate-500 mt-2 text-sm">Critério WCAG 2.1.2: No Keyboard Trap.</p>
+                    </div>
+                    <div class="bg-black/30 p-4 rounded-lg border-t-2 border-green-400">
+                        <h4 class="font-bold text-green-300 mb-2 text-lg">4. Saltar Conteúdo</h4>
+                        <p class="text-slate-300 text-base">Na primeira tela, pressione <kbd class="bg-white/10 px-1 rounded">Tab</kbd> uma vez. Aparece um link <em>"Pular para o conteúdo"</em>?</p>
+                        <p class="text-slate-500 mt-2 text-sm">Critério WCAG 2.4.1: Bypass Blocks.</p>
+                    </div>
+                </div>
+                <div class="mt-4 bg-black/20 rounded-lg p-3 text-sm text-slate-400">
+                    📋 <strong>Ao final:</strong> preencha mentalmente — <span class="text-green-400">✅ Passou</span> ou <span class="text-red-400">❌ Falhou</span> em cada critério. Qual portal é mais acessível pelo teclado?
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 8: Conclusão -->
+    <section class="slide">
+        <div class="max-w-4xl text-center">
+            <h2 class="text-6xl font-bold mb-8">Resumo</h2>
+            <div class="grid grid-cols-2 gap-4 text-left mb-12">
+                <div class="bg-white/5 p-4 rounded text-lg font-semibold">Nielsen: O guia prático do design.</div>
+                <div class="bg-white/5 p-4 rounded text-lg font-semibold">POUR: O guia ético da inclusão.</div>
+                <div class="bg-white/5 p-4 rounded text-lg font-semibold">Métricas: O que não se mede, não se gerencia.</div>
+                <div class="bg-white/5 p-4 rounded text-lg font-semibold">Contexto: Usabilidade muda conforme o público.</div>
+            </div>
+            <p class="text-slate-500 text-xl">Próxima Aula: **Ergonomia Cognitiva e Física**</p>
+        </div>
+    </section>
+
+    <!-- Controles -->
+    <div class="fixed bottom-8 right-8 flex gap-4 z-50">
+        <button onclick="prevSlide()" class="nav-btn" title="Anterior">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+        <button onclick="nextSlide()" class="nav-btn" title="Próximo">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progress = document.getElementById('progress');
+
+        function updateSlide() {
+            slides.forEach((s, i) => s.classList.toggle('active', i === currentSlide));
+            progress.style.width = ((currentSlide + 1) / slides.length * 100) + '%';
+        }
+        function nextSlide() { if (currentSlide < slides.length - 1) { currentSlide++; updateSlide(); } }
+        function prevSlide() { if (currentSlide > 0) { currentSlide--; updateSlide(); } }
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') nextSlide();
+            if (e.key === 'ArrowLeft' || e.key === 'PageUp') prevSlide();
+        });
+
+        // ── ENQUETE ──────────────────────────────────────────────
+        let pollVotes = { sim: 0, nao: 0 };
+        function votePoll(option) {
+            pollVotes[option]++;
+            const total = pollVotes.sim + pollVotes.nao;
+            const simPct = Math.round((pollVotes.sim / total) * 100);
+            const naoPct = 100 - simPct;
+            document.getElementById('sim-count').textContent = pollVotes.sim + ' voto(s) (' + simPct + '%)';
+            document.getElementById('nao-count').textContent = pollVotes.nao + ' voto(s) (' + naoPct + '%)';
+            document.getElementById('sim-bar').style.width = simPct + '%';
+            document.getElementById('nao-bar').style.width = naoPct + '%';
+            if (total > 0) document.getElementById('poll-insight').classList.remove('hidden');
+        }
+        function resetPoll() {
+            pollVotes = { sim: 0, nao: 0 };
+            ['sim', 'nao'].forEach(k => {
+                document.getElementById(k + '-count').textContent = '0 votos (0%)';
+                document.getElementById(k + '-bar').style.width = '0%';
+            });
+            document.getElementById('poll-insight').classList.add('hidden');
+        }
+
+        // ── QUIZ PILARES ─────────────────────────────────────────
+        const quizAnswers = { 1: 'Memorização', 2: 'Erros', 3: 'Aprendizado' };
+        const quizExplanations = {
+            1: 'Pilar da Memorização: o usuário já conhecia o sistema, mas a atualização mudou o layout — ele não consegue mais lembrar onde o botão estava.',
+            2: 'Pilar dos Erros: o sistema falhou em fornecer feedback útil que ajude o usuário a entender o problema e se recuperar.',
+            3: 'Pilar do Aprendizado: no primeiro contato, o sistema não sinalizou onde estava a função — baixa descoberta (discoverability).'
+        };
+        function answerQuiz(qNum, choice) {
+            const correct = quizAnswers[qNum];
+            const feedback = document.getElementById('q' + qNum + '-feedback');
+            const btns = document.querySelectorAll('#q' + qNum + ' .quiz-opt');
+            btns.forEach(b => { b.disabled = true; b.classList.add('cursor-not-allowed'); });
+            btns.forEach(b => {
+                if (b.textContent.trim() === correct)
+                    b.classList.add('bg-green-500/40', 'border-green-400', 'text-green-300');
+            });
+            if (choice !== correct)
+                [...btns].filter(b => b.textContent.trim() === choice)
+                         .forEach(b => b.classList.add('bg-red-500/30', 'border-red-400', 'text-red-300'));
+            const ok = choice === correct;
+            feedback.className = 'mt-3 text-sm p-3 rounded-lg ' + (ok ? 'bg-green-900/30 text-green-300' : 'bg-red-900/30 text-red-300');
+            feedback.innerHTML = (ok ? '✅ Correto! ' : '❌ Era <strong>' + correct + '</strong>. ') + quizExplanations[qNum];
+            feedback.classList.remove('hidden');
+        }
+
+        // ── CONTRASTE ────────────────────────────────────────────
+        function judgeContrast(verdict) {
+            const el = document.getElementById('contrast-verdict');
+            document.getElementById('contrast-compare').classList.remove('hidden');
+            el.classList.remove('hidden');
+            if (verdict === 'fail') {
+                el.className = 'p-4 rounded-xl text-center bg-green-900/30 text-green-300';
+                el.innerHTML = '✅ Correto! O ratio é <strong>2.2:1</strong> — abaixo do mínimo WCAG AA de 4.5:1. Veja a comparação:';
+            } else {
+                el.className = 'p-4 rounded-xl text-center bg-red-900/30 text-red-300';
+                el.innerHTML = '❌ Na verdade, esse texto <strong>reprova</strong>. Ratio 2.2:1 é insuficiente — WCAG AA exige ≥ 4.5:1. Veja:';
+            }
+        }
+
+        // ── CALCULADORA SUS ──────────────────────────────────────
+        function initSUS() {
+            document.querySelectorAll('.sus-opts').forEach(container => {
+                for (let i = 1; i <= 5; i++) {
+                    const btn = document.createElement('button');
+                    btn.textContent = i;
+                    btn.dataset.val = i;
+                    btn.className = 'sus-btn w-10 h-10 rounded-lg border border-white/20 hover:bg-blue-500/40 transition-all text-sm font-bold';
+                    btn.onclick = function () {
+                        container.querySelectorAll('.sus-btn').forEach(b => b.classList.remove('bg-blue-500', 'border-blue-400', 'text-white'));
+                        this.classList.add('bg-blue-500', 'border-blue-400', 'text-white');
+                        container.dataset.selected = this.dataset.val;
+                    };
+                    container.appendChild(btn);
+                }
+            });
+        }
+        function calcSUS() {
+            const opts = document.querySelectorAll('.sus-opts');
+            let scores = [], valid = true;
+            opts.forEach(el => {
+                const val = parseInt(el.dataset.selected);
+                if (isNaN(val)) { valid = false; return; }
+                scores.push(val);
+            });
+            if (!valid || scores.length < 10) { alert('Responda todas as 10 questões antes de calcular.'); return; }
+            let total = 0;
+            scores.forEach((s, i) => { total += (i % 2 === 0) ? s - 1 : 5 - s; });
+            const sus = total * 2.5;
+            let label, desc, color;
+            if      (sus >= 85) { label = '🏆 Excellent'; desc = 'Usabilidade excepcional — referência de mercado.';            color = 'text-green-400'; }
+            else if (sus >= 71) { label = '👍 Good';      desc = 'Boa usabilidade. Melhorias pontuais ainda possíveis.';     color = 'text-blue-400';  }
+            else if (sus >= 51) { label = '😐 OK';        desc = 'Aceitável, mas com problemas de usabilidade visíveis.';    color = 'text-yellow-400'; }
+            else                { label = '⚠️ Poor';      desc = 'Problemas sérios identificados. Redesign recomendado.';   color = 'text-red-400';   }
+            document.getElementById('sus-score').textContent = sus.toFixed(0);
+            document.getElementById('sus-score').className = 'text-6xl font-extrabold mb-1 ' + color;
+            document.getElementById('sus-label').textContent = label;
+            document.getElementById('sus-label').className   = 'text-xl font-bold mb-1 ' + color;
+            document.getElementById('sus-desc').textContent  = desc;
+            document.getElementById('sus-result').classList.remove('hidden');
+        }
+        function resetSUS() {
+            document.querySelectorAll('.sus-opts').forEach(container => {
+                delete container.dataset.selected;
+                container.querySelectorAll('.sus-btn').forEach(b => b.classList.remove('bg-blue-500', 'border-blue-400', 'text-white'));
+            });
+            document.getElementById('sus-result').classList.add('hidden');
+        }
+
+        // ── CRONÔMETRO ───────────────────────────────────────────
+        let timerInterval = null, timerSeconds = 20 * 60, timerRunning = false;
+        function formatTime(s) {
+            return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+        }
+        function toggleTimer() {
+            if (!timerRunning) {
+                timerRunning = true;
+                document.getElementById('timer-btn').textContent = '⏸ Pausar';
+                timerInterval = setInterval(() => {
+                    timerSeconds--;
+                    const d = document.getElementById('timer-display');
+                    d.textContent = formatTime(timerSeconds);
+                    if (timerSeconds <= 120) d.classList.add('text-orange-400');
+                    if (timerSeconds <= 30)  { d.classList.remove('text-orange-400'); d.classList.add('text-red-500'); }
+                    if (timerSeconds <= 0) {
+                        clearInterval(timerInterval); timerRunning = false;
+                        d.textContent = '⏰ Tempo!';
+                        const btn = document.getElementById('timer-btn');
+                        btn.textContent = '— Encerrado —'; btn.disabled = true;
+                    }
+                }, 1000);
+            } else {
+                timerRunning = false;
+                clearInterval(timerInterval);
+                document.getElementById('timer-btn').textContent = '▶ Continuar';
+            }
+        }
+        function resetTimer() {
+            clearInterval(timerInterval); timerRunning = false; timerSeconds = 20 * 60;
+            const d = document.getElementById('timer-display');
+            d.textContent = '20:00';
+            d.className = 'text-5xl font-extrabold font-mono text-white mb-2';
+            const btn = document.getElementById('timer-btn');
+            btn.textContent = '▶ Iniciar'; btn.disabled = false;
+        }
+
+        // ── QUIZ HEURÍSTICAS ─────────────────────────────────────
+        const hqAnswers = { 1: 'H1', 2: 'H3', 3: 'H9' };
+        const hqExplanations = {
+            1: 'H1 – Visibilidade do Status: o sistema não forneceu nenhum feedback após a ação. O usuário ficou sem saber se o envio ocorreu.',
+            2: 'H3 – Controle e Liberdade do Usuário: o sistema não oferece saída de emergência. Uma lixeira ou "Desfazer" seria essencial.',
+            3: 'H9 – Ajude a Reconhecer e Recuperar Erros: a mensagem usou código técnico em vez de linguagem simples e não sugeriu nenhuma solução.'
+        };
+        function answerHQ(qNum, choice) {
+            const correct = hqAnswers[qNum];
+            const feedback = document.getElementById('hq' + qNum + '-feedback');
+            const btns = document.querySelectorAll('#hq' + qNum + ' .hq-opt');
+            btns.forEach(b => { b.disabled = true; b.classList.add('cursor-not-allowed'); });
+            btns.forEach(b => {
+                if (b.textContent.trim().startsWith(correct))
+                    b.classList.add('bg-green-500/40', 'border-green-400', 'text-green-300');
+            });
+            if (!choice.startsWith(correct))
+                [...btns].filter(b => b.textContent.trim().startsWith(choice))
+                         .forEach(b => b.classList.add('bg-red-500/30', 'border-red-400', 'text-red-300'));
+            const ok = choice === correct;
+            feedback.className = 'mt-3 text-sm p-3 rounded-lg ' + (ok ? 'bg-green-900/30 text-green-300' : 'bg-red-900/30 text-red-300');
+            feedback.innerHTML = (ok ? '✅ Correto! ' : '❌ Era <strong>' + correct + '</strong>. ') + hqExplanations[qNum];
+            feedback.classList.remove('hidden');
+        }
+
+        initSUS();
+        updateSlide();
+    </script>
+</body>
+</html>

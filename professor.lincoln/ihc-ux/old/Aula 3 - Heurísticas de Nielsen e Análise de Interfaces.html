@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heurísticas de Nielsen e Análise de Interfaces</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Google Fonts: Roboto (Material Design Default) -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                    },
+                    // Material Design 3 Color Tokens
+                    colors: {
+                        primary: '#6750A4',
+                        'on-primary': '#FFFFFF',
+                        'primary-container': '#EADDFF',
+                        'on-primary-container': '#21005D',
+                        
+                        secondary: '#625B71',
+                        'on-secondary': '#FFFFFF',
+                        'secondary-container': '#E8DEF8',
+                        'on-secondary-container': '#1D192B',
+                        
+                        tertiary: '#7D5260',
+                        'on-tertiary': '#FFFFFF',
+                        'tertiary-container': '#FFD8E4',
+                        'on-tertiary-container': '#31111D',
+                        
+                        error: '#B3261E',
+                        'on-error': '#FFFFFF',
+                        'error-container': '#F9DEDC',
+                        'on-error-container': '#410E0B',
+                        
+                        background: '#FEFBFF',
+                        'on-background': '#1C1B1F',
+                        
+                        surface: '#FEFBFF',
+                        'on-surface': '#1C1B1F',
+                        'surface-variant': '#E7E0EC',
+                        'on-surface-variant': '#49454F',
+                        
+                        outline: '#79747E',
+                        'outline-variant': '#CAC4D0',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar MD3 style */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #FEFBFF; }
+        ::-webkit-scrollbar-thumb { background: #CAC4D0; border-radius: 8px; }
+        ::-webkit-scrollbar-thumb:hover { background: #79747E; }
+    </style>
+</head>
+<body class="font-sans text-on-surface bg-background antialiased selection:bg-primary-container selection:text-on-primary-container">
+
+    <!-- Navbar MD3 -->
+    <nav class="fixed w-full z-50 bg-surface/90 backdrop-blur-md border-b border-outline-variant transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center gap-2">
+                    <i data-lucide="layout-template" class="w-6 h-6 text-primary"></i>
+                    <span class="font-bold text-lg tracking-tight text-on-surface">UX Design</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#inicio" class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors">Início</a>
+                    <a href="#conceito" class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors">Conceito</a>
+                    <a href="#heuristicas" class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors">As 10 Heurísticas</a>
+                    <a href="#severidade" class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors">Severidade</a>
+                    <a href="#pratica" class="text-sm font-medium text-on-surface-variant hover:text-primary transition-colors">Prática</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-on-surface-variant hover:text-primary focus:outline-none">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-surface border-b border-outline-variant px-4 pt-2 pb-4 space-y-1 shadow-md">
+            <a href="#inicio" class="block px-3 py-2 rounded-full text-base font-medium text-on-surface-variant hover:text-primary hover:bg-surface-variant">Início</a>
+            <a href="#conceito" class="block px-3 py-2 rounded-full text-base font-medium text-on-surface-variant hover:text-primary hover:bg-surface-variant">Conceito</a>
+            <a href="#heuristicas" class="block px-3 py-2 rounded-full text-base font-medium text-on-surface-variant hover:text-primary hover:bg-surface-variant">As 10 Heurísticas</a>
+            <a href="#severidade" class="block px-3 py-2 rounded-full text-base font-medium text-on-surface-variant hover:text-primary hover:bg-surface-variant">Severidade</a>
+            <a href="#pratica" class="block px-3 py-2 rounded-full text-base font-medium text-on-surface-variant hover:text-primary hover:bg-surface-variant">Prática</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section (Primary Container Style) -->
+    <header id="inicio" class="pt-32 pb-20 lg:pt-48 lg:pb-32 bg-primary text-on-primary relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            
+            <span class="inline-block py-1.5 px-4 rounded-full bg-primary-container text-on-primary-container text-sm font-semibold tracking-wide mb-6 shadow-sm">
+                Disciplina de Interação Humano-Computador e UX
+            </span>
+            
+            <h1 class="text-4xl md:text-5xl lg:text-7xl font-black tracking-tight mb-6 leading-tight">
+                Heurísticas de Nielsen <br class="hidden md:block" />
+                <span class="text-primary-container">e Análise de Interfaces</span>
+            </h1>
+            
+            <p class="mt-4 max-w-2xl mx-auto text-xl text-primary-container/90 mb-10 font-normal">
+                Aprenda a identificar problemas de usabilidade, aplicar princípios clássicos de design e propor melhorias reais para a experiência do usuário.
+            </p>
+            
+            <div class="flex justify-center gap-4">
+                <!-- MD3 Filled Button -->
+                <a href="#conceito" class="px-8 py-4 rounded-full text-base font-bold text-primary bg-primary-container hover:bg-white shadow-md transition-all">
+                    Começar a Aprender
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Objetivos & Aquecimento -->
+    <section class="py-20 bg-background">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-on-surface">Objetivos da Aula</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+                <!-- Objetivo 1 - Surface Variant Card -->
+                <div class="bg-surface-variant rounded-[24px] p-8 hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center mb-6">
+                        <i data-lucide="microscope" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-on-surface mb-3">Aplicar Heurísticas</h3>
+                    <p class="text-on-surface-variant leading-relaxed">Identificar problemas de usabilidade em uma interface real utilizando as 10 heurísticas clássicas de Nielsen.</p>
+                </div>
+                
+                <!-- Objetivo 2 -->
+                <div class="bg-surface-variant rounded-[24px] p-8 hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 rounded-full bg-tertiary-container text-on-tertiary-container flex items-center justify-center mb-6">
+                        <i data-lucide="clipboard-check" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-on-surface mb-3">Registrar Achados</h3>
+                    <p class="text-on-surface-variant leading-relaxed">Documentar seus achados com evidência visual, identificar a regra violada e classificar a severidade do problema.</p>
+                </div>
+
+                <!-- Objetivo 3 -->
+                <div class="bg-surface-variant rounded-[24px] p-8 hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center mb-6">
+                        <i data-lucide="target" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-on-surface mb-3">Definir Tema (A3)</h3>
+                    <p class="text-on-surface-variant leading-relaxed">Finalizar a aula com a definição do tema do projeto prático (A3) com base nos problemas reais mapeados.</p>
+                </div>
+            </div>
+
+            <!-- Aquecimento -->
+            <div class="bg-secondary-container rounded-[32px] overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <div class="p-10 lg:p-12 flex flex-col justify-center">
+                        <div class="flex items-center gap-2 text-on-secondary-container mb-4 font-bold">
+                            <i data-lucide="flame" class="w-6 h-6"></i>
+                            <span class="tracking-wide uppercase text-sm">Aquecimento</span>
+                        </div>
+                        <h3 class="text-3xl font-black text-on-secondary-container mb-6">Caça ao Problema</h3>
+                        <p class="text-on-secondary-container/80 text-lg mb-6 font-medium">Observe criticamente uma interface confusa. O que te faria desistir de completar uma tarefa simples?</p>
+                        
+                        <ul class="space-y-4 text-on-secondary-container mb-8 font-medium">
+                            <li class="flex items-center gap-3"><i data-lucide="alert-circle" class="w-6 h-6 text-error"></i> É um erro sistêmico e bloqueante?</li>
+                            <li class="flex items-center gap-3"><i data-lucide="eye-off" class="w-6 h-6 text-primary"></i> É uma confusão visual nas informações?</li>
+                            <li class="flex items-center gap-3"><i data-lucide="frown" class="w-6 h-6 text-tertiary"></i> Causa frustração extrema?</li>
+                        </ul>
+                        
+                        <div class="bg-surface/50 p-5 rounded-[16px]">
+                            <p class="text-on-secondary-container font-bold flex items-center gap-3">
+                                <i data-lucide="crosshair" class="w-5 h-5 shrink-0"></i>
+                                Objetivo: Ativar seu olhar clínico para prevenir erros e manter o controle do usuário.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bg-surface-variant hidden lg:flex items-center justify-center p-12">
+                        <!-- Abstract UI Representation -->
+                        <div class="w-full h-full border-2 border-dashed border-outline rounded-[24px] flex flex-col items-center justify-center text-on-surface-variant relative overflow-hidden bg-surface">
+                            <div class="absolute top-4 left-4 w-20 h-8 bg-error-container rounded-lg"></div>
+                            <div class="absolute top-4 right-4 w-12 h-12 bg-primary-container rounded-full"></div>
+                            <div class="absolute bottom-10 left-10 w-32 h-10 bg-tertiary-container rounded-lg skew-x-12"></div>
+                            <i data-lucide="mouse-pointer-click" class="w-16 h-16 text-outline mb-4 z-10"></i>
+                            <span class="font-bold text-xl z-10 text-on-surface">Interface Confusa</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Conceito & Comparação -->
+    <section id="conceito" class="py-20 bg-surface border-t border-outline-variant">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-20">
+                <div>
+                    <h2 class="text-3xl font-bold text-on-surface mb-6">O que é Avaliação Heurística?</h2>
+                    <h3 class="text-xl font-bold text-primary mb-4">O Conceito</h3>
+                    <p class="text-on-surface-variant text-lg leading-relaxed mb-6 font-medium">
+                        É um método de inspeção rápida e qualitativa. Nela, avaliadores especialistas examinam a interface e julgam sua conformidade com princípios de usabilidade reconhecidos (as "heurísticas").
+                    </p>
+                    <div class="bg-secondary-container p-6 rounded-[16px]">
+                        <h4 class="font-bold text-on-secondary-container mb-2 flex items-center gap-2">
+                            <i data-lucide="clock" class="w-5 h-5"></i> Quando usar
+                        </h4>
+                        <p class="text-on-secondary-container">
+                            Excelente para as fases iniciais e intermediárias do ciclo de design, diagnosticando problemas antes mesmo de testar com usuários ou escrever código.
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="bg-tertiary-container rounded-[24px] p-8 h-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-12 h-12 bg-tertiary rounded-full flex items-center justify-center text-on-tertiary">
+                                <i data-lucide="award" class="w-6 h-6"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-on-tertiary-container">A Regra de Ouro</h3>
+                        </div>
+                        <p class="text-on-tertiary-container text-lg mb-6 font-medium">
+                            Na avaliação, a clareza da documentação é vital. Um problema de interface só é válido se for registrado como um achado completo.
+                        </p>
+                        <p class="font-bold text-on-tertiary-container mb-4">Todo achado deve conter obrigatoriamente:</p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="camera" class="w-6 h-6 text-tertiary shrink-0 mt-0.5"></i>
+                                <div><strong class="text-on-tertiary-container">Evidência:</strong> <span class="text-on-tertiary-container/80">Um print claro apontando o erro na tela.</span></div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="file-text" class="w-6 h-6 text-tertiary shrink-0 mt-0.5"></i>
+                                <div><strong class="text-on-tertiary-container">Descrição:</strong> <span class="text-on-tertiary-container/80">O que acontece e qual heurística foi ferida.</span></div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i data-lucide="trending-down" class="w-6 h-6 text-tertiary shrink-0 mt-0.5"></i>
+                                <div><strong class="text-on-tertiary-container">Impacto:</strong> <span class="text-on-tertiary-container/80">Como isso prejudica a jornada do usuário.</span></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabela Comparativa MD3 Style -->
+            <div class="bg-surface rounded-[24px] border border-outline-variant overflow-hidden">
+                <div class="p-6 md:p-8 bg-surface-variant text-on-surface-variant">
+                    <h3 class="text-2xl font-bold">Heurística vs Teste de Usabilidade</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-outline-variant">
+                                <th class="p-4 md:p-6 font-bold text-on-surface w-1/4">Característica</th>
+                                <th class="p-4 md:p-6 font-bold text-primary border-l border-outline-variant w-3/8">Avaliação Heurística</th>
+                                <th class="p-4 md:p-6 font-bold text-tertiary border-l border-outline-variant w-3/8">Teste com Usuário</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-outline-variant">
+                            <tr class="hover:bg-surface-variant/50 transition-colors">
+                                <td class="p-4 md:p-6 font-bold text-on-surface">Quem executa?</td>
+                                <td class="p-4 md:p-6 text-on-surface-variant border-l border-outline-variant">Designers / Especialistas em UX</td>
+                                <td class="p-4 md:p-6 text-on-surface-variant border-l border-outline-variant">Usuários finais representativos</td>
+                            </tr>
+                            <tr class="hover:bg-surface-variant/50 transition-colors">
+                                <td class="p-4 md:p-6 font-bold text-on-surface">Qual o Foco?</td>
+                                <td class="p-4 md:p-6 text-on-surface-variant border-l border-outline-variant">Encontrar violações de princípios técnicos de usabilidade.</td>
+                                <td class="p-4 md:p-6 text-on-surface-variant border-l border-outline-variant">Validar o comportamento real, emoções e sucesso da tarefa.</td>
+                            </tr>
+                            <tr class="hover:bg-surface-variant/50 transition-colors">
+                                <td class="p-4 md:p-6 font-bold text-on-surface">Custo e Tempo</td>
+                                <td class="p-4 md:p-6 text-on-surface-variant border-l border-outline-variant">Rápido e de baixo custo operacional.</td>
+                                <td class="p-4 md:p-6 text-on-surface-variant border-l border-outline-variant">Demorado e geralmente de alto custo.</td>
+                            </tr>
+                            <tr class="hover:bg-surface-variant/50 transition-colors">
+                                <td class="p-4 md:p-6 font-bold text-on-surface">Quando aplicar?</td>
+                                <td class="p-4 md:p-6 text-on-surface-variant border-l border-outline-variant">Do início ao fim, especialmente em wireframes e mockups.</td>
+                                <td class="p-4 md:p-6 text-on-surface-variant border-l border-outline-variant">Em protótipos avançados ou com o produto já em produção.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- As 10 Heurísticas de Nielsen — Seções Expandidas -->
+    <section id="heuristicas" class="py-20 bg-surface-variant">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-on-surface">As 10 Heurísticas de Nielsen</h2>
+                <p class="mt-4 text-on-surface-variant max-w-2xl mx-auto font-medium">Explore cada princípio em profundidade: o que é, o que observar como investigador e exemplos práticos do mundo real.</p>
+            </div>
+
+            <!-- Índice Rápido -->
+            <div class="flex flex-wrap justify-center gap-2 mb-16">
+                <a href="#h1" class="px-4 py-2 bg-surface border border-outline-variant rounded-full text-sm font-bold text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container hover:border-primary transition-all">1. Visibilidade</a>
+                <a href="#h2" class="px-4 py-2 bg-surface border border-outline-variant rounded-full text-sm font-bold text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container hover:border-primary transition-all">2. Mundo Real</a>
+                <a href="#h3" class="px-4 py-2 bg-surface border border-outline-variant rounded-full text-sm font-bold text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container hover:border-primary transition-all">3. Controle</a>
+                <a href="#h4" class="px-4 py-2 bg-surface border border-outline-variant rounded-full text-sm font-bold text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container hover:border-primary transition-all">4. Consistência</a>
+                <a href="#h5" class="px-4 py-2 bg-surface border border-outline-variant rounded-full text-sm font-bold text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container hover:border-primary transition-all">5. Prevenção</a>
+                <a href="#h6" class="px-4 py-2 bg-surface border border-outline-variant rounded-full text-sm font-bold text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container hover:border-primary transition-all">6. Reconhecimento</a>
+                <a href="#h7" class="px-4 py-2 bg-surface border border-outline-variant rounded-full text-sm font-bold text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container hover:border-primary transition-all">7. Flexibilidade</a>
+                <a href="#h8" class="px-4 py-2 bg-surface border border-outline-variant rounded-full text-sm font-bold text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container hover:border-primary transition-all">8. Minimalismo</a>
+                <a href="#h9" class="px-4 py-2 bg-surface border border-outline-variant rounded-full text-sm font-bold text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container hover:border-primary transition-all">9. Recuperação</a>
+                <a href="#h10" class="px-4 py-2 bg-surface border border-outline-variant rounded-full text-sm font-bold text-on-surface-variant hover:bg-primary-container hover:text-on-primary-container hover:border-primary transition-all">10. Documentação</a>
+            </div>
+
+            <div class="space-y-10">
+
+                <!-- ─── H1 ─── -->
+                <div id="h1" class="bg-surface rounded-[32px] border border-outline-variant overflow-hidden scroll-mt-20">
+                    <!-- Cabeçalho da Heurística -->
+                    <div class="bg-primary p-8 flex items-start gap-6">
+                        <div class="text-7xl font-black text-primary-container/30 leading-none select-none shrink-0">1</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="eye" class="w-7 h-7 text-primary-container"></i>
+                                <span class="text-primary-container/80 text-sm font-bold uppercase tracking-widest">Heurística #1</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-black text-on-primary mb-3">Visibilidade do Status do Sistema</h3>
+                            <p class="text-primary-container/90 text-base leading-relaxed font-medium max-w-3xl">
+                                O sistema deve sempre manter os usuários informados sobre o que está acontecendo, por meio de feedback adequado e entregue em tempo real. O usuário nunca deve ficar no escuro sobre o resultado de uma ação.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Corpo -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-outline-variant">
+                        <!-- Coluna: Investigador -->
+                        <div class="p-8">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="search" class="w-5 h-5 text-primary"></i> O que observar como investigador
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Há indicador de carregamento (spinner, barra de progresso) quando o sistema processa uma ação demorada?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">O usuário recebe confirmação visual ou sonora após completar uma ação (envio de formulário, compra, upload)?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Em processos multi-etapas, o usuário consegue identificar facilmente em qual etapa se encontra e quantas faltam?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Após um clique em botão, alguma coisa muda visivelmente na tela (estado do botão, mensagem) ou parece que nada aconteceu?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Em processos longos (ex: exportação de arquivo), o usuário sabe o percentual de progresso ou apenas vê um ícone genérico girando?</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Coluna: Exemplos -->
+                        <div class="p-8 bg-surface-variant/40">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="lightbulb" class="w-5 h-5 text-secondary"></i> Exemplos Práticos
+                            </h4>
+                            <div class="space-y-4">
+                                <div class="bg-surface rounded-[16px] p-5 border border-outline-variant">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-[#386A20] flex items-center justify-center shrink-0"><i data-lucide="check" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-[#386A20]">Bom Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">O Gmail exibe "Mensagem enviada. <u>Desfazer</u>" por alguns segundos logo após o envio. O YouTube mostra uma barra de progresso ao fazer upload de vídeo com percentual, velocidade e tempo estimado.</p>
+                                </div>
+                                <div class="bg-surface rounded-[16px] p-5 border border-error-container">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-error flex items-center justify-center shrink-0"><i data-lucide="x" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-error">Mau Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">Um formulário cujo botão "Enviar" não muda de estado após o clique — o usuário fica sem saber se a submissão funcionou e acaba clicando múltiplas vezes, gerando envios duplicados.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ─── H2 ─── -->
+                <div id="h2" class="bg-surface rounded-[32px] border border-outline-variant overflow-hidden scroll-mt-20">
+                    <div class="bg-secondary p-8 flex items-start gap-6">
+                        <div class="text-7xl font-black text-secondary-container/30 leading-none select-none shrink-0">2</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="globe" class="w-7 h-7 text-secondary-container"></i>
+                                <span class="text-secondary-container/80 text-sm font-bold uppercase tracking-widest">Heurística #2</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-black text-on-secondary mb-3">Compatibilidade com o Mundo Real</h3>
+                            <p class="text-secondary-container/90 text-base leading-relaxed font-medium max-w-3xl">
+                                O sistema deve falar a linguagem do usuário — palavras, frases e conceitos familiares para ele —, em vez de termos técnicos voltados ao sistema. As informações devem aparecer em uma ordem natural e lógica, espelhando o raciocínio e os modelos mentais do usuário.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-outline-variant">
+                        <div class="p-8">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="search" class="w-5 h-5 text-primary"></i> O que observar como investigador
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Os rótulos e botões usam jargão técnico interno (ex: "CRUD", "despachar entidade", "ID de registro") que o usuário final jamais utilizaria?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Os ícones são autoexplicativos ou poderiam ser confundidos com outro significado em contextos culturais diferentes?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">A hierarquia de informações segue o fluxo mental do usuário ou o fluxo lógico interno do sistema/banco de dados?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Datas, moedas ou unidades de medida são exibidos no formato e padrão local do usuário alvo?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Metáforas visuais usadas (pasta, lixeira, envelope) são reconhecíveis e fazem sentido no contexto da tarefa?</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="p-8 bg-surface-variant/40">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="lightbulb" class="w-5 h-5 text-secondary"></i> Exemplos Práticos
+                            </h4>
+                            <div class="space-y-4">
+                                <div class="bg-surface rounded-[16px] p-5 border border-outline-variant">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-[#386A20] flex items-center justify-center shrink-0"><i data-lucide="check" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-[#386A20]">Bom Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">Aplicativos de delivery usam o ícone de carrinho de compras, "Meus Pedidos" e "Endereço de Entrega" — linguagem familiar do mundo físico. O ícone de lixeira para "excluir" é universalmente reconhecido.</p>
+                                </div>
+                                <div class="bg-surface rounded-[16px] p-5 border border-error-container">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-error flex items-center justify-center shrink-0"><i data-lucide="x" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-error">Mau Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">Um sistema ERP exibe "Despachar OP #4492 para o módulo de expedição" quando deveria dizer simplesmente "Enviar pedido". Ou um site que exibe "HTTP 404" em vez de "Página não encontrada".</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ─── H3 ─── -->
+                <div id="h3" class="bg-surface rounded-[32px] border border-outline-variant overflow-hidden scroll-mt-20">
+                    <div class="bg-tertiary p-8 flex items-start gap-6">
+                        <div class="text-7xl font-black text-tertiary-container/30 leading-none select-none shrink-0">3</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="unlock" class="w-7 h-7 text-tertiary-container"></i>
+                                <span class="text-tertiary-container/80 text-sm font-bold uppercase tracking-widest">Heurística #3</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-black text-on-tertiary mb-3">Controle e Liberdade do Usuário</h3>
+                            <p class="text-tertiary-container/90 text-base leading-relaxed font-medium max-w-3xl">
+                                Usuários frequentemente escolhem funções por engano e precisam de uma "saída de emergência" claramente marcada para sair do estado indesejado sem ter que percorrer um caminho longo. O sistema deve suportar "Desfazer" e "Refazer".
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-outline-variant">
+                        <div class="p-8">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="search" class="w-5 h-5 text-primary"></i> O que observar como investigador
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Existe botão "Cancelar" visível em todos os fluxos longos (formulários, assistentes, modais)?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Após uma ação destrutiva (excluir, arquivar), o usuário tem a opção de desfazer por um período razoável?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Ao sair de um formulário parcialmente preenchido, o progresso é salvo automaticamente ou o usuário é avisado antes de perder dados?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Modais ou popups possuem uma maneira evidente de fechar (botão "X", tecla Esc, clique fora)?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Em processos de múltiplos passos (wizard), é possível voltar à etapa anterior sem perder o que foi preenchido?</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="p-8 bg-surface-variant/40">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="lightbulb" class="w-5 h-5 text-secondary"></i> Exemplos Práticos
+                            </h4>
+                            <div class="space-y-4">
+                                <div class="bg-surface rounded-[16px] p-5 border border-outline-variant">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-[#386A20] flex items-center justify-center shrink-0"><i data-lucide="check" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-[#386A20]">Bom Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">O Gmail mantém e-mails excluídos na lixeira por 30 dias. O Google Docs salva automaticamente e mantém histórico de versões, permitindo restaurar qualquer estado anterior do documento.</p>
+                                </div>
+                                <div class="bg-surface rounded-[16px] p-5 border border-error-container">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-error flex items-center justify-center shrink-0"><i data-lucide="x" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-error">Mau Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">Um sistema bancário que exclui a conta corrente imediatamente ao clicar em "Excluir", sem confirmação e sem possibilidade de desfazer. Ou um assistente de cadastro de 5 etapas onde clicar em "Voltar" apaga todos os dados.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ─── H4 ─── -->
+                <div id="h4" class="bg-surface rounded-[32px] border border-outline-variant overflow-hidden scroll-mt-20">
+                    <div class="bg-[#4A4458] p-8 flex items-start gap-6">
+                        <div class="text-7xl font-black text-white/10 leading-none select-none shrink-0">4</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="copy-check" class="w-7 h-7 text-primary-container"></i>
+                                <span class="text-primary-container/80 text-sm font-bold uppercase tracking-widest">Heurística #4</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-black text-white mb-3">Consistência e Padrões</h3>
+                            <p class="text-white/80 text-base leading-relaxed font-medium max-w-3xl">
+                                Os usuários não devem ter que se perguntar se palavras, situações ou ações diferentes significam a mesma coisa. Siga as convenções e padrões da plataforma. Um elemento que parece igual em duas telas deve se comportar da mesma forma em ambas.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-outline-variant">
+                        <div class="p-8">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="search" class="w-5 h-5 text-primary"></i> O que observar como investigador
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Botões com a mesma função (ex: confirmar, salvar, avançar) têm aparência visual, cor e rótulo consistentes em todas as telas?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">O mesmo termo é usado para o mesmo conceito em toda a interface (ex: "perfil" em umas telas e "conta" em outras para o mesmo dado)?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">A navegação principal está sempre no mesmo local em todas as páginas/telas?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">O sistema segue as diretrizes da plataforma (Material Design para Android, Human Interface Guidelines para iOS)?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Ícones têm o mesmo significado em todo o sistema (ex: o ícone de "+" sempre cria algo novo)?</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="p-8 bg-surface-variant/40">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="lightbulb" class="w-5 h-5 text-secondary"></i> Exemplos Práticos
+                            </h4>
+                            <div class="space-y-4">
+                                <div class="bg-surface rounded-[16px] p-5 border border-outline-variant">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-[#386A20] flex items-center justify-center shrink-0"><i data-lucide="check" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-[#386A20]">Bom Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">O sistema de design do Material Design garante que botões, campos, cores e tipografia sigam os mesmos padrões em todo o app Android. O usuário aprende uma vez e usa em qualquer tela.</p>
+                                </div>
+                                <div class="bg-surface rounded-[16px] p-5 border border-error-container">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-error flex items-center justify-center shrink-0"><i data-lucide="x" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-error">Mau Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">Um site que chama a mesma ação de "Salvar" em algumas telas e "Confirmar" em outras, ou onde o botão de ação principal está no canto inferior direito em alguns modais e no canto superior esquerdo em outros.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ─── H5 ─── -->
+                <div id="h5" class="bg-surface rounded-[32px] border border-outline-variant overflow-hidden scroll-mt-20">
+                    <div class="bg-error p-8 flex items-start gap-6">
+                        <div class="text-7xl font-black text-error-container/20 leading-none select-none shrink-0">5</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="shield-alert" class="w-7 h-7 text-error-container"></i>
+                                <span class="text-error-container/80 text-sm font-bold uppercase tracking-widest">Heurística #5</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-black text-on-error mb-3">Prevenção de Erros</h3>
+                            <p class="text-error-container/90 text-base leading-relaxed font-medium max-w-3xl">
+                                Ainda melhor do que boas mensagens de erro é um design cuidadoso que previne a ocorrência do problema. Elimine condições propensas a erros ou verifique-as e apresente ao usuário uma opção de confirmação antes de confirmar a ação.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-outline-variant">
+                        <div class="p-8">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="search" class="w-5 h-5 text-primary"></i> O que observar como investigador
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Campos de formulário utilizam máscaras de entrada (ex: CPF, telefone, data) para guiar o usuário ao formato correto?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Há validação em tempo real que avisa o usuário sobre dados inválidos antes de ele submeter o formulário inteiro?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Ações destrutivas (excluir, desativar, cancelar pedido) exigem uma confirmação explícita (ex: dialog "Tem certeza?")?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Seletores de datas e horários usam componentes dedicados (date picker, time picker) em vez de campos de texto livres?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Botões de ação destrutiva (ex: "Apagar tudo") estão visualmente diferenciados dos botões de confirmação para evitar clique acidental?</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="p-8 bg-surface-variant/40">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="lightbulb" class="w-5 h-5 text-secondary"></i> Exemplos Práticos
+                            </h4>
+                            <div class="space-y-4">
+                                <div class="bg-surface rounded-[16px] p-5 border border-outline-variant">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-[#386A20] flex items-center justify-center shrink-0"><i data-lucide="check" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-[#386A20]">Bom Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">O GitHub exige que o usuário digite o nome exato do repositório num campo de texto antes de confirmar a exclusão permanente. O iFood usa um seletor de horário (time picker) para o agendamento, evitando horários inválidos.</p>
+                                </div>
+                                <div class="bg-surface rounded-[16px] p-5 border border-error-container">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-error flex items-center justify-center shrink-0"><i data-lucide="x" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-error">Mau Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">Um formulário de transferência bancária com campo de valor totalmente livre, sem máscara ou limite, onde "1000" e "1.000" poderiam ser interpretados diferentemente. Ou um botão "Cancelar Pedido" sem nenhuma confirmação.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ─── H6 ─── -->
+                <div id="h6" class="bg-surface rounded-[32px] border border-outline-variant overflow-hidden scroll-mt-20">
+                    <div class="bg-primary p-8 flex items-start gap-6">
+                        <div class="text-7xl font-black text-primary-container/30 leading-none select-none shrink-0">6</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="brain" class="w-7 h-7 text-primary-container"></i>
+                                <span class="text-primary-container/80 text-sm font-bold uppercase tracking-widest">Heurística #6</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-black text-on-primary mb-3">Reconhecimento em vez de Memorização</h3>
+                            <p class="text-primary-container/90 text-base leading-relaxed font-medium max-w-3xl">
+                                Minimize a carga de memória do usuário tornando objetos, ações e opções visíveis. O usuário não deveria ter que lembrar informações de uma parte da interface para usá-las em outra. Instruções de uso devem estar visíveis ou facilmente recuperáveis.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-outline-variant">
+                        <div class="p-8">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="search" class="w-5 h-5 text-primary"></i> O que observar como investigador
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">O usuário precisa memorizar um código, número ou dado de uma tela para inserir em outra (ex: copiar um ID manualmente)?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Há breadcrumbs, trilhas de navegação ou indicadores de localização para que o usuário saiba onde está no sistema?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Campos de busca oferecem sugestões (autocomplete) com base no histórico ou nas opções disponíveis?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Em formulários longos, o context de dados preenchidos em etapas anteriores fica visível na etapa atual?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Ao errar em um formulário e recarregar a página, os dados preenchidos anteriormente são preservados?</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="p-8 bg-surface-variant/40">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="lightbulb" class="w-5 h-5 text-secondary"></i> Exemplos Práticos
+                            </h4>
+                            <div class="space-y-4">
+                                <div class="bg-surface rounded-[16px] p-5 border border-outline-variant">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-[#386A20] flex items-center justify-center shrink-0"><i data-lucide="check" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-[#386A20]">Bom Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">O Google Maps mostra na tela o endereço de destino atual enquanto o usuário navega pelas opções de rota. O histórico de pesquisas do Google aparece automaticamente ao clicar na barra de busca.</p>
+                                </div>
+                                <div class="bg-surface rounded-[16px] p-5 border border-error-container">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-error flex items-center justify-center shrink-0"><i data-lucide="x" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-error">Mau Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">Um checkout de e-commerce que exibe o código do produto na tela de confirmação e depois pede que o usuário encontre e insira esse mesmo código em outro campo numa tela seguinte. Ou menus de navegação sem indicação de qual item está ativo.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ─── H7 ─── -->
+                <div id="h7" class="bg-surface rounded-[32px] border border-outline-variant overflow-hidden scroll-mt-20">
+                    <div class="bg-secondary p-8 flex items-start gap-6">
+                        <div class="text-7xl font-black text-secondary-container/30 leading-none select-none shrink-0">7</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="zap" class="w-7 h-7 text-secondary-container"></i>
+                                <span class="text-secondary-container/80 text-sm font-bold uppercase tracking-widest">Heurística #7</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-black text-on-secondary mb-3">Flexibilidade e Eficiência de Uso</h3>
+                            <p class="text-secondary-container/90 text-base leading-relaxed font-medium max-w-3xl">
+                                Aceleradores — invisíveis para o usuário novato — podem acelerar significativamente a interação para o usuário especialista. O sistema deve atender tanto usuários inexperientes quanto experientes. Permita que os usuários adaptem ações frequentes.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-outline-variant">
+                        <div class="p-8">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="search" class="w-5 h-5 text-primary"></i> O que observar como investigador
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Existem atalhos de teclado documentados para as ações mais frequentes (Ctrl+S para salvar, Ctrl+N para novo)?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Há uma seção de "Ações Rápidas" ou "Favoritos" que o usuário pode personalizar?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Em e-commerce ou apps de serviço, há opção de "Repetir último pedido" ou "Usar endereço salvo"?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Processos que o usuário experiente realiza diariamente podem ser concluídos com menos cliques do que para um novato?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">O sistema oferece templates, modelos ou sugestões baseadas no comportamento passado do usuário?</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="p-8 bg-surface-variant/40">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="lightbulb" class="w-5 h-5 text-secondary"></i> Exemplos Práticos
+                            </h4>
+                            <div class="space-y-4">
+                                <div class="bg-surface rounded-[16px] p-5 border border-outline-variant">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-[#386A20] flex items-center justify-center shrink-0"><i data-lucide="check" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-[#386A20]">Bom Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">O Photoshop possui dezenas de atalhos de teclado que profissionais usam sem parar. O iFood tem "Pedir novamente" para repetir o último pedido com um toque. O VS Code permite customizar completamente os atalhos de teclado.</p>
+                                </div>
+                                <div class="bg-surface rounded-[16px] p-5 border border-error-container">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-error flex items-center justify-center shrink-0"><i data-lucide="x" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-error">Mau Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">Um sistema de gestão hospitalar onde o técnico de enfermagem que registra 50 pacientes por dia precisa preencher todos os 12 campos do formulário na íntegra toda vez, sem templates, histórico ou preenchimento automático.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ─── H8 ─── -->
+                <div id="h8" class="bg-surface rounded-[32px] border border-outline-variant overflow-hidden scroll-mt-20">
+                    <div class="bg-tertiary p-8 flex items-start gap-6">
+                        <div class="text-7xl font-black text-tertiary-container/30 leading-none select-none shrink-0">8</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="sparkles" class="w-7 h-7 text-tertiary-container"></i>
+                                <span class="text-tertiary-container/80 text-sm font-bold uppercase tracking-widest">Heurística #8</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-black text-on-tertiary mb-3">Estética e Design Minimalista</h3>
+                            <p class="text-tertiary-container/90 text-base leading-relaxed font-medium max-w-3xl">
+                                As interfaces não devem conter informações irrelevantes ou raramente necessárias. Cada unidade extra de informação em uma tela compete com as informações relevantes e diminui sua visibilidade relativa. Menos é mais.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-outline-variant">
+                        <div class="p-8">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="search" class="w-5 h-5 text-primary"></i> O que observar como investigador
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">A tela inicial (home) apresenta as informações e ações mais importantes com clareza, ou está sobrecarregada de banners, CTAs e notificações?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Há uma hierarquia visual clara? A ação principal se destaca visivelmente das secundárias?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Existem textos ou elementos decorativos que não contribuem com a tarefa atual do usuário?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Pop-ups, modais, banners e toasts aparecem em excesso, interrompendo o fluxo de uso da interface?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">O espaço em branco (whitespace) é usado adequadamente para criar respiro visual e guiar o olhar do usuário?</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="p-8 bg-surface-variant/40">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="lightbulb" class="w-5 h-5 text-secondary"></i> Exemplos Práticos
+                            </h4>
+                            <div class="space-y-4">
+                                <div class="bg-surface rounded-[16px] p-5 border border-outline-variant">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-[#386A20] flex items-center justify-center shrink-0"><i data-lucide="check" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-[#386A20]">Bom Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">A interface do Google Search é o exemplo clássico: uma caixa de busca centralizada, dois botões e o logo. Toda a atenção vai para a única ação que importa. Aplicativos de meditação como Headspace usam muito espaço em branco e paleta reduzida.</p>
+                                </div>
+                                <div class="bg-surface rounded-[16px] p-5 border border-error-container">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-error flex items-center justify-center shrink-0"><i data-lucide="x" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-error">Mau Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">Uma home de e-commerce com 3 pop-ups simultâneos (cupom, newsletter, notificação push), 5 banners rotativos, 8 categorias em destaque e uma barra de chat flutuante piscando — o usuário não sabe para onde olhar primeiro.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ─── H9 ─── -->
+                <div id="h9" class="bg-surface rounded-[32px] border border-outline-variant overflow-hidden scroll-mt-20">
+                    <div class="bg-[#4A4458] p-8 flex items-start gap-6">
+                        <div class="text-7xl font-black text-white/10 leading-none select-none shrink-0">9</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="life-buoy" class="w-7 h-7 text-primary-container"></i>
+                                <span class="text-primary-container/80 text-sm font-bold uppercase tracking-widest">Heurística #9</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-black text-white mb-3">Ajudar a Reconhecer, Diagnosticar e Recuperar de Erros</h3>
+                            <p class="text-white/80 text-base leading-relaxed font-medium max-w-3xl">
+                                As mensagens de erro devem ser expressas em linguagem simples (sem códigos), indicar precisamente o problema e sugerir uma solução construtiva. O sistema deve ajudar o usuário a entender o que aconteceu e como resolver.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-outline-variant">
+                        <div class="p-8">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="search" class="w-5 h-5 text-primary"></i> O que observar como investigador
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">As mensagens de erro utilizam linguagem humana e amigável, ou exibem códigos técnicos (ex: "Error 500", "NullPointerException")?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">A mensagem indica exatamente o que está errado (ex: "Email inválido" vs. "Campo obrigatório") ou é genérica demais?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Após o erro, o sistema sugere ao usuário o próximo passo para resolvê-lo (ex: "Verifique...", "Tente...", "Clique em...")?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">As mensagens de erro são exibidas próximas ao elemento que causou o problema (inline) ou apenas no topo/rodapé da página?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Distintos tipos de erro são visualmente diferenciados (erro crítico vs. aviso vs. informação)?</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="p-8 bg-surface-variant/40">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="lightbulb" class="w-5 h-5 text-secondary"></i> Exemplos Práticos
+                            </h4>
+                            <div class="space-y-4">
+                                <div class="bg-surface rounded-[16px] p-5 border border-outline-variant">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-[#386A20] flex items-center justify-center shrink-0"><i data-lucide="check" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-[#386A20]">Bom Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">A mensagem de senha fraca do Twitter/X: <em>"Sua senha deve ter pelo menos 8 caracteres, incluindo um número e uma letra maiúscula."</em> — específica, construtiva e acionável. O Duolingo usa tom de encorajamento mesmo ao errar uma questão.</p>
+                                </div>
+                                <div class="bg-surface rounded-[16px] p-5 border border-error-container">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-error flex items-center justify-center shrink-0"><i data-lucide="x" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-error">Mau Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">Um formulário que exibe apenas "Dados inválidos" sem indicar qual campo está errado. Ou um sistema bancário que retorna "Falha na operação. Código: TRX-0042F" sem explicar o que é o código nem como o usuário pode resolver.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ─── H10 ─── -->
+                <div id="h10" class="bg-surface rounded-[32px] border border-outline-variant overflow-hidden scroll-mt-20">
+                    <div class="bg-primary p-8 flex items-start gap-6">
+                        <div class="text-7xl font-black text-primary-container/30 leading-none select-none shrink-0">10</div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <i data-lucide="book-open" class="w-7 h-7 text-primary-container"></i>
+                                <span class="text-primary-container/80 text-sm font-bold uppercase tracking-widest">Heurística #10</span>
+                            </div>
+                            <h3 class="text-2xl md:text-3xl font-black text-on-primary mb-3">Ajuda e Documentação</h3>
+                            <p class="text-primary-container/90 text-base leading-relaxed font-medium max-w-3xl">
+                                Embora seja melhor que o sistema não necessite de explicações adicionais, pode ser necessário fornecer documentação e ajuda. Essa informação deve ser fácil de buscar, focada na tarefa do usuário, listar os passos concretos a executar e não ser muito extensa.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 divide-y lg:divide-y-0 lg:divide-x divide-outline-variant">
+                        <div class="p-8">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="search" class="w-5 h-5 text-primary"></i> O que observar como investigador
+                            </h4>
+                            <ul class="space-y-3">
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Existe uma central de ajuda ou FAQ acessível a partir de qualquer tela (não apenas do rodapé da home)?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Campos complexos ou incomuns possuem tooltips ou textos auxiliares (ex: ícone "?" ao lado) que explicam o que é esperado?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">A busca interna da documentação funciona? Ao pesquisar uma dúvida comum, resultado relevante aparece nas primeiras posições?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">Há um fluxo de onboarding (tour guiado, dicas contextuais) para novos usuários na primeira utilização?</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                    <span class="text-on-surface-variant text-sm leading-relaxed">A documentação está atualizada e reflete a versão atual da interface (não versões antigas com screenshots desatualizados)?</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="p-8 bg-surface-variant/40">
+                            <h4 class="font-bold text-on-surface text-lg mb-5 flex items-center gap-2">
+                                <i data-lucide="lightbulb" class="w-5 h-5 text-secondary"></i> Exemplos Práticos
+                            </h4>
+                            <div class="space-y-4">
+                                <div class="bg-surface rounded-[16px] p-5 border border-outline-variant">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-[#386A20] flex items-center justify-center shrink-0"><i data-lucide="check" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-[#386A20]">Bom Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">Ferramentas como Notion e Figma possuem tooltips contextuais em todos os ícones da toolbar. O Slack exibe um tour interativo no primeiro acesso. A documentação do Stripe é considerada referência mundial em clareza e organização por tarefa.</p>
+                                </div>
+                                <div class="bg-surface rounded-[16px] p-5 border border-error-container">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="w-5 h-5 rounded-full bg-error flex items-center justify-center shrink-0"><i data-lucide="x" class="w-3 h-3 text-white"></i></span>
+                                        <span class="font-bold text-sm text-error">Mau Exemplo</span>
+                                    </div>
+                                    <p class="text-on-surface-variant text-sm leading-relaxed">Um sistema de gestão pública onde a central de ajuda só é acessível pelo rodapé da homepage, retorna resultados irrelevantes na busca, e os artigos têm capturas de tela da versão de 2018 de um sistema completamente redesenhado em 2023.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Escala de Severidade -->
+    <section id="severidade" class="py-20 bg-background">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-on-surface">Escala de Severidade (0 a 4)</h2>
+                <p class="mt-4 text-on-surface-variant max-w-2xl mx-auto italic font-medium">"O usuário consegue concluir a tarefa principal no final?"</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+                <!-- 0 -->
+                <div class="bg-surface border border-outline-variant rounded-[24px] p-6 relative pt-12">
+                    <div class="absolute -top-4 left-6 w-12 h-12 bg-surface-variant text-on-surface-variant rounded-full flex items-center justify-center font-black text-xl border-4 border-background">0</div>
+                    <h4 class="font-bold text-on-surface mb-2">Falso Positivo</h4>
+                    <p class="text-sm text-on-surface-variant">Não é um problema real de usabilidade, muitas vezes é apenas uma opinião pessoal.</p>
+                </div>
+
+                <!-- 1 -->
+                <div class="bg-secondary-container border border-secondary-container rounded-[24px] p-6 relative pt-12">
+                    <div class="absolute -top-4 left-6 w-12 h-12 bg-secondary text-on-secondary rounded-full flex items-center justify-center font-black text-xl border-4 border-background">1</div>
+                    <h4 class="font-bold text-on-secondary-container mb-2">Problema Cosmético</h4>
+                    <p class="text-sm text-on-secondary-container/90">Problema visual leve. Não precisa ser consertado a menos que haja tempo extra no projeto.</p>
+                </div>
+
+                <!-- 2 -->
+                <div class="bg-primary-container border border-primary-container rounded-[24px] p-6 relative pt-12">
+                    <div class="absolute -top-4 left-6 w-12 h-12 bg-primary text-on-primary rounded-full flex items-center justify-center font-black text-xl border-4 border-background">2</div>
+                    <h4 class="font-bold text-on-primary-container mb-2">Problema Pequeno</h4>
+                    <p class="text-sm text-on-primary-container/90">Atrapalha um pouco a fluidez, mas o usuário consegue contornar com facilidade. Baixa prioridade.</p>
+                </div>
+
+                <!-- 3 -->
+                <div class="bg-[#F9DEDC] border border-[#F9DEDC] rounded-[24px] p-6 relative pt-12">
+                    <div class="absolute -top-4 left-6 w-12 h-12 bg-[#B3261E] text-white rounded-full flex items-center justify-center font-black text-xl border-4 border-background">3</div>
+                    <h4 class="font-bold text-[#410E0B] mb-2">Problema Grande</h4>
+                    <p class="text-sm text-[#410E0B]/90">Prejudica muito a experiência. O usuário perde muito tempo ou comete erros indesejados. Alta prioridade.</p>
+                </div>
+
+                <!-- 4 -->
+                <div class="bg-[#B3261E] border border-[#B3261E] rounded-[24px] p-6 relative pt-12">
+                    <div class="absolute -top-4 left-6 w-12 h-12 bg-[#410E0B] text-white rounded-full flex items-center justify-center font-black text-xl border-4 border-background">4</div>
+                    <h4 class="font-bold text-white mb-2">Catástrofe de Usab.</h4>
+                    <p class="text-sm text-white/90">Impeditivo. O usuário é incapaz de concluir a tarefa ou abandona a interface por extrema frustração. Deve ser corrigido.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dinâmica & Atividades -->
+    <section id="pratica" class="py-20 bg-surface border-t border-outline-variant">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-on-surface">Dinâmica: Qual heurística está gritando?</h2>
+            </div>
+
+            <!-- Scenarios -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+                <div class="bg-surface p-6 rounded-[24px] border border-outline-variant hover:bg-surface-variant/30 transition-colors">
+                    <div class="bg-surface-variant h-32 rounded-[16px] mb-4 flex items-center justify-center relative overflow-hidden">
+                         <i data-lucide="alert-triangle" class="w-12 h-12 text-outline"></i>
+                         <!-- Mock error ui -->
+                         <div class="absolute bottom-2 left-2 right-2 bg-error-container p-2 rounded text-xs text-on-error-container text-center font-bold blur-[1px]">Error 0x0099F</div>
+                    </div>
+                    <span class="text-primary font-bold text-sm uppercase tracking-wider">Cenário 1</span>
+                    <h4 class="font-bold text-on-surface mt-2 mb-2">Feedback ausente ou erro não amigável.</h4>
+                    <p class="text-on-surface-variant text-sm">Como o usuário entende o que falhou?</p>
+                </div>
+
+                <div class="bg-surface p-6 rounded-[24px] border border-outline-variant hover:bg-surface-variant/30 transition-colors">
+                    <div class="bg-surface-variant h-32 rounded-[16px] mb-4 flex items-center justify-center relative overflow-hidden">
+                        <i data-lucide="layout-dashboard" class="w-12 h-12 text-outline"></i>
+                        <!-- Mock chaotic UI -->
+                        <div class="absolute top-2 left-2 w-10 h-10 bg-outline-variant rounded blur-[1px]"></div>
+                        <div class="absolute top-2 right-2 w-20 h-4 bg-outline-variant rounded blur-[1px]"></div>
+                        <div class="absolute bottom-2 left-2 w-full h-8 bg-outline-variant rounded blur-[1px]"></div>
+                        <div class="absolute top-14 left-14 w-12 h-12 bg-secondary-container rounded-full blur-[1px]"></div>
+                    </div>
+                    <span class="text-primary font-bold text-sm uppercase tracking-wider">Cenário 2</span>
+                    <h4 class="font-bold text-on-surface mt-2 mb-2">Menu e layout visualmente bagunçados.</h4>
+                    <p class="text-on-surface-variant text-sm">Qual princípio quebra a confiança aqui?</p>
+                </div>
+
+                <div class="bg-surface p-6 rounded-[24px] border border-outline-variant hover:bg-surface-variant/30 transition-colors">
+                    <div class="bg-surface-variant h-32 rounded-[16px] mb-4 flex items-center justify-center relative overflow-hidden">
+                        <i data-lucide="form-input" class="w-12 h-12 text-outline"></i>
+                        <!-- Mock form UI -->
+                        <div class="absolute flex flex-col gap-2 w-full px-4 blur-[1px]">
+                            <div class="h-2 bg-outline-variant w-full rounded"></div>
+                            <div class="h-2 bg-outline-variant w-full rounded"></div>
+                            <div class="h-2 bg-outline-variant w-full rounded"></div>
+                            <div class="h-2 bg-outline-variant w-full rounded"></div>
+                        </div>
+                    </div>
+                    <span class="text-primary font-bold text-sm uppercase tracking-wider">Cenário 3</span>
+                    <h4 class="font-bold text-on-surface mt-2 mb-2">Formulário supercomplexo com excesso de campos.</h4>
+                    <p class="text-on-surface-variant text-sm">O que poderia ser removido?</p>
+                </div>
+            </div>
+
+            <!-- Mão na Massa -->
+            <div class="bg-primary rounded-[32px] p-8 md:p-12 text-on-primary">
+                <h3 class="text-2xl font-bold mb-8 flex items-center gap-3">
+                    <i data-lucide="users" class="w-8 h-8 text-primary-container"></i> Mão na Massa: Avaliação em Grupo
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-on-primary/10 border border-on-primary/20 rounded-[24px] p-6">
+                        <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold mb-4">1</div>
+                        <h4 class="font-bold text-lg mb-2">Organização</h4>
+                        <p class="text-on-primary/80 text-sm leading-relaxed">Formem grupos de 3 a 5 pessoas. Escolham uma das interfaces distribuídas (ex: e-commerce, app de banco ou delivery).</p>
+                    </div>
+
+                    <div class="bg-on-primary/10 border border-on-primary/20 rounded-[24px] p-6">
+                        <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold mb-4">2</div>
+                        <h4 class="font-bold text-lg mb-2">Análise Individual</h4>
+                        <p class="text-on-primary/80 text-sm leading-relaxed">5 minutos de avaliação silenciosa. Anote tudo que encontrar. Isso evita o viés e o "efeito manada" do grupo.</p>
+                    </div>
+
+                    <div class="bg-on-primary/10 border border-on-primary/20 rounded-[24px] p-6">
+                        <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold mb-4">3</div>
+                        <h4 class="font-bold text-lg mb-2">Consolidação</h4>
+                        <p class="text-on-primary/80 text-sm leading-relaxed">20 minutos para juntar os achados do grupo, eliminar repetições e selecionar os 5 a 8 problemas mais relevantes.</p>
+                    </div>
+
+                    <div class="bg-on-primary/10 border border-on-primary/20 rounded-[24px] p-6">
+                        <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold mb-4">4</div>
+                        <h4 class="font-bold text-lg mb-2">Socialização</h4>
+                        <p class="text-on-primary/80 text-sm leading-relaxed">Apresentem seu "Top 3": um problema severo (3/4), um clássico de consistência e um erro/recuperação ruim.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Relatório & Entrega -->
+    <section class="py-20 bg-background">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                
+                <!-- Template de Achados -->
+                <div>
+                    <h2 class="text-2xl font-bold text-on-surface mb-6 flex items-center gap-2">
+                        <i data-lucide="file-spreadsheet" class="w-6 h-6 text-primary"></i> O Mini-Relatório (Template)
+                    </h2>
+                    <div class="bg-surface border border-outline-variant rounded-[24px] overflow-hidden">
+                        <div class="divide-y divide-outline-variant">
+                            <div class="p-4 bg-surface-variant flex flex-col sm:flex-row gap-2 sm:gap-6">
+                                <div class="font-bold text-on-surface sm:w-1/3 shrink-0">Tela / Fluxo</div>
+                                <div class="text-on-surface-variant text-sm font-medium">Onde exatamente o problema ocorreu? (Ex: Tela principal do carrinho).</div>
+                            </div>
+                            <div class="p-4 flex flex-col sm:flex-row gap-2 sm:gap-6">
+                                <div class="font-bold text-on-surface sm:w-1/3 shrink-0">Descrição do Problema</div>
+                                <div class="text-on-surface-variant text-sm font-medium">Descreva a falha técnica e clara na interface, não apenas "achei feio".</div>
+                            </div>
+                            <div class="p-4 bg-surface-variant flex flex-col sm:flex-row gap-2 sm:gap-6">
+                                <div class="font-bold text-on-surface sm:w-1/3 shrink-0">Heurística Violada</div>
+                                <div class="text-on-surface-variant text-sm font-medium">Indique o número e o nome do princípio de Nielsen violado.</div>
+                            </div>
+                            <div class="p-4 flex flex-col sm:flex-row gap-2 sm:gap-6">
+                                <div class="font-bold text-on-surface sm:w-1/3 shrink-0">Evidência e Impacto</div>
+                                <div class="text-on-surface-variant text-sm font-medium">Qual elemento de tela falhou? Gera atraso, erro, ou confusão profunda?</div>
+                            </div>
+                            <div class="p-4 bg-surface-variant flex flex-col sm:flex-row gap-2 sm:gap-6">
+                                <div class="font-bold text-on-surface sm:w-1/3 shrink-0">Severidade e Melhoria</div>
+                                <div class="text-on-surface-variant text-sm font-medium">Nota de 1 a 4, e em seguida, uma frase curta sugerindo a correção de UI/UX.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Exit Ticket -->
+                <div class="bg-secondary-container rounded-[32px] p-8 md:p-10 text-on-secondary-container relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 text-secondary/10">
+                        <i data-lucide="ticket" class="w-64 h-64 rotate-12"></i>
+                    </div>
+                    
+                    <div class="relative z-10">
+                        <span class="bg-secondary text-on-secondary px-4 py-1.5 rounded-full text-sm font-bold tracking-wider uppercase mb-6 inline-block">Projeto A3</span>
+                        <h2 class="text-3xl font-black mb-4">Entrega-Relâmpago <br/>(Exit Ticket)</h2>
+                        <p class="text-on-secondary-container/80 text-lg mb-8 font-medium">Para registrar sua presença e definir o próximo passo, entreguem uma proposta de tema para o Projeto A3 com base na análise de hoje.</p>
+                        
+                        <div class="bg-surface/60 rounded-[24px] p-6 border border-outline-variant">
+                            <h3 class="font-bold text-xl mb-4 text-on-surface border-b border-outline-variant pb-2">O que entregar:</h3>
+                            <ul class="space-y-5">
+                                <li class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold text-sm shrink-0 mt-0.5">1</div>
+                                    <div>
+                                        <strong class="block text-on-surface mb-1">Tema:</strong>
+                                        <span class="text-on-surface-variant italic text-sm font-medium">"Redesign de [Aplicativo/Site] para melhorar [Fluxo Específico]"</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold text-sm shrink-0 mt-0.5">2</div>
+                                    <div>
+                                        <strong class="block text-on-surface mb-1">Usuário-alvo:</strong>
+                                        <span class="text-on-surface-variant text-sm font-medium">Descrição simples do público principal.</span>
+                                    </div>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <div class="w-6 h-6 rounded-full bg-secondary text-on-secondary flex items-center justify-center font-bold text-sm shrink-0 mt-0.5">3</div>
+                                    <div>
+                                        <strong class="block text-on-surface mb-1">Os 3 Maiores Problemas:</strong>
+                                        <span class="text-on-surface-variant text-sm font-medium">O "Top 3" listando heurística violada e severidade.</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-surface-variant text-on-surface-variant py-12 border-t border-outline-variant">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="layout-template" class="w-5 h-5 text-primary"></i>
+                    <span class="font-bold text-on-surface">Disciplina de IHC e UX</span>
+                </div>
+                
+                <div class="text-sm text-center md:text-right font-medium">
+                    <p>Baseado no material: "Heurísticas de Nielsen e Análise de Interfaces"</p>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-outline-variant text-center text-sm font-medium">
+                <p>&copy; 2024 Avaliação Heurística. Uso acadêmico.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        const mobileLinks = menu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

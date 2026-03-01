@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IHC & UX - Portal da Disciplina | Dr. Lincoln Sposito</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5F1FGJ25TK');
+
+      // Altere sua função para incluir o nome da aula
+		function logAcesso(status, ref, aula) {
+			gtag('event', 'presenca_aula', {
+				'disciplina': 'IHC_UX',
+				'status_presenca': status,
+				'origem': ref,
+				'aula_referencia': aula // Adicione isso para diferenciar as aulas no GA4
+			});
+	  }
+    </script>
+
+    <style>
+        :root { --navy: #002147; --white: #ffffff; --accent: #28a745; --warning: #ffc107; --card-bg: #003366; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--navy); color: var(--white); margin: 0; text-align: center; }
+        .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        #portal-entrada { background: white; padding: 30px; border-radius: 20px; display: none; margin: 20px auto; color: var(--navy); max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #qrcode { display: flex; justify-content: center; margin: 20px 0; }
+        #aula-em-curso { display: none; background: var(--card-bg); padding: 20px; border-radius: 15px; border: 2px dashed var(--warning); margin: 20px 0; }
+        .tabela-aulas { width: 100%; border-collapse: collapse; margin-top: 30px; background: var(--card-bg); border-radius: 10px; overflow: hidden; }
+        .tabela-aulas th, .tabela-aulas td { padding: 18px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; }
+        .tabela-aulas th { background: rgba(0,0,0,0.3); color: var(--accent); }
+        .btn-link { color: var(--white); text-decoration: none; font-weight: bold; border: 1px solid var(--accent); padding: 8px 15px; border-radius: 5px; display: inline-block; }
+        .atrasado-lock { opacity: 0.5; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <img src="../img/grafico.svg" alt="Logo" style="height: 60px; margin-top: 20px;">
+        <h1>Interação Humano Computador & UX</h1>
+        <p>Portal de Acompanhamento Académico</p>
+    </header>
+
+    <div id="portal-entrada">
+        <h2 style="margin-top:0">RITUAL DE ENTRADA</h2>
+        <div id="qrcode"></div> 
+        <p><strong>Aponte para confirmar presença pontual.</strong></p>
+    </div>
+
+    <div id="aula-em-curso">
+        <h3>⚠️ Aula em Curso</h3>
+        <p>O acesso ao material está a ser projetado pelo professor. Se chegou agora, utilize o QR Code no slide projetado para registrar o seu atraso.</p>
+    </div>
+
+    <table class="tabela-aulas" id="tabelaAulas">
+        <thead>
+            <tr>
+                <th>Data</th>
+				<th>Hora Início</th>
+                <th>Conteúdo</th>
+                <th>Acesso</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr data-date="2026-03-06" data-start="19:00" data-url="aula-06-03-2026.html">
+                <td>06/03/2026</td>
+				<td>19:00</td>
+                <td>Design Centrado no Usuário: Personas e Jornadas</td>
+                <td class="col-link"></td>
+            </tr>		            
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function gerirFluxo() {
+        // 1. Pega a data e hora local (conforme seu script anterior de sucesso)
+        const agora = new Date();
+        const offset = agora.getTimezoneOffset();
+        const hojeLocal = new Date(agora.getTime() - (offset*60*1000)).toISOString().split('T')[0];
+        
+        const horaAtual = agora.getHours();
+        const minAtual = agora.getMinutes();
+        const tempoAtualMin = (horaAtual * 60) + minAtual;
+
+        const rows = document.querySelectorAll('#tabelaAulas tbody tr');
+
+        rows.forEach(row => {
+            const dataAula = row.getAttribute('data-date');
+            const horaInicioRaw = row.getAttribute('data-start');
+            const urlAula = row.getAttribute('data-url');
+            const linkCell = row.querySelector('.col-link');
+
+            if (dataAula === hojeLocal && horaInicioRaw) {
+                const [h, m] = horaInicioRaw.split(':').map(Number);
+                const tempoInicioMin = (h * 60) + m;
+                const limitePontual = tempoInicioMin + 17;
+
+                // Janela de Presença Pontual (Item 2 e 3 do seu roteiro)
+                if (tempoAtualMin >= tempoInicioMin && tempoAtualMin <= limitePontual) {
+                    const urlFinal = window.location.origin + window.location.pathname.replace('index.html', '') + urlAula + "?ref=index";
+                    
+                    document.getElementById('portal-entrada').style.display = 'block';
+                    
+                    // Gera o QR Code usando a biblioteca QRCode.js
+                    document.getElementById("qrcode").innerHTML = "";
+                    new QRCode(document.getElementById("qrcode"), {
+                        text: urlFinal,
+                        width: 200, height: 200,
+                        colorDark : "#002147", colorLight : "#ffffff"
+                    });
+
+                    if(linkCell) linkCell.innerHTML = `<a href="${urlAula}?ref=index" class="btn-link" onclick="logAcesso('pontual', 'index')">Entrar na Aula</a>`;
+                } 
+                // Janela de Atraso (Item 4 e 6)
+                else if (tempoAtualMin > limitePontual && tempoAtualMin <= (tempoInicioMin + 180)) {
+                    document.getElementById('aula-em-curso').style.display = 'block';
+                    if(linkCell) linkCell.innerHTML = `<span class="atrasado-lock">Acesso via Projeção</span>`;
+                }
+            } else if (linkCell) {
+                linkCell.innerHTML = `<a href="${urlAula}?ref=estudo" class="btn-link" onclick="logAcesso('engajamento', 'extra-classe')">Revisar Material</a>`;
+            }
+        });
+    }
+
+    window.onload = function() {
+        setTimeout(gerirFluxo, 500);
+    };
+</script>
+</body>
+</html>
+
+<!-- <!DOCTYPE html> -->
+<!-- <html lang="pt-br"> -->
+<!-- <head> -->
+    <!-- <meta charset="UTF-8"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <!-- <title>IHC & UX - Portal da Disciplina | Dr. Lincoln Sposito</title> -->
+    
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script> -->
+    <!-- <script> -->
+      <!-- window.dataLayer = window.dataLayer || []; -->
+      <!-- function gtag(){dataLayer.push(arguments);} -->
+      <!-- gtag('js', new Date()); -->
+      <!-- gtag('config', 'G-5F1FGJ25TK'); -->
+
+      <!-- // Função para registar o KPI presenca_aula com a origem -->
+      <!-- function logAcesso(status, ref) { -->
+          <!-- gtag('event', 'presenca_aula', { -->
+              <!-- 'disciplina': 'IHC_UX', -->
+              <!-- 'status_presenca': status, -->
+              <!-- 'origem': ref -->
+          <!-- }); -->
+      <!-- } -->
+    <!-- </script> -->
+
+    <!-- <style> -->
+        <!-- :root { -->
+            <!-- --navy: #002147; -->
+            <!-- --white: #ffffff; -->
+            <!-- --accent: #28a745; -->
+            <!-- --warning: #ffc107; -->
+            <!-- --card-bg: #003366; -->
+        <!-- } -->
+
+        <!-- body { -->
+            <!-- font-family: 'Segoe UI', system-ui, sans-serif; -->
+            <!-- background-color: var(--navy); -->
+            <!-- color: var(--white); -->
+            <!-- margin: 0; -->
+            <!-- text-align: center; -->
+        <!-- } -->
+
+        <!-- .container { max-width: 900px; margin: 0 auto; padding: 20px; } -->
+
+        <!-- /* Container do QR Code Dinâmico */ -->
+        <!-- #portal-entrada { -->
+            <!-- background: white; -->
+            <!-- padding: 30px; -->
+            <!-- border-radius: 20px; -->
+            <!-- display: none; /* Controlado pelo JS */ -->
+            <!-- margin: 20px auto; -->
+            <!-- color: var(--navy); -->
+            <!-- max-width: 400px; -->
+            <!-- box-shadow: 0 10px 30px rgba(0,0,0,0.5); -->
+        <!-- } -->
+
+        <!-- /* Mensagem de Aula em Curso */ -->
+        <!-- #aula-em-curso { -->
+            <!-- display: none; -->
+            <!-- background: var(--card-bg); -->
+            <!-- padding: 20px; -->
+            <!-- border-radius: 15px; -->
+            <!-- border: 2px dashed var(--warning); -->
+            <!-- margin: 20px 0; -->
+        <!-- } -->
+
+        <!-- .tabela-aulas { -->
+            <!-- width: 100%; -->
+            <!-- border-collapse: collapse; -->
+            <!-- margin-top: 30px; -->
+            <!-- background: var(--card-bg); -->
+            <!-- border-radius: 10px; -->
+            <!-- overflow: hidden; -->
+        <!-- } -->
+
+        <!-- .tabela-aulas th, .tabela-aulas td { -->
+            <!-- padding: 18px; -->
+            <!-- border-bottom: 1px solid rgba(255,255,255,0.1); -->
+            <!-- text-align: left; -->
+        <!-- } -->
+
+        <!-- .tabela-aulas th { background: rgba(0,0,0,0.3); color: var(--accent); } -->
+
+        <!-- .btn-link { -->
+            <!-- color: var(--white); -->
+            <!-- text-decoration: none; -->
+            <!-- font-weight: bold; -->
+            <!-- border: 1px solid var(--accent); -->
+            <!-- padding: 8px 15px; -->
+            <!-- border-radius: 5px; -->
+            <!-- display: inline-block; -->
+        <!-- } -->
+
+        <!-- .atrasado-lock { opacity: 0.5; cursor: not-allowed; } -->
+    <!-- </style> -->
+<!-- </head> -->
+<!-- <body> -->
+
+<!-- <div class="container"> -->
+    <!-- <header> -->
+        <!-- <img src="../img/grafico.svg" alt="Logo" style="height: 60px; margin-top: 20px;"> -->
+        <!-- <h1>Interação Humano Computador & UX</h1> -->
+        <!-- <p>Portal de Acompanhamento Académico</p> -->
+    <!-- </header> -->
+
+    <!-- <div id="portal-entrada"> -->
+        <!-- <h2 style="margin-top:0">RITUAL DE ENTRADA</h2> -->
+        <!-- <div id="qrcode"></div> <p><strong>Aponte para confirmar presença pontual.</strong></p> -->
+    <!-- </div> -->
+
+    <!-- <div id="aula-em-curso"> -->
+        <!-- <h3>⚠️ Aula em Curso</h3> -->
+        <!-- <p>O acesso ao material está a ser projetado pelo professor. Se chegou agora, utilize o QR Code no slide projetado para registar o seu atraso.</p> -->
+    <!-- </div> -->
+
+    <!-- <table class="tabela-aulas" id="tabelaAulas"> -->
+        <!-- <thead> -->
+            <!-- <tr> -->
+                <!-- <th>Data</th> -->
+                <!-- <th>Conteúdo</th> -->
+                <!-- <th>Acesso</th> -->
+            <!-- </tr> -->
+        <!-- </thead> -->
+        <!-- <tbody> -->
+			<!-- <tr data-date="2026-02-28" data-start="15:47" data-url="aula-teste.html"> -->
+				<!-- <td>28/02/2026</td> -->
+				<!-- <td>AULA TESTE</td> -->
+				<!-- <td class="col-link"></td> -->
+			<!-- </tr> -->
+
+			<!-- <tr data-date="2026-03-06" data-start="19:00" data-url="aula-manhã.html"> -->
+				<!-- <td>06/03/2026</td> -->
+				<!-- <td>AULA MATUTINA</td> -->
+				<!-- <td class="col-link"></td> -->
+			<!-- </tr> -->
+            <!-- <tr data-date="2026-02-27" data-start="19:00" data-url="aula-27-02-2026.html"> -->
+                <!-- <td>27/02/2026</td> -->
+                <!-- <td>Introdução ao IHC e Ergonomia</td> -->
+                <!-- <td class="col-link"></td> -->
+            <!-- </tr> -->
+        <!-- </tbody> -->
+    <!-- </table> -->
+<!-- </div> -->
+
+<!-- <script> -->
+<!-- function gerirFluxo() { -->
+    <!-- const agora = new Date(); -->
+    <!-- const horaAtual = agora.getHours(); -->
+    <!-- const minAtual = agora.getMinutes(); -->
+    <!-- const tempoAtualMin = (horaAtual * 60) + minAtual; -->
+
+    <!-- // Formatação da data local (YYYY-MM-DD) -->
+    <!-- const hojeLocal = `${agora.getFullYear()}-${String(agora.getMonth() + 1).padStart(2, '0')}-${String(agora.getDate()).padStart(2, '0')}`; -->
+    
+    <!-- const rows = document.querySelectorAll('#tabelaAulas tbody tr'); -->
+
+    <!-- rows.forEach(row => { -->
+        <!-- const dataAula = row.getAttribute('data-date'); -->
+        <!-- const horaInicioStr = row.getAttribute('data-start'); // Lê "15:47" -->
+        <!-- const urlAula = row.getAttribute('data-url'); -->
+        <!-- const linkCell = row.querySelector('.col-link'); -->
+
+        <!-- if (dataAula === hojeLocal && horaInicioStr) { -->
+            <!-- const [h, m] = horaInicioStr.split(':').map(Number); -->
+            <!-- const tempoInicioMin = (h * 60) + m; -->
+            <!-- const limitePontual = tempoInicioMin + 17; // Janela de 17 min -->
+
+            <!-- if (tempoAtualMin >= tempoInicioMin && tempoAtualMin <= limitePontual) { -->
+                <!-- document.getElementById('portal-entrada').style.display = 'block'; -->
+                
+                <!-- // GERAÇÃO DO QR CODE VIA API -->
+                <!-- const urlCompleta = window.location.href.replace('index.html', urlAula) + '?ref=index'; -->
+                <!-- const qrUrl = `https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=${encodeURIComponent(urlCompleta)}&choe=UTF-8`; -->
+                
+                <!-- document.getElementById('qrcode').innerHTML = `<img src="${qrUrl}" alt="QR Code de Presença">`; -->
+                
+                <!-- if(linkCell) linkCell.innerHTML = `<a href="${urlAula}?ref=index" class="btn-link" onclick="logAcesso('pontual', 'index')">Entrar na Aula</a>`; -->
+            <!-- }  -->
+            <!-- else if (tempoAtualMin > limitePontual && tempoAtualMin <= (tempoInicioMin + 180)) { -->
+                <!-- document.getElementById('aula-em-curso').style.display = 'block'; -->
+                <!-- document.getElementById('portal-entrada').style.display = 'none'; -->
+                <!-- if(linkCell) linkCell.innerHTML = `<span class="atrasado-lock">Acesso via Projeção</span>`; -->
+            <!-- } -->
+        <!-- } else { -->
+            <!-- if(linkCell) linkCell.innerHTML = `<a href="${urlAula}?ref=estudo" class="btn-link" onclick="logAcesso('engajamento', 'extra-classe')">Revisar Material</a>`; -->
+        <!-- } -->
+    <!-- }); -->
+<!-- } -->
+<!-- </script> -->
+
+<!-- </body> -->
+<!-- </html> -->
