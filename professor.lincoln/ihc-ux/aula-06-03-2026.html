@@ -43,9 +43,12 @@
 
         html, body { 
             margin: 0; padding: 0; width: 100%; height: 100%;
-            overflow: hidden; 
-            font-family: 'Segoe UI', sans-serif; background: var(--navy); color: var(--white);
-        }
+            margin: 0; padding: 0; width: 100%; height: 100%;
+			overflow-x: hidden; /* Permite rolagem vertical, trava horizontal */
+			overflow-y: auto;   /* Essencial para celular */
+			font-family: 'Segoe UI', sans-serif; background: var(--navy); color: var(--white);
+			scroll-snap-type: y proximity; /* Cria o efeito de "imã" nos slides ao rolar */
+		}
 
         /* HEADER FIXO (Regra 13) */
         header {
@@ -80,11 +83,29 @@
         }
 
         .slide { 
-            min-height: 100vh; width: 100%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 100px 10% 70px 10%; /* Padding top/bottom reserva espaço para header/footer */
-            text-align: center;
-        }
+			min-height: 100vh; 
+			width: 100%;
+			display: flex; 
+			flex-direction: column; 
+			justify-content: center; 
+			align-items: center;
+			padding: 100px 5% 70px 5%; /* Padding reduzido para telas estreitas */
+			text-align: center;
+			scroll-snap-align: start; /* Alinha o slide ao topo da tela */
+		}
+		/* Ajuste específico para telas pequenas */
+		@media (max-width: 768px) {
+			:root {
+				--font-titulo: 2rem; /* Títulos menores para não quebrar */
+				--font-corpo: 1.2rem;
+			}
+			.content-box {
+				padding: 1.5rem; /* Mais espaço interno no mobile */
+			}
+			header {
+				padding: 0 15px; /* Header menos espalhado */
+			}
+		}
 
         h1 { color: var(--accent); font-size: var(--font-titulo); text-transform: uppercase; margin-bottom: 1.5rem; }
         p { font-size: var(--font-corpo); line-height: 1.5; max-width: 1100px; }
@@ -108,17 +129,6 @@
     </div>
 
     <div class="container-slides" id="deck">
-        <!-- <section class="slide"> -->
-            <!-- <h1>UCD: Personas e Jornadas</h1> -->
-            <!-- <p>Design Centrado no Usuário como motor de Conversão.</p> -->
-        <!-- </section> -->
-
-        <!-- <section class="slide"> -->
-            <!-- <div class="content-box"> -->
-                <!-- <h1>Fundamentação Teórica</h1> -->
-                <!-- <p>"O design de interação trata de criar experiências que as pessoas considerem agradáveis, envolventes e úteis." (Benyon, 2011)</p> -->
-            <!-- </div> -->
-        <!-- </section> -->
 		<section class="slide" id="boas-vindas">
             <div class="content-box">
                 <p style="color: var(--warning); font-weight: bold; margin-bottom: 0;">Disciplina: Interação Humano Computador e UX</p>
