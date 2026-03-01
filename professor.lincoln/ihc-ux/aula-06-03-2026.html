@@ -41,14 +41,16 @@
 
         * { box-sizing: border-box; }
 
-        html, body { 
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            margin: 0; padding: 0; width: 100%; height: 100%;
-			overflow-x: hidden; /* Permite rolagem vertical, trava horizontal */
-			overflow-y: auto;   /* Essencial para celular */
-			font-family: 'Segoe UI', sans-serif; background: var(--navy); color: var(--white);
-			scroll-snap-type: y proximity; /* Cria o efeito de "imã" nos slides ao rolar */
-		}
+        /* 1. HTML/BODY Limpo */
+html, body { 
+    margin: 0; padding: 0; width: 100%; min-height: 100%;
+    overflow-x: hidden; 
+    overflow-y: auto;
+    font-family: 'Segoe UI', sans-serif; 
+    background: var(--navy); 
+    color: var(--white);
+    scroll-snap-type: y proximity;
+}
 
         /* HEADER FIXO (Regra 13) */
         header {
@@ -76,37 +78,90 @@
         }
         #floating-atraso span { display: block; color: var(--navy); font-size: 9px; font-weight: bold; }
 
-        .container-slides {
-            height: 100vh; width: 100%;
-            display: flex; flex-direction: column;
-            transition: transform 0.6s cubic-bezier(0.45, 0.05, 0.55, 0.95);
-        }
+        /* 2. CONTAINER FLEXÍVEL (Ajuste crucial) */
+.container-slides {
+    width: 100%;
+    display: flex; 
+    flex-direction: column;
+    /* Removido height: 100vh fixo para não travar o conteúdo mobile */
+}
 
-        .slide { 
-			min-height: 100vh; 
-			width: 100%;
-			display: flex; 
-			flex-direction: column; 
-			justify-content: center; 
-			align-items: center;
-			padding: 100px 5% 70px 5%; /* Padding reduzido para telas estreitas */
-			text-align: center;
-			scroll-snap-align: start; /* Alinha o slide ao topo da tela */
-		}
-		/* Ajuste específico para telas pequenas */
-		@media (max-width: 768px) {
-			:root {
-				--font-titulo: 2rem; /* Títulos menores para não quebrar */
-				--font-corpo: 1.2rem;
-			}
-			.content-box {
-				padding: 1.5rem; /* Mais espaço interno no mobile */
-			}
-			header {
-				padding: 0 15px; /* Header menos espalhado */
+        /* 3. SLIDE (Como você já fez, está ótimo) */
+.slide { 
+    min-height: 100vh; 
+    width: 100%;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    padding: 60px 5% 40px 5%; 
+    text-align: center;
+    scroll-snap-align: start; 
+    position: relative;
+    box-sizing: border-box;
+
+		/* Ajuste para Desktop (mantém o respiro maior) */
+		@media (min-width: 1024px) {
+			.slide {
+				padding: 100px 5% 70px 5%;
 			}
 		}
+		
+		img, table, .content-box {
+			max-width: 100%;
+			height: auto;
+			box-sizing: border-box;
+		}
+/* AJUSTE CONSOLIDADO PARA MOBILE (Vertical/Portrait) */
+@media (max-width: 480px) {
+    :root {
+        --font-titulo: 1.6rem; 
+        --font-corpo: 0.9rem;  
+    }
 
+    body {
+        font-size: 90%; /* Reduz a escala base do documento */
+    }
+
+    .slide {
+        padding: 60px 20px; /* Ganha espaço vertical e lateral */
+        justify-content: center;
+    }
+
+    /* Força a redução nos elementos específicos para evitar quebras */
+    h1, h2 { 
+        font-size: 1.5rem !important; 
+        line-height: 1.2;
+        margin-bottom: 1rem;
+    }
+
+    p, li, td, span { 
+        font-size: 1rem !important; 
+        line-height: 1.4;
+    }
+
+    .content-box {
+        padding: 1.5rem; /* Reduz padding interno do box no mobile */
+    }
+}
+
+/* Celular na Horizontal (Landscape) - Redução maior para evitar transbordo */
+@media (max-height: 500px) and (orientation: landscape) {
+    .slide {
+        justify-content: flex-start; /* Alinha no topo para não cortar o título */
+        padding-top: 40px;
+        min-height: 120vh; /* Permite que o slide "estique" se o texto for longo */
+    }
+    
+    /* Redução de fonte mais agressiva para telas baixas */
+    h1, h2 { font-size: 1.2rem !important; }
+    p, li, td { font-size: 0.9rem !important; }
+    
+    /* Desativa o trava-tela (snap) na horizontal para facilitar a leitura */
+    html, body {
+        scroll-snap-type: none;
+    }
+}
         h1 { color: var(--accent); font-size: var(--font-titulo); text-transform: uppercase; margin-bottom: 1.5rem; }
         p { font-size: var(--font-corpo); line-height: 1.5; max-width: 1100px; }
         
@@ -114,6 +169,30 @@
             background: rgba(255,255,255,0.05); padding: 2.5rem; 
             border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 100%;
         }
+		
+		/* Estado inicial do conteúdo dentro do slide */
+.slide > * {
+    opacity: 0;
+    transform: translateY(30px); /* Começa 30px abaixo */
+    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); /* Transição suave */
+}
+
+/* Quando o slide estiver "ativo" (visível) */
+.slide.active > * {
+    opacity: 1;
+    transform: translateY(0); /* Sobe para a posição original */
+}
+
+/* Efeito de flutuação contínua em elementos específicos (opcional) */
+.floating-element {
+    animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
     </style>
 </head>
 <body>
