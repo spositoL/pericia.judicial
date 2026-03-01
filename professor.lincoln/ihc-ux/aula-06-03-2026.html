@@ -6,33 +6,36 @@
     <title>Aula: UCD, Personas e Jornadas | Dr. Lincoln Sposito</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-5F1FGJ25TK');
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>    
+	<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		  gtag('config', 'G-5F1FGJ25TK');
 
-      function logPresencaAula(status, origem) {
-          gtag('event', 'presenca_aula', {
-              'disciplina': 'IHC_UX',
-              'status_presenca': status,
-              'origem': origem,
-              'aula_referencia': 'Design Centrado no Usuário'
-          });
-      }
+		  // FUNÇÃO MESTRE: Monitora tanto presença quanto cliques em botões
+		  function logInteracao(nomeEvento, status, origem, aulaId, disciplinaId) {
+			  gtag('event', nomeEvento, {
+				  'disciplina': disciplinaId || 'IHC_UX', // Identifica qual das 4 disciplinas
+				  'status_presenca': status,              // Ex: 'atrasado', 'concluiu_revisao'
+				  'origem': origem,                      // Ex: 'qrcode', 'botao_agenda'
+				  'aula_referencia': aulaId || '2026-03-06' // A data da aula atual
+			  });
+		  }
 
-      window.onload = function() {
-          const urlParams = new URLSearchParams(window.location.search);
-          if (urlParams.get('ref') === 'atrasado') logPresencaAula('atrasado', 'qrcode_slide');
-          
-          const urlAtraso = window.location.origin + window.location.pathname + "?ref=atrasado";
-          new QRCode(document.getElementById("qrcode-persistente"), {
-              text: urlAtraso, width: 70, height: 70, colorDark : "#002147", colorLight : "#ffffff"
-          });
-      };
-    </script>
-
+		  window.onload = function() {
+			  const urlParams = new URLSearchParams(window.location.search);
+			  // Se vier pelo QR Code de atraso, loga automaticamente
+			  if (urlParams.get('ref') === 'atrasado') {
+				  logInteracao('presenca_aula', 'atrasado', 'qrcode_atraso');
+			  }
+			  
+			  const urlAtraso = window.location.origin + window.location.pathname + "?ref=atrasado";
+			  new QRCode(document.getElementById("qrcode-persistente"), {
+				  text: urlAtraso, width: 70, height: 70, colorDark : "#002147", colorLight : "#ffffff"
+			  });
+		  };
+	</script>	
     <style>
         :root { 
             --navy: #002147; --white: #ffffff; --accent: #28a745; --warning: #ffc107;
@@ -41,27 +44,23 @@
 
         * { box-sizing: border-box; }
 
-        /* 1. HTML/BODY Limpo */
-html, body { 
-    margin: 0; padding: 0; width: 100%; min-height: 100%;
-    overflow-x: hidden; 
-    overflow-y: auto;
-    font-family: 'Segoe UI', sans-serif; 
-    background: var(--navy); 
-    color: var(--white);
-    scroll-snap-type: y proximity;
-}
+        html, body { 
+            margin: 0; padding: 0; width: 100%; min-height: 100%;
+            overflow-x: hidden; 
+            overflow-y: auto;
+            font-family: 'Segoe UI', sans-serif; 
+            background: var(--navy); 
+            color: var(--white);
+            scroll-snap-type: y proximity;
+        }
 
-        /* HEADER FIXO (Regra 13) */
         header {
             position: fixed; top: 0; left: 0; width: 100%; height: 80px;
-            background: rgba(0, 33, 71, 0.9); /* Navy com leve transparência */
+            background: rgba(0, 33, 71, 0.9);
             display: flex; align-items: center; padding: 0 40px;
             border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 1000;
         }
-        .logo-header { height: 50px; }
 
-        /* FOOTER FIXO (Regra 13) */
         footer {
             position: fixed; bottom: 0; left: 0; width: 100%; height: 50px;
             background: rgba(0, 33, 71, 0.9);
@@ -70,7 +69,6 @@ html, body {
             border-top: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* QR CODE POSICIONADO ABAIXO DO HEADER */
         #floating-atraso {
             position: fixed; top: 100px; right: 20px; z-index: 999;
             background: white; padding: 6px; border-radius: 8px;
@@ -78,98 +76,25 @@ html, body {
         }
         #floating-atraso span { display: block; color: var(--navy); font-size: 9px; font-weight: bold; }
 
-        /* 2. CONTAINER FLEXÍVEL (Ajuste crucial) */
-.container-slides {
-    width: 100%;
-    display: flex; 
-    flex-direction: column;
-    /* Removido height: 100vh fixo para não travar o conteúdo mobile */
-}
+        .container-slides {
+            width: 100%;
+            display: flex; 
+            flex-direction: column;
+        }
 
-        /* 3. SLIDE (Como você já fez, está ótimo) */
-.slide { 
-    min-height: 100vh; 
-    width: 100%;
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    align-items: center;
-    padding: 60px 5% 40px 5%; 
-    text-align: center;
-    scroll-snap-align: start; 
-    position: relative;
-    box-sizing: border-box;
+        .slide { 
+            min-height: 100vh; 
+            width: 100%;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            padding: 100px 5% 70px 5%; 
+            text-align: center;
+            scroll-snap-align: start; 
+            position: relative;
+        }
 
-		/* Ajuste para Desktop (mantém o respiro maior) */
-		@media (min-width: 1024px) {
-			.slide {
-				padding: 100px 5% 70px 5%;
-			}
-		}
-		
-		img, table, .content-box {
-			max-width: 100%;
-			height: auto;
-			box-sizing: border-box;
-		}
-/* AJUSTE CONSOLIDADO PARA MOBILE (Vertical/Portrait) */
-@media (max-width: 480px) {
-    :root {
-        --font-titulo: 1.6rem; 
-        --font-corpo: 0.9rem;  
-    }
-
-    body {
-        font-size: 90%; /* Reduz a escala base do documento */
-    }
-
-    .slide {
-        padding: 60px 20px; /* Ganha espaço vertical e lateral */
-        justify-content: center;
-    }
-
-    /* Força a redução nos elementos específicos para evitar quebras */
-    h1, h2 { 
-        font-size: 1.5rem !important; 
-        line-height: 1.2;
-        margin-bottom: 1rem;
-    }
-
-    p, li, td, span { 
-        font-size: 1rem !important; 
-        line-height: 1.4;
-    }
-
-    .content-box {
-        padding: 1.5rem; /* Reduz padding interno do box no mobile */
-    }
-	
-	#floating-atraso {
-        display: none !important; /* Esconde o QR Code no celular vertical */
-    }
-}
-
-/* Celular na Horizontal (Landscape) - Redução maior para evitar transbordo */
-@media (max-height: 500px) and (orientation: landscape) {
-    .slide {
-        justify-content: flex-start; /* Alinha no topo para não cortar o título */
-        padding-top: 40px;
-        min-height: 120vh; /* Permite que o slide "estique" se o texto for longo */
-    }
-    
-    /* Redução de fonte mais agressiva para telas baixas */
-    h1, h2 { font-size: 1.2rem !important; }
-    p, li, td { font-size: 0.9rem !important; }
-    
-    /* Desativa o trava-tela (snap) na horizontal para facilitar a leitura */
-    html, body {
-        scroll-snap-type: none;
-    }
-	#floating-atraso {
-        display: none !important; /* Esconde o QR Code no celular horizontal */
-    }
-	
-}
         h1 { color: var(--accent); font-size: var(--font-titulo); text-transform: uppercase; margin-bottom: 1.5rem; }
         p { font-size: var(--font-corpo); line-height: 1.5; max-width: 1100px; }
         
@@ -177,37 +102,66 @@ html, body {
             background: rgba(255,255,255,0.05); padding: 2.5rem; 
             border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 100%;
         }
-		
-		/* Estado inicial do conteúdo dentro do slide */
-.slide > * {
-    opacity: 0;
-    transform: translateY(30px); /* Começa 30px abaixo */
-    transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); /* Transição suave */
-}
 
-/* Quando o slide estiver "ativo" (visível) */
-.slide.active > * {
-    opacity: 1;
-    transform: translateY(0); /* Sobe para a posição original */
-}
+        img, table { max-width: 100%; height: auto; }
 
-/* Efeito de flutuação contínua em elementos específicos (opcional) */
-.floating-element {
-    animation: floating 3s ease-in-out infinite;
-}
+        /* --- EFEITO DE FLUTUAR NA TRANSIÇÃO --- */
+        .slide > * {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
 
-@keyframes floating {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-    100% { transform: translateY(0px); }
-}
+        .slide.active > * {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- MEDIA QUERIES (CONSOLIDADAS) --- */
+
+        /* Ajuste Desktop */
+        @media (min-width: 1024px) {
+            .slide { padding: 100px 5% 70px 5%; }
+        }
+
+        /* AJUSTE PARA MOBILE (VERTICAL) */
+        @media (max-width: 480px) {
+            :root {
+                --font-titulo: 1.6rem; 
+                --font-corpo: 1.0rem;  
+            }
+            body { font-size: 90%; }
+            .slide { padding: 80px 20px 60px 20px; }
+            h1 { font-size: 1.6rem !important; }
+            p, li, td { font-size: 1.1rem !important; }
+            .content-box { padding: 1.2rem; }
+            
+            /* INIBIR QR CODE NO CELULAR */
+            #floating-atraso { display: none !important; } 
+        }
+
+        /* AJUSTE PARA MOBILE (HORIZONTAL) */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .slide { justify-content: flex-start; padding-top: 90px; min-height: 160vh; }
+            h1 { font-size: 1.4rem !important; }
+            p, li, td { font-size: 1rem !important; }
+            html, body { scroll-snap-type: none; }
+            
+            /* INIBIR QR CODE NO CELULAR */
+            #floating-atraso { display: none !important; }
+        }
+
+        .btn-engajamento {
+            background: var(--accent); color: white; border: none; padding: 15px 30px;
+            border-radius: 10px; font-size: 1.2rem; cursor: pointer; transition: 0.3s;
+        }
+        .btn-engajamento:hover { transform: scale(1.05); filter: brightness(1.1); }
     </style>
 </head>
 <body>
 
     <header>
-        <!-- <img src="grafico.svg" alt="Dr. Lincoln Sposito" class="logo-header"> -->
-		<img src="../img/grafico.svg" alt="Logo" style="height: 80px; margin-bottom: 20px;">
+        <img src="../img/grafico.svg" alt="Logo" style="height: 50px;">
     </header>
 
     <div id="floating-atraso">
@@ -217,274 +171,274 @@ html, body {
 
     <div class="container-slides" id="deck">
 		<section class="slide" id="boas-vindas">
-            <div class="content-box">
-                <p style="color: var(--warning); font-weight: bold; margin-bottom: 0;">Disciplina: Interação Humano Computador e UX</p>
-                <h1>Design Centrado no Usuário (UCD):<br>Personas e Jornadas</h1>
-                
-                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); width: 50%; margin: 2rem auto;">
-                
-                <h2 style="color: var(--white); margin-bottom: 0.5rem;">Prof. Dr. Lincoln Sposito</h2>
-                <p style="font-size: 1.4rem; opacity: 0.8;">Data: 06 de Março de 2026</p>
-                
-                <div style="margin-top: 2rem;">
-                    <button class="btn-engajamento" onclick="logPresencaAula('engajamento', 'inicio_aula')">
-                        Iniciar Experiência de Aula
-                    </button>
-                </div>
-            </div>
-        </section>
+			<div class="content-box">
+				<p style="color: var(--warning); font-weight: bold; margin-bottom: 0;">Disciplina: Interação Humano Computador e UX</p>
+				<h1>Design Centrado no Usuário (UCD):<br>Personas e Jornadas</h1>
+				
+				<hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); width: 50%; margin: 2rem auto;">
+				
+				<h2 style="color: var(--white); margin-bottom: 0.5rem;">Prof. Dr. Lincoln Sposito</h2>
+				<p style="font-size: 1.4rem; opacity: 0.8;">Data: 06 de Março de 2026</p>
+				
+				<div style="margin-top: 2rem;">
+					<button class="btn-engajamento" onclick="logPresencaAula('engajamento', 'inicio_aula')">
+						Iniciar Experiência de Aula
+					</button>
+				</div>
+			</div>
+		</section>
 		<section class="slide" id="agenda">
-            <div class="content-box">
-                <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 2px;">Roteiro de Atividades</h2>
-                <h1>Agenda do Dia</h1>
-                
-                <ul style="list-style: none; padding: 0; text-align: left; display: inline-block; margin-top: 1rem;">
-                    <li style="margin-bottom: 1rem; display: flex; align-items: center;">
-                        <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">01</span> 
-                        Revisão da aula anterior
-                    </li>
-                    <li style="margin-bottom: 1rem; display: flex; align-items: center;">
-                        <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">02</span> 
-                        Correção do exercício da semana
-                    </li>
-                    <li style="margin-bottom: 1rem; display: flex; align-items: center;">
-                        <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">03</span> 
-                        Pesquisa: O que você aprendeu? (Sim/Não)
-                    </li>
-                    <li style="margin-bottom: 1rem; display: flex; align-items: center;">
-                        <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">04</span> 
-                        Aula Expositiva: UCD, Personas e Jornadas
-                    </li>
-                    <li style="margin-bottom: 1rem; display: flex; align-items: center;">
-                        <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">05</span> 
-                        Exercício da Semana & Google Forms
-                    </li>
-                    <li style="margin-bottom: 1rem; display: flex; align-items: center;">
-                        <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">06</span> 
-                        Recapitulação e Resumo Final
-                    </li>
-                </ul>
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 2px;">Roteiro de Atividades</h2>
+				<h1>Agenda do Dia</h1>
+				
+				<ul style="list-style: none; padding: 0; text-align: left; display: inline-block; margin-top: 1rem;">
+					<li style="margin-bottom: 1rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">01</span> 
+						Revisão da aula anterior
+					</li>
+					<li style="margin-bottom: 1rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">02</span> 
+						Correção do exercício da semana
+					</li>
+					<li style="margin-bottom: 1rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">03</span> 
+						Pesquisa: O que você aprendeu? (Sim/Não)
+					</li>
+					<li style="margin-bottom: 1rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">04</span> 
+						Aula Expositiva: UCD, Personas e Jornadas
+					</li>
+					<li style="margin-bottom: 1rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">05</span> 
+						Exercício da Semana & Google Forms
+					</li>
+					<li style="margin-bottom: 1rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">06</span> 
+						Recapitulação e Resumo Final
+					</li>
+				</ul>
 
-                <div style="margin-top: 2rem;">
-                    <button class="btn-engajamento" onclick="logPresencaAula('engajamento', 'visualizou_agenda')">
-                        Entendido, vamos começar!
-                    </button>
-                </div>
-            </div>
-        </section>
+				<div style="margin-top: 2rem;">
+					<button class="btn-engajamento" onclick="logPresencaAula('engajamento', 'visualizou_agenda')">
+						Entendido, vamos começar!
+					</button>
+				</div>
+			</div>
+		</section>
 		<section class="slide" id="revisao">
-            <div class="content-box">
-                <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 2px;">01. Revisão</h2>
-                <h1>Fundamentação Teórica</h1>
-                
-                <div style="text-align: left; margin-top: 2rem;">
-                    <p style="border-left: 5px solid var(--accent); padding-left: 20px; margin-bottom: 2rem;">
-                        <strong>Benyon (2011):</strong> "O design de interação trata de criar experiências que as pessoas considerem agradáveis, envolventes e úteis." (p. 5)
-                    </p>
-                    
-                    <p style="border-left: 5px solid var(--accent); padding-left: 20px; margin-bottom: 2rem;">
-                        <strong>Barreto et al. (2018):</strong> "A interface humano-computador deve ser projetada de forma a facilitar a comunicação entre o usuário e o sistema computacional, minimizando o esforço cognitivo." (p. 24)
-                    </p>
-                    
-                    <p style="border-left: 5px solid var(--accent); padding-left: 20px;">
-                        <strong>Valente (2020):</strong> "O projeto de interface não deve ser uma atividade tardia no processo de desenvolvimento de software, mas sim uma atividade central e iterativa." (p. 312)
-                    </p>
-                </div>
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 2px;">01. Revisão</h2>
+				<h1>Fundamentação Teórica</h1>
+				
+				<div style="text-align: left; margin-top: 2rem;">
+					<p style="border-left: 5px solid var(--accent); padding-left: 20px; margin-bottom: 2rem;">
+						<strong>Benyon (2011):</strong> "O design de interação trata de criar experiências que as pessoas considerem agradáveis, envolventes e úteis." (p. 5)
+					</p>
+					
+					<p style="border-left: 5px solid var(--accent); padding-left: 20px; margin-bottom: 2rem;">
+						<strong>Barreto et al. (2018):</strong> "A interface humano-computador deve ser projetada de forma a facilitar a comunicação entre o usuário e o sistema computacional, minimizando o esforço cognitivo." (p. 24)
+					</p>
+					
+					<p style="border-left: 5px solid var(--accent); padding-left: 20px;">
+						<strong>Valente (2020):</strong> "O projeto de interface não deve ser uma atividade tardia no processo de desenvolvimento de software, mas sim uma atividade central e iterativa." (p. 312)
+					</p>
+				</div>
 
-                <div style="margin-top: 2rem;">
-                    <button class="btn-engajamento" onclick="logPresencaAula('engajamento', 'revisao_concluida')">
-                        Revisão Concluída
-                    </button>
-                </div>
-            </div>
-        </section>
+				<div style="margin-top: 2rem;">
+					<button class="btn-engajamento" onclick="logPresencaAula('engajamento', 'revisao_concluida')">
+						Revisão Concluída
+					</button>
+				</div>
+			</div>
+		</section>
 		<section class="slide" id="correcao-multipla">
-            <div class="content-box" style="max-width: 95%;">
-                <h2 style="color: var(--warning); font-size: 1.2rem; margin-bottom: 0;">02. Correção | Parte A</h2>
-                <h1 style="font-size: 2.5rem;">Desempenho: Múltipla Escolha</h1>
-                
-                <table style="width: 100%; border-collapse: collapse; font-size: 1rem; color: white; margin-top: 1rem; background: rgba(0,0,0,0.2);">
-                    <thead>
-                        <tr style="background: var(--accent); color: white;">
-                            <th style="padding: 10px; border: 1px solid #444;">Nº</th>
-                            <th style="padding: 10px; border: 1px solid #444;">Questão</th>
-                            <th style="padding: 10px; border: 1px solid #444;">Opção A (%)</th>
-                            <th style="padding: 10px; border: 1px solid #444;">Opção B (%)</th>
-                            <th style="padding: 10px; border: 1px solid #444;">Opção C (%)</th>
-                            <th style="padding: 10px; border: 1px solid #444;">Gabarito</th>
-                            <th style="padding: 10px; border: 1px solid #444;">Justificativa (Conceito)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td style="padding: 10px; border: 1px solid #444; text-align: center;">02</td>
-                            <td style="padding: 10px; border: 1px solid #444;">Metadados e Modelo Mental</td>
-                            <td style="padding: 10px; border: 1px solid #444;">Autoridade ( __% )</td>
-                            <td style="padding: 10px; border: 1px solid #444;">Genérico ( __% )</td>
-                            <td style="padding: 10px; border: 1px solid #444;">CTA ( __% )</td>
-                            <td style="padding: 10px; border: 1px solid #444; font-weight: bold; color: var(--accent);">A</td>
-                            <td style="padding: 10px; border: 1px solid #444; font-size: 0.85rem;">Alinhamento da expectativa do usuário com a autoridade pericial.</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 10px; border: 1px solid #444; text-align: center;">04</td>
-                            <td style="padding: 10px; border: 1px solid #444;">Mundo Real (Heurística 2)</td>
-                            <td style="padding: 10px; border: 1px solid #444;">Ícones ( __% )</td>
-                            <td style="padding: 10px; border: 1px solid #444;">Termos Técnicos ( __% )</td>
-                            <td style="padding: 10px; border: 1px solid #444;">Minimalismo ( __% )</td>
-                            <td style="padding: 10px; border: 1px solid #444; font-weight: bold; color: var(--accent);">B</td>
-                            <td style="padding: 10px; border: 1px solid #444; font-size: 0.85rem;">Uso de terminologia jurídica familiar ao público-alvo (SFH, Laudos).</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 10px; border: 1px solid #444; text-align: center;">06</td>
-                            <td style="padding: 10px; border: 1px solid #444;">Thumb Zone (Ergonomia)</td>
-                            <td style="padding: 10px; border: 1px solid #444;">Alcance ( __% )</td>
-                            <td style="padding: 10px; border: 1px solid #444;">Erro Motora ( __% )</td>
-                            <td style="padding: 10px; border: 1px solid #444;">Desktop só ( __% )</td>
-                            <td style="padding: 10px; border: 1px solid #444; font-weight: bold; color: var(--accent);">B</td>
-                            <td style="padding: 10px; border: 1px solid #444; font-size: 0.85rem;">Interfaces móveis exigem alvos de toque em zonas de conforto do polegar.</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+			<div class="content-box" style="max-width: 95%;">
+				<h2 style="color: var(--warning); font-size: 1.2rem; margin-bottom: 0;">02. Correção | Parte A</h2>
+				<h1 style="font-size: 2.5rem;">Desempenho: Múltipla Escolha</h1>
+				
+				<table style="width: 100%; border-collapse: collapse; font-size: 1rem; color: white; margin-top: 1rem; background: rgba(0,0,0,0.2);">
+					<thead>
+						<tr style="background: var(--accent); color: white;">
+							<th style="padding: 10px; border: 1px solid #444;">Nº</th>
+							<th style="padding: 10px; border: 1px solid #444;">Questão</th>
+							<th style="padding: 10px; border: 1px solid #444;">Opção A (%)</th>
+							<th style="padding: 10px; border: 1px solid #444;">Opção B (%)</th>
+							<th style="padding: 10px; border: 1px solid #444;">Opção C (%)</th>
+							<th style="padding: 10px; border: 1px solid #444;">Gabarito</th>
+							<th style="padding: 10px; border: 1px solid #444;">Justificativa (Conceito)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="padding: 10px; border: 1px solid #444; text-align: center;">02</td>
+							<td style="padding: 10px; border: 1px solid #444;">Metadados e Modelo Mental</td>
+							<td style="padding: 10px; border: 1px solid #444;">Autoridade ( __% )</td>
+							<td style="padding: 10px; border: 1px solid #444;">Genérico ( __% )</td>
+							<td style="padding: 10px; border: 1px solid #444;">CTA ( __% )</td>
+							<td style="padding: 10px; border: 1px solid #444; font-weight: bold; color: var(--accent);">A</td>
+							<td style="padding: 10px; border: 1px solid #444; font-size: 0.85rem;">Alinhamento da expectativa do usuário com a autoridade pericial.</td>
+						</tr>
+						<tr>
+							<td style="padding: 10px; border: 1px solid #444; text-align: center;">04</td>
+							<td style="padding: 10px; border: 1px solid #444;">Mundo Real (Heurística 2)</td>
+							<td style="padding: 10px; border: 1px solid #444;">Ícones ( __% )</td>
+							<td style="padding: 10px; border: 1px solid #444;">Termos Técnicos ( __% )</td>
+							<td style="padding: 10px; border: 1px solid #444;">Minimalismo ( __% )</td>
+							<td style="padding: 10px; border: 1px solid #444; font-weight: bold; color: var(--accent);">B</td>
+							<td style="padding: 10px; border: 1px solid #444; font-size: 0.85rem;">Uso de terminologia jurídica familiar ao público-alvo (SFH, Laudos).</td>
+						</tr>
+						<tr>
+							<td style="padding: 10px; border: 1px solid #444; text-align: center;">06</td>
+							<td style="padding: 10px; border: 1px solid #444;">Thumb Zone (Ergonomia)</td>
+							<td style="padding: 10px; border: 1px solid #444;">Alcance ( __% )</td>
+							<td style="padding: 10px; border: 1px solid #444;">Erro Motora ( __% )</td>
+							<td style="padding: 10px; border: 1px solid #444;">Desktop só ( __% )</td>
+							<td style="padding: 10px; border: 1px solid #444; font-weight: bold; color: var(--accent);">B</td>
+							<td style="padding: 10px; border: 1px solid #444; font-size: 0.85rem;">Interfaces móveis exigem alvos de toque em zonas de conforto do polegar.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
 
-        <section class="slide" id="correcao-descritiva">
-            <div class="content-box">
-                <h2 style="color: var(--warning); font-size: 1.2rem;">02. Correção | Parte B</h2>
-                <h1 style="font-size: 2.5rem;">Análise Descritiva</h1>
-                
-                <table style="width: 100%; border-collapse: collapse; font-size: 1.1rem; color: white; margin-top: 1rem;">
-                    <thead>
-                        <tr style="background: var(--navy); border-bottom: 2px solid var(--accent);">
-                            <th style="padding: 15px; text-align: left; width: 80px;">Nº</th>
-                            <th style="padding: 15px; text-align: left;">Questão</th>
-                            <th style="padding: 15px; text-align: left;">Resposta Aceitável (Conceitos Esperados)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            <td style="padding: 15px; font-weight: bold; color: var(--accent);">03</td>
-                            <td style="padding: 15px;">Regra de Miller e Chunking na Index</td>
-                            <td style="padding: 15px;">Citação de Miller (7+-2) e como o agrupamento reduz a <strong>Carga Cognitiva</strong>.</td>
-                        </tr>
-                        <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                            <td style="padding: 15px; font-weight: bold; color: var(--accent);">05</td>
-                            <td style="padding: 15px;">Ergonomia Física e Fadiga Visual</td>
-                            <td style="padding: 15px;">Discussão sobre contraste e espaçamento para proteger a <strong>Saúde Visual</strong>.</td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 15px; font-weight: bold; color: var(--accent);">08</td>
-                            <td style="padding: 15px;">Affordance e Fluxo de Conversão</td>
-                            <td style="padding: 15px;">Identificação de elementos que "convidam" ao clique (Botões/Links claros).</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+		<section class="slide" id="correcao-descritiva">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.2rem;">02. Correção | Parte B</h2>
+				<h1 style="font-size: 2.5rem;">Análise Descritiva</h1>
+				
+				<table style="width: 100%; border-collapse: collapse; font-size: 1.1rem; color: white; margin-top: 1rem;">
+					<thead>
+						<tr style="background: var(--navy); border-bottom: 2px solid var(--accent);">
+							<th style="padding: 15px; text-align: left; width: 80px;">Nº</th>
+							<th style="padding: 15px; text-align: left;">Questão</th>
+							<th style="padding: 15px; text-align: left;">Resposta Aceitável (Conceitos Esperados)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+							<td style="padding: 15px; font-weight: bold; color: var(--accent);">03</td>
+							<td style="padding: 15px;">Regra de Miller e Chunking na Index</td>
+							<td style="padding: 15px;">Citação de Miller (7+-2) e como o agrupamento reduz a <strong>Carga Cognitiva</strong>.</td>
+						</tr>
+						<tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+							<td style="padding: 15px; font-weight: bold; color: var(--accent);">05</td>
+							<td style="padding: 15px;">Ergonomia Física e Fadiga Visual</td>
+							<td style="padding: 15px;">Discussão sobre contraste e espaçamento para proteger a <strong>Saúde Visual</strong>.</td>
+						</tr>
+						<tr>
+							<td style="padding: 15px; font-weight: bold; color: var(--accent);">08</td>
+							<td style="padding: 15px;">Affordance e Fluxo de Conversão</td>
+							<td style="padding: 15px;">Identificação de elementos que "convidam" ao clique (Botões/Links claros).</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
 
-        <section class="slide" id="percepcao-leigos">
-            <div class="content-box">
-                <h2 style="color: var(--warning); font-size: 1.2rem;">02. Correção | Parte C</h2>
-                <h1>Voz do Usuário (Questão 7)</h1>
-                <p style="font-size: 1.4rem;">Percepção e Insights: O conflito entre o <strong>Técnico</strong> e o <strong>Leigo</strong>.</p>
-                
-                <div style="margin-top: 1rem; background: white; padding: 20px; border-radius: 20px; min-height: 350px; display: flex; align-items: center; justify-content: center;">
-                    <div id="wordcloud-placeholder" style="color: var(--navy); text-align: center;">
-                        <img src="https://linspti.com.br/img/placeholder_nuvem.png" alt="Nuvem de Palavras" style="max-height: 300px;">
-                        <p style="font-weight: bold; margin-top: 10px;">[PROJETAR NUVEM DE PALAVRAS DO MENTIMETER / FORMS AQUI]</p>
-                    </div>
-                </div>
-                <p style="font-size: 1.1rem; margin-top: 1rem; opacity: 0.8;">Insight: O leigo foca na <strong>Satisfação</strong>, enquanto o técnico foca na <strong>Eficácia</strong>.</p>
-            </div>
-        </section>
+		<section class="slide" id="percepcao-leigos">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.2rem;">02. Correção | Parte C</h2>
+				<h1>Voz do Usuário (Questão 7)</h1>
+				<p style="font-size: 1.4rem;">Percepção e Insights: O conflito entre o <strong>Técnico</strong> e o <strong>Leigo</strong>.</p>
+				
+				<div style="margin-top: 1rem; background: white; padding: 20px; border-radius: 20px; min-height: 350px; display: flex; align-items: center; justify-content: center;">
+					<div id="wordcloud-placeholder" style="color: var(--navy); text-align: center;">
+						<img src="https://linspti.com.br/img/placeholder_nuvem.png" alt="Nuvem de Palavras" style="max-height: 300px;">
+						<p style="font-weight: bold; margin-top: 10px;">[PROJETAR NUVEM DE PALAVRAS DO MENTIMETER / FORMS AQUI]</p>
+					</div>
+				</div>
+				<p style="font-size: 1.1rem; margin-top: 1rem; opacity: 0.8;">Insight: O leigo foca na <strong>Satisfação</strong>, enquanto o técnico foca na <strong>Eficácia</strong>.</p>
+			</div>
+		</section>
 		<section class="slide" id="parecer-tecnico">
-            <div class="content-box">
-                <h2 style="color: var(--warning); font-size: 1.2rem;">02. Correção | Síntese Final</h2>
-                <h1>Parecer Técnico dos Alunos</h1>
-                <p style="font-size: 1.4rem;">Questão 10: Sugestão de mudança de <strong>maior impacto</strong> para Conversão.</p>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 1.5rem; align-items: center;">
-                    
-                    <div style="background: white; padding: 15px; border-radius: 15px; min-height: 300px; display: flex; flex-direction: column; justify-content: center;">
-                        <span style="color: var(--navy); font-weight: bold; font-size: 0.9rem; margin-bottom: 10px;">NUVEM DE INSIGHTS (O QUE MUDAR?)</span>
-                        <div id="wordcloud-solucoes" style="text-align: center;">
-                            <p style="color: #666; font-size: 1rem;">[Projete aqui a Nuvem com termos como: CTA, Contraste, Minimalismo, Hierarquia]</p>
-                        </div>
-                    </div>
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.2rem;">02. Correção | Síntese Final</h2>
+				<h1>Parecer Técnico dos Alunos</h1>
+				<p style="font-size: 1.4rem;">Questão 10: Sugestão de mudança de <strong>maior impacto</strong> para Conversão.</p>
+				
+				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 1.5rem; align-items: center;">
+					
+					<div style="background: white; padding: 15px; border-radius: 15px; min-height: 300px; display: flex; flex-direction: column; justify-content: center;">
+						<span style="color: var(--navy); font-weight: bold; font-size: 0.9rem; margin-bottom: 10px;">NUVEM DE INSIGHTS (O QUE MUDAR?)</span>
+						<div id="wordcloud-solucoes" style="text-align: center;">
+							<p style="color: #666; font-size: 1rem;">[Projete aqui a Nuvem com termos como: CTA, Contraste, Minimalismo, Hierarquia]</p>
+						</div>
+					</div>
 
-                    <div style="text-align: left;">
-                        <h3 style="color: var(--accent); font-size: 1.5rem; margin-bottom: 10px;">Critérios de Sucesso:</h3>
-                        <ul style="font-size: 1.2rem; line-height: 1.6;">
-                            <li><strong>Fundamentação:</strong> Citou Heurísticas ou Autores?</li>
-                            <li><strong>Viabilidade:</strong> A mudança é tecnicamente possível?</li>
-                            <li><strong>Foco em Conversão:</strong> Garante que o visitante vire cliente?</li>
-                        </ul>
-                        <div style="background: rgba(40, 167, 69, 0.2); padding: 15px; border-radius: 10px; margin-top: 15px;">
-                            <p style="font-size: 1.1rem; margin: 0;"><strong>Destaque:</strong> Melhores pareceres serão comentados agora!</p>
-                        </div>
-                    </div>
-                </div>
+					<div style="text-align: left;">
+						<h3 style="color: var(--accent); font-size: 1.5rem; margin-bottom: 10px;">Critérios de Sucesso:</h3>
+						<ul style="font-size: 1.2rem; line-height: 1.6;">
+							<li><strong>Fundamentação:</strong> Citou Heurísticas ou Autores?</li>
+							<li><strong>Viabilidade:</strong> A mudança é tecnicamente possível?</li>
+							<li><strong>Foco em Conversão:</strong> Garante que o visitante vire cliente?</li>
+						</ul>
+						<div style="background: rgba(40, 167, 69, 0.2); padding: 15px; border-radius: 10px; margin-top: 15px;">
+							<p style="font-size: 1.1rem; margin: 0;"><strong>Destaque:</strong> Melhores pareceres serão comentados agora!</p>
+						</div>
+					</div>
+				</div>
 
-                <div style="margin-top: 2rem;">
-                    <button class="btn-engajamento" onclick="logPresencaAula('engajamento', 'conclusao_parecer')">
-                        Finalizar Correção e Iniciar UCD
-                    </button>
-                </div>
-            </div>
-        </section>
+				<div style="margin-top: 2rem;">
+					<button class="btn-engajamento" onclick="logPresencaAula('engajamento', 'conclusao_parecer')">
+						Finalizar Correção e Iniciar UCD
+					</button>
+				</div>
+			</div>
+		</section>
 		<section class="slide" id="pesquisa-ergonomia">
-            <div class="content-box">
-                <h2 style="color: var(--warning); font-size: 1.2rem;">03. Verificação de Aprendizado</h2>
-                <h1>Você aprendeu os conceitos de ERGONOMIA?</h1>
-                <p style="font-size: 1.4rem; margin-bottom: 2rem;">Abaixo, registre sua percepção. O resultado aparecerá em tempo real no painel do Professor.</p>
-                
-                <div style="display: flex; justify-content: center; gap: 40px; margin: 2rem 0;">
-                    <button class="btn-engajamento" 
-                            style="background: var(--accent); width: 250px; font-size: 2rem;" 
-                            onclick="gtag('event', 'aprendizado_ergonomia', {'resposta': 'SIM'}); alert('Resposta SIM registrada!');">
-                        SIM 👍
-                    </button>
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.2rem;">03. Verificação de Aprendizado</h2>
+				<h1>Você aprendeu os conceitos de ERGONOMIA?</h1>
+				<p style="font-size: 1.4rem; margin-bottom: 2rem;">Abaixo, registre sua percepção. O resultado aparecerá em tempo real no painel do Professor.</p>
+				
+				<div style="display: flex; justify-content: center; gap: 40px; margin: 2rem 0;">
+					<button class="btn-engajamento" 
+							style="background: var(--accent); width: 250px; font-size: 2rem;" 
+							onclick="gtag('event', 'aprendizado_ergonomia', {'resposta': 'SIM'}); alert('Resposta SIM registrada!');">
+						SIM 👍
+					</button>
 
-                    <button class="btn-engajamento" 
-                            style="background: #dc3545; width: 250px; font-size: 2rem;" 
-                            onclick="gtag('event', 'aprendizado_ergonomia', {'resposta': 'NAO'}); alert('Resposta NÃO registrada. Vamos revisar!');">
-                        NÃO 👎
-                    </button>
-                </div>
+					<button class="btn-engajamento" 
+							style="background: #dc3545; width: 250px; font-size: 2rem;" 
+							onclick="gtag('event', 'aprendizado_ergonomia', {'resposta': 'NAO'}); alert('Resposta NÃO registrada. Vamos revisar!');">
+						NÃO 👎
+					</button>
+				</div>
 
-                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; border: 1px dashed var(--warning); margin-top: 1.5rem;">
-                    <h3 style="color: var(--warning); margin-top: 0;">Indicador Realtime (GA4)</h3>
-                    <p style="font-size: 1.1rem; opacity: 0.9;">
-                        Professor: Acesse <strong>Relatórios > Tempo Real</strong> no GA4 e filtre pelo evento <code>aprendizado_ergonomia</code> para mostrar a contagem de respostas à turma.
-                    </p>
-                </div>
-            </div>
-        </section>
+				<div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; border: 1px dashed var(--warning); margin-top: 1.5rem;">
+					<h3 style="color: var(--warning); margin-top: 0;">Indicador Realtime (GA4)</h3>
+					<p style="font-size: 1.1rem; opacity: 0.9;">
+						Professor: Acesse <strong>Relatórios > Tempo Real</strong> no GA4 e filtre pelo evento <code>aprendizado_ergonomia</code> para mostrar a contagem de respostas à turma.
+					</p>
+				</div>
+			</div>
+		</section>
 		<section class="slide" id="ucd-abertura">
-            <div class="content-box">
-                <h2 style="color: var(--warning);">04. Aula Expositiva</h2>
-                <h1>Design Centrado no Usuário (UCD)</h1>
-                <p style="font-size: 1.6rem;">Projetar ecossistemas de interação que resolvam problemas humanos e gerem valor de mercado.</p>
-                <div style="background: rgba(40, 167, 69, 0.1); padding: 15px; border-radius: 10px; margin-top: 1rem;">
-                    <p style="font-size: 1.2rem; margin: 0;">"Vocês não estão aqui apenas para desenhar telas, mas para projetar experiências."</p>
-                </div>
-            </div>
-        </section>
+			<div class="content-box">
+				<h2 style="color: var(--warning);">04. Aula Expositiva</h2>
+				<h1>Design Centrado no Usuário (UCD)</h1>
+				<p style="font-size: 1.6rem;">Projetar ecossistemas de interação que resolvam problemas humanos e gerem valor de mercado.</p>
+				<div style="background: rgba(40, 167, 69, 0.1); padding: 15px; border-radius: 10px; margin-top: 1rem;">
+					<p style="font-size: 1.2rem; margin: 0;">"Vocês não estão aqui apenas para desenhar telas, mas para projetar experiências."</p>
+				</div>
+			</div>
+		</section>
 
-        <section class="slide" id="teoria-benyon">
-            <div class="content-box">
-                <h2 style="color: var(--warning);">Fundamentação Teórica</h2>
-                <h1>A Perspectiva de Benyon (2011)</h1>
-                <p style="text-align: left; border-left: 5px solid var(--accent); padding-left: 20px;">
-                    "O design de interação trata de criar experiências que as pessoas considerem agradáveis, envolventes e úteis."
-                </p>
-                <ul style="text-align: left; font-size: 1.4rem; margin-top: 1rem;">
-                    <li>Foco na <strong>experiência subjetiva</strong> do indivíduo.</li>
-                    <li>A interação como uma <strong>atividade situada</strong>.</li>
-                    <li>Hardware é o meio; a experiência é o fim.</li>
-                </ul>
-            </div>
-        </section>
+		<section class="slide" id="teoria-benyon">
+			<div class="content-box">
+				<h2 style="color: var(--warning);">Fundamentação Teórica</h2>
+				<h1>A Perspectiva de Benyon (2011)</h1>
+				<p style="text-align: left; border-left: 5px solid var(--accent); padding-left: 20px;">
+					"O design de interação trata de criar experiências que as pessoas considerem agradáveis, envolventes e úteis."
+				</p>
+				<ul style="text-align: left; font-size: 1.4rem; margin-top: 1rem;">
+					<li>Foco na <strong>experiência subjetiva</strong> do indivíduo.</li>
+					<li>A interação como uma <strong>atividade situada</strong>.</li>
+					<li>Hardware é o meio; a experiência é o fim.</li>
+				</ul>
+			</div>
+		</section>
 		<section class="slide" id="teoria-benyon">
 			<div class="content-box">
 				<h2 style="color: var(--warning);">Fundamentação Teórica</h2>
@@ -497,22 +451,22 @@ html, body {
 			</div>
 		</section>
 
-        <section class="slide" id="teoria-barreto-valente">
-            <div class="content-box">
-                <h2 style="color: var(--warning);">Fundamentação Teórica</h2>
-                <h1>Barreto (2018) & Valente (2020)</h1>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-top: 1rem;">
-                    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;">
-                        <h3 style="color: var(--accent);">Ergonomia (Barreto)</h3>
-                        <p>Interfaces que facilitam a comunicação e minimizam o <strong>esforço cognitivo</strong> do usuário.</p>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;">
-                        <h3 style="color: var(--accent);">Engenharia (Valente)</h3>
-                        <p>A interface como atividade <strong>central e iterativa</strong> do desenvolvimento de software.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+		<section class="slide" id="teoria-barreto-valente">
+			<div class="content-box">
+				<h2 style="color: var(--warning);">Fundamentação Teórica</h2>
+				<h1>Barreto (2018) & Valente (2020)</h1>
+				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-top: 1rem;">
+					<div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;">
+						<h3 style="color: var(--accent);">Ergonomia (Barreto)</h3>
+						<p>Interfaces que facilitam a comunicação e minimizam o <strong>esforço cognitivo</strong> do usuário.</p>
+					</div>
+					<div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;">
+						<h3 style="color: var(--accent);">Engenharia (Valente)</h3>
+						<p>A interface como atividade <strong>central e iterativa</strong> do desenvolvimento de software.</p>
+					</div>
+				</div>
+			</div>
+		</section>
 		<section class="slide" id="ergonomia-comparativo">
 			<div class="content-box">
 				<h2 style="color: var(--warning);">Fundamentação Teórica | Ergonomia</h2>
@@ -525,107 +479,107 @@ html, body {
 				</div>
 			</div>
 		</section>
-        <section class="slide" id="ferramenta-personas">
-            <div class="content-box">
-                <h2 style="color: var(--warning);">Ferramentas do UCD</h2>
-                <h1>Personas: O "Quem" do Projeto</h1>
-                <p>Arquétipos baseados em dados que humanizam o desenvolvimento.</p>
-                <ul style="text-align: left; display: inline-block; font-size: 1.3rem;">
-                    <li>✅ <strong>Dores:</strong> O que frustra o usuário?</li>
-                    <li>✅ <strong>Necessidades:</strong> O que ele busca resolver?</li>
-                    <li>✅ <strong>Comportamento:</strong> Como ele interage digitalmente?</li>
-                </ul>
-                <p style="color: var(--accent); margin-top: 1rem;">Evita que o sistema seja projetado para o "usuário médio" inexistente.</p>
-            </div>
-        </section>
+		<section class="slide" id="ferramenta-personas">
+			<div class="content-box">
+				<h2 style="color: var(--warning);">Ferramentas do UCD</h2>
+				<h1>Personas: O "Quem" do Projeto</h1>
+				<p>Arquétipos baseados em dados que humanizam o desenvolvimento.</p>
+				<ul style="text-align: left; display: inline-block; font-size: 1.3rem;">
+					<li>✅ <strong>Dores:</strong> O que frustra o usuário?</li>
+					<li>✅ <strong>Necessidades:</strong> O que ele busca resolver?</li>
+					<li>✅ <strong>Comportamento:</strong> Como ele interage digitalmente?</li>
+				</ul>
+				<p style="color: var(--accent); margin-top: 1rem;">Evita que o sistema seja projetado para o "usuário médio" inexistente.</p>
+			</div>
+		</section>
 		<section class="slide" id="persona-visual">
-            <div class="content-box">
-                <h2 style="color: var(--warning);">04. Aula Expositiva | Ferramentas UCD</h2>
-                <h1>Persona Técnica: O Advogado</h1>
-                
-                <div style="display: flex; flex-direction: column; align-items: center; margin-top: 1rem;">
-                    <div style="background: white; padding: 10px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); max-width: 850px;">
-                        <img src="card_persona_advogado.webp" alt="Card Visual Persona O Advogado" 
-                             style="width: 100%; border-radius: 15px; display: block;">
-                    </div>
-                    
-                    <div style="margin-top: 1rem; text-align: center; max-width: 750px;">
-                        <p style="font-size: 1.1rem; border-top: 1px solid var(--accent); padding-top: 10px;">
-                            <strong>IHC na Prática:</strong> Projetar para 'Roberto Almeida' evita o caos visual para o público jurídico.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
+			<div class="content-box">
+				<h2 style="color: var(--warning);">04. Aula Expositiva | Ferramentas UCD</h2>
+				<h1>Persona Técnica: O Advogado</h1>
+				
+				<div style="display: flex; flex-direction: column; align-items: center; margin-top: 1rem;">
+					<div style="background: white; padding: 10px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); max-width: 850px;">
+						<img src="card_persona_advogado.webp" alt="Card Visual Persona O Advogado" 
+							 style="width: 100%; border-radius: 15px; display: block;">
+					</div>
+					
+					<div style="margin-top: 1rem; text-align: center; max-width: 750px;">
+						<p style="font-size: 1.1rem; border-top: 1px solid var(--accent); padding-top: 10px;">
+							<strong>IHC na Prática:</strong> Projetar para 'Roberto Almeida' evita o caos visual para o público jurídico.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
 		<section class="slide" id="jornada-visual">
-            <div class="content-box">
-                <h2 style="color: var(--warning);">04. Aula Expositiva | Ferramentas UCD</h2>
-                <h1>O Mapa da Jornada do Roberto</h1>
-                
-                <div style="display: flex; flex-direction: column; align-items: center; margin-top: 1rem;">
-                    <div style="background: white; padding: 10px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); max-width: 850px;">
-                        <img src="storymap_jornada_advogado.webp" alt="Storymap Jornada do Usuário O Advogado" 
-                             style="width: 100%; border-radius: 15px; display: block;">
-                    </div>
-                    
-                    <div style="margin-top: 1rem; text-align: center; max-width: 750px;">
-                        <p style="font-size: 1.1rem; border-top: 1px solid var(--accent); padding-top: 10px;">
-                            <strong>IHC na Prática:</strong> Mapear dores e pontos de contato garante que o sistema converta a necessidade em venda.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
+			<div class="content-box">
+				<h2 style="color: var(--warning);">04. Aula Expositiva | Ferramentas UCD</h2>
+				<h1>O Mapa da Jornada do Roberto</h1>
+				
+				<div style="display: flex; flex-direction: column; align-items: center; margin-top: 1rem;">
+					<div style="background: white; padding: 10px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); max-width: 850px;">
+						<img src="storymap_jornada_advogado.webp" alt="Storymap Jornada do Usuário O Advogado" 
+							 style="width: 100%; border-radius: 15px; display: block;">
+					</div>
+					
+					<div style="margin-top: 1rem; text-align: center; max-width: 750px;">
+						<p style="font-size: 1.1rem; border-top: 1px solid var(--accent); padding-top: 10px;">
+							<strong>IHC na Prática:</strong> Mapear dores e pontos de contato garante que o sistema converta a necessidade em venda.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
 
-        <section class="slide" id="ferramenta-jornadas">
-            <div class="content-box">
-                <h2 style="color: var(--warning);">Ferramentas do UCD</h2>
-                <h1>Jornadas: O "Como" do Fluxo</h1>
-                <p>Mapeamento dos pontos de contato entre o usuário e o sistema.</p>
-                <div style="background: var(--navy); padding: 15px; border-radius: 10px; margin: 1rem 0; border: 1px solid var(--accent);">
-                    <p style="font-size: 1.4rem; font-weight: bold; margin: 0;">CONSCIÊNCIA → CONSIDERAÇÃO → DECISÃO</p>
-                </div>
-                <p style="font-size: 1.2rem;">Uma jornada mapeada otimiza o <strong>SEO</strong> e garante a <strong>RETENÇÃO</strong>.</p>
-            </div>
-        </section>
+		<section class="slide" id="ferramenta-jornadas">
+			<div class="content-box">
+				<h2 style="color: var(--warning);">Ferramentas do UCD</h2>
+				<h1>Jornadas: O "Como" do Fluxo</h1>
+				<p>Mapeamento dos pontos de contato entre o usuário e o sistema.</p>
+				<div style="background: var(--navy); padding: 15px; border-radius: 10px; margin: 1rem 0; border: 1px solid var(--accent);">
+					<p style="font-size: 1.4rem; font-weight: bold; margin: 0;">CONSCIÊNCIA → CONSIDERAÇÃO → DECISÃO</p>
+				</div>
+				<p style="font-size: 1.2rem;">Uma jornada mapeada otimiza o <strong>SEO</strong> e garante a <strong>RETENÇÃO</strong>.</p>
+			</div>
+		</section>
 
-        <section class="slide" id="usabilidade-pratica">
-            <div class="content-box">
-                <h2 style="color: var(--warning);">Princípios de Usabilidade</h2>
-                <h1>Eficiência, Eficácia e Satisfação</h1>
-                <div style="text-align: left; font-size: 1.3rem;">
-                    <p>📌 <strong>Eficiente:</strong> Realizar a tarefa rápido.</p>
-                    <p>📌 <strong>Eficaz:</strong> Sem erros no processo.</p>
-                    <p>📌 <strong>Satisfatório:</strong> Sentir-se bem ao usar.</p>
-                </div>
-                <p style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px; margin-top: 10px;">
-                    <strong>Ergonomia Cognitiva:</strong> Não sobrecarregue a memória do usuário.
-                </p>
-            </div>
-        </section>
+		<section class="slide" id="usabilidade-pratica">
+			<div class="content-box">
+				<h2 style="color: var(--warning);">Princípios de Usabilidade</h2>
+				<h1>Eficiência, Eficácia e Satisfação</h1>
+				<div style="text-align: left; font-size: 1.3rem;">
+					<p>📌 <strong>Eficiente:</strong> Realizar a tarefa rápido.</p>
+					<p>📌 <strong>Eficaz:</strong> Sem erros no processo.</p>
+					<p>📌 <strong>Satisfatório:</strong> Sentir-se bem ao usar.</p>
+				</div>
+				<p style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px; margin-top: 10px;">
+					<strong>Ergonomia Cognitiva:</strong> Não sobrecarregue a memória do usuário.
+				</p>
+			</div>
+		</section>
 		<section class="slide" id="visao-mercado">
-            <div class="content-box">
-                <h2 style="color: var(--warning);">04. Aula Expositiva | O Gancho de Mercado</h2>
-                <h1>A Tríade de Sucesso: SEO, Retenção e Conversão</h1>
-                <p style="font-size: 1.4rem;">Como Personas e Jornadas se convertem em lucro e autoridade?</p>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 1.5rem;">
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-top: 4px solid var(--accent);">
-                        <h3 style="color: var(--accent); font-size: 1.1rem;">SEO</h3>
-                        <p style="font-size: 0.95rem;">Identificar o que o usuário busca em cada etapa da jornada para ser <strong>encontrado</strong>.</p>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-top: 4px solid var(--accent);">
-                        <h3 style="color: var(--accent); font-size: 1.1rem;">RETENÇÃO</h3>
-                        <p style="font-size: 0.95rem;">Reduzir a carga cognitiva para que o usuário permaneça e <strong>consuma</strong> o conteúdo.</p>
-                    </div>
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-top: 4px solid var(--accent);">
-                        <h3 style="color: var(--accent); font-size: 1.1rem;">CONVERSÃO</h3>
-                        <p style="font-size: 0.95rem;">Garantir que a jornada conduza o usuário à <strong>decisão</strong> (venda ou contratação).</p>
-                    </div>
-                </div>
-                <p style="margin-top: 1.5rem; font-style: italic; color: var(--warning);">"Se o conteúdo certo está no ponto de contato certo, a experiência flui para a venda."</p>
-            </div>
-        </section>
+			<div class="content-box">
+				<h2 style="color: var(--warning);">04. Aula Expositiva | O Gancho de Mercado</h2>
+				<h1>A Tríade de Sucesso: SEO, Retenção e Conversão</h1>
+				<p style="font-size: 1.4rem;">Como Personas e Jornadas se convertem em lucro e autoridade?</p>
+				
+				<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 1.5rem;">
+					<div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-top: 4px solid var(--accent);">
+						<h3 style="color: var(--accent); font-size: 1.1rem;">SEO</h3>
+						<p style="font-size: 0.95rem;">Identificar o que o usuário busca em cada etapa da jornada para ser <strong>encontrado</strong>.</p>
+					</div>
+					<div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-top: 4px solid var(--accent);">
+						<h3 style="color: var(--accent); font-size: 1.1rem;">RETENÇÃO</h3>
+						<p style="font-size: 0.95rem;">Reduzir a carga cognitiva para que o usuário permaneça e <strong>consuma</strong> o conteúdo.</p>
+					</div>
+					<div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-top: 4px solid var(--accent);">
+						<h3 style="color: var(--accent); font-size: 1.1rem;">CONVERSÃO</h3>
+						<p style="font-size: 0.95rem;">Garantir que a jornada conduza o usuário à <strong>decisão</strong> (venda ou contratação).</p>
+					</div>
+				</div>
+				<p style="margin-top: 1.5rem; font-style: italic; color: var(--warning);">"Se o conteúdo certo está no ponto de contato certo, a experiência flui para a venda."</p>
+			</div>
+		</section>
 		<section class="slide" id="visual-funil">
 			<div class="content-box">
 				<h2 style="color: var(--warning);">Tríade Estratégica | Resultados</h2>
@@ -639,149 +593,970 @@ html, body {
 			</div>
 		</section>
 
-        <section class="slide" id="ucd-conclusao-final">
-            <div class="content-box">
-                <h2 style="color: var(--warning);">Conclusão</h2>
-                <h1>O Código é o Meio, a Experiência é o Fim</h1>
-                <p style="font-size: 1.6rem;">O mercado não aceita mais sistemas puramente funcionais; ele exige <strong>sistemas memoráveis</strong>.</p>
-                
-                <div style="background: rgba(40, 167, 69, 0.1); padding: 20px; border-radius: 15px; margin-top: 1rem;">
-                    <p style="font-size: 1.2rem; margin: 0;"><strong>Próxima Etapa:</strong> Converter estas teorias em Protótipos de Baixa Fidelidade no Laboratório.</p>
-                </div>
+		<section class="slide" id="ucd-conclusao-final">
+			<div class="content-box">
+				<h2 style="color: var(--warning);">Conclusão</h2>
+				<h1>O Código é o Meio, a Experiência é o Fim</h1>
+				<p style="font-size: 1.6rem;">O mercado não aceita mais sistemas puramente funcionais; ele exige <strong>sistemas memoráveis</strong>.</p>
+				
+				<div style="background: rgba(40, 167, 69, 0.1); padding: 20px; border-radius: 15px; margin-top: 1rem;">
+					<p style="font-size: 1.2rem; margin: 0;"><strong>Próxima Etapa:</strong> Converter estas teorias em Protótipos de Baixa Fidelidade no Laboratório.</p>
+				</div>
 
-                <div style="margin-top: 2rem;">
-                    <button class="btn-engajamento" onclick="logPresencaAula('engajamento', 'expositiva_completa')">
-                        Concluir Aula Expositiva
-                    </button>
-                </div>
-            </div>
-        </section>
-<section class="slide" id="exercicio-explicação">
-            <div class="content-box">
-                <h2 style="color: var(--warning);">05. Exercício da Semana</h2>
-                <h1>Auditoria de Engenharia UCD</h1>
-                <p style="font-size: 1.5rem; margin-bottom: 1.5rem;">Vamos validar se o design de um grande player foca realmente no usuário ou apenas na estética.</p>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; text-align: left;">
-                    <div style="background: rgba(40, 167, 69, 0.1); padding: 25px; border-radius: 15px; border-left: 5px solid var(--accent);">
-                        <h3 style="color: var(--accent); margin-top: 0; font-size: 1.4rem;">Objetivo Técnico</h3>
-                        <p style="font-size: 1.1rem; line-height: 1.4;">Identificar como a <strong>Persona</strong> e sua <strong>Jornada</strong> ditam a eficiência do <strong>SEO</strong>, a taxa de <strong>RETENÇÃO</strong> e o sucesso da <strong>CONVERSÃO</strong>.</p>
-                    </div>
-                    <div style="background: rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 15px;">
-                        <h3 style="color: var(--white); margin-top: 0; font-size: 1.4rem;">Roteiro de Análise</h3>
-                        <ul style="font-size: 1rem; padding-left: 20px;">
-                            <li>Mapeamento de Pontos de Contato.</li>
-                            <li>Avaliação de Carga Cognitiva.</li>
-                            <li>Verificação de Heurísticas de Usabilidade.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
+				<div style="margin-top: 2rem;">
+					<button class="btn-engajamento" onclick="logPresencaAula('engajamento', 'expositiva_completa')">
+						Concluir Aula Expositiva
+					</button>
+				</div>
+			</div>
+		</section>
+		<section class="slide" id="exercicio-explicação">
+			<div class="content-box">
+				<h2 style="color: var(--warning);">05. Exercício da Semana</h2>
+				<h1>Auditoria de Engenharia UCD</h1>
+				<p style="font-size: 1.5rem; margin-bottom: 1.5rem;">Vamos validar se o design de um grande player foca realmente no usuário ou apenas na estética.</p>
+				
+				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; text-align: left;">
+					<div style="background: rgba(40, 167, 69, 0.1); padding: 25px; border-radius: 15px; border-left: 5px solid var(--accent);">
+						<h3 style="color: var(--accent); margin-top: 0; font-size: 1.4rem;">Objetivo Técnico</h3>
+						<p style="font-size: 1.1rem; line-height: 1.4;">Identificar como a <strong>Persona</strong> e sua <strong>Jornada</strong> ditam a eficiência do <strong>SEO</strong>, a taxa de <strong>RETENÇÃO</strong> e o sucesso da <strong>CONVERSÃO</strong>.</p>
+					</div>
+					<div style="background: rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 15px;">
+						<h3 style="color: var(--white); margin-top: 0; font-size: 1.4rem;">Roteiro de Análise</h3>
+						<ul style="font-size: 1rem; padding-left: 20px;">
+							<li>Mapeamento de Pontos de Contato.</li>
+							<li>Avaliação de Carga Cognitiva.</li>
+							<li>Verificação de Heurísticas de Usabilidade.</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
 
-        <section class="slide" id="exercicio-acesso">
-            <div class="content-box">
-                <h2 style="color: var(--warning);">Laboratório Digital</h2>
-                <h1>Acesse o Formulário de Auditoria</h1>
-                
-                <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; margin-top: 2rem;">
-                    <div id="qrcode-exercicio-semana" style="background: white; padding: 15px; border-radius: 15px; border: 5px solid var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-                        </div>
-                    
-                    <div style="max-width: 450px; text-align: left;">
-                        <p style="font-size: 1.3rem; margin-bottom: 1.5rem;">
-                            <strong>Instruções:</strong><br>
-                            1. Escaneie o QR Code ao lado;<br>
-                            2. Responda às 10 questões de múltipla-escolha;<br>
-                            3. Elabore o seu Parecer Técnico final.
-                        </p>
-                        <a href="https://forms.gle/SEU_LINK_UCD_AQUI" id="link-direto-forms" target="_blank" style="background: var(--accent); color: white; padding: 15px 30px; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 1.2rem; display: inline-block; transition: 0.3s;">
-                            ABRIR NO NAVEGADOR
-                        </a>
-                    </div>
-                </div>
+		<section class="slide" id="exercicio-acesso">
+			<div class="content-box">
+				<h2 style="color: var(--warning);">Laboratório Digital</h2>
+				<h1>Acesse o Formulário de Auditoria</h1>
+				
+				<div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; margin-top: 2rem;">
+					<div id="qrcode-exercicio-semana" style="background: white; padding: 15px; border-radius: 15px; border: 5px solid var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+						</div>
+					
+					<div style="max-width: 450px; text-align: left;">
+						<p style="font-size: 1.3rem; margin-bottom: 1.5rem;">
+							<strong>Instruções:</strong><br>
+							1. Escaneie o QR Code ao lado;<br>
+							2. Responda às 10 questões de múltipla-escolha;<br>
+							3. Elabore o seu Parecer Técnico final.
+						</p>
+						<a href="https://forms.gle/SEU_LINK_UCD_AQUI" id="link-direto-forms" target="_blank" style="background: var(--accent); color: white; padding: 15px 30px; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 1.2rem; display: inline-block; transition: 0.3s;">
+							ABRIR NO NAVEGADOR
+						</a>
+					</div>
+				</div>
 
-                <script>
-                    // Configuração do Link do Exercício (Substitua pela URL real do seu Forms)
-                    const urlFormsUCD = "https://forms.gle/SEU_LINK_UCD_AQUI";
-                    document.getElementById('link-direto-forms').href = urlFormsUCD;
+				<script>
+					// Configuração do Link do Exercício (Substitua pela URL real do seu Forms)
+					const urlFormsUCD = "https://forms.gle/SEU_LINK_UCD_AQUI";
+					document.getElementById('link-direto-forms').href = urlFormsUCD;
 
-                    new QRCode(document.getElementById("qrcode-exercicio-semana"), {
-                        text: urlFormsUCD,
-                        width: 250,
-                        height: 250,
-                        colorDark : "#002147",
-                        colorLight : "#ffffff",
-                        correctLevel : QRCode.CorrectLevel.H
-                    });
-                </script>
-            </div>
-        </section>
+					new QRCode(document.getElementById("qrcode-exercicio-semana"), {
+						text: urlFormsUCD,
+						width: 250,
+						height: 250,
+						colorDark : "#002147",
+						colorLight : "#ffffff",
+						correctLevel : QRCode.CorrectLevel.H
+					});
+				</script>
+			</div>
+		</section>
 		
 		<section class="slide" id="recapitulacao-fechamento">
-            <div class="content-box">
-                <h2 style="color: var(--warning);">06. Resumo e Encerramento</h2>
-                <h1>Recapitulação do Dia</h1>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; text-align: left; margin-top: 1rem;">
-                    <div style="background: rgba(40, 167, 69, 0.1); padding: 20px; border-radius: 15px;">
-                        <h3 style="color: var(--accent); margin-top: 0;">Conceitos Chave</h3>
-                        <ul style="font-size: 1.1rem; line-height: 1.4;">
-                            <li><strong>UCD:</strong> Ciência e engenharia focadas no humano.</li>
-                            <li><strong>Personas:</strong> Arquétipos que guiam o desenvolvimento.</li>
-                            <li><strong>Jornadas:</strong> O mapa estratégico da <strong>Conversão</strong>.</li>
-                            <li><strong>Tríade:</strong> Como o Design dita o <strong>SEO</strong> e a <strong>Retenção</strong>.</li>
-                        </ul>
-                    </div>
+			<div class="content-box">
+				<h2 style="color: var(--warning);">06. Resumo e Encerramento</h2>
+				<h1>Recapitulação do Dia</h1>
+				
+				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; text-align: left; margin-top: 1rem;">
+					<div style="background: rgba(40, 167, 69, 0.1); padding: 20px; border-radius: 15px;">
+						<h3 style="color: var(--accent); margin-top: 0;">Conceitos Chave</h3>
+						<ul style="font-size: 1.1rem; line-height: 1.4;">
+							<li><strong>UCD:</strong> Ciência e engenharia focadas no humano.</li>
+							<li><strong>Personas:</strong> Arquétipos que guiam o desenvolvimento.</li>
+							<li><strong>Jornadas:</strong> O mapa estratégico da <strong>Conversão</strong>.</li>
+							<li><strong>Tríade:</strong> Como o Design dita o <strong>SEO</strong> e a <strong>Retenção</strong>.</li>
+						</ul>
+					</div>
 
-                    <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 15px; border: 1px dashed var(--warning);">
-                        <h3 style="color: var(--warning); margin-top: 0;">Material de Estudo</h3>
-                        <p style="font-size: 1rem; margin-bottom: 1.5rem;">Descarregue o PDF completo com a fundamentação de Benyon, Barreto e Valente.</p>
-                        
-                        <a href="design-centrado-no-usuario-UCD-persona-jornada.pdf" download 
-                           class="btn-engajamento" 
-                           style="background: var(--accent); text-decoration: none; display: inline-block; font-size: 1rem; width: auto; padding: 10px 20px;"
-                           onclick="gtag('event', 'download_material', {'file_name': 'UCD_Persona_Jornada'});">
-                           📥 Baixar PDF da Aula
-                        </a>
+					<div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 15px; border: 1px dashed var(--warning);">
+						<h3 style="color: var(--warning); margin-top: 0;">Material de Estudo</h3>
+						<p style="font-size: 1rem; margin-bottom: 1.5rem;">Descarregue o PDF completo com a fundamentação de Benyon, Barreto e Valente.</p>
+						
+						<a href="design-centrado-no-usuario-UCD-persona-jornada.pdf" download 
+						   class="btn-engajamento" 
+						   style="background: var(--accent); text-decoration: none; display: inline-block; font-size: 1rem; width: auto; padding: 10px 20px;"
+						   onclick="gtag('event', 'download_material', {'file_name': 'UCD_Persona_Jornada'});">
+						   📥 Baixar PDF da Aula
+						</a>
 
-                        <p style="font-size: 0.9rem; margin-top: 1.5rem; opacity: 0.8;">📅 <strong>Aviso:</strong> Prazo do Forms até 12/03.</p>
-                    </div>
-                </div>
+						<p style="font-size: 0.9rem; margin-top: 1.5rem; opacity: 0.8;">📅 <strong>Aviso:</strong> Prazo do Forms até 12/03.</p>
+					</div>
+				</div>
 
-                <div style="margin-top: 1.5rem;">
-                    <h1 style="color: var(--accent); font-size: 3.5rem; margin-bottom: 0;">OBRIGADO!</h1>
-                    <p style="font-size: 1.4rem; opacity: 0.8;">Excelente trabalho, peritos. Vemo-nos no laboratório!</p>
-                </div>
-            </div>
-        </section>
-    </div>
+				<div style="margin-top: 1.5rem;">
+					<h1 style="color: var(--accent); font-size: 3.5rem; margin-bottom: 0;">OBRIGADO!</h1>
+					<p style="font-size: 1.4rem; opacity: 0.8;">Excelente trabalho, peritos. Vemo-nos no laboratório!</p>
+				</div>
+			</div>
+		</section>
+		<section class="slide" id="feedback-final">
+			<div class="content-box" style="text-align: center;">
+				<span style="background: var(--warning); color: var(--navy); padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 0.9rem; text-transform: uppercase;">Métrica de UX</span>
+				
+				<h2 style="margin-top: 1.5rem;">O que achou da aula de hoje?</h2>
+				<p style="font-size: 1.2rem; opacity: 0.9;">UCD, Personas e Jornadas: Seu feedback é anônimo e alimenta nosso dashboard de satisfação em tempo real.</p>
+				
+				<div class="feedback-icons" style="display: flex; justify-content: center; gap: 30px; margin-top: 2rem; font-size: 4rem; cursor: pointer;">
+					<span class="emoji" title="Excelente" 
+						  onclick="gtag('event', 'feedback_aula', {'sentimento': 'excelente', 'aula_referencia': '06-03-2026'}); alert('Obrigado! Feedback registrado.');" 
+						  style="transition: 0.3s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">😍</span>
+					
+					<span class="emoji" title="Bom" 
+						  onclick="gtag('event', 'feedback_aula', {'sentimento': 'bom', 'aula_referencia': '06-03-2026'}); alert('Fico feliz que gostou!');"
+						  style="transition: 0.3s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">🙂</span>
+					
+					<span class="emoji" title="Regular" 
+						  onclick="gtag('event', 'feedback_aula', {'sentimento': 'regular', 'aula_referencia': '06-03-2026'}); alert('Obrigado. Vamos melhorar!');"
+						  style="transition: 0.3s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">😐</span>
+					
+					<span class="emoji" title="Ruim" 
+						  onclick="gtag('event', 'feedback_aula', {'sentimento': 'ruim', 'aula_referencia': '06-03-2026'}); alert('Sinto muito. Vamos conversar para ajustar.');"
+						  style="transition: 0.3s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">☹️</span>
+				</div>
+				
+				<p style="margin-top: 2rem; font-size: 0.9rem; color: var(--accent);">ID da Aula: 06/03 - UCD & Personas</p>
+			</div>
+		</section>
+
+	</div>
 
     <footer>
-        Prof. Dr. Lincoln Sposito | Todos os direitos reservados &copy; 2026
+        Prof. Dr. Lincoln Sposito | &copy; 2026
     </footer>
 
     <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const deck = document.getElementById('deck');
+        // Sistema de Observer para o efeito "Flutuar" (Slide Ativo)
+        const observerOptions = { threshold: 0.4 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
 
-        function updateSlide() {
-            const offset = currentSlide * -100;
-            deck.style.transform = `translateY(${offset}vh)`;
-        }
+        document.querySelectorAll('.slide').forEach(slide => {
+            observer.observe(slide);
+        });
 
+        // Navegação Suave por Teclado (Desktop)
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-                if (currentSlide < slides.length - 1) { currentSlide++; updateSlide(); }
-            }
-            if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-                if (currentSlide > 0) { currentSlide--; updateSlide(); }
+            if (window.innerWidth > 1024) { // Apenas Desktop para não conflitar com o touch do celular
+                const slides = document.querySelectorAll('.slide');
+                let current = [...slides].findIndex(s => s.getBoundingClientRect().top >= -50 && s.getBoundingClientRect().top <= 50);
+                
+                if ((e.key === 'ArrowRight' || e.key === 'ArrowDown') && current < slides.length - 1) {
+                    slides[current + 1].scrollIntoView({ behavior: 'smooth' });
+                }
+                if ((e.key === 'ArrowLeft' || e.key === 'ArrowUp') && current > 0) {
+                    slides[current - 1].scrollIntoView({ behavior: 'smooth' });
+                }
             }
         });
     </script>
 </body>
 </html>
+<!-- <!DOCTYPE html> -->
+<!-- <html lang="pt-br"> -->
+<!-- <head> -->
+    <!-- <meta charset="UTF-8"> -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <!-- <title>Aula: UCD, Personas e Jornadas | Dr. Lincoln Sposito</title> -->
+    
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script> -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script> -->
+    <!-- <script> -->
+      <!-- window.dataLayer = window.dataLayer || []; -->
+      <!-- function gtag(){dataLayer.push(arguments);} -->
+      <!-- gtag('js', new Date()); -->
+      <!-- gtag('config', 'G-5F1FGJ25TK'); -->
+
+      <!-- function logPresencaAula(status, origem) { -->
+          <!-- gtag('event', 'presenca_aula', { -->
+              <!-- 'disciplina': 'IHC_UX', -->
+              <!-- 'status_presenca': status, -->
+              <!-- 'origem': origem, -->
+              <!-- 'aula_referencia': 'Design Centrado no Usuário' -->
+          <!-- }); -->
+      <!-- } -->
+
+      <!-- window.onload = function() { -->
+          <!-- const urlParams = new URLSearchParams(window.location.search); -->
+          <!-- if (urlParams.get('ref') === 'atrasado') logPresencaAula('atrasado', 'qrcode_slide'); -->
+          
+          <!-- const urlAtraso = window.location.origin + window.location.pathname + "?ref=atrasado"; -->
+          <!-- new QRCode(document.getElementById("qrcode-persistente"), { -->
+              <!-- text: urlAtraso, width: 70, height: 70, colorDark : "#002147", colorLight : "#ffffff" -->
+          <!-- }); -->
+      <!-- }; -->
+    <!-- </script> -->
+
+    <!-- <style> -->
+        <!-- :root {  -->
+            <!-- --navy: #002147; --white: #ffffff; --accent: #28a745; --warning: #ffc107; -->
+            <!-- --font-titulo: 3.2rem; --font-corpo: 1.8rem; -->
+        <!-- } -->
+
+        <!-- * { box-sizing: border-box; } -->
+
+        <!-- /* 1. HTML/BODY Limpo */ -->
+		<!-- html, body {  -->
+			<!-- margin: 0; padding: 0; width: 100%; min-height: 100%; -->
+			<!-- overflow-x: hidden;  -->
+			<!-- overflow-y: auto; -->
+			<!-- font-family: 'Segoe UI', sans-serif;  -->
+			<!-- background: var(--navy);  -->
+			<!-- color: var(--white); -->
+			<!-- scroll-snap-type: y proximity; -->
+		<!-- } -->
+
+        <!-- /* HEADER FIXO (Regra 13) */ -->
+        <!-- header { -->
+            <!-- position: fixed; top: 0; left: 0; width: 100%; height: 80px; -->
+            <!-- background: rgba(0, 33, 71, 0.9); /* Navy com leve transparência */ -->
+            <!-- display: flex; align-items: center; padding: 0 40px; -->
+            <!-- border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 1000; -->
+        <!-- } -->
+        <!-- .logo-header { height: 50px; } -->
+
+        <!-- /* FOOTER FIXO (Regra 13) */ -->
+        <!-- footer { -->
+            <!-- position: fixed; bottom: 0; left: 0; width: 100%; height: 50px; -->
+            <!-- background: rgba(0, 33, 71, 0.9); -->
+            <!-- display: flex; align-items: center; justify-content: center; -->
+            <!-- font-size: 0.9rem; opacity: 0.7; z-index: 1000; -->
+            <!-- border-top: 1px solid rgba(255,255,255,0.1); -->
+        <!-- } -->
+
+        <!-- /* QR CODE POSICIONADO ABAIXO DO HEADER */ -->
+        <!-- #floating-atraso { -->
+            <!-- position: fixed; top: 100px; right: 20px; z-index: 999; -->
+            <!-- background: white; padding: 6px; border-radius: 8px; -->
+            <!-- border: 2px solid var(--warning); text-align: center; -->
+        <!-- } -->
+        <!-- #floating-atraso span { display: block; color: var(--navy); font-size: 9px; font-weight: bold; } -->
+
+        <!-- /* 2. CONTAINER FLEXÍVEL (Ajuste crucial) */ -->
+		<!-- .container-slides { -->
+			<!-- width: 100%; -->
+			<!-- display: flex;  -->
+			<!-- flex-direction: column; -->
+			<!-- /* Removido height: 100vh fixo para não travar o conteúdo mobile */ -->
+		<!-- } -->
+
+        <!-- /* 3. SLIDE (Como você já fez, está ótimo) */ -->
+		<!-- .slide {  -->
+			<!-- min-height: 100vh;  -->
+			<!-- width: 100%; -->
+			<!-- display: flex;  -->
+			<!-- flex-direction: column;  -->
+			<!-- justify-content: center;  -->
+			<!-- align-items: center; -->
+			<!-- padding: 60px 5% 40px 5%;  -->
+			<!-- text-align: center; -->
+			<!-- scroll-snap-align: start;  -->
+			<!-- position: relative; -->
+			<!-- box-sizing: border-box; -->
+
+				<!-- /* Ajuste para Desktop (mantém o respiro maior) */ -->
+				<!-- @media (min-width: 1024px) { -->
+					<!-- .slide { -->
+						<!-- padding: 100px 5% 70px 5%; -->
+					<!-- } -->
+				<!-- } -->
+				
+				<!-- img, table, .content-box { -->
+					<!-- max-width: 100%; -->
+					<!-- height: auto; -->
+					<!-- box-sizing: border-box; -->
+				<!-- } -->
+		
+		<!-- /* AJUSTE CONSOLIDADO PARA MOBILE (Vertical/Portrait) */ -->
+		<!-- @media (max-width: 480px) { -->
+			<!-- :root { -->
+				<!-- --font-titulo: 1.6rem;  -->
+				<!-- --font-corpo: 0.9rem;   -->
+			<!-- } -->
+
+			<!-- body { -->
+				<!-- font-size: 90%; /* Reduz a escala base do documento */ -->
+			<!-- } -->
+
+			<!-- .slide { -->
+				<!-- padding: 60px 20px; /* Ganha espaço vertical e lateral */ -->
+				<!-- justify-content: center; -->
+			<!-- } -->
+
+			<!-- /* Força a redução nos elementos específicos para evitar quebras */ -->
+			<!-- h1, h2 {  -->
+				<!-- font-size: 1.5rem !important;  -->
+				<!-- line-height: 1.2; -->
+				<!-- margin-bottom: 1rem; -->
+			<!-- } -->
+
+			<!-- p, li, td, span {  -->
+				<!-- font-size: 1rem !important;  -->
+				<!-- line-height: 1.4; -->
+			<!-- } -->
+
+			<!-- .content-box { -->
+				<!-- padding: 1.5rem; /* Reduz padding interno do box no mobile */ -->
+			<!-- } -->
+		<!-- } -->
+		
+        <!-- h1 { color: var(--accent); font-size: var(--font-titulo); text-transform: uppercase; margin-bottom: 1.5rem; } -->
+        <!-- p { font-size: var(--font-corpo); line-height: 1.5; max-width: 1100px; } -->
+        
+        <!-- .content-box {  -->
+            <!-- background: rgba(255,255,255,0.05); padding: 2.5rem;  -->
+            <!-- border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 100%; -->
+        <!-- } -->
+		
+		<!-- /* Estado inicial do conteúdo dentro do slide */ -->
+		<!-- .slide > * { -->
+			<!-- opacity: 0; -->
+			<!-- transform: translateY(30px); /* Começa 30px abaixo */ -->
+			<!-- transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1); /* Transição suave */ -->
+		<!-- } -->
+
+		<!-- /* Quando o slide estiver "ativo" (visível) */ -->
+		<!-- .slide.active > * { -->
+			<!-- opacity: 1; -->
+			<!-- transform: translateY(0); /* Sobe para a posição original */ -->
+		<!-- } -->
+
+		<!-- /* Efeito de flutuação contínua em elementos específicos (opcional) */ -->
+		<!-- .floating-element { -->
+			<!-- animation: floating 3s ease-in-out infinite; -->
+		<!-- } -->
+
+		<!-- @keyframes floating { -->
+			<!-- 0% { transform: translateY(0px); } -->
+			<!-- 50% { transform: translateY(-10px); } -->
+			<!-- 100% { transform: translateY(0px); } -->
+		<!-- }		 -->
+    <!-- </style> -->
+<!-- </head> -->
+<!-- <body> -->
+
+    <!-- <header> -->
+        <!-- <img src="grafico.svg" alt="Dr. Lincoln Sposito" class="logo-header"> -->
+		<!-- <img src="../img/grafico.svg" alt="Logo" style="height: 80px; margin-bottom: 20px;"> -->
+    <!-- </header> -->
+
+    <!-- <div id="floating-atraso"> -->
+        <!-- <div id="qrcode-persistente"></div> -->
+        <!-- <span>ATRASO</span> -->
+    <!-- </div> -->
+
+    <!-- <div class="container-slides" id="deck"> -->
+		<!-- <section class="slide" id="boas-vindas"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <p style="color: var(--warning); font-weight: bold; margin-bottom: 0;">Disciplina: Interação Humano Computador e UX</p> -->
+                <!-- <h1>Design Centrado no Usuário (UCD):<br>Personas e Jornadas</h1> -->
+                
+                <!-- <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); width: 50%; margin: 2rem auto;"> -->
+                
+                <!-- <h2 style="color: var(--white); margin-bottom: 0.5rem;">Prof. Dr. Lincoln Sposito</h2> -->
+                <!-- <p style="font-size: 1.4rem; opacity: 0.8;">Data: 06 de Março de 2026</p> -->
+                
+                <!-- <div style="margin-top: 2rem;"> -->
+                    <!-- <button class="btn-engajamento" onclick="logPresencaAula('engajamento', 'inicio_aula')"> -->
+                        <!-- Iniciar Experiência de Aula -->
+                    <!-- </button> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </section> -->
+		<!-- <section class="slide" id="agenda"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 2px;">Roteiro de Atividades</h2> -->
+                <!-- <h1>Agenda do Dia</h1> -->
+                
+                <!-- <ul style="list-style: none; padding: 0; text-align: left; display: inline-block; margin-top: 1rem;"> -->
+                    <!-- <li style="margin-bottom: 1rem; display: flex; align-items: center;"> -->
+                        <!-- <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">01</span>  -->
+                        <!-- Revisão da aula anterior -->
+                    <!-- </li> -->
+                    <!-- <li style="margin-bottom: 1rem; display: flex; align-items: center;"> -->
+                        <!-- <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">02</span>  -->
+                        <!-- Correção do exercício da semana -->
+                    <!-- </li> -->
+                    <!-- <li style="margin-bottom: 1rem; display: flex; align-items: center;"> -->
+                        <!-- <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">03</span>  -->
+                        <!-- Pesquisa: O que você aprendeu? (Sim/Não) -->
+                    <!-- </li> -->
+                    <!-- <li style="margin-bottom: 1rem; display: flex; align-items: center;"> -->
+                        <!-- <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">04</span>  -->
+                        <!-- Aula Expositiva: UCD, Personas e Jornadas -->
+                    <!-- </li> -->
+                    <!-- <li style="margin-bottom: 1rem; display: flex; align-items: center;"> -->
+                        <!-- <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">05</span>  -->
+                        <!-- Exercício da Semana & Google Forms -->
+                    <!-- </li> -->
+                    <!-- <li style="margin-bottom: 1rem; display: flex; align-items: center;"> -->
+                        <!-- <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">06</span>  -->
+                        <!-- Recapitulação e Resumo Final -->
+                    <!-- </li> -->
+                <!-- </ul> -->
+
+                <!-- <div style="margin-top: 2rem;"> -->
+                    <!-- <button class="btn-engajamento" onclick="logPresencaAula('engajamento', 'visualizou_agenda')"> -->
+                        <!-- Entendido, vamos começar! -->
+                    <!-- </button> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </section> -->
+		<!-- <section class="slide" id="revisao"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 2px;">01. Revisão</h2> -->
+                <!-- <h1>Fundamentação Teórica</h1> -->
+                
+                <!-- <div style="text-align: left; margin-top: 2rem;"> -->
+                    <!-- <p style="border-left: 5px solid var(--accent); padding-left: 20px; margin-bottom: 2rem;"> -->
+                        <!-- <strong>Benyon (2011):</strong> "O design de interação trata de criar experiências que as pessoas considerem agradáveis, envolventes e úteis." (p. 5) -->
+                    <!-- </p> -->
+                    
+                    <!-- <p style="border-left: 5px solid var(--accent); padding-left: 20px; margin-bottom: 2rem;"> -->
+                        <!-- <strong>Barreto et al. (2018):</strong> "A interface humano-computador deve ser projetada de forma a facilitar a comunicação entre o usuário e o sistema computacional, minimizando o esforço cognitivo." (p. 24) -->
+                    <!-- </p> -->
+                    
+                    <!-- <p style="border-left: 5px solid var(--accent); padding-left: 20px;"> -->
+                        <!-- <strong>Valente (2020):</strong> "O projeto de interface não deve ser uma atividade tardia no processo de desenvolvimento de software, mas sim uma atividade central e iterativa." (p. 312) -->
+                    <!-- </p> -->
+                <!-- </div> -->
+
+                <!-- <div style="margin-top: 2rem;"> -->
+                    <!-- <button class="btn-engajamento" onclick="logPresencaAula('engajamento', 'revisao_concluida')"> -->
+                        <!-- Revisão Concluída -->
+                    <!-- </button> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </section> -->
+		<!-- <section class="slide" id="correcao-multipla"> -->
+            <!-- <div class="content-box" style="max-width: 95%;"> -->
+                <!-- <h2 style="color: var(--warning); font-size: 1.2rem; margin-bottom: 0;">02. Correção | Parte A</h2> -->
+                <!-- <h1 style="font-size: 2.5rem;">Desempenho: Múltipla Escolha</h1> -->
+                
+                <!-- <table style="width: 100%; border-collapse: collapse; font-size: 1rem; color: white; margin-top: 1rem; background: rgba(0,0,0,0.2);"> -->
+                    <!-- <thead> -->
+                        <!-- <tr style="background: var(--accent); color: white;"> -->
+                            <!-- <th style="padding: 10px; border: 1px solid #444;">Nº</th> -->
+                            <!-- <th style="padding: 10px; border: 1px solid #444;">Questão</th> -->
+                            <!-- <th style="padding: 10px; border: 1px solid #444;">Opção A (%)</th> -->
+                            <!-- <th style="padding: 10px; border: 1px solid #444;">Opção B (%)</th> -->
+                            <!-- <th style="padding: 10px; border: 1px solid #444;">Opção C (%)</th> -->
+                            <!-- <th style="padding: 10px; border: 1px solid #444;">Gabarito</th> -->
+                            <!-- <th style="padding: 10px; border: 1px solid #444;">Justificativa (Conceito)</th> -->
+                        <!-- </tr> -->
+                    <!-- </thead> -->
+                    <!-- <tbody> -->
+                        <!-- <tr> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444; text-align: center;">02</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444;">Metadados e Modelo Mental</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444;">Autoridade ( __% )</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444;">Genérico ( __% )</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444;">CTA ( __% )</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444; font-weight: bold; color: var(--accent);">A</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444; font-size: 0.85rem;">Alinhamento da expectativa do usuário com a autoridade pericial.</td> -->
+                        <!-- </tr> -->
+                        <!-- <tr> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444; text-align: center;">04</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444;">Mundo Real (Heurística 2)</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444;">Ícones ( __% )</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444;">Termos Técnicos ( __% )</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444;">Minimalismo ( __% )</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444; font-weight: bold; color: var(--accent);">B</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444; font-size: 0.85rem;">Uso de terminologia jurídica familiar ao público-alvo (SFH, Laudos).</td> -->
+                        <!-- </tr> -->
+                        <!-- <tr> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444; text-align: center;">06</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444;">Thumb Zone (Ergonomia)</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444;">Alcance ( __% )</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444;">Erro Motora ( __% )</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444;">Desktop só ( __% )</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444; font-weight: bold; color: var(--accent);">B</td> -->
+                            <!-- <td style="padding: 10px; border: 1px solid #444; font-size: 0.85rem;">Interfaces móveis exigem alvos de toque em zonas de conforto do polegar.</td> -->
+                        <!-- </tr> -->
+                    <!-- </tbody> -->
+                <!-- </table> -->
+            <!-- </div> -->
+        <!-- </section> -->
+
+        <!-- <section class="slide" id="correcao-descritiva"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning); font-size: 1.2rem;">02. Correção | Parte B</h2> -->
+                <!-- <h1 style="font-size: 2.5rem;">Análise Descritiva</h1> -->
+                
+                <!-- <table style="width: 100%; border-collapse: collapse; font-size: 1.1rem; color: white; margin-top: 1rem;"> -->
+                    <!-- <thead> -->
+                        <!-- <tr style="background: var(--navy); border-bottom: 2px solid var(--accent);"> -->
+                            <!-- <th style="padding: 15px; text-align: left; width: 80px;">Nº</th> -->
+                            <!-- <th style="padding: 15px; text-align: left;">Questão</th> -->
+                            <!-- <th style="padding: 15px; text-align: left;">Resposta Aceitável (Conceitos Esperados)</th> -->
+                        <!-- </tr> -->
+                    <!-- </thead> -->
+                    <!-- <tbody> -->
+                        <!-- <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"> -->
+                            <!-- <td style="padding: 15px; font-weight: bold; color: var(--accent);">03</td> -->
+                            <!-- <td style="padding: 15px;">Regra de Miller e Chunking na Index</td> -->
+                            <!-- <td style="padding: 15px;">Citação de Miller (7+-2) e como o agrupamento reduz a <strong>Carga Cognitiva</strong>.</td> -->
+                        <!-- </tr> -->
+                        <!-- <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);"> -->
+                            <!-- <td style="padding: 15px; font-weight: bold; color: var(--accent);">05</td> -->
+                            <!-- <td style="padding: 15px;">Ergonomia Física e Fadiga Visual</td> -->
+                            <!-- <td style="padding: 15px;">Discussão sobre contraste e espaçamento para proteger a <strong>Saúde Visual</strong>.</td> -->
+                        <!-- </tr> -->
+                        <!-- <tr> -->
+                            <!-- <td style="padding: 15px; font-weight: bold; color: var(--accent);">08</td> -->
+                            <!-- <td style="padding: 15px;">Affordance e Fluxo de Conversão</td> -->
+                            <!-- <td style="padding: 15px;">Identificação de elementos que "convidam" ao clique (Botões/Links claros).</td> -->
+                        <!-- </tr> -->
+                    <!-- </tbody> -->
+                <!-- </table> -->
+            <!-- </div> -->
+        <!-- </section> -->
+
+        <!-- <section class="slide" id="percepcao-leigos"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning); font-size: 1.2rem;">02. Correção | Parte C</h2> -->
+                <!-- <h1>Voz do Usuário (Questão 7)</h1> -->
+                <!-- <p style="font-size: 1.4rem;">Percepção e Insights: O conflito entre o <strong>Técnico</strong> e o <strong>Leigo</strong>.</p> -->
+                
+                <!-- <div style="margin-top: 1rem; background: white; padding: 20px; border-radius: 20px; min-height: 350px; display: flex; align-items: center; justify-content: center;"> -->
+                    <!-- <div id="wordcloud-placeholder" style="color: var(--navy); text-align: center;"> -->
+                        <!-- <img src="https://linspti.com.br/img/placeholder_nuvem.png" alt="Nuvem de Palavras" style="max-height: 300px;"> -->
+                        <!-- <p style="font-weight: bold; margin-top: 10px;">[PROJETAR NUVEM DE PALAVRAS DO MENTIMETER / FORMS AQUI]</p> -->
+                    <!-- </div> -->
+                <!-- </div> -->
+                <!-- <p style="font-size: 1.1rem; margin-top: 1rem; opacity: 0.8;">Insight: O leigo foca na <strong>Satisfação</strong>, enquanto o técnico foca na <strong>Eficácia</strong>.</p> -->
+            <!-- </div> -->
+        <!-- </section> -->
+		<!-- <section class="slide" id="parecer-tecnico"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning); font-size: 1.2rem;">02. Correção | Síntese Final</h2> -->
+                <!-- <h1>Parecer Técnico dos Alunos</h1> -->
+                <!-- <p style="font-size: 1.4rem;">Questão 10: Sugestão de mudança de <strong>maior impacto</strong> para Conversão.</p> -->
+                
+                <!-- <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 1.5rem; align-items: center;"> -->
+                    
+                    <!-- <div style="background: white; padding: 15px; border-radius: 15px; min-height: 300px; display: flex; flex-direction: column; justify-content: center;"> -->
+                        <!-- <span style="color: var(--navy); font-weight: bold; font-size: 0.9rem; margin-bottom: 10px;">NUVEM DE INSIGHTS (O QUE MUDAR?)</span> -->
+                        <!-- <div id="wordcloud-solucoes" style="text-align: center;"> -->
+                            <!-- <p style="color: #666; font-size: 1rem;">[Projete aqui a Nuvem com termos como: CTA, Contraste, Minimalismo, Hierarquia]</p> -->
+                        <!-- </div> -->
+                    <!-- </div> -->
+
+                    <!-- <div style="text-align: left;"> -->
+                        <!-- <h3 style="color: var(--accent); font-size: 1.5rem; margin-bottom: 10px;">Critérios de Sucesso:</h3> -->
+                        <!-- <ul style="font-size: 1.2rem; line-height: 1.6;"> -->
+                            <!-- <li><strong>Fundamentação:</strong> Citou Heurísticas ou Autores?</li> -->
+                            <!-- <li><strong>Viabilidade:</strong> A mudança é tecnicamente possível?</li> -->
+                            <!-- <li><strong>Foco em Conversão:</strong> Garante que o visitante vire cliente?</li> -->
+                        <!-- </ul> -->
+                        <!-- <div style="background: rgba(40, 167, 69, 0.2); padding: 15px; border-radius: 10px; margin-top: 15px;"> -->
+                            <!-- <p style="font-size: 1.1rem; margin: 0;"><strong>Destaque:</strong> Melhores pareceres serão comentados agora!</p> -->
+                        <!-- </div> -->
+                    <!-- </div> -->
+                <!-- </div> -->
+
+                <!-- <div style="margin-top: 2rem;"> -->
+                    <!-- <button class="btn-engajamento" onclick="logPresencaAula('engajamento', 'conclusao_parecer')"> -->
+                        <!-- Finalizar Correção e Iniciar UCD -->
+                    <!-- </button> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </section> -->
+		<!-- <section class="slide" id="pesquisa-ergonomia"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning); font-size: 1.2rem;">03. Verificação de Aprendizado</h2> -->
+                <!-- <h1>Você aprendeu os conceitos de ERGONOMIA?</h1> -->
+                <!-- <p style="font-size: 1.4rem; margin-bottom: 2rem;">Abaixo, registre sua percepção. O resultado aparecerá em tempo real no painel do Professor.</p> -->
+                
+                <!-- <div style="display: flex; justify-content: center; gap: 40px; margin: 2rem 0;"> -->
+                    <!-- <button class="btn-engajamento"  -->
+                            <!-- style="background: var(--accent); width: 250px; font-size: 2rem;"  -->
+                            <!-- onclick="gtag('event', 'aprendizado_ergonomia', {'resposta': 'SIM'}); alert('Resposta SIM registrada!');"> -->
+                        <!-- SIM 👍 -->
+                    <!-- </button> -->
+
+                    <!-- <button class="btn-engajamento"  -->
+                            <!-- style="background: #dc3545; width: 250px; font-size: 2rem;"  -->
+                            <!-- onclick="gtag('event', 'aprendizado_ergonomia', {'resposta': 'NAO'}); alert('Resposta NÃO registrada. Vamos revisar!');"> -->
+                        <!-- NÃO 👎 -->
+                    <!-- </button> -->
+                <!-- </div> -->
+
+                <!-- <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; border: 1px dashed var(--warning); margin-top: 1.5rem;"> -->
+                    <!-- <h3 style="color: var(--warning); margin-top: 0;">Indicador Realtime (GA4)</h3> -->
+                    <!-- <p style="font-size: 1.1rem; opacity: 0.9;"> -->
+                        <!-- Professor: Acesse <strong>Relatórios > Tempo Real</strong> no GA4 e filtre pelo evento <code>aprendizado_ergonomia</code> para mostrar a contagem de respostas à turma. -->
+                    <!-- </p> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </section> -->
+		<!-- <section class="slide" id="ucd-abertura"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning);">04. Aula Expositiva</h2> -->
+                <!-- <h1>Design Centrado no Usuário (UCD)</h1> -->
+                <!-- <p style="font-size: 1.6rem;">Projetar ecossistemas de interação que resolvam problemas humanos e gerem valor de mercado.</p> -->
+                <!-- <div style="background: rgba(40, 167, 69, 0.1); padding: 15px; border-radius: 10px; margin-top: 1rem;"> -->
+                    <!-- <p style="font-size: 1.2rem; margin: 0;">"Vocês não estão aqui apenas para desenhar telas, mas para projetar experiências."</p> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </section> -->
+
+        <!-- <section class="slide" id="teoria-benyon"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning);">Fundamentação Teórica</h2> -->
+                <!-- <h1>A Perspectiva de Benyon (2011)</h1> -->
+                <!-- <p style="text-align: left; border-left: 5px solid var(--accent); padding-left: 20px;"> -->
+                    <!-- "O design de interação trata de criar experiências que as pessoas considerem agradáveis, envolventes e úteis." -->
+                <!-- </p> -->
+                <!-- <ul style="text-align: left; font-size: 1.4rem; margin-top: 1rem;"> -->
+                    <!-- <li>Foco na <strong>experiência subjetiva</strong> do indivíduo.</li> -->
+                    <!-- <li>A interação como uma <strong>atividade situada</strong>.</li> -->
+                    <!-- <li>Hardware é o meio; a experiência é o fim.</li> -->
+                <!-- </ul> -->
+            <!-- </div> -->
+        <!-- </section> -->
+		<!-- <section class="slide" id="teoria-benyon"> -->
+			<!-- <div class="content-box"> -->
+				<!-- <h2 style="color: var(--warning);">Fundamentação Teórica</h2> -->
+				<!-- <h1>O Modelo de Benyon (2011)</h1> -->
+				
+				<!-- <div style="text-align: center; margin-top: 1.5rem;"> -->
+					<!-- <img src="aula-06-03-2026-diagrama_benyon.webp" alt="Diagrama Círculos Concêntricos de Benyon" style="max-height: 400px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);"> -->
+					<!-- <p style="font-size: 1.2rem; margin-top: 10px; color: var(--accent);">Visualização: A Experiência Humana como o Fim da Cadeia.</p> -->
+				<!-- </div> -->
+			<!-- </div> -->
+		<!-- </section> -->
+
+        <!-- <section class="slide" id="teoria-barreto-valente"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning);">Fundamentação Teórica</h2> -->
+                <!-- <h1>Barreto (2018) & Valente (2020)</h1> -->
+                <!-- <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-top: 1rem;"> -->
+                    <!-- <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;"> -->
+                        <!-- <h3 style="color: var(--accent);">Ergonomia (Barreto)</h3> -->
+                        <!-- <p>Interfaces que facilitam a comunicação e minimizam o <strong>esforço cognitivo</strong> do usuário.</p> -->
+                    <!-- </div> -->
+                    <!-- <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;"> -->
+                        <!-- <h3 style="color: var(--accent);">Engenharia (Valente)</h3> -->
+                        <!-- <p>A interface como atividade <strong>central e iterativa</strong> do desenvolvimento de software.</p> -->
+                    <!-- </div> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </section> -->
+		<!-- <section class="slide" id="ergonomia-comparativo"> -->
+			<!-- <div class="content-box"> -->
+				<!-- <h2 style="color: var(--warning);">Fundamentação Teórica | Ergonomia</h2> -->
+				<!-- <h1>Cognição vs. Fadiga (Barreto, 2018)</h1> -->
+				
+				<!-- <div style="text-align: center; margin-top: 1.5rem;"> -->
+					<!-- <img src="infografico_ergonomia.webp" alt="Comparativo Baixo Esforço vs Alta Fadiga em HCI"  -->
+						 <!-- style="max-height: 400px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);"> -->
+					<!-- <p style="font-size: 1.2rem; margin-top: 10px; color: var(--accent);">Visualização: O Impacto do Design na Saúde Visual e Cognitiva do Usuário.</p> -->
+				<!-- </div> -->
+			<!-- </div> -->
+		<!-- </section> -->
+        <!-- <section class="slide" id="ferramenta-personas"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning);">Ferramentas do UCD</h2> -->
+                <!-- <h1>Personas: O "Quem" do Projeto</h1> -->
+                <!-- <p>Arquétipos baseados em dados que humanizam o desenvolvimento.</p> -->
+                <!-- <ul style="text-align: left; display: inline-block; font-size: 1.3rem;"> -->
+                    <!-- <li>✅ <strong>Dores:</strong> O que frustra o usuário?</li> -->
+                    <!-- <li>✅ <strong>Necessidades:</strong> O que ele busca resolver?</li> -->
+                    <!-- <li>✅ <strong>Comportamento:</strong> Como ele interage digitalmente?</li> -->
+                <!-- </ul> -->
+                <!-- <p style="color: var(--accent); margin-top: 1rem;">Evita que o sistema seja projetado para o "usuário médio" inexistente.</p> -->
+            <!-- </div> -->
+        <!-- </section> -->
+		<!-- <section class="slide" id="persona-visual"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning);">04. Aula Expositiva | Ferramentas UCD</h2> -->
+                <!-- <h1>Persona Técnica: O Advogado</h1> -->
+                
+                <!-- <div style="display: flex; flex-direction: column; align-items: center; margin-top: 1rem;"> -->
+                    <!-- <div style="background: white; padding: 10px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); max-width: 850px;"> -->
+                        <!-- <img src="card_persona_advogado.webp" alt="Card Visual Persona O Advogado"  -->
+                             <!-- style="width: 100%; border-radius: 15px; display: block;"> -->
+                    <!-- </div> -->
+                    
+                    <!-- <div style="margin-top: 1rem; text-align: center; max-width: 750px;"> -->
+                        <!-- <p style="font-size: 1.1rem; border-top: 1px solid var(--accent); padding-top: 10px;"> -->
+                            <!-- <strong>IHC na Prática:</strong> Projetar para 'Roberto Almeida' evita o caos visual para o público jurídico. -->
+                        <!-- </p> -->
+                    <!-- </div> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </section> -->
+		<!-- <section class="slide" id="jornada-visual"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning);">04. Aula Expositiva | Ferramentas UCD</h2> -->
+                <!-- <h1>O Mapa da Jornada do Roberto</h1> -->
+                
+                <!-- <div style="display: flex; flex-direction: column; align-items: center; margin-top: 1rem;"> -->
+                    <!-- <div style="background: white; padding: 10px; border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.6); max-width: 850px;"> -->
+                        <!-- <img src="storymap_jornada_advogado.webp" alt="Storymap Jornada do Usuário O Advogado"  -->
+                             <!-- style="width: 100%; border-radius: 15px; display: block;"> -->
+                    <!-- </div> -->
+                    
+                    <!-- <div style="margin-top: 1rem; text-align: center; max-width: 750px;"> -->
+                        <!-- <p style="font-size: 1.1rem; border-top: 1px solid var(--accent); padding-top: 10px;"> -->
+                            <!-- <strong>IHC na Prática:</strong> Mapear dores e pontos de contato garante que o sistema converta a necessidade em venda. -->
+                        <!-- </p> -->
+                    <!-- </div> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </section> -->
+
+        <!-- <section class="slide" id="ferramenta-jornadas"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning);">Ferramentas do UCD</h2> -->
+                <!-- <h1>Jornadas: O "Como" do Fluxo</h1> -->
+                <!-- <p>Mapeamento dos pontos de contato entre o usuário e o sistema.</p> -->
+                <!-- <div style="background: var(--navy); padding: 15px; border-radius: 10px; margin: 1rem 0; border: 1px solid var(--accent);"> -->
+                    <!-- <p style="font-size: 1.4rem; font-weight: bold; margin: 0;">CONSCIÊNCIA → CONSIDERAÇÃO → DECISÃO</p> -->
+                <!-- </div> -->
+                <!-- <p style="font-size: 1.2rem;">Uma jornada mapeada otimiza o <strong>SEO</strong> e garante a <strong>RETENÇÃO</strong>.</p> -->
+            <!-- </div> -->
+        <!-- </section> -->
+
+        <!-- <section class="slide" id="usabilidade-pratica"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning);">Princípios de Usabilidade</h2> -->
+                <!-- <h1>Eficiência, Eficácia e Satisfação</h1> -->
+                <!-- <div style="text-align: left; font-size: 1.3rem;"> -->
+                    <!-- <p>📌 <strong>Eficiente:</strong> Realizar a tarefa rápido.</p> -->
+                    <!-- <p>📌 <strong>Eficaz:</strong> Sem erros no processo.</p> -->
+                    <!-- <p>📌 <strong>Satisfatório:</strong> Sentir-se bem ao usar.</p> -->
+                <!-- </div> -->
+                <!-- <p style="border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px; margin-top: 10px;"> -->
+                    <!-- <strong>Ergonomia Cognitiva:</strong> Não sobrecarregue a memória do usuário. -->
+                <!-- </p> -->
+            <!-- </div> -->
+        <!-- </section> -->
+		<!-- <section class="slide" id="visao-mercado"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning);">04. Aula Expositiva | O Gancho de Mercado</h2> -->
+                <!-- <h1>A Tríade de Sucesso: SEO, Retenção e Conversão</h1> -->
+                <!-- <p style="font-size: 1.4rem;">Como Personas e Jornadas se convertem em lucro e autoridade?</p> -->
+                
+                <!-- <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-top: 1.5rem;"> -->
+                    <!-- <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-top: 4px solid var(--accent);"> -->
+                        <!-- <h3 style="color: var(--accent); font-size: 1.1rem;">SEO</h3> -->
+                        <!-- <p style="font-size: 0.95rem;">Identificar o que o usuário busca em cada etapa da jornada para ser <strong>encontrado</strong>.</p> -->
+                    <!-- </div> -->
+                    <!-- <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-top: 4px solid var(--accent);"> -->
+                        <!-- <h3 style="color: var(--accent); font-size: 1.1rem;">RETENÇÃO</h3> -->
+                        <!-- <p style="font-size: 0.95rem;">Reduzir a carga cognitiva para que o usuário permaneça e <strong>consuma</strong> o conteúdo.</p> -->
+                    <!-- </div> -->
+                    <!-- <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-top: 4px solid var(--accent);"> -->
+                        <!-- <h3 style="color: var(--accent); font-size: 1.1rem;">CONVERSÃO</h3> -->
+                        <!-- <p style="font-size: 0.95rem;">Garantir que a jornada conduza o usuário à <strong>decisão</strong> (venda ou contratação).</p> -->
+                    <!-- </div> -->
+                <!-- </div> -->
+                <!-- <p style="margin-top: 1.5rem; font-style: italic; color: var(--warning);">"Se o conteúdo certo está no ponto de contato certo, a experiência flui para a venda."</p> -->
+            <!-- </div> -->
+        <!-- </section> -->
+		<!-- <section class="slide" id="visual-funil"> -->
+			<!-- <div class="content-box"> -->
+				<!-- <h2 style="color: var(--warning);">Tríade Estratégica | Resultados</h2> -->
+				<!-- <h1>O Funil de Conversão de IHC</h1> -->
+				
+				<!-- <div style="text-align: center; margin-top: 1rem;"> -->
+					<!-- <img src="funil_estrategico_ihc.webp" alt="Gráfico de Funil SEO Retenção Conversão"  -->
+						 <!-- style="max-height: 400px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);"> -->
+					<!-- <p style="font-size: 1.1rem; margin-top: 10px; color: var(--accent);">Visualização: Como o Design Centrado no Usuário empurra a Persona do Tráfego ao Resultado de Negócio.</p> -->
+				<!-- </div> -->
+			<!-- </div> -->
+		<!-- </section> -->
+
+        <!-- <section class="slide" id="ucd-conclusao-final"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning);">Conclusão</h2> -->
+                <!-- <h1>O Código é o Meio, a Experiência é o Fim</h1> -->
+                <!-- <p style="font-size: 1.6rem;">O mercado não aceita mais sistemas puramente funcionais; ele exige <strong>sistemas memoráveis</strong>.</p> -->
+                
+                <!-- <div style="background: rgba(40, 167, 69, 0.1); padding: 20px; border-radius: 15px; margin-top: 1rem;"> -->
+                    <!-- <p style="font-size: 1.2rem; margin: 0;"><strong>Próxima Etapa:</strong> Converter estas teorias em Protótipos de Baixa Fidelidade no Laboratório.</p> -->
+                <!-- </div> -->
+
+                <!-- <div style="margin-top: 2rem;"> -->
+                    <!-- <button class="btn-engajamento" onclick="logPresencaAula('engajamento', 'expositiva_completa')"> -->
+                        <!-- Concluir Aula Expositiva -->
+                    <!-- </button> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </section> -->
+<!-- <section class="slide" id="exercicio-explicação"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning);">05. Exercício da Semana</h2> -->
+                <!-- <h1>Auditoria de Engenharia UCD</h1> -->
+                <!-- <p style="font-size: 1.5rem; margin-bottom: 1.5rem;">Vamos validar se o design de um grande player foca realmente no usuário ou apenas na estética.</p> -->
+                
+                <!-- <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; text-align: left;"> -->
+                    <!-- <div style="background: rgba(40, 167, 69, 0.1); padding: 25px; border-radius: 15px; border-left: 5px solid var(--accent);"> -->
+                        <!-- <h3 style="color: var(--accent); margin-top: 0; font-size: 1.4rem;">Objetivo Técnico</h3> -->
+                        <!-- <p style="font-size: 1.1rem; line-height: 1.4;">Identificar como a <strong>Persona</strong> e sua <strong>Jornada</strong> ditam a eficiência do <strong>SEO</strong>, a taxa de <strong>RETENÇÃO</strong> e o sucesso da <strong>CONVERSÃO</strong>.</p> -->
+                    <!-- </div> -->
+                    <!-- <div style="background: rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 15px;"> -->
+                        <!-- <h3 style="color: var(--white); margin-top: 0; font-size: 1.4rem;">Roteiro de Análise</h3> -->
+                        <!-- <ul style="font-size: 1rem; padding-left: 20px;"> -->
+                            <!-- <li>Mapeamento de Pontos de Contato.</li> -->
+                            <!-- <li>Avaliação de Carga Cognitiva.</li> -->
+                            <!-- <li>Verificação de Heurísticas de Usabilidade.</li> -->
+                        <!-- </ul> -->
+                    <!-- </div> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </section> -->
+
+        <!-- <section class="slide" id="exercicio-acesso"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning);">Laboratório Digital</h2> -->
+                <!-- <h1>Acesse o Formulário de Auditoria</h1> -->
+                
+                <!-- <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; margin-top: 2rem;"> -->
+                    <!-- <div id="qrcode-exercicio-semana" style="background: white; padding: 15px; border-radius: 15px; border: 5px solid var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,0.5);"> -->
+                        <!-- </div> -->
+                    
+                    <!-- <div style="max-width: 450px; text-align: left;"> -->
+                        <!-- <p style="font-size: 1.3rem; margin-bottom: 1.5rem;"> -->
+                            <!-- <strong>Instruções:</strong><br> -->
+                            <!-- 1. Escaneie o QR Code ao lado;<br> -->
+                            <!-- 2. Responda às 10 questões de múltipla-escolha;<br> -->
+                            <!-- 3. Elabore o seu Parecer Técnico final. -->
+                        <!-- </p> -->
+                        <!-- <a href="https://forms.gle/SEU_LINK_UCD_AQUI" id="link-direto-forms" target="_blank" style="background: var(--accent); color: white; padding: 15px 30px; text-decoration: none; border-radius: 10px; font-weight: bold; font-size: 1.2rem; display: inline-block; transition: 0.3s;"> -->
+                            <!-- ABRIR NO NAVEGADOR -->
+                        <!-- </a> -->
+                    <!-- </div> -->
+                <!-- </div> -->
+
+                <!-- <script> -->
+                    <!-- // Configuração do Link do Exercício (Substitua pela URL real do seu Forms) -->
+                    <!-- const urlFormsUCD = "https://forms.gle/SEU_LINK_UCD_AQUI"; -->
+                    <!-- document.getElementById('link-direto-forms').href = urlFormsUCD; -->
+
+                    <!-- new QRCode(document.getElementById("qrcode-exercicio-semana"), { -->
+                        <!-- text: urlFormsUCD, -->
+                        <!-- width: 250, -->
+                        <!-- height: 250, -->
+                        <!-- colorDark : "#002147", -->
+                        <!-- colorLight : "#ffffff", -->
+                        <!-- correctLevel : QRCode.CorrectLevel.H -->
+                    <!-- }); -->
+                <!-- </script> -->
+            <!-- </div> -->
+        <!-- </section> -->
+		
+		<!-- <section class="slide" id="recapitulacao-fechamento"> -->
+            <!-- <div class="content-box"> -->
+                <!-- <h2 style="color: var(--warning);">06. Resumo e Encerramento</h2> -->
+                <!-- <h1>Recapitulação do Dia</h1> -->
+                
+                <!-- <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; text-align: left; margin-top: 1rem;"> -->
+                    <!-- <div style="background: rgba(40, 167, 69, 0.1); padding: 20px; border-radius: 15px;"> -->
+                        <!-- <h3 style="color: var(--accent); margin-top: 0;">Conceitos Chave</h3> -->
+                        <!-- <ul style="font-size: 1.1rem; line-height: 1.4;"> -->
+                            <!-- <li><strong>UCD:</strong> Ciência e engenharia focadas no humano.</li> -->
+                            <!-- <li><strong>Personas:</strong> Arquétipos que guiam o desenvolvimento.</li> -->
+                            <!-- <li><strong>Jornadas:</strong> O mapa estratégico da <strong>Conversão</strong>.</li> -->
+                            <!-- <li><strong>Tríade:</strong> Como o Design dita o <strong>SEO</strong> e a <strong>Retenção</strong>.</li> -->
+                        <!-- </ul> -->
+                    <!-- </div> -->
+
+                    <!-- <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 15px; border: 1px dashed var(--warning);"> -->
+                        <!-- <h3 style="color: var(--warning); margin-top: 0;">Material de Estudo</h3> -->
+                        <!-- <p style="font-size: 1rem; margin-bottom: 1.5rem;">Descarregue o PDF completo com a fundamentação de Benyon, Barreto e Valente.</p> -->
+                        
+                        <!-- <a href="design-centrado-no-usuario-UCD-persona-jornada.pdf" download  -->
+                           <!-- class="btn-engajamento"  -->
+                           <!-- style="background: var(--accent); text-decoration: none; display: inline-block; font-size: 1rem; width: auto; padding: 10px 20px;" -->
+                           <!-- onclick="gtag('event', 'download_material', {'file_name': 'UCD_Persona_Jornada'});"> -->
+                           <!-- 📥 Baixar PDF da Aula -->
+                        <!-- </a> -->
+
+                        <!-- <p style="font-size: 0.9rem; margin-top: 1.5rem; opacity: 0.8;">📅 <strong>Aviso:</strong> Prazo do Forms até 12/03.</p> -->
+                    <!-- </div> -->
+                <!-- </div> -->
+
+                <!-- <div style="margin-top: 1.5rem;"> -->
+                    <!-- <h1 style="color: var(--accent); font-size: 3.5rem; margin-bottom: 0;">OBRIGADO!</h1> -->
+                    <!-- <p style="font-size: 1.4rem; opacity: 0.8;">Excelente trabalho, peritos. Vemo-nos no laboratório!</p> -->
+                <!-- </div> -->
+            <!-- </div> -->
+        <!-- </section> -->
+    <!-- </div> -->
+
+    <!-- <footer> -->
+        <!-- Prof. Dr. Lincoln Sposito | Todos os direitos reservados &copy; 2026 -->
+    <!-- </footer> -->
+
+    <!-- <script> -->
+        <!-- let currentSlide = 0; -->
+        <!-- const slides = document.querySelectorAll('.slide'); -->
+        <!-- const deck = document.getElementById('deck'); -->
+
+        <!-- function updateSlide() { -->
+            <!-- const offset = currentSlide * -100; -->
+            <!-- deck.style.transform = `translateY(${offset}vh)`; -->
+        <!-- } -->
+
+        <!-- document.addEventListener('keydown', (e) => { -->
+            <!-- if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { -->
+                <!-- if (currentSlide < slides.length - 1) { currentSlide++; updateSlide(); } -->
+            <!-- } -->
+            <!-- if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { -->
+                <!-- if (currentSlide > 0) { currentSlide--; updateSlide(); } -->
+            <!-- } -->
+        <!-- }); -->
+    <!-- </script> -->
+	<!-- <script> -->
+		<!-- const observerOptions = { -->
+			<!-- threshold: 0.5 // Ativa quando 50% do slide estiver visível -->
+		<!-- }; -->
+
+		<!-- const observer = new IntersectionObserver((entries) => { -->
+			<!-- entries.forEach(entry => { -->
+				<!-- if (entry.isIntersecting) { -->
+					<!-- entry.target.classList.add('active'); // Ativa o efeito de flutuar -->
+				<!-- } else { -->
+					<!-- // Opcional: remover a classe para repetir o efeito ao voltar -->
+					<!-- // entry.target.classList.remove('active');  -->
+				<!-- } -->
+			<!-- }); -->
+		<!-- }, observerOptions); -->
+
+		<!-- // Aplica o observador em todos os slides -->
+		<!-- document.querySelectorAll('.slide').forEach(slide => { -->
+			<!-- observer.observe(slide); -->
+		<!-- }); -->
+	<!-- </script> -->
+<!-- </body> -->
+<!-- </html> -->
 <!-- <!DOCTYPE html> -->
 <!-- <html lang="pt-br"> -->
 <!-- <head> -->
