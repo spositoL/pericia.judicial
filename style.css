@@ -1143,7 +1143,8 @@ iframe#chatbase-bubble-window {
 }
 
 .tab-content.active {
-    display: block; /* Mostra apenas a aba ativa */
+    display: block !important; /* Mostra apenas a aba ativa */
+	/* display: flex; /* Ou block, mostra apenas a que tiver a classe active */ */
 }
 
 @keyframes fadeIn {
