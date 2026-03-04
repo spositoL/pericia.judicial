@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula: HTML5 & Semântica | Dr. Lincoln Sposito</title>
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>    
+    <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-5F1FGJ25TK');
+
+          function logInteracao(nomeEvento, status, origem, aulaId) {
+                gtag('event', nomeEvento, {
+                    'disciplina': 'Web_Mobile_Jogos',
+                    'status_presenca': status,
+                    'origem': origem,
+                    'aula_referencia': aulaId || 'aula-04-03-2026'
+                });
+          }
+		  
+		  window.onload = function() {
+			  const urlParams = new URLSearchParams(window.location.search);
+			  // Se vier pelo QR Code de atraso, loga automaticamente
+			  if (urlParams.get('ref') === 'atrasado') {
+				  logInteracao('presenca_aula', 'atrasado', 'qrcode_atraso');
+			  }
+			  
+			  const urlAtraso = window.location.origin + window.location.pathname + "?ref=atrasado";
+			  new QRCode(document.getElementById("qrcode-persistente"), {
+				  text: urlAtraso, width: 70, height: 70, colorDark : "#002147", colorLight : "#ffffff"
+			  });
+		  };
+    </script>
+
+    <style>
+        :root { --navy: #002147; --white: #ffffff; --accent: #28a745; --warning: #ffc107; --dark-bg: #001530; }
+        body, html { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--navy); color: var(--white); scroll-behavior: smooth; overflow-x: hidden; }
+        
+        header { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(135deg, var(--navy) 0%, var(--dark-bg) 100%); text-align: center; padding: 20px; }
+        .slide { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 60px 20px; box-sizing: border-box; border-bottom: 1px solid rgba(255,255,255,0.1); opacity: 0.1; transform: translateY(50px); transition: all 0.8s ease; }
+        .slide.active { opacity: 1; transform: translateY(0); }
+        
+        .container { max-width: 900px; width: 100%; }
+        h1 { font-size: 3rem; color: var(--accent); margin-bottom: 10px; }
+        h2 { font-size: 2.2rem; color: var(--warning); border-left: 5px solid var(--accent); padding-left: 15px; margin-bottom: 30px; }
+        p, li { font-size: 1.2rem; line-height: 1.6; color: #e0e0e0; }
+        .code-block { background: #000; padding: 20px; border-radius: 10px; font-family: 'Courier New', Courier, monospace; overflow-x: auto; width: 100%; border: 1px solid var(--accent); color: #00ff00; text-align: left; }
+        
+        .btn-nav { position: fixed; bottom: 20px; right: 20px; background: var(--accent); color: white; border: none; padding: 15px; border-radius: 50%; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 100; }
+        footer { padding: 40px; text-align: center; background: var(--dark-bg); font-weight: bold; }
+        .quote { font-style: italic; border-left: 4px solid var(--warning); padding: 20px; background: rgba(255,193,7,0.05); margin: 20px 0; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div style="font-size: 80px;">🌐</div>
+        <h1>HTML5 & Semântica Web</h1>
+        <p>Aula 03 | Prof. Dr. Lincoln Sposito</p>
+        <div id="qrcode" style="background: white; padding: 10px; border-radius: 10px; margin-top: 20px;"></div>
+        <p style="font-size: 0.9rem; margin-top: 10px;">Aponte para registrar presença e acessar o material</p>
+    </header>
+
+    <main class="container">
+        <section class="slide" id="intro">
+            <div class="container">
+                <h2>O Esqueleto do Mundo Digital</h2>
+                <p>O HTML não é uma linguagem de programação, mas de <strong>marcação</strong>. Ele define a intenção e a hierarquia do conteúdo.</p>
+                <div class="quote">
+                    "O HTML5 funciona como a fundação de qualquer projeto web, estabelecendo a hierarquia que será interpretada pelos navegadores." — <strong>Alves (2019)</strong>
+                </div>
+            </div>
+        </section>
+        <section class="slide" id="semantica">
+            <div class="container">
+                <h2>Por que Semântica?</h2>
+                <ul>
+                    <li><strong>Acessibilidade:</strong> Permite que leitores de tela entendam a página.</li>
+                    <li><strong>SEO:</strong> Motores de busca (Google) indexam melhor seu conteúdo.</li>
+                    <li><strong>Manutenção:</strong> Código limpo e legível para o desenvolvedor.</li>
+                </ul>
+                <div class="code-block">
+					&lt;!-- Estrutura Semântica --&gt;<br>
+					&lt;header&gt;Cabeçalho&lt;/header&gt;<br>
+					&lt;main&gt;Conteúdo Principal&lt;/main&gt;<br>
+					&lt;footer&gt;Rodapé&lt;/footer&gt;
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="tags">
+            <div class="container">
+                <h2>Glossário Técnico</h2>
+                <p><strong>&lt;article&gt;:</strong> Conteúdo independente (ex: post de blog).</p>
+                <p><strong>&lt;section&gt;:</strong> Agrupamento temático de conteúdo.</p>
+                <p><strong>&lt;aside&gt;:</strong> Conteúdo relacionado lateralmente (sidebars).</p>
+                <p><strong>&lt;nav&gt;:</strong> Conjunto de links de navegação.</p>
+                <div class="quote">
+                    "A semântica do HTML é o alicerce para um design de navegação que reduza a carga cognitiva do usuário." — <strong>Kalbach (2009)</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="ihc">
+            <div class="container">
+                <h2>IHC e Mobile First</h2>
+                <p>A Interação Humano-Computador ganha vida nos formulários. Tipos de input específicos melhoram a usabilidade no mobile:</p>
+                <div class="code-block">
+&lt;input type="email"&gt; &lt;!-- Abre teclado com @ --&gt;<br>
+&lt;input type="tel"&gt;   &lt;!-- Abre teclado numérico --&gt;<br>
+&lt;label&gt;Nome:&lt;/label&gt; &lt;!-- Aumenta área de clique --&gt;
+                </div>
+                <p>Segundo <strong>Mota et al. (2023)</strong>, a acessibilidade tecnológica é uma obrigação no design de interfaces modernas.</p>
+            </div>
+        </section>
+
+        <section class="slide" id="desafio">
+            <div class="container">
+                <h2>Desafio Prático</h2>
+                <p>Analise o portal da nossa disciplina:</p>
+                <ol>
+                    <li>Identifique o <code>&lt;header&gt;</code>.</li>
+                    <li>Onde está o <code>&lt;main&gt;</code>?</li>
+                    <li>A tabela de aulas é a melhor escolha semântica?</li>
+                </ol>
+                <p>Rascunhe a árvore de elementos (DOM) da página.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        Prof. Dr. Lincoln Sposito | &copy; 2026 | Usabilidade, Web & Mobile
+    </footer>
+
+    <script>
+        // QR Code da Aula
+        new QRCode(document.getElementById("qrcode"), {
+            text: window.location.href + "?ref=sala",
+            width: 150, height: 150,
+            colorDark : "#002147", colorLight : "#ffffff"
+        });
+
+        // Efeito de Ativação dos Slides (Scroll Observer)
+        const observerOptions = { threshold: 0.3 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    logInteracao('visualizacao_slide', 'ativo', entry.target.id);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.slide').forEach(slide => observer.observe(slide));
+    </script>
+</body>
+</html>
