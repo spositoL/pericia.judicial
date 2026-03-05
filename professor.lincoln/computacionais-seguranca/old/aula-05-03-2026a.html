@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula: Processadores e Memória | Dr. Lincoln Sposito</title>
+	
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>    
+	<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		  gtag('config', 'G-5F1FGJ25TK');
+
+		  function logInteracao(nomeEvento, status, origem, aulaId, disciplinaId) {
+			  gtag('event', nomeEvento, {
+				  'disciplina': disciplinaId || 'Sistemas_Computacionais_Seguranca',
+				  'status_presenca': status,
+				  'origem': origem,
+				  'aula_referencia': aulaId || '2026-03-05'
+			  });
+		  }
+
+		  window.onload = function() {
+			  const urlParams = new URLSearchParams(window.location.search);
+			  if (urlParams.get('ref') === 'atrasado') {
+				  logInteracao('presenca_aula', 'atrasado', 'qrcode_atraso');
+			  }
+			  
+			  const urlAtraso = window.location.origin + window.location.pathname + "?ref=atrasado";
+			  new QRCode(document.getElementById("qrcode-persistente"), {
+				  text: urlAtraso, width: 70, height: 70, colorDark : "#002147", colorLight : "#ffffff"
+			  });
+		  };
+	</script>	
+    <style>
+        :root { 
+            --navy: #002147; --white: #ffffff; --accent: #28a745; --warning: #ffc107;
+            --font-titulo: 3.2rem; --font-corpo: 1.8rem;
+        }
+        * { box-sizing: border-box; }
+        html, body { 
+            margin: 0; padding: 0; width: 100%; min-height: 100%;
+            overflow-x: hidden; overflow-y: auto;
+            font-family: 'Segoe UI', sans-serif; background: var(--navy); color: var(--white);
+            scroll-snap-type: y proximity;
+        }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            background: rgba(0, 33, 71, 0.9); display: flex; align-items: center; padding: 0 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 1000;
+        }
+        footer {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 50px;
+            background: rgba(0, 33, 71, 0.9); display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; opacity: 0.7; z-index: 1000; border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        #floating-atraso {
+            position: fixed; top: 100px; right: 20px; z-index: 999;
+            background: white; padding: 6px; border-radius: 8px; border: 2px solid var(--warning); text-align: center;
+        }
+        #floating-atraso span { display: block; color: var(--navy); font-size: 9px; font-weight: bold; }
+        .slide { 
+            min-height: 100vh; width: 100%; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; padding: 100px 5% 70px 5%; 
+            text-align: center; scroll-snap-align: start; position: relative;
+        }
+        h1 { color: var(--accent); font-size: var(--font-titulo); text-transform: uppercase; margin-bottom: 1.5rem; }
+        p { font-size: var(--font-corpo); line-height: 1.5; max-width: 1100px; }
+        .content-box { 
+            background: rgba(255,255,255,0.05); padding: 2.5rem; 
+            border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 100%;
+        }
+        .slide > * { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.22, 1, 0.36, 1); }
+        .slide.active > * { opacity: 1; transform: translateY(0); }
+        .btn-engajamento {
+            background: var(--accent); color: white; border: none; padding: 15px 30px;
+            border-radius: 10px; font-size: 1.2rem; cursor: pointer; transition: 0.3s;
+        }
+        .btn-engajamento:hover { transform: scale(1.05); filter: brightness(1.1); }
+		.btn-voltar {
+			margin-left: auto; color: var(--white); text-decoration: none; font-size: 1rem;
+			font-weight: bold; padding: 8px 15px; border: 1px solid rgba(255,255,255,0.3);
+			border-radius: 8px; transition: 0.3s; background: rgba(255,255,255,0.05);
+		}
+        .highlight { color: var(--warning); font-weight: bold; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 15px; border: 1px solid rgba(255,255,255,0.1); text-align: left; }
+        th { background: var(--accent); color: white; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div style="font-size: 30px;">🛡️💻</div>
+		<a href="index.html" class="btn-voltar" onclick="logInteracao('navegacao', 'retorno_portal', 'header')">← Portal da Disciplina</a>
+		<a href="../../index.html" class="btn-voltar">Atuação Profissional</a>
+    </header>
+    
+    <div class="container-slides">
+        <section class="slide" id="boas-vindas">
+            <div class="content-box">
+                <p style="color: var(--warning); font-weight: bold;">Sistemas computacionais e segurança</p>
+                <h1>Processadores e Hierarquia de Memória</h1>
+                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); width: 50%; margin: 2rem auto;">
+                <h2 style="color: var(--white);">Prof. Dr. Lincoln Sposito</h2>
+                <p style="font-size: 1.4rem; opacity: 0.8;">Data: 05 de Março de 2026</p>
+                <div style="margin-top: 2rem;">
+                    <button class="btn-engajamento" onclick="logInteracao('engajamento', 'inicio_aula', 'botao_start')">Iniciar Experiência de Aula</button>
+                </div>
+            </div>
+        </section>
+        <section class="slide" id="agenda">
+            <div class="content-box">
+                <h2 style="color: var(--warning); letter-spacing: 2px;">ROTEIRO TÉCNICO</h2>
+                <h1>Agenda da Aula (150 min)</h1>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-top: 1rem;">
+                    <ul style="list-style: none; padding: 0;">
+                        <li><span class="highlight">01.</span> Ritual de Entrada e Contexto Profissional</li>
+                        <li><span class="highlight">02.</span> Anatomia da CPU: O Maestro</li>
+                        <li><span class="highlight">03.</span> Ciclo de Instrução (Fetch-Decode-Execute)</li>
+                        <li><span class="highlight">04.</span> A Crise de Latência (Gargalo)</li>
+                    </ul>
+                    <ul style="list-style: none; padding: 0;">
+                        <li><span class="highlight">05.</span> Intervalo (20 minutos) ☕</li>
+                        <li><span class="highlight">06.</span> Pirâmide da Hierarquia de Memória</li>
+                        <li><span class="highlight">07.</span> Atividade: Auditoria de Hardware</li>
+                        <li><span class="highlight">08.</span> Fechamento e Pesquisa de Aprendizado</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="contexto">
+            <div class="content-box">
+                <h1>Por que entender isso?</h1>
+                <p style="text-align: left; border-left: 5px solid var(--accent); padding-left: 20px;">
+                    Como <span class="highlight">Analista de Sistemas</span>, você precisa identificar se a lentidão de um software é falta de CPU ou RAM. Como <span class="highlight">Perito</span>, a memória RAM é onde residem as chaves criptográficas de uma investigação viva.
+                </p>
+                <p style="margin-top: 20px; font-style: italic; font-size: 1.2rem;">"O hardware é o corpo; o software é a mente; a segurança é a blindagem."</p>
+            </div>
+        </section>
+
+        <section class="slide" id="cpu-maestro">
+            <div class="content-box">
+                <h2 style="color: var(--warning);">SEÇÃO 01</h2>
+                <h1>O Processador (CPU): O Maestro</h1>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 2rem;">
+                    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+                        <h3 style="color: var(--accent);">UC</h3>
+                        <p style="font-size: 1rem;">Unidade de Controle: Gerencia o tráfego e interpreta instruções.</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+                        <h3 style="color: var(--accent);">ULA</h3>
+                        <p style="font-size: 1rem;">Unidade Lógica e Aritmética: Onde os cálculos ocorrem.</p>
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+                        <h3 style="color: var(--accent);">Registradores</h3>
+                        <p style="font-size: 1rem;">Memórias ultrarrápidas dentro do núcleo.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="ciclo">
+            <div class="content-box">
+                <h2 style="color: var(--warning);">SEÇÃO 02</h2>
+                <h1>Ciclo de Instrução</h1>
+                <p>O processo repetido bilhões de vezes por segundo:</p>
+                <div style="background: #000; padding: 30px; border-radius: 15px; border: 1px solid var(--accent); color: #00ff00; font-family: monospace; text-align: left; display: inline-block;">
+                    1. FETCH (Busca na RAM)<br>
+                    2. DECODE (Traduz a UC)<br>
+                    3. EXECUTE (ULA processa)<br>
+                    4. STORE (Guarda o resultado)
+                </div>
+                <p style="font-size: 1.2rem; margin-top: 20px;">Clock: O pulso que sincroniza essa dança (medido em GHz).</p>
+            </div>
+        </section>
+
+        <section class="slide" id="intervalo">
+            <div class="content-box">
+                <h2 style="color: var(--warning);">PAUSA PARA NETWORKING</h2>
+                <h1>Intervalo (20 min)</h1>
+                <div style="margin: 40px auto; background: rgba(0,0,0,0.2); padding: 20px; border-radius: 20px; display: inline-block;">
+                    <div id="timer-display" style="font-size: 6rem; font-weight: bold; color: var(--accent); font-family: monospace;">20:00</div>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <button class="btn-engajamento" onclick="startTimer(1200); logInteracao('intervalo', 'inicio', 'bt_timer')">Iniciar Contador</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="hierarquia">
+            <div class="content-box">
+                <h2 style="color: var(--warning);">SEÇÃO 04</h2>
+                <h1>A Pirâmide da Hierarquia</h1>
+                
+                <table>
+                    <thead>
+                        <tr><th>Tipo</th><th>Velocidade</th><th>Localização</th><th>Volátil?</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Registradores</td><td>Imediata</td><td>Dentro da CPU</td><td>Sim</td></tr>
+                        <tr><td>Caches (L1/L2/L3)</td><td>Altíssima</td><td>No Processador</td><td>Sim</td></tr>
+                        <tr><td>Memória RAM</td><td>Média</td><td>Placa-mãe</td><td>Sim</td></tr>
+                        <tr><td>SSD / HD</td><td>Baixa</td><td>Barramento SATA/NVMe</td><td>Não</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="slide" id="atividade">
+            <div class="content-box">
+                <h2 style="color: var(--warning);">DESAFIO EM TEMPO REAL</h2>
+                <h1>Auditoria de Hardware</h1>
+                <p style="font-size: 1.2rem; text-align: left;">
+                    Abra o <span class="highlight">Gerenciador de Tarefas</span> (Ctrl+Shift+Esc) > Guia <span class="highlight">Desempenho</span> > <span class="highlight">CPU</span>.<br><br>
+                    Identifique e anote para debate:<br>
+                    1. Quantidade de Núcleos (Cores) e Processadores Lógicos.<br>
+                    2. Tamanho das Caches L1, L2 e L3.<br>
+                    3. Velocidade de Base vs. Velocidade Atual.
+                </p>
+                <button class="btn-engajamento" style="margin-top: 20px;" onclick="logInteracao('atividade', 'concluida', 'bt_atividade')">Missão Cumprida!</button>
+            </div>
+        </section>
+
+        <section class="slide" id="pesquisa">
+            <div class="content-box">
+                <h1>Verificação de Aprendizado</h1>
+                <p>Você compreende a diferença entre a função da Cache e da RAM?</p>
+                <div style="display: flex; justify-content: center; gap: 30px; margin-top: 2rem;">
+                    <button class="btn-engajamento" style="width: 200px;" onclick="gtag('event', 'aprendizado', {'status': 'sim'}); alert('Excelente!')">SIM 👍</button>
+                    <button class="btn-engajamento" style="width: 200px; background: #dc3545;" onclick="gtag('event', 'aprendizado', {'status': 'nao'}); alert('Revisaremos amanhã!')">NÃO 👎</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="slide" id="feedback">
+            <div class="content-box">
+                <h1>Avalie a Aula</h1>
+                <div style="display: flex; justify-content: center; gap: 40px; font-size: 4rem; cursor: pointer;">
+                    <span onclick="gtag('event', 'feedback', {'val': 3}); alert('Obrigado!')">😍</span>
+                    <span onclick="gtag('event', 'feedback', {'val': 2}); alert('Valeu!')">🙂</span>
+                    <span onclick="gtag('event', 'feedback', {'val': 1}); alert('Anotado!')">😐</span>
+                </div>
+                <p style="margin-top: 3rem; font-size: 1rem; opacity: 0.6;">Próxima Aula: Prática de Diagnóstico e Perícia em Memória (06/03)</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>Prof. Dr. Lincoln Sposito | &copy; 2026 - Sistemas Computacionais</footer>
+
+    <script>
+        // Timer Logic
+        let countdown;
+        function startTimer(seconds) {
+            clearInterval(countdown);
+            const now = Date.now();
+            const then = now + seconds * 1000;
+            const display = document.getElementById('timer-display');
+            countdown = setInterval(() => {
+                const secondsLeft = Math.round((then - Date.now()) / 1000);
+                if (secondsLeft < 0) { clearInterval(countdown); return; }
+                const minutes = Math.floor(secondsLeft / 60);
+                const remainderSeconds = secondsLeft % 60;
+                display.innerText = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
+            }, 1000);
+        }
+
+        // Observer for scroll animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.slide').forEach(slide => observer.observe(slide));
+    </script>
+</body>
+</html>

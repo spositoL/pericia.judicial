@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas Computacionais e Segurança - Portal | Dr. Lincoln Sposito</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5F1FGJ25TK');
+
+      function logAcesso(status, ref, aula) {
+		gtag('event', 'presenca_aula', {
+			'disciplina': 'Sistemas_Computacionais_Seguranca', 
+			'status_presenca': status,
+			'origem': ref,
+			'aula_referencia': aula 
+		});
+	  }
+    </script>
+
+    <style>
+        :root { --navy: #002147; --white: #ffffff; --accent: #28a745; --warning: #ffc107; --card-bg: #003366; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--navy); color: var(--white); margin: 0; text-align: center; }
+        .container { max-width: 950px; margin: 0 auto; padding: 20px; }
+        #portal-entrada { background: white; padding: 30px; border-radius: 20px; display: none; margin: 20px auto; color: var(--navy); max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #qrcode { display: flex; justify-content: center; margin: 20px 0; }
+        #aula-em-curso { display: none; background: var(--card-bg); padding: 20px; border-radius: 15px; border: 2px dashed var(--warning); margin: 20px 0; }
+        .tabela-aulas { width: 100%; border-collapse: collapse; margin-top: 30px; background: var(--card-bg); border-radius: 10px; overflow: hidden; font-size: 0.9rem; }
+        .tabela-aulas th, .tabela-aulas td { padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; }
+        .tabela-aulas th { background: rgba(0,0,0,0.3); color: var(--accent); text-transform: uppercase; letter-spacing: 1px; }
+        .btn-link { background: none; color: var(--white); text-decoration: none; font-weight: bold; border: 1px solid var(--accent); padding: 8px 15px; border-radius: 5px; display: inline-block; cursor: pointer; transition: 0.3s; }
+        .btn-link:hover { background: var(--accent); }
+        .atrasado-lock { opacity: 0.5; cursor: not-allowed; font-style: italic; }
+		
+		.btn-voltar {
+			display: inline-block;
+			margin: 10px;
+			color: var(--white);
+			text-decoration: none;
+			font-size: 0.9rem;
+			font-weight: bold;
+			padding: 8px 15px;
+			border: 1px solid rgba(255,255,255,0.3);
+			border-radius: 8px;
+			transition: 0.3s;
+			background: rgba(255,255,255,0.05);
+		}
+
+		.btn-voltar:hover {
+			background: var(--accent);
+			border-color: var(--accent);
+		}
+
+		.btn-perito {
+			display: inline-block;
+			background-color: var(--accent);
+			color: var(--white);
+			text-decoration: none;
+			padding: 15px 30px;
+			border-radius: 8px;
+			font-weight: bold;
+			font-size: 1.1rem;
+			transition: all 0.3s ease;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+		}
+
+		.btn-perito:hover {
+			background-color: #218838;
+			transform: translateY(-3px);
+			box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+		}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+		<div style="font-size: 50px; margin-top: 20px;"><img src="../img/grafico.svg" alt="Logo" style="height: 60px; margin-top: 20px;">🛡️</div>
+		<h1>Sistemas computacionais e segurança</h1>
+		<p>Portal da Disciplina | Prof. Dr. Lincoln Sposito</p>
+		<a href="../index.html" class="btn-voltar">← Voltar ao Portal de Disciplinas</a>
+		<a href="../../index.html" class="btn-voltar">Atuação Profissional / Perícias</a><br>
+	</header>
+
+    <div id="portal-entrada">
+        <h2 style="margin-top:0">RITUAL DE ENTRADA</h2>
+        <div id="qrcode"></div> 
+        <p><strong>Aponte para confirmar presença pontual </strong></p>
+    </div>
+
+    <div id="aula-em-curso">
+        <h3>⚠️ Aula em Curso</h3>
+        <!-- <p>O acesso direto foi encerrado. Se chegou agora, utilize o QR Code projetado em sala para registrar o seu atraso e liberar o material.</p> -->
+    </div>
+
+    <table class="tabela-aulas" id="tabelaAulas">
+        <thead>
+            <tr>
+                <th>Data</th>
+				<th>Hora Início</th>
+                <th>Conteúdo (Teoria)</th>
+                <th>Acesso</th>
+            </tr>
+        </thead>
+        <tbody>
+			<tr data-date="2026-02-12" data-start="19:00" data-url="aula-12-02-2026.html">
+				<td>12/02/2026</td>
+				<td>19:00</td>
+				<td>Intro: História, Evolução e Tendências</td>
+				<td class="col-link"></td>
+			</tr>
+			<tr data-date="2026-02-19" data-start="19:00" data-url="aula-19-02-2026.html">
+				<td>19/02/2026</td>
+				<td>19:00</td>
+				<td>Bases Numéricas: Binário, Octal e Hexa</td>
+				<td class="col-link"></td>
+			</tr>
+			<tr data-date="2026-02-26" data-start="19:00" data-url="aula-26-02-2026.html">
+				<td>26/02/2026</td>
+				<td>19:00</td>
+				<td>Lógica de Boole e Portas Lógicas</td>
+				<td class="col-link"></td>
+			</tr>
+			<tr data-date="2026-03-05" data-start="19:00" data-url="aula-05-03-2026.html">
+				<td>05/03/2026</td>
+				<td>19:00</td>
+				<td>Unidade de Processamento e Memória</td>
+				<td class="col-link"></td>
+			</tr>
+			<tr data-date="2026-03-12" data-start="19:00" data-url="aula-12-03-2026.html">
+				<td>12/03/2026</td>
+				<td>19:00</td>
+				<td>Hierarquia de Memória e Caches</td>
+				<td class="col-link"></td>
+			</tr>
+			<tr data-date="2026-03-26" data-start="19:00" data-url="aula-26-03-2026.html">
+				<td>26/03/2026</td>
+				<td>19:00</td>
+				<td>Arquitetura de Barramentos e I/O</td>
+				<td class="col-link"></td>
+			</tr>
+			<tr data-date="2026-04-16" data-start="19:00" data-url="aula-16-04-2026.html">
+				<td>16/04/2026</td>
+				<td>19:00</td>
+				<td>Sistemas Operacionais e Virtualização</td>
+				<td class="col-link"></td>
+			</tr>
+			<tr data-date="2026-04-30" data-start="19:00" data-url="aula-30-04-2026.html">
+				<td>30/04/2026</td>
+				<td>19:00</td>
+				<td>Escalonamento de Processos e Threads</td>
+				<td class="col-link"></td>
+			</tr>
+			<tr data-date="2026-05-14" data-start="19:00" data-url="aula-14-05-2026.html">
+				<td>14/05/2026</td>
+				<td>19:00</td>
+				<td>Internet das Coisas (IoT) em Redes</td>
+				<td class="col-link"></td>
+			</tr>
+			<tr data-date="2026-05-21" data-start="19:00" data-url="aula-21-05-2026.html">
+				<td>21/05/2026</td>
+				<td>19:00</td>
+				<td>Ameaças: Engenharia Social e Malware</td>
+				<td class="col-link"></td>
+			</tr>
+			<tr data-date="2026-06-04" data-start="19:00" data-url="aula-04-06-2026.html">
+				<td>04/06/2026</td>
+				<td>19:00</td>
+				<td>Criptografia e Proteção de Dados</td>
+				<td class="col-link"></td>
+			</tr>
+			<tr data-date="2026-06-11" data-start="19:00" data-url="aula-11-06-2026.html">
+				<td>11/06/2026</td>
+				<td>19:00</td>
+				<td>Normas e Políticas de Segurança</td>
+				<td class="col-link"></td>
+			</tr>
+			<tr data-date="2026-06-18" data-start="19:00" data-url="aula-18-06-2026.html">
+				<td>18/06/2026</td>
+				<td>19:00</td>
+				<td>Case: Computação Quântica vs Tradicional</td>
+				<td class="col-link"></td>
+			</tr>
+		</tbody>
+    </table>
+</div>
+
+<section style="margin: 40px auto; max-width: 950px; padding: 0 20px; text-align: center;">
+    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px;">
+    
+    <div class="card-perito" style="background: rgba(255,255,255,0.05); border: 1px solid var(--accent); border-radius: 15px; padding: 30px;">
+        <h2 style="color: var(--warning); margin-top: 0;">Além da Sala de Aula</h2>
+        <p style="margin-bottom: 25px;">Conheça minha atuação profissional em perícias judiciais e consultoria especializada.</p>
+        <a href="../../index.html" class="btn-perito">Conheça meu trabalho como perito</a>
+    </div>
+</section>
+
+<script>
+    async function navegarParaAula(url, status, ref) {
+        // Dispara o log para o Google Analytics antes da verificação
+		if (typeof logAcesso === "function") {
+            logAcesso(status, ref, url);
+        }
+		
+		try {
+            const response = await fetch(url, { method: 'HEAD' });
+            if (response.ok) {
+				logAcesso(status, ref, url);
+                window.location.href = url + "?ref=" + ref;
+            } else {
+                alert("O material desta aula está sendo finalizado. Estará disponível no horário da aula! 😊");
+            }
+        } catch (error) {
+            alert("Erro de conexão. Tente novamente mais tarde.");
+        }
+    }
+</script>
+<script>
+    function gerirFluxo() {
+        const agora = new Date();
+        const offset = agora.getTimezoneOffset();
+        const hojeLocal = new Date(agora.getTime() - (offset*60*1000)).toISOString().split('T')[0];
+        
+        const tempoAtualMin = (agora.getHours() * 60) + agora.getMinutes();
+
+        const rows = document.querySelectorAll('#tabelaAulas tbody tr');
+
+        rows.forEach(row => {
+            const dataAula = row.getAttribute('data-date');
+            const horaInicioRaw = row.getAttribute('data-start');
+            const urlAula = row.getAttribute('data-url');
+            const linkCell = row.querySelector('.col-link');
+
+            if (dataAula === hojeLocal && horaInicioRaw) {
+                const [h, m] = horaInicioRaw.split(':').map(Number);
+                const tempoInicioMin = (h * 60) + m;
+                const limitePontual = tempoInicioMin + 17;
+
+                if (tempoAtualMin >= tempoInicioMin && tempoAtualMin <= limitePontual) {
+                    const urlFinal = window.location.origin + window.location.pathname.replace('index.html', '') + urlAula + "?ref=index";
+                    document.getElementById('portal-entrada').style.display = 'block';
+                    document.getElementById("qrcode").innerHTML = "";
+                    new QRCode(document.getElementById("qrcode"), {
+                        text: urlFinal, width: 200, height: 200,
+                        colorDark : "#002147", colorLight : "#ffffff"
+                    });
+					if(linkCell) {
+						linkCell.innerHTML = `<button class="btn-link" onclick="navegarParaAula('${urlAula}', 'pontual', 'index')">Acessar Agora</button>`;
+					}
+                } 
+                else if (tempoAtualMin > limitePontual && tempoAtualMin <= (tempoInicioMin + 180)) {
+                    document.getElementById('aula-em-curso').style.display = 'block';
+                    if(linkCell) linkCell.innerHTML = `<span class="atrasado-lock">Acesso via Sala</span>`;
+                }
+			    else if (linkCell) {
+				    linkCell.innerHTML = `<button class="btn-link" onclick="navegarParaAula('${urlAula}', 'engajamento', 'estudo')">Revisar Material</button>`;
+			    }
+            } 
+			else if (linkCell) {
+				linkCell.innerHTML = `<button class="btn-link" onclick="navegarParaAula('${urlAula}', 'engajamento', 'estudo')">Revisar Material</button>`;
+			}
+        });
+    }
+
+    window.onload = function() {
+        setTimeout(gerirFluxo, 500);
+    };
+</script>
+</body>
+</html>
