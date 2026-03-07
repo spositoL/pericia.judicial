@@ -88,523 +88,284 @@
 </head>
 <body>
 
-<div class="container">
-    <header>
-		<div style="font-size: 50px; margin-top: 20px;"><img src="../img/grafico.svg" alt="Logo" style="height: 60px; margin-top: 20px;">💻</div>
-		<h1>Usabilidade, desenvolvimento web, mobile e jogos</h1>
-		<p>Portal da Disciplina | Prof. Dr. Lincoln Sposito</p>
-		<a href="../index.html" class="btn-voltar" onclick="logInteracao('navegacao', 'retorno_portal', 'header')">← Voltar ao Portal de Disciplinas</a>
-		<a href="../../index.html" class="btn-voltar">Conheça meu trabalho como perito</a><br>
-	</header>
+	<div class="container">
+		<header>
+			<div style="font-size: 50px; margin-top: 20px;"><img src="../img/grafico.svg" alt="Logo" style="height: 60px; margin-top: 20px;">💻</div>
+			<h1>Usabilidade, desenvolvimento web, mobile e jogos</h1>
+			<p>Portal da Disciplina | Prof. Dr. Lincoln Sposito</p>
+			<a href="../index.html" class="btn-voltar" onclick="logInteracao('navegacao', 'retorno_portal', 'header')">← Voltar ao Portal de Disciplinas</a>
+			<a href="../../index.html" class="btn-voltar">Conheça meu trabalho como perito</a><br>
+		</header>
 
-    <div id="portal-entrada">
-        <h2 style="margin-top:0">RITUAL DE ENTRADA</h2>
-        <div id="qrcode"></div> 
-        <p><strong>Aponte para confirmar presença pontual.</strong></p>
-    </div>
+		<div id="portal-entrada">
+			<h2 style="margin-top:0">RITUAL DE ENTRADA</h2>
+			<div id="qrcode"></div> 
+			<p><strong>Aponte para confirmar presença pontual.</strong></p>
+		</div>
 
-    <div id="aula-em-curso">
-        <h3>⚠️ Aula em Curso</h3>
-        <!-- <p>O acesso ao material está a ser projetado pelo professor. Se chegou agora, utilize o QR Code no slide projetado para registrar o seu atraso.</p> -->
-    </div>
+		<div id="aula-em-curso">
+			<h3>⚠️ Aula em Curso</h3>
+			<p>O acesso ao material está a ser projetado pelo professor. Se chegou agora, utilize o QR Code no slide projetado para registrar o seu atraso.</p>
+		</div>
 
-    <table class="tabela-aulas" id="tabelaAulas">
-        <thead>
-            <tr>
-                <th>Data</th>
-				<th>Hora Início</th>
-                <th>Conteúdo (Teoria)</th>
-                <th>Acesso</th>
-            </tr>
-        </thead>
-        <tbody>
-			<tr data-date="2026-02-11" data-start="19:00" data-url="aula-11-02-2026.html">
-				<td>11/02/2026</td>
-				<td>19:00</td>
-				<td>Introdução e Conceitos de UX/UI</td>
-				<td class="col-link"></td>
-			</tr>
-			<tr data-date="2026-02-25" data-start="19:00" data-url="aula-25-02-2026.html">
-				<td>25/02/2026</td>
-				<td>19:00</td>
-				<td>Princípios de Usabilidade e Acessibilidade</td>
-				<td class="col-link"></td>
-			</tr>
-			<tr data-date="2026-03-04" data-start="19:00" data-url="aula-04-03-2026.html">
-				<td>04/03/2026</td>
-				<td>19:00</td>
-				<td>HTML5 e Semântica Web</td>
-				<td class="col-link"></td>
-			</tr>
-			<tr data-date="2026-03-11" data-start="19:00" data-url="aula-11-03-2026.html">
-				<td>11/03/2026</td>
-				<td>19:00</td>
-				<td>CSS3, Flexbox e Grid Layout</td>
-				<td class="col-link"></td>
-			</tr>
-			<tr data-date="2026-03-18" data-start="19:00" data-url="aula-18-03-2026.html">
-				<td>18/03/2026</td>
-				<td>19:00</td>
-				<td>Responsividade e Mobile First</td>
-				<td class="col-link"></td>
-			</tr>
-			<tr data-date="2026-03-25" data-start="19:00" data-url="aula-25-03-2026.html">
-				<td>25/03/2026</td>
-				<td>19:00</td>
-				<td>Lógica de Programação com JavaScript</td>
-				<td class="col-link"></td>
-			</tr>
-			<tr data-date="2026-04-01" data-start="19:00" data-url="aula-01-04-2026.html">
-				<td>01/04/2026</td>
-				<td>19:00</td>
-				<td>Frameworks Frontend e Gerenciadores</td>
-				<td class="col-link"></td>
-			</tr>
-			<tr data-date="2026-04-08" data-start="19:00" data-url="aula-08-04-2026.html">
-				<td>08/04/2026</td>
-				<td>19:00</td>
-				<td>Estratégias Mobile: Nativo, Híbrido e PWA</td>
-				<td class="col-link"></td>
-			</tr>
-			<tr data-date="2026-04-15" data-start="19:00" data-url="aula-15-04-2026.html">
-				<td>15/04/2026</td>
-				<td>19:00</td>
-				<td>Consumo de APIs e Serviços Web</td>
-				<td class="col-link"></td>
-			</tr>
-			<tr data-date="2026-04-22" data-start="19:00" data-url="aula-22-04-2026.html">
-				<td>22/04/2026</td>
-				<td>19:00</td>
-				<td>Matemática para Jogos: Geometria e Trigonometria</td>
-				<td class="col-link"></td>
-			</tr>
-			<tr data-date="2026-04-29" data-start="19:00" data-url="aula-29-04-2026.html">
-				<td>29/04/2026</td>
-				<td>19:00</td>
-				<td>Álgebra Linear Aplicada a Jogos</td>
-				<td class="col-link"></td>
-			</tr>
-			<tr data-date="2026-05-20" data-start="19:00" data-url="aula-20-05-2026.html">
-				<td>20/05/2026</td>
-				<td>19:00</td>
-				<td>IHC e Avaliação de Interfaces Gráficas</td>
-				<td class="col-link"></td>
-			</tr>
-			<tr data-date="2026-05-27" data-start="19:00" data-url="aula-27-05-2026.html">
-				<td>27/05/2026</td>
-				<td>19:00</td>
-				<td>Publicação e Distribuição Digital</td>
-				<td class="col-link"></td>
-			</tr>
-			<tr data-date="2026-06-10" data-start="19:00" data-url="aula-10-06-2026.html">
-				<td>10/06/2026</td>
-				<td>19:00</td>
-				<td>Encerramento e Feedback de Projetos</td>
-				<td class="col-link"></td>
-			</tr>
-		</tbody>
-    </table>
-</div>
+		<table class="tabela-aulas" id="tabelaAulas">
+			<thead>
+				<tr>
+					<th>Data</th>
+					<th>Hora Início</th>
+					<th>Conteúdo (Teoria)</th>
+					<th>Acesso</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- <tr data-date="2026-02-11" data-start="19:00" data-url="aula-11-02-2026.html"> -->
+					<!-- <td>11/02/2026</td> -->
+					<!-- <td>19:00</td> -->
+					<!-- <td>Introdução e Conceitos de UX/UI</td> -->
+					<!-- <td class="col-link"></td> -->
+				<!-- </tr> -->
+				<!-- <tr data-date="2026-02-25" data-start="19:00" data-url="aula-25-02-2026.html"> -->
+					<!-- <td>25/02/2026</td> -->
+					<!-- <td>19:00</td> -->
+					<!-- <td>Princípios de Usabilidade e Acessibilidade</td> -->
+					<!-- <td class="col-link"></td> -->
+				<!-- </tr> -->
+				<tr data-date="2026-03-04" data-start="19:00" data-url="aula-04-03-2026.html">
+					<td>04/03/2026</td>
+					<td>19:00</td>
+					<td>HTML5 e Semântica Web</td>
+					<td class="col-link"></td>
+				</tr>
+				<tr data-date="2026-03-11" data-start="19:00" data-url="aula-11-03-2026.html">
+					<td>11/03/2026</td>
+					<td>19:00</td>
+					<td>CSS3, Flexbox e Grid Layout</td>
+					<td class="col-link"></td>
+				</tr>
+				<tr data-date="2026-03-18" data-start="19:00" data-url="aula-18-03-2026.html">
+					<td>18/03/2026</td>
+					<td>19:00</td>
+					<td>Responsividade e Mobile First</td>
+					<td class="col-link"></td>
+				</tr>
+				<tr data-date="2026-03-25" data-start="19:00" data-url="aula-25-03-2026.html">
+					<td>25/03/2026</td>
+					<td>19:00</td>
+					<td>Lógica de Programação com JavaScript</td>
+					<td class="col-link"></td>
+				</tr>
+				<tr data-date="2026-04-01" data-start="19:00" data-url="aula-01-04-2026.html">
+					<td>01/04/2026</td>
+					<td>19:00</td>
+					<td>Frameworks Frontend e Gerenciadores</td>
+					<td class="col-link"></td>
+				</tr>
+				<tr data-date="2026-04-08" data-start="19:00" data-url="aula-08-04-2026.html">
+					<td>08/04/2026</td>
+					<td>19:00</td>
+					<td>Estratégias Mobile: Nativo, Híbrido e PWA</td>
+					<td class="col-link"></td>
+				</tr>
+				<tr data-date="2026-04-15" data-start="19:00" data-url="aula-15-04-2026.html">
+					<td>15/04/2026</td>
+					<td>19:00</td>
+					<td>Consumo de APIs e Serviços Web</td>
+					<td class="col-link"></td>
+				</tr>
+				<tr data-date="2026-04-22" data-start="19:00" data-url="aula-22-04-2026.html">
+					<td>22/04/2026</td>
+					<td>19:00</td>
+					<td>Matemática para Jogos: Geometria e Trigonometria</td>
+					<td class="col-link"></td>
+				</tr>
+				<tr data-date="2026-04-29" data-start="19:00" data-url="aula-29-04-2026.html">
+					<td>29/04/2026</td>
+					<td>19:00</td>
+					<td>Álgebra Linear Aplicada a Jogos</td>
+					<td class="col-link"></td>
+				</tr>
+				<tr data-date="2026-05-20" data-start="19:00" data-url="aula-20-05-2026.html">
+					<td>20/05/2026</td>
+					<td>19:00</td>
+					<td>IHC e Avaliação de Interfaces Gráficas</td>
+					<td class="col-link"></td>
+				</tr>
+				<tr data-date="2026-05-27" data-start="19:00" data-url="aula-27-05-2026.html">
+					<td>27/05/2026</td>
+					<td>19:00</td>
+					<td>Publicação e Distribuição Digital</td>
+					<td class="col-link"></td>
+				</tr>
+				<tr data-date="2026-06-10" data-start="19:00" data-url="aula-10-06-2026.html">
+					<td>10/06/2026</td>
+					<td>19:00</td>
+					<td>Encerramento e Feedback de Projetos</td>
+					<td class="col-link"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
-<section style="margin: 40px auto; max-width: 900px; padding: 0 20px; text-align: center;">
-    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px;">
-    
-    <div class="card-perito" style="background: rgba(255,255,255,0.05); border: 1px solid var(--accent); border-radius: 15px; padding: 30px;">
-        <h2 style="color: var(--warning); margin-top: 0;">Além da Sala de Aula</h2>
-        <p style="margin-bottom: 25px;">Conheça minha atuação profissional em perícias judiciais e consultoria especializada.</p>
-        
-        <a href="../../index.html" class="btn-perito">
-            Conheça meu trabalho como perito
-        </a>
-    </div>
-</section>
-
-<script>
-    // Função para verificar se o arquivo existe antes de navegar
-    async function navegarParaAula(url, status, ref) {
-        // Dispara o log para o Google Analytics antes da verificação
-        if (typeof logAcesso === "function") {
-            logAcesso(status, ref, url);
-        }
+	<section style="margin: 40px auto; max-width: 900px; padding: 0 20px; text-align: center;">
+		<hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px;">
 		
-		try {
-            const response = await fetch(url, { method: 'HEAD' });
-            if (response.ok) {
-                logAcesso(status, ref, url);
-                window.location.href = url + "?ref=" + ref;
-            } else {
-                alert("Professor Lincoln ainda está preparando este material. Por favor, aguarde a liberação em sala! 😊");
-            }
-        } catch (error) {
-            alert("Não foi possível acessar o material no momento.");
-        }
-    }
-</script>
-<script>
-    function gerirFluxo() {
-        const agora = new Date();
-        const offset = agora.getTimezoneOffset();
-        const hojeLocal = new Date(agora.getTime() - (offset*60*1000)).toISOString().split('T')[0];
-        
-        const horaAtual = agora.getHours();
-        const minAtual = agora.getMinutes();
-        const tempoAtualMin = (horaAtual * 60) + minAtual;
+		<div class="card-perito" style="background: rgba(255,255,255,0.05); border: 1px solid var(--accent); border-radius: 15px; padding: 30px;">
+			<h2 style="color: var(--warning); margin-top: 0;">Além da Sala de Aula</h2>
+			<p style="margin-bottom: 25px;">Conheça minha atuação profissional em perícias judiciais e consultoria especializada.</p>
+			
+			<a href="../../index.html" class="btn-perito">
+				Conheça meu trabalho como perito
+			</a>
+		</div>
+	</section>
 
-        const rows = document.querySelectorAll('#tabelaAulas tbody tr');
+	<script>
+		async function navegarParaAula(url, status, ref) {
+			try {
+				const response = await fetch(url, { method: 'HEAD' });
 
-        rows.forEach(row => {
-            const dataAula = row.getAttribute('data-date');
-            const horaInicioRaw = row.getAttribute('data-start');
-            const urlAula = row.getAttribute('data-url');
-            const linkCell = row.querySelector('.col-link');
-
-            if (dataAula === hojeLocal && horaInicioRaw) {
-                const [h, m] = horaInicioRaw.split(':').map(Number);
-                const tempoInicioMin = (h * 60) + m;
-                const limitePontual = tempoInicioMin + 17;
-
-                if (tempoAtualMin >= tempoInicioMin && tempoAtualMin <= limitePontual) {
-                    const urlFinal = window.location.origin + window.location.pathname.replace('index.html', '') + urlAula + "?ref=index";
-                    
-                    document.getElementById('portal-entrada').style.display = 'block';
-                    
-                    document.getElementById("qrcode").innerHTML = "";
-                    new QRCode(document.getElementById("qrcode"), {
-                        text: urlFinal,
-                        width: 200, height: 200,
-                        colorDark : "#002147", colorLight : "#ffffff"
-                    });
-
-                    <!-- if(linkCell) linkCell.innerHTML = `<a href="${urlAula}?ref=index" class="btn-link" onclick="logAcesso('pontual', 'index')">Entrar na Aula</a>`; -->
-					if(linkCell) {
-						// Chamada unificada que garante o log e o tratamento de erro
-						linkCell.innerHTML = `<button class="btn-link" onclick="navegarParaAula('${urlAula}', 'pontual', 'index')">Entrar na Aula</button>`;
+				if (response.ok) {
+					if (typeof logAcesso === "function") {
+						logAcesso(status, ref, url);
 					}
-                } 
-                else if (tempoAtualMin > limitePontual && tempoAtualMin <= (tempoInicioMin + 180)) {
-                    document.getElementById('aula-em-curso').style.display = 'block';
-                    if(linkCell) linkCell.innerHTML = `<span class="atrasado-lock">Acesso via Projeção</span>`;
-                }
-            <!-- } else if (linkCell) { -->
-                <!-- linkCell.innerHTML = `<a href="${urlAula}?ref=estudo" class="btn-link" onclick="logAcesso('engajamento', 'extra-classe')">Revisar Material</a>`; -->
-            <!-- } -->
-			else if (linkCell) {
-				linkCell.innerHTML = `<button class="btn-link" onclick="navegarParaAula('${urlAula}', 'engajamento', 'estudo')">Revisar Material</button>`;
+					window.location.href = url + "?ref=" + ref;
+				} else {
+					alert("Professor Lincoln ainda está preparando este material. Por favor, aguarde a liberação em sala! 😊");
+				}
+			} catch (error) {
+				alert("Não foi possível acessar o material no momento.");
 			}
-        });
-    }
+		}
+	</script>
+	<script>
+		function gerirFluxo() {
+			// 1. Pega a data e hora local (conforme seu script anterior de sucesso)
+			const agora = new Date();
+			const offset = agora.getTimezoneOffset();
+			const hojeLocal = new Date(agora.getTime() - (offset*60*1000)).toISOString().split('T')[0];
+			
+			const horaAtual = agora.getHours();
+			const minAtual = agora.getMinutes();
+			const tempoAtualMin = (horaAtual * 60) + minAtual;
 
-    window.onload = function() {
-        setTimeout(gerirFluxo, 500);
-    };
-</script>
+			const rows = document.querySelectorAll('#tabelaAulas tbody tr');
+
+			rows.forEach(row => {
+				const dataAula = row.getAttribute('data-date');
+				const horaInicioRaw = row.getAttribute('data-start');
+				const urlAula = row.getAttribute('data-url');
+				const linkCell = row.querySelector('.col-link');
+
+				if (dataAula === hojeLocal && horaInicioRaw) {
+					const [h, m] = horaInicioRaw.split(':').map(Number);
+					const tempoInicioMin = (h * 60) + m;
+					const limitePontual = tempoInicioMin + 17;
+
+					// Janela de Presença Pontual (Item 2 e 3 do seu roteiro)
+					if (tempoAtualMin >= tempoInicioMin && tempoAtualMin <= limitePontual) {
+						const urlFinal = window.location.origin + window.location.pathname.replace('index.html', '') + urlAula + "?ref=index";
+						
+						document.getElementById('portal-entrada').style.display = 'block';
+						
+						// Gera o QR Code usando a biblioteca QRCode.js
+						document.getElementById("qrcode").innerHTML = "";
+						new QRCode(document.getElementById("qrcode"), {
+							text: urlFinal,
+							width: 200, height: 200,
+							colorDark : "#002147", colorLight : "#ffffff"
+						});
+
+						if(linkCell) linkCell.innerHTML = `<a href="${urlAula}?ref=index" class="btn-link" onclick="logAcesso('pontual', 'index')">Entrar na Aula</a>`;
+					} 
+					// Janela de Atraso (Item 4 e 6)
+					else if (tempoAtualMin > limitePontual && tempoAtualMin <= (tempoInicioMin + 180)) {
+						document.getElementById('aula-em-curso').style.display = 'block';
+						if(linkCell) linkCell.innerHTML = `<span class="atrasado-lock">Acesso via Projeção</span>`;
+					}
+				} else if (linkCell) {
+					linkCell.innerHTML = `<a href="${urlAula}?ref=estudo" class="btn-link" onclick="logAcesso('engajamento', 'extra-classe')">Revisar Material</a>`;
+				}
+			});
+		}
+
+		window.onload = function() {
+			setTimeout(gerirFluxo, 500);
+		};
+	</script>	
 </body>
 </html>
 
-<!-- <!DOCTYPE html> -->
-<!-- <html lang="pt-br"> -->
-<!-- <head> -->
-    <!-- <meta charset="UTF-8"> -->
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <!-- <title>IHC & UX - Portal da Disciplina | Dr. Lincoln Sposito</title> -->
-    
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script> -->
-    
-    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script> -->
-    <!-- <script> -->
-      <!-- window.dataLayer = window.dataLayer || []; -->
-      <!-- function gtag(){dataLayer.push(arguments);} -->
-      <!-- gtag('js', new Date()); -->
-      <!-- gtag('config', 'G-5F1FGJ25TK'); -->
-
-      <!-- function logAcesso(status, ref, aula) { -->
-		<!-- gtag('event', 'presenca_aula', { -->
-			<!-- 'disciplina': 'Sistemas_Distribuidos', // Alterado de IHC_UX -->
-			<!-- 'status_presenca': status, -->
-			<!-- 'origem': ref, -->
-			<!-- 'aula_referencia': aula  -->
-		<!-- }); -->
-	  <!-- } -->
-    <!-- </script> -->
-
-    <!-- <style> -->
-        <!-- :root { --navy: #002147; --white: #ffffff; --accent: #28a745; --warning: #ffc107; --card-bg: #003366; } -->
-        <!-- body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: var(--navy); color: var(--white); margin: 0; text-align: center; } -->
-        <!-- .container { max-width: 900px; margin: 0 auto; padding: 20px; } -->
-        <!-- #portal-entrada { background: white; padding: 30px; border-radius: 20px; display: none; margin: 20px auto; color: var(--navy); max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); } -->
-        <!-- #qrcode { display: flex; justify-content: center; margin: 20px 0; } -->
-        <!-- #aula-em-curso { display: none; background: var(--card-bg); padding: 20px; border-radius: 15px; border: 2px dashed var(--warning); margin: 20px 0; } -->
-        <!-- .tabela-aulas { width: 100%; border-collapse: collapse; margin-top: 30px; background: var(--card-bg); border-radius: 10px; overflow: hidden; } -->
-        <!-- .tabela-aulas th, .tabela-aulas td { padding: 18px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; } -->
-        <!-- .tabela-aulas th { background: rgba(0,0,0,0.3); color: var(--accent); } -->
-        <!-- .btn-link { color: var(--white); text-decoration: none; font-weight: bold; border: 1px solid var(--accent); padding: 8px 15px; border-radius: 5px; display: inline-block; } -->
-        <!-- .atrasado-lock { opacity: 0.5; cursor: not-allowed; } -->
-		
-		<!-- .btn-voltar { -->
-			<!-- margin-left: auto; /* Empurra o botão para a direita */ -->
-			<!-- color: var(--white); -->
-			<!-- text-decoration: none; -->
-			<!-- font-size: 1rem; -->
-			<!-- font-weight: bold; -->
-			<!-- padding: 8px 15px; -->
-			<!-- border: 1px solid rgba(255,255,255,0.3); -->
-			<!-- border-radius: 8px; -->
-			<!-- transition: 0.3s; -->
-			<!-- background: rgba(255,255,255,0.05); -->
-		<!-- } -->
-
-		<!-- .btn-voltar:hover { -->
-			<!-- background: var(--accent); -->
-			<!-- border-color: var(--accent); -->
-			<!-- transform: translateX(-5px); /* Efeito visual de retorno */ -->
-		<!-- } -->
-
-		<!-- /* Esconder o texto no mobile para não apertar o header, deixando apenas a seta se preferir */ -->
-		<!-- @media (max-width: 480px) { -->
-			<!-- .btn-voltar { -->
-				<!-- font-size: 0.8rem; -->
-				<!-- padding: 5px 10px; -->
-			<!-- } -->
-		<!-- } -->
-		
-		<!-- .btn-perito { -->
-			<!-- display: inline-block; -->
-			<!-- background-color: var(--accent); -->
-			<!-- color: var(--white); -->
-			<!-- text-decoration: none; -->
-			<!-- padding: 15px 30px; -->
-			<!-- border-radius: 8px; -->
-			<!-- font-weight: bold; -->
-			<!-- font-size: 1.1rem; -->
-			<!-- transition: all 0.3s ease; -->
-			<!-- text-transform: uppercase; -->
-			<!-- letter-spacing: 1px; -->
-		<!-- } -->
-
-		<!-- .btn-perito:hover { -->
-			<!-- background-color: #218838; /* Um tom de verde mais escuro */ -->
-			<!-- transform: translateY(-3px); -->
-			<!-- box-shadow: 0 5px 15px rgba(0,0,0,0.3); -->
-		<!-- } -->
-
-		<!-- @media (max-width: 480px) { -->
-			<!-- .btn-perito { -->
-				<!-- width: 100%; -->
-				<!-- font-size: 1rem; -->
-			<!-- } -->
-		<!-- } -->
-		
-    <!-- </style> -->
-<!-- </head> -->
-<!-- <body> -->
-
-<!-- <div class="container"> -->
-    <!-- <header> -->
-		<!-- <div style="font-size: 50px; margin-top: 20px;"><img src="../img/grafico.svg" alt="Logo" style="height: 60px; margin-top: 20px;">🌐</div> -->
-		<!-- <h1>Sistemas Distribuídos</h1> -->
-		<!-- <p>Portal da Disciplina | Prof. Dr. Lincoln Sposito</p> -->
-		<!-- <a href="../index.html" class="btn-voltar" onclick="logInteracao('navegacao', 'retorno_portal', 'header')">← Voltar ao Portal de Disciplinas</a> -->
-		<!-- <a href="../../index.html" class="btn-voltar">Conheça meu trabalho como perito</a><br> -->
-	<!-- </header> -->
-
-    <!-- <div id="portal-entrada"> -->
-        <!-- <h2 style="margin-top:0">RITUAL DE ENTRADA</h2> -->
-        <!-- <div id="qrcode"></div>  -->
-        <!-- <p><strong>Aponte para confirmar presença pontual.</strong></p> -->
-    <!-- </div> -->
-
-    <!-- <div id="aula-em-curso"> -->
-        <!-- <h3>⚠️ Aula em Curso</h3> -->
-        <!-- <p>O acesso ao material está a ser projetado pelo professor. Se chegou agora, utilize o QR Code no slide projetado para registrar o seu atraso.</p> -->
-    <!-- </div> -->
-
-    <!-- <table class="tabela-aulas" id="tabelaAulas"> -->
-        <!-- <thead> -->
-            <!-- <tr> -->
-                <!-- <th>Data</th> -->
-				<!-- <th>Hora Início</th> -->
-                <!-- <th>Conteúdo</th> -->
-                <!-- <th>Acesso</th> -->
-            <!-- </tr> -->
-        <!-- </thead> -->
-        <!-- <tbody> -->
-			<!-- <tr data-date="2026-02-09" data-start="19:00" data-url="aula-09-02-2026.html"> -->
-				<!-- <td>09/02/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td>Introdução aos Sistemas Distribuídos e Protocolo HTTP</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-			<!-- <tr data-date="2026-02-23" data-start="19:00" data-url="aula-23-02-2026.html"> -->
-				<!-- <td>23/02/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td>JSON/XML e Serviços de Integração Web</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-
-			<!-- <tr data-date="2026-03-02" data-start="19:00" data-url="aula-02-03-2026.html"> -->
-				<!-- <td>02/03/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td>Componentização e Padrões de Projeto Modernos</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-			<!-- <tr data-date="2026-03-09" data-start="19:00" data-url="aula-09-03-2026.html"> -->
-				<!-- <td>09/03/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td>SOA (Arquitetura Orientada a Serviços) e SOAP/REST</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-			<!-- <tr data-date="2026-03-16" data-start="19:00" data-url="aula-16-03-2026.html"> -->
-				<!-- <td>16/03/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td>Microsserviços e API Gateways</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-			<!-- <tr data-date="2026-03-23" data-start="19:00" data-url="aula-23-03-2026.html"> -->
-				<!-- <td>23/03/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td><b>Avaliação A1:</b> Prática de Construção de API</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-			<!-- <tr data-date="2026-03-30" data-start="19:00" data-url="aula-30-03-2026.html"> -->
-				<!-- <td>30/03/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td>Mensageria e Comunicação Assíncrona (RabbitMQ/Kafka)</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-
-			<!-- <tr data-date="2026-04-06" data-start="19:00" data-url="aula-06-04-2026.html"> -->
-				<!-- <td>06/04/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td>Cloud Computing: IaaS, PaaS, SaaS e Serverless</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-			<!-- <tr data-date="2026-04-13" data-start="19:00" data-url="aula-13-04-2026.html"> -->
-				<!-- <td>13/04/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td>Edge Computing (Computação de Borda)</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-			<!-- <tr data-date="2026-04-27" data-start="19:00" data-url="aula-27-04-2026.html"> -->
-				<!-- <td>27/04/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td>Teorema CAP e Bancos de Dados Distribuídos</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-
-			<!-- <tr data-date="2026-05-04" data-start="19:00" data-url="aula-04-05-2026.html"> -->
-				<!-- <td>04/05/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td>NoSQL e Escalabilidade Horizontal</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-			<!-- <tr data-date="2026-05-11" data-start="19:00" data-url="aula-11-05-2026.html"> -->
-				<!-- <td>11/05/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td><b>Avaliação A2:</b> Simulação Cloud</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-			<!-- <tr data-date="2026-05-18" data-start="19:00" data-url="aula-18-05-2026.html"> -->
-				<!-- <td>18/05/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td>Programação Paralela: Threads e Sincronização</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-			<!-- <tr data-date="2026-05-25" data-start="19:00" data-url="aula-25-05-2026.html"> -->
-				<!-- <td>25/05/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td>Segurança (OAuth2/JWT) e Confiabilidade</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-
-			<!-- <tr data-date="2026-06-01" data-start="19:00" data-url="aula-01-06-2026.html"> -->
-				<!-- <td>01/06/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td>Internet das Coisas (IoT) e Protocolo MQTT</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-			<!-- <tr data-date="2026-06-15" data-start="19:00" data-url="aula-15-06-2026.html"> -->
-				<!-- <td>15/06/2026</td> -->
-				<!-- <td>19:00</td> -->
-				<!-- <td><b>Avaliação A3:</b> Deploy Ponta-a-Ponta</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-			<!-- <tr data-date="2026-03-01" data-start="17:58" data-url="aula-15-06-2026.html"> -->
-				<!-- <td>01/03/2026</td> -->
-				<!-- <td>21:23</td> -->
-				<!-- <td><b>AULA TESTE</td> -->
-				<!-- <td class="col-link"></td> -->
-			<!-- </tr> -->
-		<!-- </tbody> -->
-    <!-- </table> -->
-<!-- </div> -->
-
-<!-- <section style="margin: 40px auto; max-width: 900px; padding: 0 20px; text-align: center;"> -->
-    <!-- <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin-bottom: 40px;"> -->
-    
-    <!-- <div class="card-perito" style="background: rgba(255,255,255,0.05); border: 1px solid var(--accent); border-radius: 15px; padding: 30px;"> -->
-        <!-- <h2 style="color: var(--warning); margin-top: 0;">Além da Sala de Aula</h2> -->
-        <!-- <p style="margin-bottom: 25px;">Conheça minha atuação profissional em perícias judiciais e consultoria especializada.</p> -->
-        
-        <!-- <a href="../../index.html" class="btn-perito"> -->
-            <!-- Conheça meu trabalho como perito -->
-        <!-- </a> -->
-    <!-- </div> -->
-<!-- </section> -->
-
 <!-- <script> -->
-    <!-- function gerirFluxo() { -->
-        <!-- // 1. Pega a data e hora local (conforme seu script anterior de sucesso) -->
-        <!-- const agora = new Date(); -->
-        <!-- const offset = agora.getTimezoneOffset(); -->
-        <!-- const hojeLocal = new Date(agora.getTime() - (offset*60*1000)).toISOString().split('T')[0]; -->
-        
-        <!-- const horaAtual = agora.getHours(); -->
-        <!-- const minAtual = agora.getMinutes(); -->
-        <!-- const tempoAtualMin = (horaAtual * 60) + minAtual; -->
-
-        <!-- const rows = document.querySelectorAll('#tabelaAulas tbody tr'); -->
-
-        <!-- rows.forEach(row => { -->
-            <!-- const dataAula = row.getAttribute('data-date'); -->
-            <!-- const horaInicioRaw = row.getAttribute('data-start'); -->
-            <!-- const urlAula = row.getAttribute('data-url'); -->
-            <!-- const linkCell = row.querySelector('.col-link'); -->
-
-            <!-- if (dataAula === hojeLocal && horaInicioRaw) { -->
-                <!-- const [h, m] = horaInicioRaw.split(':').map(Number); -->
-                <!-- const tempoInicioMin = (h * 60) + m; -->
-                <!-- const limitePontual = tempoInicioMin + 17; -->
-
-                <!-- // Janela de Presença Pontual (Item 2 e 3 do seu roteiro) -->
-                <!-- if (tempoAtualMin >= tempoInicioMin && tempoAtualMin <= limitePontual) { -->
-                    <!-- const urlFinal = window.location.origin + window.location.pathname.replace('index.html', '') + urlAula + "?ref=index"; -->
-                    
-                    <!-- document.getElementById('portal-entrada').style.display = 'block'; -->
-                    
-                    <!-- // Gera o QR Code usando a biblioteca QRCode.js -->
-                    <!-- document.getElementById("qrcode").innerHTML = ""; -->
-                    <!-- new QRCode(document.getElementById("qrcode"), { -->
-                        <!-- text: urlFinal, -->
-                        <!-- width: 200, height: 200, -->
-                        <!-- colorDark : "#002147", colorLight : "#ffffff" -->
-                    <!-- }); -->
-
-                    <!-- if(linkCell) linkCell.innerHTML = `<a href="${urlAula}?ref=index" class="btn-link" onclick="logAcesso('pontual', 'index')">Entrar na Aula</a>`; -->
-                <!-- }  -->
-                <!-- // Janela de Atraso (Item 4 e 6) -->
-                <!-- else if (tempoAtualMin > limitePontual && tempoAtualMin <= (tempoInicioMin + 180)) { -->
-                    <!-- document.getElementById('aula-em-curso').style.display = 'block'; -->
-                    <!-- if(linkCell) linkCell.innerHTML = `<span class="atrasado-lock">Acesso via Projeção</span>`; -->
-                <!-- } -->
-            <!-- } else if (linkCell) { -->
-                <!-- linkCell.innerHTML = `<a href="${urlAula}?ref=estudo" class="btn-link" onclick="logAcesso('engajamento', 'extra-classe')">Revisar Material</a>`; -->
+    <!-- // Função para verificar se o arquivo existe antes de navegar -->
+    <!-- async function navegarParaAula(url, status, ref) { -->
+        <!-- // Dispara o log para o Google Analytics antes da verificação -->
+        <!-- if (typeof logAcesso === "function") { -->
+            <!-- logAcesso(status, ref, url); -->
+        <!-- } -->
+		
+		<!-- try { -->
+            <!-- const response = await fetch(url, { method: 'HEAD' }); -->
+            <!-- if (response.ok) { -->
+                <!-- logAcesso(status, ref, url); -->
+                <!-- window.location.href = url + "?ref=" + ref; -->
+            <!-- } else { -->
+                <!-- alert("Professor Lincoln ainda está preparando este material. Por favor, aguarde a liberação em sala! 😊"); -->
             <!-- } -->
-        <!-- }); -->
+        <!-- } catch (error) { -->
+            <!-- alert("Não foi possível acessar o material no momento."); -->
+        <!-- } -->
     <!-- } -->
+	<!-- </script> -->
+<!-- <script>     -->
+<!-- function gerirFluxo() { -->
+    <!-- const agora = new Date(); -->
+    <!-- const diaAtual = agora.getDate(); -->
+    <!-- const mesAtual = agora.getMonth() + 1; -->
+    <!-- const tempoAtualMin = (agora.getHours() * 60) + agora.getMinutes(); -->
 
+    <!-- aulas.forEach(aula => { -->
+        <!-- const row = document.getElementById(aula.id); -->
+        <!-- if (!row) return; -->
+
+        <!-- const linkCell = row.querySelector('.link-cell'); -->
+        <!-- const [diaAula, mesAula] = aula.data.split('/').map(Number); -->
+        <!-- const [horaInicio, minInicio] = aula.horario.split(':').map(Number); -->
+        <!-- const tempoInicioMin = (horaInicio * 60) + minInicio; -->
+        <!-- const limitePontual = tempoInicioMin + 15; -->
+
+        <!-- // Limpa a célula antes de decidir -->
+        <!-- linkCell.innerHTML = ""; -->
+
+        <!-- // CASO 1: É o dia da aula -->
+        <!-- if (diaAtual === diaAula && mesAtual === mesAula) { -->
+            <!-- // Janela de entrada pontual -->
+            <!-- if (tempoAtualMin >= (tempoInicioMin - 30) && tempoAtualMin <= limitePontual) { -->
+                <!-- document.getElementById('aula-em-curso').style.display = 'block'; -->
+                <!-- linkCell.innerHTML = `<a href="${aula.url}?ref=index" class="btn-link" onclick="logAcesso('pontual', 'index', '${aula.id}')">Entrar na Aula</a>`; -->
+            <!-- }  -->
+            <!-- // Janela de atraso (até 3h depois do início) -->
+            <!-- else if (tempoAtualMin > limitePontual && tempoAtualMin <= (tempoInicioMin + 180)) { -->
+                <!-- document.getElementById('aula-em-curso').style.display = 'block'; -->
+                <!-- linkCell.innerHTML = `<span class="atrasado-lock">Acesso via Projeção</span>`; -->
+            <!-- } -->
+            <!-- else { -->
+                <!-- linkCell.innerHTML = `<a href="${aula.url}?ref=estudo" class="btn-link" onclick="logAcesso('revisao', 'index', '${aula.id}')">Revisar Material</a>`; -->
+            <!-- } -->
+        <!-- }  -->
+        <!-- // CASO 2: A aula já passou (Data Atual > Data da Aula) ou é futuro -->
+        <!-- else { -->
+            <!-- const dataAulaObj = new Date(2026, mesAula - 1, diaAula); -->
+            <!-- if (agora > dataAulaObj) { -->
+                <!-- // Se a aula já passou, sempre mostra "Revisar Material" -->
+                <!-- linkCell.innerHTML = `<a href="${aula.url}?ref=estudo" class="btn-link" onclick="logAcesso('revisao', 'index', '${aula.id}')">Revisar Material</a>`; -->
+            <!-- } else { -->
+                <!-- // Aula futura -->
+                <!-- linkCell.innerHTML = `<span style="color: #999; font-size: 0.8rem;">Disponível em ${aula.data}</span>`; -->
+            <!-- } -->
+        <!-- } -->
+    <!-- }); -->
+<!-- } -->
     <!-- window.onload = function() { -->
         <!-- setTimeout(gerirFluxo, 500); -->
     <!-- }; -->
 <!-- </script> -->
-<!-- </body> -->
-<!-- </html> -->
