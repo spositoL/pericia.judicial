@@ -1,0 +1,3 @@
+Gabarito para o Professor:
+•	Q1: B | Q2: B | Q3: B | Q4: B | Q5: C
+Dr. Lincoln, gostaria que eu gerasse o link simbólico ou um QR Code para os alunos acessarem este código via GitHub Gist?
