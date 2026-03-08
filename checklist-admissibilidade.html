@@ -147,11 +147,11 @@
 								<option value="StalkingBancario">Checklist de Prova Técnica (Stalking Bancário)</option>
 								<option value="TI&Dados">Checklist: 10 Indicadores De Risco Em Sistemas De Dados </option>
 								<option value="ReformaTributaria">Checklist de Conformidade: Transição Tributária 2026</option>
-								<option value="Saude-445">Checklist: Plano de Saúde (Produto 445)</option>
+								<option value="Saude445">Checklist: Plano de Saúde (Produto 445)</option>
+								<option value="SaudeMental">Dossiê de Impacto: Perícia de Dados em Saúde Mental</option>
 								<option value="Lei149052024">Checklist Conformidade com a Lei 14.9052024</option>
 								<option value="Quesitos4966">Modelo de Quesitos - Resolução 4.966 / IFRS 9</option>
-								<option value="QuesitosAML">Modelo de Quesitos: Auditoria de AML/KYC (Fircosoft)</option>
-								<option value="StalkingBancario">Checklist de Prova Técnica (Stalking Bancário)</option>
+								<option value="QuesitosAML">Modelo de Quesitos: Auditoria de AML/KYC (Fircosoft)</option>								
 							</select>
                         </div>
 
@@ -183,7 +183,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const foco = urlParams.get('foco');
         const selectMaterial = document.getElementById('material');
-        if (foco === 'saude') selectMaterial.value = 'Saude-445';
+        if (foco === 'saude') selectMaterial.value = 'Saude445';
         if (foco === 'veiculos') selectMaterial.value = 'Veiculos';
         if (foco === 'financeiro') selectMaterial.value = 'Price-Gauss';
         if (foco === '1988') selectMaterial.value = 'SFH-1988';
@@ -194,6 +194,7 @@
 		if (foco === 'Quesitos4966') selectMaterial.value = 'Quesitos4966';		
 		if (foco === 'QuesitosAML') selectMaterial.value = 'QuesitosAML';
 		if (foco === 'stalking-bancario') selectMaterial.value = 'StalkingBancario';		
+		if (foco === 'saude-mental') selectMaterial.value = 'SaudeMental';		
     });
 
     // 2. Função de Processamento
@@ -221,7 +222,7 @@
         const arquivos = {
             'Veiculos': 'arquivos/checklist-revisional-veiculos-cdc-lincoln-sposito.pdf',
             'Price-Gauss': 'arquivos/checklist-tabela-price-gauss-lincoln-sposito.pdf',
-            'Saude-445': 'arquivos/checklist-saude-produto-445-lincoln-sposito.pdf',
+            'Saude445': 'arquivos/checklist-saude-produto-445-lincoln-sposito.pdf',
             'SFH-1988': 'arquivos/checklist-revisao-contrato-1988-SFH-lincoln-sposito.pdf',
 			'TI&Dados': 'arquivos/checklist-indicadores-risco-dados-lincoln-sposito.pdf',			
 			'IOF': 'arquivos/Guia-Auditoria-IOF-Dr-Lincoln-Sposito.pdf',
@@ -230,6 +231,7 @@
 			'Quesitos4966': 'arquivos/modelo-quesitos-resolucao-4966-dr-lincoln-sposito.pdf', // Certifique-se de subir este PDF
 			'QuesitosAML': 'arquivos/modelo-quesitos-aml-kyc-dr-lincoln-sposito.pdf',									 
 			'StalkingBancario': 'arquivos/checklist-stalking-bancario-2026-pericia-dr-lincoln-sposito.pdf',
+			'SaudeMental': 'arquivos/dossie-de-impacto-pericia-de-dados-em-saude-mental.pdf',
 			'Ambos': 'materiais.html'
         };
 
