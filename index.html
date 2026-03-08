@@ -675,6 +675,7 @@
 						<option value="Questões tributárias">Questões tributárias</option>						
 						<option value="Perícia em TI">Perícia relacionada a Tecnologia da Informação</option>
 						<option value="Perícia em Resolução 4.966">Perícia em Resolução 4.966</option>
+						<option value="Assédio Digital">Assédio Digital</option>
 						<option value="Outros">Outras Demandas</option>
                     </select>
                 </div>
@@ -1041,6 +1042,29 @@ window.addEventListener('load', function() {
 		}
 		
 		// 4. Foco automático no campo nome para conversão imediata
+		if (campoNome) {
+			setTimeout(() => { campoNome.focus(); }, 600);
+		}
+	}
+	else if (tema === 'StalkingBancario') {
+		// 1. Decodifica os parâmetros da URL para tratar acentos e espaços
+		const areaDecodificada = areaParam ? decodeURIComponent(areaParam) : "Assédio Digital";
+		const assuntoDecodificado = assuntoParam ? decodeURIComponent(assuntoParam) : "Stalking Bancário / Perícia Algorítmica";
+
+		// 2. Preenche a Área e o Assunto nos campos do formulário
+		if (campoArea) {
+			campoArea.value = areaDecodificada;
+		}
+		if (campoAssunto) {
+			campoAssunto.value = assuntoDecodificado;
+		}
+		
+		// 3. Mensagem personalizada focada no diferencial de Analista de Sistemas
+		if (campoMensagem) {
+			campoMensagem.value = "Dr. Lincoln, li seu artigo sobre Stalking Bancário. Preciso de uma auditoria técnica em logs de chamadas e identificação de padrões de discadores preditivos (assédio algorítmico) para fundamentar uma ação judicial. Gostaria de validar a viabilidade técnica da minha causa.";
+		}
+		
+		// 4. Foco automático no campo nome para conversão imediata (Pilar de Conversão do Roteiro 7.0)
 		if (campoNome) {
 			setTimeout(() => { campoNome.focus(); }, 600);
 		}

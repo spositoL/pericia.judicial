@@ -523,23 +523,6 @@ img {
     transform: translateY(-5px);
 }
 
-/* Tags de categoria dentro dos cards 
-.tag-categoria {
-    display: inline-block;
-    color: white;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: 15px;
-}
-
-.tag-standar { background: var(--primary); }
-.tag-saude { background: #4D050E; }
-.tag-bancario { background: #27ae60; }
-.tag-revisional { background: #8e44ad; }
-.tag-tidados  { background: #191970;} */
 /* Tags de categoria dentro dos cards */
 .tag-categoria {
     display: inline-block;
@@ -563,8 +546,9 @@ img {
 
 /* 4. TI/Dados: Use o Azul Deep Navy ou Petróleo */
 .tag-tidados { background: #16a085; }
-
 .tag-ti {background: #1a2a3a;}
+.tag-digital {background: #005f73;}
+
 .tag-automotivo {background: #c5a059;}
 .tag-direito {background: #4D050E;}
 .tag-tributaria {background: #364d0c; }
