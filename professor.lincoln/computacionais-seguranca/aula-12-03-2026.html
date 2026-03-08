@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula: Lógica Booleana & Portas Lógicas | Dr. Lincoln Sposito</title>
+    <meta name="description" content="Aula de Sistemas Computacionais e Segurança - USJT - 12/03/2026">
+	
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>    
+	<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+		  gtag('config', 'G-5F1FGJ25TK');
+
+		  /**
+		   * FUNÇÃO MESTRE: Monitora tanto presença quanto cliques em botões
+		   * @param {string} nomeEvento - Categoria do evento
+		   * @param {string} status - Estado da interação
+		   * @param {string} origem - De onde veio o clique
+		   */
+		  function logInteracao(nomeEvento, status, origem, aulaId, disciplinaId) {
+			  gtag('event', nomeEvento, {
+				  'disciplina': disciplinaId || 'Sistemas_Computacionais_Seguranca',
+				  'status_presenca': status,              
+				  'origem': origem,                      
+				  'aula_referencia': aulaId || '2026-03-12' // Atualizado para a data correta
+			  });
+		  }
+
+		  window.onload = function() {
+			  const urlParams = new URLSearchParams(window.location.search);
+			  // Se vier pelo QR Code de atraso, loga automaticamente
+			  if (urlParams.get('ref') === 'atrasado') {
+				  logInteracao('presenca_aula', 'atrasado', 'qrcode_atraso');
+			  }
+			  
+			  const urlAtraso = window.location.origin + window.location.pathname + "?ref=atrasado";
+			  new QRCode(document.getElementById("qrcode-persistente"), {
+				  text: urlAtraso, width: 70, height: 70, colorDark : "#002147", colorLight : "#ffffff"
+			  });
+
+              // Inicializa o sistema de observer para animação de flutuar
+              const observerOptions = { threshold: 0.4 };
+              const observer = new IntersectionObserver((entries) => {
+                  entries.forEach(entry => {
+                      if (entry.isIntersecting) {
+                          entry.target.classList.add('active');
+                      }
+                  });
+              }, observerOptions);
+
+              document.querySelectorAll('.slide').forEach(slide => {
+                  observer.observe(slide);
+              });
+		  };
+	</script>	
+    <style>
+        :root { 
+            --navy: #002147; --white: #ffffff; --accent: #28a745; --warning: #ffc107;
+            --font-titulo: 3.2rem; --font-corpo: 1.8rem;
+            --gold: #d4af37; /* Cor para destaques acadêmicos */
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body { 
+            margin: 0; padding: 0; width: 100%; min-height: 100%;
+            overflow-x: hidden; 
+            overflow-y: auto;
+            font-family: 'Segoe UI', sans-serif; 
+            background: var(--navy); 
+            color: var(--white);
+            scroll-snap-type: y proximity;
+        }
+
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            background: rgba(0, 33, 71, 0.9);
+            display: flex; align-items: center; padding: 0 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 1000;
+        }
+
+        footer {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 50px;
+            background: rgba(0, 33, 71, 0.9);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; opacity: 0.7; z-index: 1000;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        #floating-atraso {
+            position: fixed; top: 100px; right: 20px; z-index: 999;
+            background: white; padding: 6px; border-radius: 8px;
+            border: 2px solid var(--warning); text-align: center;
+        }
+        #floating-atraso span { display: block; color: var(--navy); font-size: 9px; font-weight: bold; }
+
+        .container-slides {
+            width: 100%;
+            display: flex; 
+            flex-direction: column;
+        }
+
+        .slide { 
+            min-height: 100vh; 
+            width: 100%;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            padding: 100px 5% 70px 5%; 
+            text-align: center;
+            scroll-snap-align: start; 
+            position: relative;
+        }
+
+        h1 { color: var(--accent); font-size: var(--font-titulo); text-transform: uppercase; margin-bottom: 1.5rem; }
+        p { font-size: var(--font-corpo); line-height: 1.5; max-width: 1100px; }
+        
+        .content-box { 
+            background: rgba(255,255,255,0.05); padding: 2.5rem; 
+            border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 100%;
+        }
+
+        /* Estilo para Tabela Verdade nos Slides */
+        .logic-table {
+            width: auto;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background: rgba(255,255,255,0.1);
+        }
+        .logic-table th, .logic-table td {
+            border: 1px solid var(--white);
+            padding: 10px 20px;
+            font-size: 1.5rem;
+        }
+        .logic-table th { background: var(--accent); color: white; }
+
+        /* --- EFEITO DE FLUTUAR NA TRANSIÇÃO --- */
+        .slide > * {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .slide.active > * {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* AJUSTE PARA MOBILE (VERTICAL) */
+        @media (max-width: 480px) {
+            :root {
+                --font-titulo: 1.6rem; 
+                --font-corpo: 1.0rem;  
+            }
+            .slide { padding: 80px 20px 60px 20px; }
+            h1 { font-size: 1.6rem !important; }
+            p, li, td { font-size: 1.1rem !important; }
+            #floating-atraso { display: none !important; } 
+        }
+
+        .btn-engajamento {
+            background: var(--accent); color: white; border: none; padding: 15px 30px;
+            border-radius: 10px; font-size: 1.2rem; cursor: pointer; transition: 0.3s;
+            margin: 10px;
+        }
+        .btn-engajamento:hover { transform: scale(1.05); filter: brightness(1.1); }
+		
+		.btn-voltar {
+			margin-left: auto;
+			color: var(--white);
+			text-decoration: none;
+			font-size: 1rem;
+			font-weight: bold;
+			padding: 8px 15px;
+			border: 1px solid rgba(255,255,255,0.3);
+			border-radius: 8px;
+			transition: 0.3s;
+			background: rgba(255,255,255,0.05);
+		}
+
+		.btn-voltar:hover {
+			background: var(--accent);
+			border-color: var(--accent);
+			transform: translateX(-5px);
+		}
+        
+        .code-block { background: #000; padding: 20px; border-radius: 10px; font-family: 'Courier New', Courier, monospace; overflow-x: auto; width: 100%; max-width: 600px; border: 1px solid var(--accent); color: #00ff00; text-align: left; margin: 20px auto; }
+        
+        .disciplina-tag {
+            background: var(--gold);
+            color: var(--navy);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="../img/grafico.svg" alt="Logo" style="height: 70px;">
+		<a href="index.html" class="btn-voltar" onclick="logInteracao('navegacao', 'retorno_portal', 'header')">← Voltar ao Portal da Disciplina</a>
+		<a href="../../index.html" class="btn-voltar">Conheça meu trabalho como perito</a><br>
+    </header>
+
+    <div class="container-slides" id="deck">	
+		<section class="slide" id="capa-boole" style="
+			min-height: 100vh; 
+			display: flex; 
+			align-items: center; 
+			justify-content: center; 
+			background: linear-gradient(135deg, var(--navy) 0%, #00152e 100%);
+			padding: 2rem;">
+
+			<div class="content-box" style="
+				max-width: 1400px; 
+				width: 100%; 
+				margin: 0 auto; 
+				text-align: center; 
+				border: none; 
+				background: transparent;">
+				
+				<div style="margin-bottom: 2.5rem;">
+					<span style="background: var(--warning); color: var(--navy); padding: 12px 35px; border-radius: 50px; font-weight: 800; font-size: clamp(1rem, 2vw, 1.4rem); text-transform: uppercase; letter-spacing: 4px; box-shadow: 0 4px 15px rgba(255,193,7,0.3);">
+						Módulo I: Fundamentos Digitais
+					</span>
+				</div>
+
+				<h1 style="font-size: clamp(2.5rem, 8vw, 5.5rem); margin: 0; color: var(--white); line-height: 1.1; font-weight: 800;">
+					Lógica Booleana e <br>
+					<span style="color: var(--accent); text-shadow: 0 0 20px rgba(40,167,69,0.4);">Circuitos Digitais</span>
+				</h1>
+
+				<hr style="border: 0; border-top: 4px solid var(--accent); width: clamp(100px, 20vw, 200px); margin: 2.5rem auto;">
+
+				<h2 style="font-size: clamp(1.5rem, 4vw, 2.8rem); font-weight: 300; margin: 0; color: rgba(255,255,255,0.9);">
+					Prof. Dr. Lincoln Sposito
+				</h2>
+				
+				<p style="font-size: clamp(1rem, 2vw, 1.5rem); opacity: 0.8; margin-top: 1rem; font-weight: 400; letter-spacing: 1px;">
+					Sistemas Computacionais e Segurança | <span style="color: var(--warning);">12 de Março de 2026</span>
+				</p>
+
+				<div style="margin-top: clamp(3rem, 8vh, 5rem);">
+					<button class="btn-engajamento" style="
+						padding: clamp(15px, 3vh, 25px) clamp(40px, 6vw, 90px); 
+						font-size: clamp(1.2rem, 3vw, 2rem); 
+						font-weight: bold; 
+						box-shadow: 0 10px 20px rgba(0,0,0,0.3);" 
+						onclick="logInteracao('inicio_aula', 'presencial', 'capa', '2026-03-12', 'Sistemas_Computacionais_Seguranca'); window.location.href='#agenda';">
+						Iniciar Processamento 🚀
+					</button>
+				</div>
+			</div>
+		</section>
+		
+		<section class="slide" id="agenda-boole" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 4rem 2rem;">
+			<div class="content-box" style="max-width: 1400px; width: 100%; margin: 0 auto; padding: clamp(1.5rem, 5vw, 3rem); background: rgba(255,255,255,0.03);">
+				
+				<h2 style="color: var(--warning); font-size: clamp(0.9rem, 2vw, 1.3rem); text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 4px; font-weight: 800;">
+					Roteiro de Atividades
+				</h2>
+				<h1 style="font-size: clamp(2rem, 5vw, 3.8rem); margin-bottom: clamp(2rem, 5vh, 3.5rem); color: var(--white); font-weight: 800; line-height: 1.1;">
+					Agenda do Dia: Lógica e Circuitos
+				</h1>
+				
+				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(1rem, 4vw, 4rem); text-align: left;">
+					
+					<ul style="list-style: none; padding: 0; margin: 0;">
+						<li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+							<span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">01</span> 
+							Abertura: George Boole e a Gênese Binária
+						</li>
+						<li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+							<span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">02</span> 
+							Estados Lógicos: Níveis de Tensão e Abstração
+						</li>
+						<li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+							<span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">03</span> 
+							Operador NOT: Inversão e Complemento de Bit
+						</li>
+						<li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+							<span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">04</span> 
+							Operador AND: Conjunção e Regras de Acesso (2FA)
+						</li>
+						<li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+							<span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">05</span> 
+							Operador OR: Disjunção e Lógica de Alarme
+						</li>
+						<li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4; color: var(--warning);">
+							<span style="color: var(--warning); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">06</span> 
+							Intervalo (20 minutos): Reset de Ciclo
+						</li>
+					</ul>
+
+					<ul style="list-style: none; padding: 0; margin: 0;">
+						<li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+							<span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">07</span> 
+							Tabela Verdade: Mapeando Saídas e Estados
+						</li>
+						<li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+							<span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">08</span> 
+							Portas Lógicas: Implementação (Transistores)
+						</li>
+						<li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+							<span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">09</span> 
+							Expressões Compostas: Do Papel ao Silício
+						</li>
+						<li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+							<span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">10</span> 
+							Segurança: Máscaras de Rede, RAID e Cripto
+						</li>
+						<li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+							<span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">11</span> 
+							Atividade: Simulação de Circuitos Digitais
+						</li>
+						<li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+							<span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">12</span> 
+							Fechamento e Verificação de Aprendizado
+						</li>
+					</ul>
+				</div>
+
+				<div style="margin-top: 3rem; padding: 1.5rem; background: rgba(255, 193, 7, 0.05); border-radius: 15px; border-left: 5px solid var(--warning); text-align: left;">
+					<p style="margin: 0; font-size: clamp(0.9rem, 1.5vw, 1.2rem); line-height: 1.5; opacity: 0.9;">
+						<strong>📚 Base Teórica:</strong> Esta agenda segue a estruturação de <strong>Monteiro (2007)</strong> e <strong>Delgado & Ribeiro (2017)</strong>, partindo da álgebra abstrata até a implementação física das portas lógicas que sustentam a arquitetura da CPU.
+					</p>
+				</div>
+
+				<div style="margin-top: clamp(2rem, 5vh, 3.5rem);">
+					<button class="btn-engajamento" style="padding: 18px 60px; font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: bold; border-radius: 50px;" 
+						onclick="logInteracao('engajamento', 'visualizou_agenda_boole', 'botao_agenda', '2026-03-12', 'Sistemas_Computacionais_Seguranca'); window.location.href='#modulo-revisao';">
+						Entendido, vamos começar! 🚀
+					</button>
+				</div>
+			</div>
+		</section>
+		
+		<section class="slide" id="boole-historia" style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+			<div class="content-box" style="max-width: 1400px; border-left: 10px solid var(--accent);">
+				<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 3rem; text-align: left;">
+					
+					<div style="flex: 1 1 500px;">
+						<h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem;">
+							01 | Abertura
+						</h2>
+						<h1 style="font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 2rem;">
+							George Boole e a <br><span style="color: var(--accent);">Gênese Binária</span>
+						</h1>
+						<p style="font-size: clamp(1.2rem, 2vw, 1.8rem); margin-bottom: 2rem;">
+							Em 1854, Boole propôs que o raciocínio lógico poderia ser reduzido a um sistema algébrico de apenas dois estados: <strong>Verdadeiro (1)</strong> ou <strong>Falso (0)</strong>.
+						</p>
+						<div style="background: rgba(40, 167, 69, 0.1); padding: 20px; border-radius: 15px; border: 1px dashed var(--accent);">
+							<p style="font-size: 1.2rem; margin: 0; font-style: italic;">
+								"A computação moderna é a formalização da lógica binária aplicada ao silício." 
+								<br><small>— Adaptado de Monteiro (2007)</small>
+							</p>
+						</div>
+					</div>
+
+					<div style="flex: 1 1 300px; text-align: center;">
+						<div style="position: relative; display: inline-block;">
+							<img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/George_Boole_color.jpg" 
+								 alt="George Boole" 
+								 style="width: clamp(200px, 25vw, 350px); border-radius: 20px; filter: grayscale(20%) contrast(110%); box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+							<div style="position: absolute; bottom: -20px; right: -20px; background: var(--accent); color: white; padding: 15px; border-radius: 10px; font-weight: bold; font-size: 1rem; box-shadow: 0 10px 20px rgba(0,0,0,0.3);">
+								1815 - 1864
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	
+		<section class="slide" id="boole-bit" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2);">
+			<div class="content-box" style="max-width: 1400px; text-align: center;">
+				<h1 style="font-size: clamp(2rem, 4vw, 3.5rem); color: var(--warning); margin-bottom: 3rem;">
+					A Unidade Fundamental: O Bit
+				</h1>
+
+				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem;">
+					
+					<div style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 20px; border-bottom: 5px solid var(--accent);">
+						<h3 style="color: var(--accent); font-size: 2rem; margin-bottom: 1.5rem;">Lógica</h3>
+						<div style="font-size: 4rem; font-weight: 800; margin-bottom: 1rem;">True / False</div>
+						<p style="font-size: 1.3rem; opacity: 0.8;">Decisão binária de software e algoritmos.</p>
+					</div>
+
+					<div style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 20px; border-bottom: 5px solid var(--warning);">
+						<h3 style="color: var(--warning); font-size: 2rem; margin-bottom: 1.5rem;">Física</h3>
+						<div style="font-size: 4rem; font-weight: 800; margin-bottom: 1rem;">5V / 0V</div>
+						<p style="font-size: 1.3rem; opacity: 0.8;">Níveis de tensão elétrica medidos no hardware.</p>
+					</div>
+
+					<div style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 20px; border-bottom: 5px solid var(--white);">
+						<h3 style="color: var(--white); font-size: 2rem; margin-bottom: 1.5rem;">Dados</h3>
+						<div style="font-size: 4rem; font-weight: 800; margin-bottom: 1rem;">1 / 0</div>
+						<p style="font-size: 1.3rem; opacity: 0.8;">A linguagem que a CPU processa em nanosegundos.</p>
+					</div>
+				</div>
+
+				<div style="margin-top: 4rem;">
+					<p style="font-size: 1.4rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+						Como Analistas, entendemos que o software não "vê" palavras, mas sim <strong>bilhões de transistores</strong> chaveando entre esses dois estados.
+					</p>
+				</div>
+			</div>
+		</section>
+	
+		<section class="slide" id="estados-tensao" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, var(--navy) 0%, #000b1a 100%);">
+			<div class="content-box" style="max-width: 1400px; text-align: center; border: none;">
+				<h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem;">
+					02 | Estados Lógicos
+				</h2>
+				<h1 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 3rem;">Níveis de Tensão: <span style="color: var(--accent);">Onde a Elétrica vira Lógica</span></h1>
+
+				<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; align-items: stretch;">
+					
+					<div style="flex: 1 1 450px; background: rgba(40, 167, 69, 0.1); padding: 3rem; border-radius: 30px; border: 2px solid var(--accent); position: relative; overflow: hidden;">
+						<div style="font-size: 6rem; font-weight: 900; color: var(--accent); margin-bottom: 1rem;">5V</div>
+						<h3 style="font-size: 2.5rem; margin-bottom: 1rem;">Estado HIGH</h3>
+						<p style="font-size: 1.5rem; opacity: 0.9;">Presença de potencial elétrico. <br>Representado pelo valor lógico <strong>1</strong>.</p>
+						<div style="position: absolute; top: 10px; right: 20px; font-size: 5rem; opacity: 0.2; font-weight: 900;">ON</div>
+					</div>
+
+					<div style="flex: 1 1 450px; background: rgba(255, 255, 255, 0.05); padding: 3rem; border-radius: 30px; border: 2px solid rgba(255,255,255,0.2); position: relative; overflow: hidden;">
+						<div style="font-size: 6rem; font-weight: 900; color: #aaa; margin-bottom: 1rem;">0V</div>
+						<h3 style="font-size: 2.5rem; margin-bottom: 1rem;">Estado LOW</h3>
+						<p style="font-size: 1.5rem; opacity: 0.9;">Ausência (ou referência) de potencial. <br>Representado pelo valor lógico <strong>0</strong>.</p>
+						<div style="position: absolute; top: 10px; right: 20px; font-size: 5rem; opacity: 0.1; font-weight: 900;">OFF</div>
+					</div>
+
+				</div>
+
+				<p style="margin-top: 4rem; font-size: 1.3rem; font-style: italic; color: var(--warning);">
+					"Em sistemas digitais, não medimos volts, interpretamos estados." — <strong>Delgado & Ribeiro (2017)</strong>
+				</p>
+			</div>
+		</section>
+
+		<section class="slide" id="abstracao-binaria" style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+			<div class="content-box" style="max-width: 1400px; text-align: left; background: rgba(255,255,255,0.02); border-left: 10px solid var(--warning);">
+				
+				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 4rem; align-items: center;">
+					
+					<div>
+						<h1 style="font-size: clamp(2rem, 4vw, 3.2rem); color: var(--white); margin-bottom: 2rem;">Por que apenas <br><span style="color: var(--warning);">0 e 1?</span></h1>
+						<ul style="list-style: none; padding: 0;">
+							<li style="font-size: 1.6rem; margin-bottom: 1.5rem; display: flex; align-items: center;">
+								<span style="color: var(--accent); margin-right: 15px; font-size: 2rem;">✔</span> <strong>Confiabilidade:</strong> Menor margem de erro na leitura física.
+							</li>
+							<li style="font-size: 1.6rem; margin-bottom: 1.5rem; display: flex; align-items: center;">
+								<span style="color: var(--accent); margin-right: 15px; font-size: 2rem;">✔</span> <strong>Simplicidade:</strong> Circuitos com apenas dois estados são mais baratos.
+							</li>
+							<li style="font-size: 1.6rem; margin-bottom: 1.5rem; display: flex; align-items: center;">
+								<span style="color: var(--accent); margin-right: 15px; font-size: 2rem;">✔</span> <strong>Velocidade:</strong> Chaveamento (Switching) em nanosegundos.
+							</li>
+						</ul>
+					</div>
+
+					<div style="background: #000; padding: 2rem; border-radius: 20px; border: 1px solid var(--accent); box-shadow: 0 15px 40px rgba(0,0,0,0.5);">
+						<p style="font-family: 'Courier New', monospace; color: var(--accent); font-size: 1.2rem; margin-bottom: 1rem;">// Abstração de Baixo Nível</p>
+						<div style="font-family: 'Courier New', monospace; font-size: 1.8rem; line-height: 1.6;">
+							<span style="color: var(--warning);">if</span> (voltage > 2.0) {<br>
+							&nbsp;&nbsp;return <span style="color: var(--white);">"LOGIC 1"</span>;<br>
+							} <span style="color: var(--warning);">else</span> {<br>
+							&nbsp;&nbsp;return <span style="color: var(--white);">"LOGIC 0"</span>;<br>
+							}
+						</div>
+					</div>
+
+				</div>
+
+				<div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+					<p style="font-size: 1.4rem; font-weight: 300;">
+						Como <strong>Analistas de Sistemas</strong>, nossa missão é garantir que essa tradução do sinal elétrico para a lógica de software seja <strong>íntegra e segura</strong>.
+					</p>
+				</div>
+			</div>
+		</section>
+
+
+	<section class="slide" id="operador-not" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--navy) 0%, #001a33 100%);">
+    <div class="content-box" style="max-width: 1400px; text-align: center; border-top: 10px solid var(--warning);">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem;">
+            03 | Operador NOT
+        </h2>
+        <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); margin-bottom: 2rem;">A Lógica da <span style="color: var(--warning);">Inversão</span></h1>
+        
+        <p style="font-size: clamp(1.2rem, 2vw, 1.8rem); max-width: 900px; margin: 0 auto 3rem auto;">
+            O operador <strong>NOT</strong> (Inversor) é a porta lógica mais simples, possuindo uma única entrada e uma única saída. Sua função é inverter o estado lógico: o que é "Verdade" vira "Falso" e vice-versa.
+        </p>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; align-items: center;">
+            
+            <div style="flex: 1 1 400px; background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+                <h3 style="color: var(--accent); margin-bottom: 1.5rem; font-size: 1.8rem;">Símbolo ANSI/IEEE</h3>
+                <div style="font-family: 'Courier New', monospace; font-size: 2.5rem; color: var(--warning); margin-top: 1rem;">S = Ā</div>
+                <p style="font-size: 1.1rem; opacity: 0.7; margin-top: 0.5rem;">(Lê-se: S é igual a A negado)</p>
+            </div>
+
+            <div style="flex: 1 1 300px;">
+                <table class="logic-table" style="width: 100%; font-size: clamp(1.5rem, 3vw, 2.5rem); box-shadow: 0 20px 40px rgba(0,0,0,0.4);">
+                    <thead>
+                        <tr>
+                            <th style="background: var(--navy);">Entrada (A)</th>
+                            <th style="background: var(--accent);">Saída (S)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td style="color: var(--accent); font-weight: 900;">1</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td style="color: var(--warning); font-weight: 900;">0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="not-tecnico" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2);">
+    <div class="content-box" style="max-width: 1400px; text-align: left; border-right: 10px solid var(--accent);">
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 4rem; align-items: center;">
+            
+            <div>
+                <h1 style="font-size: clamp(2rem, 4vw, 3.2rem); color: var(--accent); margin-bottom: 1.5rem;">Complemento de Bit</h1>
+                <p style="font-size: 1.4rem; line-height: 1.6; margin-bottom: 2rem;">
+                    A inversão lógica é o alicerce para o <strong>Complemento de 1</strong>. Sem essa operação, a CPU não conseguiria realizar subtrações de forma eficiente utilizando apenas circuitos somadores.
+                </p>
+                
+                <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--warning);">
+                    <p style="margin: 0; font-size: 1.2rem; font-style: italic; opacity: 0.9;">
+                        "O inversor é o átomo da complexidade digital; dele derivam todas as negações de controle de fluxo." <br>
+                        <span style="font-weight: bold; color: var(--white);">— Monteiro (2007)</span>
+                    </p>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <div class="code-block" style="width: 100%; border: 2px solid var(--warning);">
+                    <div style="color: var(--warning); font-weight: bold; margin-bottom: 10px; font-size: 1rem;"># Operação Bitwise NOT (~)</div>
+                    <div style="font-size: 1.8rem; letter-spacing: 5px;">
+                        Original: <span style="color: var(--white);">10110001</span><br>
+                        <hr style="border: 0; border-top: 1px solid #333; margin: 10px 0;">
+                        Invertido: <span style="color: var(--accent); font-weight: bold;">01001110</span>
+                    </div>
+                </div>
+                <p style="margin-top: 1.5rem; font-size: 1.1rem; opacity: 0.6;">
+                    Essencial para máscaras de sub-rede invertidas (wildcards) e algoritmos de hash.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="operador-and" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--navy) 0%, #001f3f 100%);">
+    <div class="content-box" style="max-width: 1400px; text-align: center; border-top: 10px solid var(--accent);">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem;">
+            04 | Operador AND
+        </h2>
+        <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); margin-bottom: 2rem;">A Lógica da <span style="color: var(--accent);">Conjunção</span></h1>
+        
+        <p style="font-size: clamp(1.2rem, 2vw, 1.8rem); max-width: 950px; margin: 0 auto 3rem auto;">
+            O operador <strong>AND</strong> (E) funciona como um multiplicador binário. A saída será verdadeira <strong>apenas e somente se</strong> todas as entradas forem verdadeiras.
+        </p>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; align-items: center;">
+            
+            <div style="flex: 1 1 400px; background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+                <h3 style="color: var(--accent); margin-bottom: 1.5rem; font-size: 1.8rem;">Símbolo ANSI</h3>
+                
+
+[Image of AND gate logic diagram and truth table]
+
+                <div style="font-family: 'Courier New', monospace; font-size: 2.5rem; color: var(--accent); margin-top: 1rem; font-weight: bold;">S = A • B</div>
+                <p style="font-size: 1.1rem; opacity: 0.7;">(Representado matematicamente pela multiplicação)</p>
+            </div>
+
+            <div style="flex: 1 1 400px;">
+                <table class="logic-table" style="width: 100%; font-size: clamp(1.2rem, 2.5vw, 2rem);">
+                    <thead>
+                        <tr><th>A</th><th>B</th><th style="background: var(--accent);">S (Saída)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>0</td><td>1</td><td>0</td></tr>
+                        <tr><td>1</td><td>0</td><td>0</td></tr>
+                        <tr><td style="background: rgba(40,167,69,0.2);">1</td><td style="background: rgba(40,167,69,0.2);">1</td><td style="color: var(--accent); font-weight: 900; background: rgba(40,167,69,0.3);">1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="and-seguranca" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3);">
+    <div class="content-box" style="max-width: 1400px; text-align: left; border-left: 10px solid var(--warning);">
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 4rem; align-items: center;">
+            
+            <div>
+                <h1 style="font-size: clamp(2rem, 4vw, 3.2rem); color: var(--warning); margin-bottom: 1.5rem;">Lógica AND na Prática: 2FA</h1>
+                <p style="font-size: 1.4rem; line-height: 1.6; margin-bottom: 2rem;">
+                    Em segurança, a porta AND é o algoritmo que valida a <strong>Autenticação de Dois Fatores</strong>. O acesso só é concedido se o usuário possuir a Senha <strong>E</strong> o Token.
+                </p>
+                
+                <div style="background: var(--navy); padding: 1.5rem; border-radius: 12px; border: 1px dashed var(--accent);">
+                    <p style="margin: 0; font-size: 1.3rem; color: var(--accent); font-weight: bold;">
+                        Acesso = (Senha Correta) AND (Token Válido)
+                    </p>
+                </div>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 20px;">
+                <h3 style="color: var(--white); margin-bottom: 1rem;">Visão do Analista (Bitwise)</h3>
+                <div class="code-block" style="width: 100%; border-color: var(--accent);">
+                    <span style="color: #666;">// Validação de Permissões</span><br>
+                    User_Perm: <span style="color: var(--white);">1010</span> (Read/Execute)<br>
+                    File_Req:  <span style="color: var(--white);">1100</span> (Read/Write)<br>
+                    <hr style="border-color: #333;">
+                    <span style="color: var(--accent);">RESULT (AND): 1000</span> (Apenas Read)
+                </div>
+                <p style="margin-top: 1rem; font-size: 1.1rem; opacity: 0.7;">
+                    Referência: <strong>Delgado & Ribeiro (2017)</strong> - "A porta AND é o filtro elementar de qualquer sistema de controle".
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="operador-or" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--navy) 0%, #0a001f 100%);">
+    <div class="content-box" style="max-width: 1400px; text-align: center; border-top: 10px solid #ff4757;">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem;">
+            05 | Operador OR
+        </h2>
+        <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); margin-bottom: 2rem;">A Lógica da <span style="color: #ff4757;">Disjunção</span></h1>
+        
+        <p style="font-size: clamp(1.2rem, 2vw, 1.8rem); max-width: 950px; margin: 0 auto 3rem auto;">
+            O operador <strong>OR</strong> (OU) funciona como um somador binário. A saída será verdadeira se <strong>pelo menos uma</strong> das entradas for verdadeira.
+        </p>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; align-items: center;">
+            
+            <div style="flex: 1 1 400px; background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+                <h3 style="color: #ff4757; margin-bottom: 1.5rem; font-size: 1.8rem;">Símbolo ANSI</h3>
+                <div style="font-family: 'Courier New', monospace; font-size: 2.5rem; color: #ff4757; margin-top: 1rem; font-weight: bold;">S = A + B</div>
+                <p style="font-size: 1.1rem; opacity: 0.7;">(Representado matematicamente pela soma lógica)</p>
+            </div>
+
+            <div style="flex: 1 1 400px;">
+                <table class="logic-table" style="width: 100%; font-size: clamp(1.2rem, 2.5vw, 2rem);">
+                    <thead>
+                        <tr><th>A</th><th>B</th><th style="background: #ff4757;">S (Saída)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>0</td><td>0</td><td style="color: #ff4757; font-weight: 900;">0</td></tr>
+                        <tr><td style="background: rgba(255,71,87,0.1);">0</td><td style="background: rgba(255,71,87,0.1);">1</td><td style="color: var(--white); background: rgba(255,71,87,0.2);">1</td></tr>
+                        <tr><td style="background: rgba(255,71,87,0.1);">1</td><td style="background: rgba(255,71,87,0.1);">0</td><td style="color: var(--white); background: rgba(255,71,87,0.2);">1</td></tr>
+                        <tr><td style="background: rgba(255,71,87,0.1);">1</td><td style="background: rgba(255,71,87,0.1);">1</td><td style="color: var(--white); background: rgba(255,71,87,0.2);">1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="or-seguranca" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3);">
+    <div class="content-box" style="max-width: 1400px; text-align: left; border-left: 10px solid #ff4757;">
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 4rem; align-items: center;">
+            
+            <div>
+                <h1 style="font-size: clamp(2rem, 4vw, 3.2rem); color: #ff4757; margin-bottom: 1.5rem;">Sistemas de Alarme</h1>
+                <p style="font-size: 1.4rem; line-height: 1.6; margin-bottom: 2rem;">
+                    A porta OR é a base dos sistemas de monitorização. O alarme deve disparar se o Sensor de Janela <strong>OU</strong> o Sensor de Porta for violado.
+                </p>
+                
+                <div style="background: var(--navy); padding: 1.5rem; border-radius: 12px; border: 1px dashed #ff4757;">
+                    <p style="margin: 0; font-size: 1.3rem; color: #ff4757; font-weight: bold;">
+                        Sirene = (Sensor_A == 1) OR (Sensor_B == 1)
+                    </p>
+                </div>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 20px;">
+                <h3 style="color: var(--white); margin-bottom: 1rem;">Alta Disponibilidade (HA)</h3>
+                <p style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 1.5rem;">
+                    Em servidores, o sistema continua online se o Link A <strong>OU</strong> o Link B estiverem ativos.
+                </p>
+                <div class="code-block" style="width: 100%; border-color: #ff4757;">
+                    <span style="color: #666;">// Verificação de Status</span><br>
+                    Status_Servidor: <span style="color: var(--white);">UP</span><br>
+                    Causa: <span style="color: var(--accent);">Link_Primario (0)</span> OR <span style="color: var(--accent);">Link_Backup (1)</span><br>
+                    <hr style="border-color: #333;">
+                    <span style="color: var(--accent);">RESULTADO: 1 (Operacional)</span>
+                </div>
+                <p style="margin-top: 1rem; font-size: 1.1rem; opacity: 0.7;">
+                    Referência: <strong>Monteiro (2007)</strong> - "A disjunção permite a construção de caminhos alternativos de dados".
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="intervalo-reset" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, #001a33 0%, var(--navy) 100%);">
+    <div class="content-box" style="max-width: 1000px; text-align: center; border: 2px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.02); padding: 4rem;">
+        
+        <div style="margin-bottom: 2rem;">
+            <span style="background: var(--warning); color: var(--navy); padding: 10px 30px; border-radius: 50px; font-weight: 900; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 5px;">
+                System Idle
+            </span>
+        </div>
+
+        <h1 style="font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--white); margin-bottom: 1rem;">
+            Intervalo: <span style="color: var(--warning);">Reset de Ciclo</span>
+        </h1>
+        
+        <p style="font-size: clamp(1.2rem, 2vw, 1.6rem); opacity: 0.8; margin-bottom: 3rem;">
+            Momento para limpeza de cache, networking e hidratação.
+        </p>
+
+        <div style="display: inline-flex; align-items: center; justify-content: center; gap: 20px; background: rgba(0,0,0,0.3); padding: 2rem 4rem; border-radius: 20px; border: 1px solid var(--warning);">
+            <div style="text-align: center;">
+                <div style="font-size: 5rem; font-weight: 900; color: var(--white); line-height: 1;">20</div>
+                <div style="font-size: 1rem; text-transform: uppercase; opacity: 0.6;">Minutos</div>
+            </div>
+            <div style="font-size: 4rem; font-weight: 300; color: var(--warning); line-height: 1;">:</div>
+            <div style="text-align: center;">
+                <div style="font-size: 5rem; font-weight: 900; color: var(--white); line-height: 1;">00</div>
+                <div style="font-size: 1rem; text-transform: uppercase; opacity: 0.6;">Segundos</div>
+            </div>
+        </div>
+
+        <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);">
+            <p style="font-size: 1.3rem; font-weight: 300; font-style: italic;">
+                "A criatividade e a resolução de problemas complexos ocorrem frequentemente nos momentos de repouso do processamento central."
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<section class="slide" id="tabela-verdade-intro" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--navy) 0%, #001226 100%);">
+    <div class="content-box" style="max-width: 1400px; text-align: center; border-top: 10px solid var(--accent);">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem;">
+            07 | Tabela Verdade
+        </h2>
+        <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); margin-bottom: 2rem;">Mapeando o <span style="color: var(--accent);">DNA Digital</span></h1>
+        
+        <p style="font-size: clamp(1.2rem, 2vw, 1.8rem); max-width: 1000px; margin: 0 auto 3rem auto;">
+            A Tabela Verdade é o instrumento que enumera todas as combinações possíveis de entrada e define o comportamento exato da saída. O número de combinações é dado por <strong>2<sup>n</sup></strong> (onde n é o número de entradas).
+        </p>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 60px; align-items: center;">
+            
+            <div style="flex: 1 1 350px; background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 20px; border: 1px solid var(--accent);">
+                <h3 style="color: var(--accent); margin-bottom: 1rem; font-size: 1.8rem;">Cálculo de Linhas</h3>
+                <div style="font-size: 4rem; font-weight: 800; color: var(--white);">2<sup>n</sup></div>
+                <p style="font-size: 1.3rem; opacity: 0.8; margin-top: 1rem;">
+                    2 Entradas = 4 Linhas<br>
+                    3 Entradas = 8 Linhas<br>
+                    4 Entradas = 16 Linhas
+                </p>
+            </div>
+
+            <div style="flex: 1 1 500px;">
+                
+                <p style="margin-top: 1.5rem; font-size: 1.1rem; font-style: italic; opacity: 0.7;">
+                    "Sem uma tabela verdade, não há previsibilidade. Sem previsibilidade, não há segurança." — <strong>Monteiro (2007)</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="tabela-pericia" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2);">
+    <div class="content-box" style="max-width: 1400px; text-align: left; border-right: 10px solid var(--warning);">
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 4rem; align-items: center;">
+            
+            <div>
+                <h1 style="font-size: clamp(2rem, 4vw, 3.2rem); color: var(--warning); margin-bottom: 1.5rem;">Diagnóstico e Perícia</h1>
+                <p style="font-size: 1.4rem; line-height: 1.6; margin-bottom: 2rem;">
+                    Na análise de falhas, comparamos a <strong>Saída Real</strong> medida no hardware com a <strong>Saída Esperada</strong> da Tabela Verdade. Qualquer divergência indica uma falha no componente ou um ataque de hardware.
+                </p>
+                
+                <ul style="list-style: none; padding: 0;">
+                    <li style="font-size: 1.3rem; margin-bottom: 1rem; color: var(--accent);">● <strong>Output 0 inesperado:</strong> Falha de energia ou curto-circuito.</li>
+                    <li			 style="font-size: 1.3rem; margin-bottom: 1rem; color: var(--warning);">● <strong>Output 1 inesperado:</strong> Sobrecarga ou "Stuck-at" fault.</li>
+                </ul>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px;">
+                <h3 style="color: var(--white); margin-bottom: 1.5rem; text-align: center;">Tabela de Verificação</h3>
+                <table class="logic-table" style="width: 100%; font-size: 1.2rem;">
+                    <thead>
+                        <tr><th>In</th><th>Esperado</th><th style="background: #cc0000;">Medido</th><th>Status</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>0 0</td><td>0</td><td>0</td><td style="color: var(--accent);">OK</td></tr>
+                        <tr><td>1 1</td><td>1</td><td style="color: #ff4d4d; font-weight: bold;">0</td><td style="color: #ff4d4d;">ERRO</td></tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 1rem; font-size: 1rem; opacity: 0.6; text-align: center;">
+                    Referência: <strong>Delgado & Ribeiro (2017)</strong> - Análise de Confiabilidade de Sistemas.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="transistor-chave" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle, #001a33 0%, var(--navy) 100%);">
+    <div class="content-box" style="max-width: 1400px; text-align: center; border-bottom: 10px solid var(--accent);">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem;">
+            08 | Implementação Física
+        </h2>
+        <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); margin-bottom: 2rem;">O Transístor: <span style="color: var(--accent);">A Chave Digital</span></h1>
+        
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 50px; align-items: center;">
+            
+            <div style="flex: 1 1 500px; text-align: left;">
+                <p style="font-size: clamp(1.2rem, 2vw, 1.7rem); line-height: 1.6;">
+                    As portas lógicas não são mágicas; são circuitos eletrónicos compostos por <strong>Transístores</strong>. Em sistemas digitais, o transístor opera em dois estados:
+                </p>
+                <ul style="list-style: none; padding: 0; margin-top: 2rem;">
+                    <li style="font-size: 1.4rem; margin-bottom: 1.5rem;">
+                        <span style="color: var(--accent); font-weight: bold;">● CORTE (OFF):</span> Não passa corrente. Representa o <strong>0 lógico</strong>.
+                    </li>
+                    <li style="font-size: 1.4rem; margin-bottom: 1.5rem;">
+                        <span style="color: var(--accent); font-weight: bold;">● SATURAÇÃO (ON):</span> Passa corrente. Representa o <strong>1 lógico</strong>.
+                    </li>
+                </ul>
+            </div>
+
+            <div style="flex: 1 1 400px; background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px;">
+                
+                <p style="margin-top: 1rem; font-size: 1.1rem; opacity: 0.7;">
+                    A tecnologia <strong>CMOS</strong> (Complementary Metal-Oxide-Semiconductor) usa pares de transístores para alta eficiência energética.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="construindo-portas" style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <div class="content-box" style="max-width: 1400px; text-align: left; border-left: 10px solid var(--warning);">
+        
+        <h1 style="font-size: clamp(2rem, 4vw, 3.2rem); color: var(--warning); margin-bottom: 2.5rem; text-align: center;">Arranjos Físicos e Lógica</h1>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem;">
+            
+            <div style="padding: 2.5rem; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+                <h3 style="color: var(--accent); font-size: 1.8rem; margin-bottom: 1.5rem;">Porta AND (Série)</h3>
+                <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">
+                    Imagine dois interruptores em <strong>série</strong>. A lâmpada só acende se o Interruptor A <strong>E</strong> o B estiverem fechados.
+                </p>
+                <div style="text-align: center; font-size: 1.5rem; letter-spacing: 5px; background: #000; padding: 10px; border-radius: 8px;">
+                    —[A]—[B]—( )—
+                </div>
+            </div>
+
+            <div style="padding: 2.5rem; background: rgba(255,255,255,0.03); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+                <h3 style="color: #ff4757; font-size: 1.8rem; margin-bottom: 1.5rem;">Porta OR (Paralelo)</h3>
+                <p style="font-size: 1.2rem; margin-bottom: 1.5rem;">
+                    Dois interruptores em <strong>paralelo</strong>. A lâmpada acende se o Interruptor A <strong>OU</strong> o B estiverem fechados.
+                </p>
+                <div style="text-align: center; font-size: 1.5rem; letter-spacing: 5px; background: #000; padding: 10px; border-radius: 8px;">
+                    —+[A]+—( )—<br>
+                    &nbsp;&nbsp;&nbsp;L[B]J
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 3rem; padding: 1.5rem; background: rgba(0, 33, 71, 0.5); border-radius: 15px;">
+            <p style="margin: 0; font-size: 1.2rem; text-align: center;">
+                <strong>💡 Insight de Arquitetura:</strong> "Biliões desses arranjos microscópicos são o que formam o processador que você está a usar agora." — <strong>Monteiro (2007)</strong>.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="expressoes-algebra" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--navy) 0%, #001f3f 100%);">
+    <div class="content-box" style="max-width: 1400px; text-align: center; border-top: 10px solid var(--warning);">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem;">
+            09 | Expressões Compostas
+        </h2>
+        <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); margin-bottom: 2rem;">Do Papel: <span style="color: var(--warning);">A Álgebra Lógica</span></h1>
+        
+        <p style="font-size: clamp(1.2rem, 2vw, 1.8rem); max-width: 1000px; margin: 0 auto 3rem auto;">
+            Assim como na matemática tradicional, as operações lógicas podem ser combinadas em expressões complexas. A ordem de precedência (NOT > AND > OR) define como o sinal trafega pelo circuito.
+        </p>
+
+        <div style="background: rgba(0,0,0,0.3); padding: 3rem; border-radius: 20px; border: 1px dashed var(--warning); display: inline-block;">
+            <div style="font-family: 'Courier New', monospace; font-size: clamp(1.5rem, 4vw, 3.5rem); color: var(--white); font-weight: bold;">
+                S = (A • B) + C
+            </div>
+            <p style="margin-top: 1rem; color: var(--accent); font-size: 1.3rem; text-transform: uppercase; letter-spacing: 2px;">
+                Saída = (A AND B) OR C
+            </p>
+        </div>
+
+        <div style="margin-top: 3rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+            <div style="background: rgba(255,255,255,0.05); padding: 1rem 2rem; border-radius: 10px; font-size: 1.1rem;">
+                <strong>1º Passo:</strong> Resolver parênteses
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 1rem 2rem; border-radius: 10px; font-size: 1.1rem;">
+                <strong>2º Passo:</strong> Operações NOT
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 1rem 2rem; border-radius: 10px; font-size: 1.1rem;">
+                <strong>3º Passo:</strong> Operações AND
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 1rem 2rem; border-radius: 10px; font-size: 1.1rem;">
+                <strong>4º Passo:</strong> Operações OR
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="expressoes-silicio" style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <div class="content-box" style="max-width: 1400px; text-align: left; border-left: 10px solid var(--accent);">
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 4rem; align-items: center;">
+            
+            <div>
+                <h1 style="font-size: clamp(2rem, 4vw, 3.2rem); color: var(--accent); margin-bottom: 2rem;">Ao Silício: O Circuito</h1>
+                <p style="font-size: 1.4rem; line-height: 1.6; margin-bottom: 2rem;">
+                    Cada operador na sua expressão representa uma <strong>Porta Lógica física</strong> dentro de um Circuito Integrado (CI). A combinação dessas portas permite que a CPU execute decisões complexas em nanosegundos.
+                </p>
+                
+                <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 15px;">
+                    <p style="margin: 0; font-size: 1.2rem;">
+                        <strong>Visão Pericial:</strong> Analisar o diagrama de um circuito é o primeiro passo para identificar falhas de lógica em sistemas embarcados ou dispositivos de segurança física.
+                    </p>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px; border: 1px solid var(--accent);">
+                    
+                    <p style="margin-top: 1.5rem; font-size: 1.2rem; font-weight: bold; color: var(--warning);">
+                        Expressão Implementada: S = (A • B) + C
+                    </p>
+                </div>
+                <p style="margin-top: 1rem; font-size: 1rem; opacity: 0.6;">
+                    Referência: <strong>Delgado & Ribeiro (2017)</strong> - Projeto de Circuitos Combinatórios.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="seguranca-redes" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--navy) 0%, #001a33 100%);">
+    <div class="content-box" style="max-width: 1400px; text-align: center; border-top: 10px solid var(--accent);">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem;">
+            10 | Aplicação em Segurança
+        </h2>
+        <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); margin-bottom: 2rem;">Máscaras de Rede: <span style="color: var(--accent);">O Filtro AND</span></h1>
+        
+        <p style="font-size: clamp(1.1rem, 1.8vw, 1.5rem); max-width: 1000px; margin: 0 auto 3rem auto;">
+            Para um router decidir se um pacote é local ou externo, ele realiza uma operação <strong>AND bit a bit</strong> entre o endereço IP de destino e a Máscara de Sub-rede.
+        </p>
+
+        <div style="background: rgba(0,0,0,0.4); padding: clamp(1.5rem, 5vw, 3rem); border-radius: 20px; border: 1px solid var(--accent); display: inline-block; text-align: left;">
+            <div style="font-family: 'Courier New', monospace; font-size: clamp(1.2rem, 2.5vw, 2rem); line-height: 1.8;">
+                IP (Dec): 192.168.1.50 &nbsp;-> <span style="color: var(--white);">11000000.10101000.00000001.00110010</span><br>
+                Masc: 255.255.255.0 -> <span style="color: var(--warning);">11111111.11111111.11111111.00000000</span><br>
+                <hr style="border-color: #444; margin: 15px 0;">
+                <span style="color: var(--accent); font-weight: bold;">REDE (AND): 11000000.10101000.00000001.00000000 (192.168.1.0)</span>
+            </div>
+        </div>
+
+        <p style="margin-top: 2rem; font-size: 1.2rem; opacity: 0.7; font-style: italic;">
+            "A porta AND é o firewall elementar que define fronteiras de rede." — <strong>Stallings (2017)</strong>
+        </p>
+    </div>
+</section>
+
+<section class="slide" id="seguranca-raid-cripto" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.2);">
+    <div class="content-box" style="max-width: 1400px; text-align: left; border-right: 10px solid var(--warning);">
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 4rem; align-items: center;">
+            
+            <div>
+                <h1 style="font-size: clamp(2rem, 4vw, 3.2rem); color: var(--warning); margin-bottom: 1.5rem;">Integridade e Segredo</h1>
+                <p style="font-size: 1.4rem; line-height: 1.6; margin-bottom: 2rem;">
+                    A lógica combinatória garante que os dados possam ser recuperados mesmo em caso de perda total de um disco físico ou protegidos contra leitura não autorizada.
+                </p>
+                
+                <ul style="list-style: none; padding: 0;">
+                    <li style="font-size: 1.4rem; margin-bottom: 1.5rem; display: flex; align-items: flex-start;">
+                        <span style="color: var(--accent); margin-right: 15px;">💾</span>
+                        <span><strong>RAID (Redundância):</strong> Uso de paridade (XOR/OR) para reconstruir dados em discos espelhados.</span>
+                    </li>
+                    <li style="font-size: 1.4rem; margin-bottom: 1.5rem; display: flex; align-items: flex-start;">
+                        <span style="color: var(--accent); margin-right: 15px;">🔐</span>
+                        <span><strong>Criptografia:</strong> Operações lógicas que transformam o texto claro em cifras baseadas em chaves binárias.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 20px; border: 1px dashed var(--warning);">
+                <h3 style="color: var(--white); margin-bottom: 1.5rem; text-align: center;">Visão Pericial</h3>
+                <p style="font-size: 1.2rem; line-height: 1.5; opacity: 0.9;">
+                    Na recuperação de dados (Data Recovery), o perito utiliza o conhecimento de portas lógicas para validar se os blocos de dados mantêm a paridade esperada definida no controlador de armazenamento.
+                </p>
+                <div style="margin-top: 2rem; padding: 1rem; background: var(--navy); border-radius: 10px; font-size: 1rem; text-align: center;">
+                    <strong>Referência:</strong> Delgado & Ribeiro (2017) - "Lógica Aplicada à Segurança".
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="atividade-desafio" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--navy) 0%, #002b5c 100%);">
+    <div class="content-box" style="max-width: 1400px; text-align: center; border-top: 10px solid var(--accent);">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem;">
+            11 | Atividade Prática
+        </h2>
+        <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); margin-bottom: 2rem;">Desafio: <span style="color: var(--accent);">Controle de Acesso Biométrico</span></h1>
+        
+        <p style="font-size: clamp(1.1rem, 2vw, 1.5rem); max-width: 900px; margin: 0 auto 3rem auto;">
+            Como Analista de Sistemas, você deve projetar a lógica de uma sala de alta segurança. A porta só deve abrir se:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; text-align: left;">
+            <div style="background: rgba(40, 167, 69, 0.1); padding: 2rem; border-radius: 15px; border: 1px solid var(--accent);">
+                <h3 style="color: var(--accent); margin-top: 0;">Cenário A</h3>
+                <p style="font-size: 1.2rem;">O <strong>Cartão (A)</strong> for lido E a <strong>Biometria (B)</strong> for válida.</p>
+            </div>
+            <div style="background: rgba(255, 193, 7, 0.1); padding: 2rem; border-radius: 15px; border: 1px solid var(--warning);">
+                <h3 style="color: var(--warning); margin-top: 0;">Cenário B</h3>
+                <p style="font-size: 1.2rem;">A <strong>Chave Mestra (C)</strong> for inserida manualmente.</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 3rem; background: rgba(0,0,0,0.3); padding: 2rem; border-radius: 20px;">
+            <p style="font-size: 1.8rem; font-weight: bold; color: var(--white);">
+                Expressão Alvo: <span style="color: var(--accent);">S = (A • B) + C</span>
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="simulacao-passo" style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <div class="content-box" style="max-width: 1400px; text-align: left; border-left: 10px solid var(--warning);">
+        
+        <h1 style="font-size: clamp(2rem, 4vw, 3.2rem); color: var(--warning); margin-bottom: 2.5rem;">Hands-on: Do Diagrama ao Bit</h1>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 4rem; align-items: flex-start;">
+            
+            <div>
+                <h3 style="color: var(--white); font-size: 1.8rem; margin-bottom: 1.5rem;">🛠️ Roteiro de Execução</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="font-size: 1.3rem; margin-bottom: 1.2rem; display: flex; align-items: flex-start;">
+                        <span style="color: var(--accent); margin-right: 15px; font-weight: bold;">1.</span>
+                        Aceda ao simulador indicado (Logisim ou Digital).
+                    </li>
+                    <li style="font-size: 1.3rem; margin-bottom: 1.2rem; display: flex; align-items: flex-start;">
+                        <span style="color: var(--accent); margin-right: 15px; font-weight: bold;">2.</span>
+                        Posicione as entradas (Inputs) A, B e C.
+                    </li>
+                    <li style="font-size: 1.3rem; margin-bottom: 1.2rem; display: flex; align-items: flex-start;">
+                        <span style="color: var(--accent); margin-right: 15px; font-weight: bold;">3.</span>
+                        Conecte A e B em uma porta <strong>AND</strong>.
+                    </li>
+                    <li style="font-size: 1.3rem; margin-bottom: 1.2rem; display: flex; align-items: flex-start;">
+                        <span style="color: var(--accent); margin-right: 15px; font-weight: bold;">4.</span>
+                        Conecte o resultado à entrada de uma porta <strong>OR</strong> junto com C.
+                    </li>
+                </ul>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px; text-align: center;">
+                <h3 style="color: var(--accent); margin-bottom: 1rem;">Validação</h3>
+                <p style="font-size: 1.1rem; opacity: 0.8; margin-bottom: 1.5rem;">Preencha a Tabela Verdade no seu relatório para as 8 combinações (2<sup>3</sup>).</p>
+                <div style="border: 2px dashed var(--accent); padding: 20px; color: var(--accent); font-weight: bold; font-size: 1.2rem;">
+                    [Inserir Print do Circuito no Canvas]
+                </div>
+                <p style="margin-top: 1rem; font-size: 0.9rem;">
+                    Referência: <strong>Monteiro (2007)</strong> - Análise de Circuitos Digitais.
+                </p>
+            </div>
+
+        </div>
+
+        <div style="margin-top: 3rem; text-align: center;">
+            <button class="btn-engajamento" style="background: var(--warning); color: var(--navy); font-weight: 900;" onclick="logInteracao('atividade_pratica', 'iniciou_simulacao', 'slide_11', '2026-03-12', 'Sistemas_Computacionais_Seguranca')">
+                Registar Início da Atividade ⏱️
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="fechamento-resumo" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, var(--navy) 0%, #00152e 100%);">
+    <div class="content-box" style="max-width: 1400px; text-align: left; border-top: 10px solid var(--accent);">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1rem;">
+            12 | Fechamento
+        </h2>
+        <h1 style="font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 3rem;">Consolidação do <span style="color: var(--accent);">Conhecimento</span></h1>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem;">
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px;">
+                <h3 style="color: var(--warning);">Módulo I: Fundamentos</h3>
+                <p style="font-size: 1.2rem; opacity: 0.8;">Dominamos a transição da tensão elétrica (5V/0V) para a lógica binária (1/0) através de George Boole.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px;">
+                <h3 style="color: var(--accent);">Módulo II: Portas Lógicas</h3>
+                <p style="font-size: 1.2rem; opacity: 0.8;">Analisamos como AND, OR e NOT formam a base de segurança para 2FA, Alarmes e Máscaras de Rede.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px;">
+                <h3 style="color: var(--white);">Rumo à A3</h3>
+                <p style="font-size: 1.2rem; opacity: 0.8;">O projeto prático exigirá a aplicação destas expressões para resolver problemas reais de infraestrutura.</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 4rem; padding: 2rem; background: rgba(40, 167, 69, 0.1); border-radius: 15px; text-align: center;">
+            <p style="margin: 0; font-size: 1.4rem; font-weight: bold;">
+                "A simplicidade do bit é o que permite a complexidade da inteligência artificial."
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="fechamento-feedback" style="min-height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <div class="content-box" style="max-width: 1400px; text-align: center; border: none; background: transparent;">
+        
+        <h1 style="font-size: clamp(2rem, 5vw, 4rem); color: var(--white); margin-bottom: 2rem;">Aula Concluída com Sucesso!</h1>
+        <p style="font-size: 1.5rem; opacity: 0.8; margin-bottom: 4rem;">Como foi a sua experiência de processamento hoje?</p>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+            <button class="btn-engajamento" style="background: var(--accent);" 
+                onclick="logInteracao('feedback_aula', 'excelente', 'final_aula', '2026-03-12', 'Sistemas_Computacionais_Seguranca'); alert('Ótimo! Vejo-te na próxima aula.');">
+                Excelente! 🚀
+            </button>
+            <button class="btn-engajamento" style="background: var(--warning); color: var(--navy);" 
+                onclick="logInteracao('feedback_aula', 'bom', 'final_aula', '2026-03-12', 'Sistemas_Computacionais_Seguranca'); alert('Boa! Vamos continuar a evoluir.');">
+                Bom / Desafiador 🧠
+            </button>
+            <button class="btn-engajamento" style="background: #6c757d;" 
+                onclick="window.location.href='#agenda-boole';">
+                Rever Agenda 🔄
+            </button>
+        </div>
+
+        <div style="margin-top: 5rem; display: flex; flex-direction: column; align-items: center;">
+            <div id="qrcode-persistente" style="background: white; padding: 10px; border-radius: 10px;"></div>
+            <p style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.6; letter-spacing: 2px;">REGISTO DE PRESENÇA FINAL</p>
+        </div>
+
+        <footer style="margin-top: 4rem; position: relative; background: transparent; border: none;">
+            <p style="font-size: 1rem;">© 2026 | Prof. Dr. Lincoln Sposito | Sistemas Computacionais e Segurança</p>
+        </footer>
+    </div>
+</section>
+
+	
+
+	</div>
+
+    <script>
+        // Sistema de Observer para o efeito "Flutuar" (Slide Ativo)
+        const observerOptions = { threshold: 0.4 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.slide').forEach(slide => {
+            observer.observe(slide);
+        });
+
+        // Navegação Suave por Teclado (Desktop)
+        document.addEventListener('keydown', (e) => {
+            if (window.innerWidth > 1024) { // Apenas Desktop para não conflitar com o touch do celular
+                const slides = document.querySelectorAll('.slide');
+                let current = [...slides].findIndex(s => s.getBoundingClientRect().top >= -50 && s.getBoundingClientRect().top <= 50);
+                
+                if ((e.key === 'ArrowRight' || e.key === 'ArrowDown') && current < slides.length - 1) {
+                    slides[current + 1].scrollIntoView({ behavior: 'smooth' });
+                }
+                if ((e.key === 'ArrowLeft' || e.key === 'ArrowUp') && current > 0) {
+                    slides[current - 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
