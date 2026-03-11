@@ -292,80 +292,38 @@
 			setTimeout(gerirFluxo, 500);
 		};
 	</script>	
+	<script>
+	(function(){
+		if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>
+			{if(!window.chatbase.q){window.chatbase.q=[]}
+			window.chatbase.q.push(arguments)
+		};
+		window.chatbase=new Proxy(window.chatbase,{
+			get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}
+			})
+		}
+		const onLoad=function(){
+			const script=document.createElement("script");
+			script.src="https://www.chatbase.co/embed.min.js";
+			script.id="uFEke3ZP9R3S3o5CFSMyh";
+			script.domain="www.chatbase.co";
+
+			// --- ADIÇÃO PARA PERFORMANCE ---
+			script.async = true; 
+			script.defer = true;
+			// -------------------------------
+			
+			// Dentro da sua função onLoad, antes do appendChild:
+			script.setAttribute('data-priority', 'low');
+			
+			document.body.appendChild(script)
+		};
+		if(document.readyState==="complete"){
+			onLoad()
+		}else{
+			window.addEventListener("load",onLoad)
+		}
+	})();
+</script>
 </body>
 </html>
-
-<!-- <script> -->
-    <!-- // Função para verificar se o arquivo existe antes de navegar -->
-    <!-- async function navegarParaAula(url, status, ref) { -->
-        <!-- // Dispara o log para o Google Analytics antes da verificação -->
-        <!-- if (typeof logAcesso === "function") { -->
-            <!-- logAcesso(status, ref, url); -->
-        <!-- } -->
-		
-		<!-- try { -->
-            <!-- const response = await fetch(url, { method: 'HEAD' }); -->
-            <!-- if (response.ok) { -->
-                <!-- logAcesso(status, ref, url); -->
-                <!-- window.location.href = url + "?ref=" + ref; -->
-            <!-- } else { -->
-                <!-- alert("Professor Lincoln ainda está preparando este material. Por favor, aguarde a liberação em sala! 😊"); -->
-            <!-- } -->
-        <!-- } catch (error) { -->
-            <!-- alert("Não foi possível acessar o material no momento."); -->
-        <!-- } -->
-    <!-- } -->
-	<!-- </script> -->
-<!-- <script>     -->
-<!-- function gerirFluxo() { -->
-    <!-- const agora = new Date(); -->
-    <!-- const diaAtual = agora.getDate(); -->
-    <!-- const mesAtual = agora.getMonth() + 1; -->
-    <!-- const tempoAtualMin = (agora.getHours() * 60) + agora.getMinutes(); -->
-
-    <!-- aulas.forEach(aula => { -->
-        <!-- const row = document.getElementById(aula.id); -->
-        <!-- if (!row) return; -->
-
-        <!-- const linkCell = row.querySelector('.link-cell'); -->
-        <!-- const [diaAula, mesAula] = aula.data.split('/').map(Number); -->
-        <!-- const [horaInicio, minInicio] = aula.horario.split(':').map(Number); -->
-        <!-- const tempoInicioMin = (horaInicio * 60) + minInicio; -->
-        <!-- const limitePontual = tempoInicioMin + 15; -->
-
-        <!-- // Limpa a célula antes de decidir -->
-        <!-- linkCell.innerHTML = ""; -->
-
-        <!-- // CASO 1: É o dia da aula -->
-        <!-- if (diaAtual === diaAula && mesAtual === mesAula) { -->
-            <!-- // Janela de entrada pontual -->
-            <!-- if (tempoAtualMin >= (tempoInicioMin - 30) && tempoAtualMin <= limitePontual) { -->
-                <!-- document.getElementById('aula-em-curso').style.display = 'block'; -->
-                <!-- linkCell.innerHTML = `<a href="${aula.url}?ref=index" class="btn-link" onclick="logAcesso('pontual', 'index', '${aula.id}')">Entrar na Aula</a>`; -->
-            <!-- }  -->
-            <!-- // Janela de atraso (até 3h depois do início) -->
-            <!-- else if (tempoAtualMin > limitePontual && tempoAtualMin <= (tempoInicioMin + 180)) { -->
-                <!-- document.getElementById('aula-em-curso').style.display = 'block'; -->
-                <!-- linkCell.innerHTML = `<span class="atrasado-lock">Acesso via Projeção</span>`; -->
-            <!-- } -->
-            <!-- else { -->
-                <!-- linkCell.innerHTML = `<a href="${aula.url}?ref=estudo" class="btn-link" onclick="logAcesso('revisao', 'index', '${aula.id}')">Revisar Material</a>`; -->
-            <!-- } -->
-        <!-- }  -->
-        <!-- // CASO 2: A aula já passou (Data Atual > Data da Aula) ou é futuro -->
-        <!-- else { -->
-            <!-- const dataAulaObj = new Date(2026, mesAula - 1, diaAula); -->
-            <!-- if (agora > dataAulaObj) { -->
-                <!-- // Se a aula já passou, sempre mostra "Revisar Material" -->
-                <!-- linkCell.innerHTML = `<a href="${aula.url}?ref=estudo" class="btn-link" onclick="logAcesso('revisao', 'index', '${aula.id}')">Revisar Material</a>`; -->
-            <!-- } else { -->
-                <!-- // Aula futura -->
-                <!-- linkCell.innerHTML = `<span style="color: #999; font-size: 0.8rem;">Disponível em ${aula.data}</span>`; -->
-            <!-- } -->
-        <!-- } -->
-    <!-- }); -->
-<!-- } -->
-    <!-- window.onload = function() { -->
-        <!-- setTimeout(gerirFluxo, 500); -->
-    <!-- }; -->
-<!-- </script> -->
