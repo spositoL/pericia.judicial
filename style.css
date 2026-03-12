@@ -556,6 +556,9 @@ img {
 /* 5. Padrão/Geral: O Vinho Escuro que você gostou fica ótimo aqui */
 .tag-standard { background: #4D050E; }
 
+/* Tag para Dossiês e Investigações */
+.tag-investigativo { background: #000000; color: #c5a059; border: 1px solid #c5a059; }
+
 /* Classe utilitária para o filtro JavaScript */
 .hidden {
     display: none !important;
