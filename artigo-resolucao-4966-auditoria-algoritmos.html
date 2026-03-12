@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Resolução 4.966 e Auditoria de Algoritmos: A Nova Perícia Bancária | Dr. Lincoln Sposito</title>
+    <meta name="description" content="A transição para a Perda Esperada (ECL) sob a ótica da governança de dados e auditoria de algoritmos. Dr. Lincoln Sposito analisa os impactos da Resolução 4.966.">
+    <meta name="keywords" content="Resolução 4.966, CMN 4.966/21, Auditoria de Algoritmos, Perda Esperada, ECL, IFRS 9, Perícia Bancária de Elite, Governança de Dados, Dr. Lincoln Sposito, Topaz Core Banking">
+    
+    <link rel="canonical" href="https://sposito.github.io/pericia.judicial/consultor.lincoln/artigo-resolucao-4966-auditoria-algoritmos.html" />
+    
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://sposito.github.io/pericia.judicial/consultor.lincoln/artigo-resolucao-4966-auditoria-algoritmos.html">
+    <meta property="og:title" content="Abrindo a Caixa-Preta do Crédito: Resolução 4.966 e Auditoria de Algoritmos">
+    <meta property="og:description" content="Onde a governança encontra o algoritmo. Descubra como a nova fronteira da perícia bancária impacta o setor corporativo.">
+    <meta property="og:image" content="https://sposito.github.io/pericia.judicial/img/capa-artigo-res4966-lincoln.webp">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@lincolnsposito">
+    <meta name="twitter:creator" content="@lincolnsposito">
+    <meta name="twitter:title" content="Resolução 4.966: A Era da Auditoria de Algoritmos Bancários">
+    <meta name="twitter:description" content="Dr. Lincoln Digital analisa a transição para o novo padrão de provisionamento e o fim da 'Caixa-Preta' nos cálculos de crédito.">
+    <meta name="twitter:image" content="https://sposito.github.io/pericia.judicial/img/capa-artigo-res4966-lincoln.webp">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      // Configuração com segmentação para o Portal do Consultor
+      gtag('config', 'G-5F1FGJ25TK', {
+        'page_path': '/consultor.lincoln/artigo-resolucao-4966-auditoria-algoritmos.html'
+      });
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Article",
+          "@id": "https://sposito.github.io/pericia.judicial/consultor.lincoln/artigo-resolucao-4966-auditoria-algoritmos.html#article",
+          "headline": "A Resolução 4.966 e o Fim da Caixa-Preta nos Cálculos Bancários: Uma Abordagem de Governança de Dados",
+          "description": "Análise técnica sobre a transição para o modelo de Perda Esperada (ECL) e a importância da auditoria de algoritmos e modelagem de risco sob a Resolução CMN 4.966.",
+          "image": "https://sposito.github.io/pericia.judicial/img/capa-artigo-res4966-lincoln.webp",
+          "author": {
+            "@type": "Person",
+            "name": "Dr. Lincoln Sposito",
+            "jobTitle": "Doutor em Administração e Analista de Sistemas",
+            "url": "https://sposito.github.io/pericia.judicial/"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Linsp TI - Perícia e Estratégia",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://sposito.github.io/pericia.judicial/img/grafico.svg"
+            }
+          },
+          "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://sposito.github.io/pericia.judicial/consultor.lincoln/artigo-resolucao-4966-auditoria-algoritmos.html"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "O que muda com a Resolução 4.966?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A principal mudança é a transição do modelo de 'perda incorrida' para o de 'perda esperada' (ECL), exigindo que as provisões sejam feitas com base em modelos estatísticos e projeções futuras (forward-looking)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Qual a importância da auditoria de algoritmos na 4.966?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Como as provisões agora dependem de modelos de risco (Staging), a auditoria de algoritmos é essencial para verificar se a parametrização do banco e os 'Management Overlays' refletem a realidade técnica ou manipulações sistêmicas."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+
+<header style="background-color: #1a2a3a; padding: 15px 0; border-bottom: 2px solid #c5a059;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+        <a href="index.html" style="text-decoration: none; display: block; width: 220px;">
+            <img src="grafico.svg" width="220" height="60" loading="lazy" alt="Logo Dr. Lincoln Sposito">
+        </a>
+        <nav>
+            <ul style="list-style: none; display: flex; gap: 20px; margin: 0; padding: 0;">
+                <li><a href="index.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Início</a></li>
+                <li><a href="sobre.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Sobre</a></li>
+				<li><a href="index.html#servicos" class="btn-nav">Serviços</a></li>
+				<li><a href="pericia-dados.html" class="btn-nav">Perícia de Dados</a></li>
+				<li><a href="index.html#blog"     class="btn-nav">Artigos</a></li>
+				<li><a href="casos-emblematicos.html"     class="btn-nav">Casos emblemáticos</a></li>
+                <li><a href="materiais.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Materiais</a></li>
+				<li><a href="faq.html" class="btn-nav" style="color: var(--accent); font-weight: bold;">FAQ</a></li>
+                <li><a href="index.html#contato"  class="btn-nav">Contato</a></li>				
+            </ul>
+        </nav>		
+    </div>
+</header>
+
+<nav class="breadcrumb-container" aria-label="Breadcrumb" style="background: #f4f4f4; padding: 12px 0; border-bottom: 1px solid #ddd;">
+	<div style="max-width: 1100px; margin: 0 auto; padding: 0 20px; font-family: 'Inter', sans-serif; font-size: 0.85rem; text-align: center;">
+		<a href="../index.html" style="color: #c5a059; text-decoration: none; font-weight: 600;">Início</a>
+		<span style="margin: 0 10px; color: #999;">&gt;</span>
+		<a href="index.html" style="color: #c5a059; text-decoration: none; font-weight: 600;">Portal do Consultor</a>
+		<span style="margin: 0 10px; color: #999;">&gt;</span>
+		<span style="color: #666; font-weight: 400;">Auditoria de Algoritmos: Resolução 4.966</span>
+	</div>
+</nav>
+
+<article class="article-container">
+	<header class="article-header" style="background-color: #ffffff; padding: 40px 20px; border-bottom: 1px solid #eeeeee; text-align: center;">		
+		<div class="tags-wrapper" style="display: flex; gap: 8px; justify-content: center; margin-bottom: 15px;">
+			<span class="tag-categoria tag-bancario">PERÍCIA BANCÁRIA DE ELITE</span>
+			<span class="tag-categoria tag-direito">AUDITORIA DE ALGORITMOS</span>
+			<span class="tag-categoria tag-revisional">RESOLUÇÃO 4.966</span>
+		</div>
+		
+		<span class="article-meta" style="display: block; margin-bottom: 15px; color: #666; font-size: 0.9rem;">
+			Publicado em 11 de Março de 2026 • Auditoria de Algoritmos e Riscos
+		</span>
+
+		<a href="index.html?tema=Bancario&area=Resolucao4966#blog" style="text-decoration: none; color: #c5a059; font-weight: bold; font-size: 0.9rem;">
+			&larr; Voltar Para Consultoria e Auditoria Bancária
+		</a>
+
+		<h1 style="margin-top: 20px; font-family: 'Playfair Display', serif; color: #1a2a3a; font-size: 2.5rem; line-height: 1.2;">
+			A "Caixa-Preta" da Resolução 4.966: Por que a Perícia Contábil Tradicional não é mais suficiente?
+		</h1>
+		
+		<div class="resumo-estrategico" style="background-color: #f8f9fa; border-left: 5px solid #c5a059; padding: 25px; margin: 30px auto; border-radius: 0 8px 8px 0; max-width: 900px; text-align: left;">
+			<p style="margin-top: 0; color: #1a2a3a; font-weight: 700; font-size: 1.1em;">
+				<i class="fas fa-microchip"></i> Resumo Estratégico: O Paradigma da Perda Esperada
+			</p>
+			<p style="color: #444; line-height: 1.6; margin-bottom: 15px;">
+				Com a <strong>Resolução CMN 4.966/21</strong>, a perícia bancária deixa de ser retrospectiva para se tornar preditiva. Este artigo analisa como a transição para o modelo de <strong>Perda Esperada (ECL)</strong> exige que o perito audite não apenas números, mas o "motor de cálculo" das instituições. Entenda como o <strong>Staging</strong> e os modelos de risco podem camuflar distorções contratuais que só uma auditoria de algoritmos é capaz de revelar.
+			</p>
+			<div style="background: #fff; padding: 15px; border-radius: 5px; border: 1px dashed #c5a059;">
+				<p style="margin: 0; color: #c5a059; font-weight: 600; font-size: 0.9em; text-transform: uppercase; letter-spacing: 0.5px;">
+					A "Vulnerabilidade do Dia 1" (Risco Sistêmico):
+				</p>
+				<p style="margin-top: 5px; color: #1a2a3a; font-size: 1em; line-height: 1.5; font-weight: 500;">
+					O perigo reside nos <strong>Management Overlays</strong>: ajustes manuais que bancos aplicam quando o algoritmo falha. Sem uma perícia que domine a <strong>Engenharia de Dados e Core Banking</strong>, falhas na parametrização do <em>Aumento Significativo de Risco (SICR)</em> passam despercebidas, gerando provisões indevidas e desequilíbrio financeiro oculto debaixo do código.
+				</p>
+			</div>
+		</div>
+		<section class="diagnostico-comparativo" style="margin: 40px 0; font-family: 'Inter', sans-serif;">
+			<h2 style="color: #1a2a3a; font-family: 'Playfair Display', serif; border-bottom: 2px solid #c5a059; padding-bottom: 10px; margin-bottom: 20px;">
+				Diagnóstico de Transição: O Impacto da Resolução 4.966 no Modelo de Risco
+			</h2>
+			
+			<p style="color: #444; line-height: 1.6; margin-bottom: 25px;">
+				A implementação da norma exige que as instituições abandonem a visão retrospectiva. A tabela abaixo demonstra como a auditoria de algoritmos identifica falhas na parametrização da <strong>Perda Esperada (ECL)</strong>, evitando distorções no provisionamento que impactam o equilíbrio contratual:
+			</p>
+
+			<div style="overflow-x: auto; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+				<table style="width: 100%; border-collapse: collapse; background: #fff; min-width: 600px;">
+					<thead>
+						<tr style="background: #1a2a3a; color: #fff; text-align: left;">
+							<th style="padding: 15px; border: 1px solid #243b55;">Critério de Auditoria</th>
+							<th style="padding: 15px; border: 1px solid #243b55; text-align: center;">Modelo Antigo (Perda Incorrida)</th>
+							<th style="padding: 15px; border: 1px solid #243b55; text-align: center; background: #c5a059;">Novo Padrão 4.966 (Perda Esperada)</th>
+							<th style="padding: 15px; border: 1px solid #243b55; text-align: center;">Ação da Perícia de Elite</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="padding: 15px; border: 1px solid #eee; font-weight: 600;">Gatilho de Provisão</td>
+							<td style="padding: 15px; border: 1px solid #eee; text-align: center; color: #444;">Evento de Inadimplência (Atraso)</td>
+							<td style="padding: 15px; border: 1px solid #eee; text-align: center; font-weight: bold;">"Dia 1" (Projetado no Contrato)</td>
+							<td style="padding: 15px; border: 1px solid #eee; text-align: center; color: #27ae60; font-weight: bold;">Validar Probabilidade (PD)</td>
+						</tr>
+						<tr style="background: #f8f9fa;">
+							<td style="padding: 15px; border: 1px solid #eee; font-weight: 600;">Classificação de Risco</td>
+							<td style="padding: 15px; border: 1px solid #eee; text-align: center;">Rating Estático (A a H)</td>
+							<td style="padding: 15px; border: 1px solid #eee; text-align: center; font-weight: bold;">Staging Dinâmico (Estágios 1, 2 e 3)</td>
+							<td style="padding: 15px; border: 1px solid #eee; text-align: center; color: #c5a059; font-weight: bold;">Auditar Algoritmo de SICR</td>
+						</tr>
+						<tr>
+							<td style="padding: 15px; border: 1px solid #eee; font-weight: 600;">Projeção de Cenários</td>
+							<td style="padding: 15px; border: 1px solid #eee; text-align: center; color: #e74c3c;">Dados Históricos Apenas</td>
+							<td style="padding: 15px; border: 1px solid #eee; text-align: center; font-weight: bold;">Forward-looking (Macroeconomia)</td>
+							<td style="padding: 15px; border: 1px solid #eee; text-align: center; color: #27ae60; font-weight: bold;">Análise de Data Lineage</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<p style="margin-top: 25px; color: #444; line-height: 1.7; padding: 20px; background: #fdf9f2; border-left: 5px solid #c5a059; border-radius: 4px;">
+				<strong>Por Que Este Diagnóstico é Fundamental:</strong> A Resolução 4.966 não altera apenas a contabilidade, ela altera a <strong>Lógica de Execução</strong> dos contratos. O erro material agora reside na "caixa-preta" dos <em>Management Overlays</em> — ajustes manuais que podem distorcer a provisão de crédito e mascarar a realidade financeira de operações complexas.
+			</p>
+			<p style="margin-top: 15px; color: #1a2a3a; font-style: italic; line-height: 1.6; padding: 0 20px;">
+				Para o setor jurídico e corporativo, este diagnóstico é a base da <strong>Impugnação por Vício de Modelagem</strong>. Se a perícia demonstrar que o motor de cálculo do banco utilizou dados corrompidos ou cenários macroeconômicos enviesados, a integridade da dívida pode ser questionada tecnicamente.
+			</p>
+			<div style="background: #f0f7f0; border-left: 5px solid #27ae60; padding: 15px; margin-top: 10px; border-radius: 4px;">
+				<p style="margin: 0; color: #1e8449; font-size: 0.95em; font-weight: 600;">
+					<i class="fas fa-microchip"></i> Inteligência Forense Bancária: Com 22 anos de atuação "debaixo do capô" dos sistemas bancários, utilizo a auditoria de algoritmos para garantir que a transição para o novo padrão de provisionamento seja íntegra e livre de manipulações sistêmicas.
+				</p>
+			</div>
+		</section>		
+		<img src="img/capa-artigo-resolucao-4966-auditoria-algoritmos.webp" 
+			 loading="lazy" 
+			 alt="Capa do Artigo Resolução 4.966: Auditoria de Algoritmos e o Fim da Caixa-Preta Bancária. Análise Técnica do Dr. Lincoln Sposito sobre Perda Esperada (ECL) e Modelagem de Risco." 
+			 class="article-capa" 
+			 style="width: 100%; height: auto; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);">
+			 
+		<div class="article-content" >
+			<section class="intro-box" style="background: #f9f9f9; border-left: 5px solid #c5a059; padding: 25px; margin-bottom: 40px;">
+				<p style="font-size: 1.2rem; color: #333; line-height: 1.6; margin: 0;">
+					<strong>A Resolução 4.966 não é apenas uma mudança contábil; é uma migração para a Perícia Preditiva.</strong> Enquanto o mercado ainda foca na "perda incorrida", a verdadeira fronteira da elite reside na auditoria dos algoritmos de <strong>Perda Esperada (ECL)</strong> e na integridade dos modelos de risco que operam "debaixo do capô" dos bancos.
+				</p>
+			</section>
+
+			<p>A Resolução 4.966/21 deixou de ser uma diretriz regulatória para se tornar o novo motor de cálculo do sistema financeiro nacional. Em 2026, entramos num cenário de governança algorítmica onde a auditoria de modelos de risco é o único escudo contra distorções no provisionamento e falhas críticas na modelagem da Perda Esperada (ECL).</p>
+			
+			<div style="margin: 40px 0; padding: 20px; border: 1px solid #eee; border-radius: 10px; background: #fff;">
+				<h4 style="text-align: center; margin-top: 0; font-family: 'Playfair Display', serif; color: #1a2a3a;">
+					Análise de Tendência: A Ascensão da Governança de Dados e Risco de Crédito
+				</h4>
+				<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/4356_RC01/embed_loader.js"></script>
+				<script type="text/javascript">
+				  trends.embed.renderExploreWidget("TIMESERIES", {
+					"comparisonItem":[
+					  {"keyword":"Resolução 4966","geo":"BR","time":"today 5-y"},
+					  {"keyword":"Risco de Crédito","geo":"BR","time":"today 5-y"},
+					  {"keyword":"IFRS 9","geo":"BR","time":"today 5-y"},
+					  {"keyword":"Compliance Bancário","geo":"BR","time":"today 5-y"},
+					  {"keyword":"Auditoria de Dados","geo":"BR","time":"today 5-y"}
+					],
+					"category":0, 
+					"property":""
+				  }, {
+					"exploreQuery":"date=today%205-y&geo=BR&q=Resolu%C3%A7%C3%A3o%204966,Risco%20de%20Cr%C3%A9dito,IFRS%209,Compliance%20Banc%C3%A1rio,Auditoria%20de%20Dados&hl=pt-BR",
+					"guestPath":"https://trends.google.com:443/trends/embed/"
+				  });
+				</script>
+			</div>
+
+			<h2>Introdução: Resolução CMN nº 4.966/21</h2>
+			<p>Com a implementação da <strong>Resolução CMN nº 4.966/21</strong>, o cenário da perícia bancária no Brasil sofreu uma mudança de paradigma. Se antes o embate jurídico se limitava a conferir cálculos de juros e amortizações, hoje o jogo é decidido na <strong>modelagem estatística e na governança de dados.</strong></p>
+			<p style="background: #f0f4f8; padding: 15px; border-radius: 8px; border-left: 4px solid #1a2a3a; margin-top: 20px;">
+				<strong>Relacionado:</strong> Quando a falha na governança de dados transborda para o abuso na recuperação de ativos, entramos na esfera do assédio algorítmico. Entenda como a auditoria de logs fundamenta teses de 
+				<a href="../artigo-stalking-bancario-cobranca-indevida.html" style="color: #c5a059; font-weight: bold; text-decoration: underline;">Stalking Bancário e Invasão de Privacidade</a>.
+			</p>
+			<p>Enquanto a maioria dos peritos ainda foca na "perda incorrida" (esperar o atraso para provisionar), o novo padrão exige olhar para o futuro: a <strong>Perda Esperada (ECL - Expected Credit Loss).</strong> É aqui que reside a vulnerabilidade das Instituições Financeiras e a oportunidade para uma perícia técnica de elite.</p>
+
+			<section class="perito-ti-box" style="background: #1a2a3a; color: #ffffff; padding: 40px; border-radius: 12px; margin: 40px 0; border-left: 8px solid #c5a059; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+				<div style="display: flex; align-items: center; gap: 20px; margin-bottom: 20px;">
+					<div style="background: #c5a059; padding: 12px; border-radius: 8px;">
+						<i class="fas fa-microchip" style="color: #1a2a3a; font-size: 1.5rem;"></i>
+					</div>
+					<h2 style="color: #c5a059; font-family: 'Playfair Display', serif; margin: 0; font-size: 1.6rem;">O Olhar do Analista de Sistemas: Por que o <em>Core Banking</em> é o Novo Campo de Batalha?</h2>
+				</div>
+
+				<p style="font-size: 1.1rem; line-height: 1.7; color: #e0e0e0; margin-bottom: 20px;">
+					A transição imposta pela Resolução 4.966 é <strong>Essencialmente Tecnológica</strong>. O maior risco para as instituições e empresas não é meramente contábil, mas de <em>Integridade de Modelagem</em>. Atuar "debaixo do capô" de sistemas exige entender como a lógica de provisionamento foi reescrita para processar a Perda Esperada (ECL) sem viciar o equilíbrio financeiro do contrato.
+				</p>
+
+				<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 25px;">
+					<div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border: 1px solid rgba(197, 160, 89, 0.3);">
+						<h4 style="color: #c5a059; margin-top: 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">O Perigo do <em>Staging</em> Mal Parametrizado</h4>
+						<p style="font-size: 0.9rem; margin-bottom: 0;">Sistemas de risco podem falhar ao classificar o <strong>SICR (Aumento Significativo de Risco)</strong>, forçando o ativo para o Estágio 2 de forma indevida e gerando prejuízos artificiais por erro de lógica algorítmica.</p>
+					</div>
+					<div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 8px; border: 1px solid rgba(197, 160, 89, 0.3);">
+						<h4 style="color: #c5a059; margin-top: 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">A Auditoria de Algoritmos</h4>
+						<p style="font-size: 0.9rem; margin-bottom: 0;">A perícia em <strong>Engenharia de Dados</strong> analisa a linhagem (<em>Data Lineage</em>) e os cenários <em>Forward-looking</em>, garantindo que o cálculo da provisão seja técnico, transparente e livre de ajustes manuais injustificados.</p>
+					</div>
+				</div>
+
+				<p style="margin-top: 30px; font-style: italic; color: #c5a059; font-weight: 600; text-align: center; border-top: 1px solid rgba(197, 160, 89, 0.2); padding-top: 20px;">
+					"Na era da Resolução 4.966, a conformidade bancária será decidida na precisão dos algoritmos, não apenas na conferência de planilhas."
+				</p>
+			</section>	
+			
+			<div style="margin: 30px 0; padding: 20px; border: 1px dashed #c5a059; border-radius: 10px;">
+				<h4 style="margin-top: 0; color: #1a2a3a;"><i class="fas fa-shield-alt"></i> Visão Holística de Compliance</h4>
+				<p style="font-size: 0.9rem; margin-bottom: 0;">
+					A Resolução 4.966 não isola o risco de crédito. A integridade dos algoritmos de provisão deve caminhar junto à robustez do monitoramento de lavagem de dinheiro. Conheça minha metodologia de 
+					<a href="pericia-aml-kyc.html" style="color: #1a2a3a; font-weight: bold; text-decoration: underline;">Perícia em Prevenção à Lavagem de Dinheiro (AML) e KYC</a>.
+				</p>
+			</div>			
+			
+			<h2>O Fim da Perda Incorrida e a Era dos Algoritmos</h2>
+			<p>A transição do modelo de provisão é profunda. A norma exige que o banco estime a perda desde o "Dia 1" do contrato. Isso não é feito com uma calculadora simples, mas com modelos de risco e projeções macroeconômicas.</p>
+			<p>Os três pilares que agora dominam o contencioso bancário são:</p>
+			<ul style="list-style: none; padding: 0; margin: 30px 0; text-align: left; font-family: 'Inter', sans-serif;">
+				<li style="margin-bottom: 25px; line-height: 1.7; display: flex; align-items: flex-start;">
+					<span style="color: #c5a059; font-weight: bold; font-size: 1.2rem; margin-right: 15px; min-width: 25px;">1.</span>
+					<span style="color: #444;">
+						<strong style="color: #1a2a3a;">Staging (Classificação em 3 Estágios):</strong> A migração de um ativo do Estágio 1 para o Estágio 2 (Aumento Significativo de Risco - SICR) é onde ocorrem as maiores distorções. Um erro na parametrização do algoritmo pode forçar uma provisão indevida para toda a vida do contrato, impactando diretamente o resultado financeiro.
+					</span>
+				</li>
+				
+				<li style="margin-bottom: 25px; line-height: 1.7; display: flex; align-items: flex-start;">
+					<span style="color: #c5a059; font-weight: bold; font-size: 1.2rem; margin-right: 15px; min-width: 25px;">2.</span>
+					<span style="color: #444;">
+						<strong style="color: #1a2a3a;">Forward-looking (Dados Prospectivos):</strong> A provisão agora deve considerar variáveis como desemprego e PIB. Se o banco utiliza dados sem validação técnica ou fontes corrompidas, o cálculo da perícia pode — e deve — ser derrubado.
+					</span>
+				</li>
+
+				<li style="margin-bottom: 25px; line-height: 1.7; display: flex; align-items: flex-start;">
+					<span style="color: #c5a059; font-weight: bold; font-size: 1.2rem; margin-right: 15px; min-width: 25px;">3.</span>
+					<span style="color: #444;">
+						<strong style="color: #1a2a3a;">Linhagem de Dados (Data Lineage):</strong> Como Analista de Sistemas, sei que a transição de sistemas legados para o novo padrão é um campo minado. Dados mal parametrizados geram resultados viciados debaixo do código.
+					</span>
+				</li>
+			</ul>
+
+			<figure class="infografico-container" style="margin: 40px 0; text-align: center;">
+				<img src="img/infografico-cadeia-de-auditoria-evento-ao-calculo-de-perda-esperada.webp" 
+					 alt="Infográfico: Cadeia de Auditoria da Resolução 4.966 - Do Evento ao Cálculo de Perda Esperada (ECL). Esquematização Técnica por Dr. Lincoln Sposito." 
+					 loading="lazy" 
+					 style="width: 100%; max-width: 900px; height: auto; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); border: 1px solid #e1e4e8;">
+				
+				<figcaption style="margin-top: 15px; font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #666; font-style: italic;">
+					Figura 1: Fluxo de Auditoria Algorítmica – Da Origem do Dado ao Provisionamento (ECL).
+				</figcaption>
+			</figure>
+
+
+			<h2>O "Pulo do Gato": Questionando o Motor de Cálculo</h2>
+			<p>O diferencial de uma perícia estratégica não é perguntar se o cálculo está certo, mas sim <strong>qual é a lógica do algoritmo.</strong></p>
+			<p>Um dos pontos mais sensíveis da Resolução 4.966 são os chamados <strong>Management Overlays</strong> (Ajustes de Gestão). Muitas vezes, quando o modelo estatístico do banco falha ou não entrega o número desejado pela diretoria, aplicam-se ajustes manuais para "corrigir" o algoritmo.</p>
+			<p><strong>O Quesito de Ouro:</strong> Questionar a fundamentação técnica desses ajustes manuais é a armadilha perfeita para expor fragilidades na governança de dados da instituição.</p>
+
+			<div id="diagnostico-pericial" style="background: linear-gradient(145deg, #1a2a3a, #243b55); color: #fff; padding: 40px 30px; border-radius: 16px; margin: 50px 0; box-shadow: 0 20px 40px rgba(0,0,0,0.3); border: 1px solid rgba(197, 160, 89, 0.2); font-family: 'Inter', sans-serif;">
+    
+				<div style="text-align: center; margin-bottom: 30px;">
+					<span style="background: #c5a059; color: #1a2a3a; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Análise de Viabilidade Técnica</span>
+					<h3 style="color: #c5a059; margin: 15px 0 10px; font-family: 'Playfair Display', serif; font-size: 1.8rem;">Termômetro de Vulnerabilidade Algorítmica</h3>
+					<p style="font-size: 1rem; opacity: 0.8; max-width: 500px; margin: 0 auto;">Identifique brechas na Resolução 4.966 para fundamentação de quesitos periciais.</p>
+				</div>
+
+				<style>
+					.quiz-option {
+						display: flex;
+						align-items: center;
+						background: rgba(255,255,255,0.05);
+						padding: 14px;
+						border-radius: 10px;
+						margin-top: 8px;
+						cursor: pointer;
+						transition: all 0.3s ease;
+						border: 1px solid rgba(255,255,255,0.1);
+					}
+					.quiz-option:hover { background: rgba(197, 160, 89, 0.1); border-color: #c5a059; }
+					.quiz-option input { margin-right: 15px; accent-color: #c5a059; transform: scale(1.2); }
+				</style>
+
+				<div style="margin-bottom: 25px;">
+					<p style="font-weight: 600; margin-bottom: 10px; font-size: 1.05rem;">1. Houve alteração no provisionamento sem mudança no histórico de pagamentos?</p>
+					<label class="quiz-option">
+						<input type="radio" name="q0" value="suspeito"> Sim (Indício de falha no Staging/SICR).
+					</label>
+					<label class="quiz-option">
+						<input type="radio" name="q0" value="normal"> Não, segue o fluxo histórico.
+					</label>
+				</div>
+
+				<div style="margin-bottom: 25px;">
+					<p style="font-weight: 600; margin-bottom: 10px; font-size: 1.05rem;">2. A instituição aplicou "Management Overlays" (Ajustes de Gestão) no cálculo?</p>
+					<label class="quiz-option">
+						<input type="radio" name="q1" value="alto"> Sim ou Não informado (Alta vulnerabilidade pericial).
+					</label>
+					<label class="quiz-option">
+						<input type="radio" name="q1" value="baixo"> O motor de cálculo é puramente estatístico.
+					</label>
+				</div>
+
+				<div style="margin-bottom: 30px;">
+					<p style="font-weight: 600; margin-bottom: 10px; font-size: 1.05rem;">3. Os dados "Forward-looking" (cenários) foram apresentados de forma clara?</p>
+					<label class="quiz-option">
+						<input type="radio" name="q2" value="vicio"> Não, o banco mantém a "Caixa-Preta" do algoritmo.
+					</label>
+					<label class="quiz-option">
+						<input type="radio" name="q2" value="transparente"> Sim, as variáveis macroeconômicas são auditáveis.
+					</label>
+				</div>
+
+				<button onclick="analisarViabilidade()" style="width: 100%; padding: 18px; background: #c5a059; border: none; color: #1a2a3a; font-weight: 800; font-size: 1.1rem; border-radius: 8px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(197, 160, 89, 0.3);">
+					AVALIAR POTENCIAL DE IMPUGNAÇÃO
+				</button>
+				
+				<div id="resultado-viabilidade" style="margin-top: 25px; padding: 25px; border-radius: 12px; display: none; text-align: left; line-height: 1.6; font-size: 1rem; border: 1px solid #c5a059; background: rgba(197, 160, 89, 0.05);"></div>
+			</div>
+			
+			<h2>Conclusão: A Ciência por Trás da Defesa</h2>
+			<p>A perícia judicial moderna exige uma fusão entre a ciência da administração e a engenharia de software. Não basta ser contador; é preciso ser um auditor de algoritmos. Ao forçar a Instituição Financeira a abrir sua "caixa-preta", revelamos se a governança prometida pela 4.966 é real ou apenas uma máscara sistêmica.</p>
+			
+			<div style="margin-top: 50px; padding: 30px; background: #1a2a3a; color: white; border-radius: 8px; border-left: 8px solid #c5a059; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
+				<h4 style="color: #c5a059; margin-top: 0; font-family: 'Playfair Display', serif; font-size: 1.4rem;">O Olhar do Analista de Sistemas: Auditoria de Algoritmos</h4>
+				<p style="margin-bottom: 0; line-height: 1.6; color: #e0e0e0;">
+					Diferente de uma perícia contábil comum, meu foco é o que acontece <strong>"debaixo do capô"</strong> dos sistemas bancários (como o Topaz). Eu audito a <strong>rastreabilidade do dado (Data Lineage)</strong> e a lógica dos modelos de risco para garantir que a Resolução 4.966 não seja apenas uma máscara sistêmica, mas uma execução lógica íntegra e auditável.
+				</p>
+			</div>			
+			<p style="text-align: center; font-style: italic; color: #666; font-size: 0.9rem; margin-bottom: 30px;">
+				* Esta análise baseia-se em metodologia de auditoria algorítmica aplicada em instituições financeiras globais e sistemas de core banking de alta performance.
+			</p>			
+			
+			<div class="tabs-container" style="margin: 40px 0; border: 1px solid #ddd; border-radius: 12px; overflow: hidden; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+				<div class="tabs-header" style="display: flex; background: #1a2a3a;">
+					<button class="tab-btn active" onclick="openTab(event, 'quesitos')" style="flex: 1; padding: 18px; border: none; background: #1a2a3a; color: #fff; cursor: pointer; font-weight: bold; border-bottom: 3px solid transparent; transition: 0.3s; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Quesitos Estratégicos</button>
+					<button class="tab-btn" onclick="openTab(event, 'faq')" style="flex: 1; padding: 18px; border: none; background: #1a2a3a; color: #fff; cursor: pointer; font-weight: bold; border-bottom: 3px solid transparent; transition: 0.3s; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Dúvidas Frequentes</button>
+					<button class="tab-btn" onclick="event.stopPropagation(); openTab(event, 'checklist')" style="flex: 1; padding: 18px; border: none; background: #1a2a3a; color: #fff; cursor: pointer; font-weight: bold; border-bottom: 3px solid transparent; transition: 0.3s; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Checklist De Conformidade</button>
+				</div>
+
+				<div id="quesitos" class="tab-content active" style="padding: 35px;">
+					<h3 style="color: #c5a059; font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 20px;">Quesitos para Impugnação de Modelagem (Resolução 4.966)</h3>
+					<p style="color: #666; margin-bottom: 20px;">Advogado, utilize estes quesitos para expor vícios na <strong>Auditoria de Algoritmos</strong> e garantir a integridade técnica da prova pericial no setor bancário:</p>
+
+					<ol class="lista-quesitos" style="line-height: 1.9; color: #444; text-align: left; padding-left: 20px;">
+						<li style="margin-bottom: 15px;">
+							Queira o Sr. Perito informar se os <strong>Critérios de Staging</strong> (Estágios 1, 2 e 3) aplicados ao contrato estão parametrizados conforme os gatilhos de <strong>SICR (Aumento Significativo de Risco)</strong>, ou se houve migração indevida de estágio baseada em erro de lógica algorítmica?
+						</li>
+
+						<li style="margin-bottom: 15px;">
+							Queira o Sr. Perito verificar se a Instituição Financeira aplicou os chamados <strong>Management Overlays</strong> (Ajustes de Gestão) no cálculo da Perda Esperada (ECL) e, em caso positivo, qual a fundamentação técnica e estatística que justifique a sobreposição manual ao modelo original?
+						</li>
+
+						<li style="margin-bottom: 15px;">
+							Queira o Sr. Perito demonstrar a <strong>Linhagem de Dados (Data Lineage)</strong>: as variáveis macroeconômicas utilizadas no modelo <em>Forward-looking</em> (PIB, Desemprego, IPCA) possuem correspondência exata com fontes oficiais, ou houve "viés de cenário" para majorar a provisão de risco?
+						</li>
+
+						<li style="margin-bottom: 15px;">
+							Queira o Sr. Perito esclarecer se o motor de cálculo do <strong>Core Banking (ex: Topaz)</strong> realizou a segregação lógica entre a perda incorrida histórica e o novo modelo de perda esperada, de forma a impedir a duplicidade de provisão (double counting) no momento da transição normativa?
+						</li>
+
+						<li style="margin-bottom: 15px;">
+							Com base na Engenharia de Dados, queira o Sr. Perito apontar se a <strong>Arquitetura do Banco de Dados de Risco</strong> permite a auditoria reversa dos lançamentos, comprovando que as probabilidades de inadimplência (PD) e perda dado o default (LGD) foram calculadas sobre dados íntegros e não corrompidos?
+						</li>
+					</ol>
+				</div>
+
+				<div id="faq" class="tab-content" style="padding: 35px; display: none;">
+					<h3 style="color: #c5a059; font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 25px;">Perguntas Frequentes sobre a Resolução 4.966 e Auditoria de Riscos</h3>
+					
+					<div class="faq-container" style="text-align: left;">
+						<div class="faq-item" style="margin-bottom: 25px;">
+							<strong style="color: #1a2a3a; font-size: 1.05rem;">1. O que muda no provisionamento bancário com a nova norma?</strong>
+							<p style="color: #475569; margin-top: 8px; line-height: 1.6;">A mudança é de paradigma: saímos da "perda incorrida" (atraso real) para a <strong>Perda Esperada (ECL)</strong>. O risco crítico é o banco superestimar o risco no "Dia 1" do contrato através de algoritmos de <em>Staging</em> mal parametrizados, gerando um passivo artificial para o financiado.</p>
+						</div>
+
+						<div class="faq-item" style="margin-bottom: 25px;">
+							<strong style="color: #1a2a3a; font-size: 1.05rem;">2. Como a Auditoria de Algoritmos identifica erros no motor de cálculo?</strong>
+							<p style="color: #475569; margin-top: 8px; line-height: 1.6;">Diferente de uma perícia contábil comum, a auditoria sistêmica analisa a lógica do <strong>SICR (Aumento Significativo de Risco)</strong>. Verificamos se o software de <em>core banking</em> (como o Topaz) está executando gatilhos automáticos que ignoram a realidade financeira do cliente em favor de provisões majoradas.</p>
+						</div>
+
+						<div class="faq-item" style="margin-bottom: 25px;">
+							<strong style="color: #1a2a3a; font-size: 1.05rem;">3. Por que os "Management Overlays" são o ponto fraco das instituições?</strong>
+							<p style="color: #475569; margin-top: 8px; line-height: 1.6;">Os <em>Management Overlays</em> são ajustes manuais sobre o modelo estatístico. Se a <strong>Linhagem do Dado (Data Lineage)</strong> não for transparente, esses ajustes tornam-se "caixas-pretas" que escondem vício de modelagem. A perícia técnica de elite é a única capaz de forçar a abertura dessa lógica em juízo.</p>
+						</div>
+
+						<div class="faq-item" style="margin-bottom: 25px;">
+							<strong style="color: #1a2a3a; font-size: 1.05rem;">4. Qual o papel do Analista de Sistemas na perícia bancária moderna?</strong>
+							<p style="color: #475569; margin-top: 8px; line-height: 1.6;">O Analista de Sistemas atua na <strong>Auditoria de Dados e Código</strong>. Hoje, o erro material raramente é aritmético, mas sim sistêmico. Minha perícia fundamenta a impugnação provando que o motor de risco utilizou variáveis <em>Forward-looking</em> (cenários macro) enviesadas ou dados corrompidos na origem.</p>
+						</div>
+
+						<div class="faq-item" style="margin-bottom: 25px;">
+							<strong style="color: #1a2a3a; font-size: 1.05rem;">5. Como advogados podem utilizar esta perícia para anular cláusulas de risco?</strong>
+							<p style="color: #475569; margin-top: 8px; line-height: 1.6;">Através da <strong>Impugnação por Vício de Modelagem</strong>. Ao demonstrar que a governança de dados exigida pela Resolução 4.966 não foi seguida, a perícia técnica derruba a presunção de acerto dos cálculos bancários, permitindo o reequilíbrio contratual baseado em dados reais e auditáveis.</p>
+						</div>
+					</div>					
+				</div>
+				<div id="checklist" class="tab-content" style="padding: 35px; display: none;">
+					<h3 style="color: #c5a059; font-family: 'Playfair Display', serif; font-size: 1.6rem; margin-bottom: 20px;">Checklist De Auditoria Da Reforma Tributária</h3>
+					<p style="margin-bottom: 25px;">Verifique os 5 pontos críticos para evitar a Bitributação Silenciosa:</p>
+
+					<ul style="list-style: none; padding: 0; text-align: left;">
+						<li style="margin-bottom: 12px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #c5a059; display: flex; align-items: center;">
+							<input type="checkbox" style="margin-right: 15px; transform: scale(1.3);"> 
+							<span><strong>Abatimento De 1%:</strong> A Alíquota Teste (0,9% CBS + 0,1% IBS) foi integralmente deduzida da guia de PIS/COFINS para evitar bitributação?</span>
+						</li>
+						
+						<li style="margin-bottom: 12px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #c5a059; display: flex; align-items: center;">
+							<input type="checkbox" style="margin-right: 15px; transform: scale(1.3);"> 
+							<span><strong>Segregação De Dados:</strong> O ERP processa o IVA Dual em centros de custos e contas separadas do Regime Legado para garantir rastreabilidade?</span>
+						</li>
+						
+						<li style="margin-bottom: 12px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #c5a059; display: flex; align-items: center;">
+							<input type="checkbox" style="margin-right: 15px; transform: scale(1.3);"> 
+							<span><strong>Créditos Acumulados:</strong> Existe um plano de Auditoria para os créditos de PIS/COFINS que serão extintos, garantindo que não se tornem prejuízo líquido?</span>
+						</li>
+						
+						<li style="margin-bottom: 12px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #c5a059; display: flex; align-items: center;">
+							<input type="checkbox" style="margin-right: 15px; transform: scale(1.3);"> 
+							<span><strong>Parametrização De NCM:</strong> As mercadorias com Alíquota Zero ou Regimes Diferenciados foram remapeadas conforme a nova Tabela de Incidência?</span>
+						</li>
+
+						<li style="margin-bottom: 12px; padding: 15px; background: #f8f9fa; border-radius: 8px; border-left: 5px solid #c5a059; display: flex; align-items: center;">
+							<input type="checkbox" style="margin-right: 15px; transform: scale(1.3);"> 
+							<span><strong>Validação De XML:</strong> O sistema de recepção de notas fiscais está configurado para capturar o "Crédito Financeiro" direto do novo layout dos documentos digitais?</span>
+						</li>
+					</ul>
+
+					<div style="text-align: center; margin-top: 30px;">
+						<a href="checklist-admissibilidade.html?foco=reftributaria" target="_blank" style="background: #c5a059; color: #1a2a3a; padding: 15px 30px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block; box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3);">
+							<i class="fas fa-file-pdf"></i> Baixar Checklist De Auditoria Técnica (PDF)
+						</a>
+					</div>
+				</div>
+
+			</div>
+						
+			<div class="cta-box-checklist" style="border: 2px solid var(--accent); padding: 30px; border-radius: 12px; margin: 40px 0; background: #fff; position: relative;">
+				<span style="position: absolute; top: -15px; right: 20px; background: var(--accent); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8em; font-weight: bold;">EXCLUSIVO PARA ADVOGADOS</span>
+				
+				<h3 style="color: var(--primary); margin-top: 0;">Checklist de Viabilidade: Impugnação Resolução 4.966</h3>
+				
+				<p style="color: #555;">A transição para o modelo de <strong>Perda Esperada (ECL)</strong> exige uma auditoria rigorosa da modelagem de risco e do <strong>Staging</strong>. Não permita que erros de parametrização algorítmica ou <em>Management Overlays</em> injustificados gerem um passivo artificial no contrato do seu cliente sob o novo padrão normativo.</p>
+				
+				<a href="checklist-admissibilidade.html?foco=reftributaria" style="display: inline-block; background: var(--accent); color: white; padding: 14px 28px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s;">
+					Baixar Checklist de Viabilidade Pericial
+				</a>
+				
+				<div style="text-align: center; margin: 40px 0;">
+					<a href="index.html?tema=Tributario&area=Perícia tributária&assunto=Auditoria Aliquota Teste 1#contato" class="btn-cta-premium">			
+						Solicitar Auditoria de Algoritmo Especializada
+						<span>Fundamente sua petição com uma análise pericial de elite que identifica vício de modelagem no provisionamento e garante a integridade dos dados sob a ótica do Analista de Sistemas.</span>
+					</a>
+				</div>				
+			</div>
+			<div class="checklist-preview" style="background: #fdf9f2; border: 1px solid #e8dcc4; padding: 30px; border-radius: 12px; margin-top: 20px;">
+				<h4 style="color: #1a2a3a; border-bottom: 2px solid #c5a059; padding-bottom: 15px; font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-top: 0;">O Que Você Encontrará no Material Completo:</h4>
+				<ul style="list-style: none; padding-left: 0; color: #444; font-size: 1.05rem;">
+					<li style="margin-bottom: 15px; display: flex; align-items: start;">
+						<span style="color: #c5a059; margin-right: 10px;">✔</span> <strong>Auditoria de Staging:</strong> Critérios para validar a migração entre Estágios 1, 2 e 3 baseada no SICR.
+					</li>
+					<li style="margin-bottom: 15px; display: flex; align-items: start;">
+						<span style="color: #c5a059; margin-right: 10px;">✔</span> <strong>Rastreabilidade de Dados:</strong> Como verificar a linhagem (Data Lineage) de variáveis macroeconômicas no modelo Forward-looking.
+					</li>
+					<li style="margin-bottom: 15px; display: flex; align-items: start;">
+						<span style="color: #c5a059; margin-right: 10px;">✔</span> <strong>Detecção de Overlays:</strong> Metodologia para identificar ajustes manuais que distorcem o cálculo da Perda Esperada (ECL).
+					</li>
+					<li style="margin-bottom: 15px; display: flex; align-items: start;">
+						<span style="color: #c5a059; margin-right: 10px;">✔</span> <strong>Fundamentação de Quesitos:</strong> Base técnica para formular impugnações que forçam a abertura da "caixa-preta" algorítmica.
+					</li>
+				</ul>
+				
+				<div style="margin-top: 25px; padding: 20px; background: #1a2a3a; border-radius: 8px; border-left: 6px solid #c5a059;">
+					<p style="margin: 0; color: #fff; line-height: 1.6; font-size: 0.95rem;">
+						<strong>Nota do Autor:</strong> Como Doutor em Administração e Analista de Sistemas, sintetizei neste material 22 anos de atuação "debaixo do capô" dos bancos para garantir que sua tese jurídica possua fundamentação científica inquestionável.
+					</p>
+				</div>
+			</div>			
+
+			<section class="nota-tecnica-container" style="margin: 60px 0; font-family: 'Inter', sans-serif; background-color: #fff; border: 1px solid #e1e4e8; border-radius: 12px; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.05);">
+				
+				<div style="background: #1a2a3a; padding: 30px; border-bottom: 5px solid #c5a059;">
+					<div style="display: flex; align-items: center; gap: 20px;">
+						<div style="background: rgba(197, 160, 89, 0.2); padding: 15px; border-radius: 50%;">
+							<i class="fas fa-balance-scale" style="color: #c5a059; font-size: 1.8rem;"></i>
+						</div>
+						<div>
+							<h2 style="color: #c5a059; font-family: 'Playfair Display', serif; margin: 0; font-size: 1.8rem; letter-spacing: 0.5px;">Nota Técnica de Diligência e Responsabilidade</h2>
+							<p style="color: #ffffff; opacity: 0.8; margin: 5px 0 0; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">Fundamentação Normativa e Auditabilidade Algorítmica</p>
+						</div>
+					</div>
+				</div>
+
+				<div style="padding: 40px; color: #333; line-height: 1.8;">
+					
+					<div style="margin-bottom: 35px;">
+						<h3 style="color: #1a2a3a; font-size: 1.2rem; border-left: 4px solid #c5a059; padding-left: 15px; margin-bottom: 15px;">1. Amparo Normativo: O Dever de Transparência (BACEN)</h3>
+						<p style="text-align: justify;">
+							A <strong>Resolução CMN nº 4.966/2021</strong>, em convergência com o padrão internacional <strong>IFRS 9</strong>, estabelece em seus artigos 3º e 4º a obrigatoriedade de as instituições manterem documentação detalhada sobre metodologias de risco. A transição para a <strong>Perda Esperada (ECL)</strong> não confere às instituições um "cheque em branco" algorítmico; ao contrário, a <strong>Resolução CMN nº 4.557/17</strong> reforça que toda estrutura de gerenciamento de riscos deve ser passível de validação e auditoria independente.
+						</p>
+					</div>
+
+					<div style="background: #f8f9fa; padding: 25px; border-radius: 8px; border: 1px dashed #c5a059; margin-bottom: 35px;">
+						<p style="margin-top: 0; font-weight: 700; color: #1a2a3a;">Premissas Técnicas Inquestionáveis:</p>
+						<p style="font-size: 0.95rem; margin-bottom: 0;">
+							A auditabilidade deve recair obrigatoriamente sobre a <strong>Linhagem de Dados (Data Lineage)</strong> das variáveis <strong>PD</strong> (Probabilidade de Default), <strong>LGD</strong> (Perda dado o Default) e <strong>EAD</strong> (Exposição no Default). A opacidade sobre a origem destes dados fere o princípio da fidedignidade da informação financeira.
+						</p>
+					</div>
+
+					<div style="margin-bottom: 35px;">
+						<h3 style="color: #1a2a3a; font-size: 1.2rem; border-left: 4px solid #c5a059; padding-left: 15px; margin-bottom: 15px;">2. Realidade Jurídica: O Fim da "Caixa-Preta"</h3>
+						<p style="text-align: justify;">
+							Embora a norma seja contemporânea, a jurisprudência brasileira — fundamentada no <strong>Art. 6º, VIII do CDC</strong> e no <strong>Art. 373 do CPC</strong> — consolidou o entendimento de que a inversão do ônus da prova obriga a instituição bancária a demonstrar a retidão dos seus sistemas. Quando o ponto controvertido reside na "lógica interna do software", a perícia contábil comum torna-se insuficiente, exigindo a <strong>Engenharia Forense de Dados</strong> para desconstruir possíveis vícios de modelagem.
+						</p>
+					</div>
+
+					<div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #eee; text-align: center;">
+						<p style="font-style: italic; color: #666; font-size: 1rem; max-width: 800px; margin: 0 auto 25px;">
+							"Diligência não é apenas conferir o resultado, mas auditar o processo que o gerou. A verdade técnica na Resolução 4.966 reside na abertura da caixa-preta algorítmica."
+						</p>
+						
+						<div style="display: inline-block; text-align: left; border: 1px solid #c5a059; padding: 15px 25px; border-radius: 8px;">
+							<p style="margin: 0; font-weight: bold; color: #1a2a3a;">Dr. Lincoln Sposito</p>
+							<p style="margin: 0; font-size: 0.85rem; color: #c5a059; font-weight: 600;">Doutor em Administração | Analista de Sistemas</p>
+							<p style="margin: 0; font-size: 0.8rem; color: #999;">Especialista em Auditoria de Algoritmos e Core Banking</p>
+						</div>
+					</div>
+				</div>
+			</section>		
+			<section class="author-box bg-dark">
+				<img src="img/perito-judicial-administracao-lincoln-sposito.webp" loading="lazy" alt="Retrato do Dr. Lincoln Sposito, Doutor em Administração e Perito Judicial especializado em finanças e sistemas.">
+				<div>
+					<h3><a href="https://www.linkedin.com/in/lincolnsposito/" target="_blank" class="author-link">Dr. Lincoln Sposito</a></h3>
+					<p><a href="http://lattes.cnpq.br/4917125955922920" target="_blank" class="author-link">Doutor em Administração</a> e Perito Judicial. Especialista em auditoria bancária e perícia financeira, utiliza rigor estatístico e Data Science para identificar assimetrias informacionais e garantir o reequilíbrio de contratos de crédito complexos.</p>
+				</div>
+			</section>					
+		</div>			
+	</header>		
+</article>
+<footer>
+    <p>&copy; 2026 Dr. Lincoln Sposito | Perícia Judicial e Assistência Técnica. </p>
+	<p>Todos os direitos reservados.
+		(<a href="faq.html" style="color: #c5a059; margin: 0 15px; text-decoration: none; font-weight: bold;">FAQ Técnico</a>)
+	</p>
+<script>
+function calcularRisco() {
+    const q0 = document.querySelector('input[name="q0"]:checked');
+    const q1 = document.querySelector('input[name="q1"]:checked');
+    const q2 = document.querySelector('input[name="q2"]:checked');
+    const res = document.getElementById('resultado-risco');
+    
+    if(!q0 || !q1 || !q2) {
+        alert("Por favor, responda a todas as perguntas para um diagnóstico preciso.");
+        return;
+    }
+
+    res.style.display = "block";
+    
+    let nivelRisco = (q1.value == "1" || q2.value == "1") ? "critico" : "baixo";
+    let regimeInfo = q0.value == "real" ? "<strong>Lucro Real:</strong> O impacto nos seus créditos não-cumulativos exige auditoria rigorosa de Engenharia de Dados." : "<strong>Lucro Presumido:</strong> Embora a carga seja cumulativa, a alíquota de 1% exige compensação exata para evitar bitributação.";
+
+    if(nivelRisco == "critico") {
+        res.style.background = "rgba(231, 76, 60, 0.15)";
+        res.style.border = "1px solid #e74c3c";
+        res.style.color = "#ffedeb";
+        res.innerHTML = `
+            <strong style="color: #ff4d4d; font-size: 1.2rem; display: block; margin-bottom: 10px; text-align: center;">🔴 RISCO CRÍTICO DETECTADO</strong>
+            <p style="margin-bottom: 15px;">${regimeInfo}</p>
+            <p>O risco reside na <strong>Assimetria De Compensação</strong>. Em 2026, a falha em parametrizar o abatimento da alíquota de 1% gera desembolso de caixa em duplicidade e possível perda de créditos acumulados que serão extintos.</p>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="https://wa.me/5511999999999?text=Olá Dr. Lincoln, meu diagnóstico deu RISCO CRÍTICO para minha empresa no Lucro ${q0.value == 'real' ? 'Real' : 'Presumido'}. Preciso de uma auditoria." 
+                   style="display: inline-block; padding: 14px 24px; background: #25d366; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                   SOLICITAR AUDITORIA DE RISCO
+                </a>
+            </div>`;
+    } else {
+        res.style.background = "rgba(46, 204, 113, 0.15)";
+        res.style.border = "1px solid #2ecc71";
+        res.style.color = "#e8fff0";
+        res.innerHTML = `
+            <strong style="color: #2ecc71; font-size: 1.2rem; display: block; margin-bottom: 10px; text-align: center;">🟢 RISCO BAIXO (SITUAÇÃO MONITORADA)</strong>
+            <p style="margin-bottom: 15px;">${regimeInfo}</p>
+            <p>Sua estrutura parece resiliente. Contudo, para o ano de 2026, recomenda-se a <strong>Certificação De Algoritmos Fiscais</strong> para validar se a rastreabilidade digital do IBS/CBS está blindada contra interpretações da Receita.</p>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="https://wa.me/5511999999999?text=Olá Dr. Lincoln, meu diagnóstico deu Risco Baixo, mas quero certificar meus algoritmos no Lucro ${q0.value == 'real' ? 'Real' : 'Presumido'}." 
+                   style="display: inline-block; padding: 14px 24px; background: #25d366; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                   CERTIFICAR MEUS ALGORITMOS
+                </a>
+            </div>`;
+    }
+}
+</script>
+<script>
+	function openTab(evt, tabName) {
+		var i, tabcontent, tablinks;
+		
+		// 1. Esconde todos os conteúdos das abas
+		tabcontent = document.getElementsByClassName("tab-content");
+		for (i = 0; i < tabcontent.length; i++) {
+			tabcontent[i].style.display = "none";
+			tabcontent[i].classList.remove("active");
+		}
+
+		// 2. Remove a classe 'active' e reseta o estilo de todos os botões
+		tablinks = document.getElementsByClassName("tab-btn");
+		for (i = 0; i < tablinks.length; i++) {
+			tablinks[i].classList.remove("active");
+			tablinks[i].style.borderBottom = "3px solid transparent";
+			tablinks[i].style.backgroundColor = "#1a2a3a"; // Cor padrão (escuro)
+		}
+
+		// 3. Mostra a aba atual
+		const currentTab = document.getElementById(tabName);
+		currentTab.style.display = "block";
+		currentTab.classList.add("active");
+
+		// 4. Destaca o botão clicado
+		evt.currentTarget.classList.add("active");
+		evt.currentTarget.style.borderBottom = "3px solid #c5a059"; // Destaque Dourado
+		evt.currentTarget.style.backgroundColor = "#243b55"; // Tom levemente mais claro para feedback
+	}
+</script>
+
+<script>
+	(function(){
+		if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>
+			{if(!window.chatbase.q){window.chatbase.q=[]}
+			window.chatbase.q.push(arguments)
+		};
+		window.chatbase=new Proxy(window.chatbase,{
+			get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}
+			})
+		}
+		const onLoad=function(){
+			const script=document.createElement("script");
+			script.src="https://www.chatbase.co/embed.min.js";
+			script.id="uFEke3ZP9R3S3o5CFSMyh";
+			script.domain="www.chatbase.co";
+
+			// --- ADIÇÃO PARA PERFORMANCE ---
+			script.async = true; 
+			script.defer = true;
+			// -------------------------------
+			
+			// Dentro da sua função onLoad, antes do appendChild:
+			script.setAttribute('data-priority', 'low');
+			
+			document.body.appendChild(script)
+		};
+		if(document.readyState==="complete"){
+			onLoad()
+		}else{
+			window.addEventListener("load",onLoad)
+		}
+	})();
+</script>
+
+</body>
