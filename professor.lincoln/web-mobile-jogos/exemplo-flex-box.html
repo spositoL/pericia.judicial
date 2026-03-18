@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Exemplo Flexbox Horizontal e Vertical</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* --- LAYOUT HORIZONTAL --- */
+    .container-horizontal {
+      display: flex;
+      flex-direction: row;        /* em linha */
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      height: 50vh;
+      background: #e8f0fe;
+      border-bottom: 4px solid #ccc;
+    }
+
+    /* --- LAYOUT VERTICAL --- */
+    .container-vertical {
+      display: flex;
+      flex-direction: column;     /* em coluna */
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      height: 50vh;
+      background: #fef3e8;
+    }
+
+    .item {
+      background: #4a90e2;
+      color: white;
+      padding: 20px;
+      font-size: 20px;
+      border-radius: 8px;
+      width: 120px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Seção horizontal -->
+  <div class="container-horizontal">
+    <div class="item">Item A</div>
+    <div class="item">Item B</div>
+    <div class="item">Item C</div>
+  </div>
+
+  <!-- Seção vertical -->
+  <div class="container-vertical">
+    <div class="item">Item 1</div>
+    <div class="item">Item 2</div>
+    <div class="item">Item 3</div>
+  </div>
+
+</body>
+</html>
+<!-- <!DOCTYPE html> -->
+<!-- <html lang="pt-BR"> -->
+<!-- <head> -->
+  <!-- <meta charset="UTF-8"> -->
+  <!-- <title>Exemplo Flexbox</title> -->
+  <!-- <style> -->
+    <!-- .container { -->
+      <!-- display: flex;              /* ativa o Flexbox */ -->
+      <!-- flex-direction: row;        /* organiza em linha */ -->
+      <!-- justify-content: center;    /* centraliza horizontalmente */ -->
+      <!-- align-items: center;        /* centraliza verticalmente */ -->
+      <!-- gap: 20px;                  /* espaço entre os itens */ -->
+      <!-- height: 100vh;              /* ocupa a tela inteira */ -->
+      <!-- background: #f0f0f0; -->
+    <!-- } -->
+
+    <!-- .item { -->
+      <!-- background: #4a90e2; -->
+      <!-- color: white; -->
+      <!-- padding: 20px; -->
+      <!-- font-size: 20px; -->
+      <!-- border-radius: 8px; -->
+    <!-- } -->
+  <!-- </style> -->
+<!-- </head> -->
+<!-- <body> -->
+
+  <!-- <div class="container"> -->
+    <!-- <div class="item">Item 1</div> -->
+    <!-- <div class="item">Item 2</div> -->
+    <!-- <div class="item">Item 3</div> -->
+  <!-- </div> -->
+
+<!-- </body> -->
+<!-- </html> -->
