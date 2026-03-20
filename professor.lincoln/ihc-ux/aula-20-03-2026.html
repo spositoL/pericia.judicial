@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula: Prototipagem I - Wireframes | Dr. Lincoln Sposito</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>    
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-5F1FGJ25TK');
+
+        // FUNÇÃO MESTRE: Atualizada com a data de referência 20/03/2026
+        function logInteracao(nomeEvento, status, origem, aulaId, disciplinaId) {
+            gtag('event', nomeEvento, {
+                'disciplina': disciplinaId || 'IHC_UX', 
+                'status_presenca': status,              
+                'origem': origem,                       
+                'aula_referencia': aulaId || '2026-03-20' // Atualizado para a aula de hoje
+            });
+        }
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            // Log automático para QR Code de presença/atraso
+            if (urlParams.get('ref') === 'atrasado') {
+                logInteracao('presenca_aula', 'atrasado', 'qrcode_atraso');
+            }
+            
+            const urlAtraso = window.location.origin + window.location.pathname + "?ref=atrasado";
+            new QRCode(document.getElementById("qrcode-persistente"), {
+                text: urlAtraso, width: 70, height: 70, colorDark : "#002147", colorLight : "#ffffff"
+            });
+        };
+    </script>   
+    <style>
+        :root { 
+            --navy: #002147; --white: #ffffff; --accent: #28a745; --warning: #ffc107;
+            --font-titulo: 3.2rem; --font-corpo: 1.8rem;
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body { 
+            margin: 0; padding: 0; width: 100%; min-height: 100%;
+            overflow-x: hidden; 
+            overflow-y: auto;
+            font-family: 'Segoe UI', sans-serif; 
+            background: var(--navy); 
+            color: var(--white);
+            scroll-snap-type: y proximity;
+        }
+
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            background: rgba(0, 33, 71, 0.9);
+            display: flex; align-items: center; padding: 0 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 1000;
+        }
+
+        footer {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 50px;
+            background: rgba(0, 33, 71, 0.9);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; opacity: 0.7; z-index: 1000;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        #floating-atraso {
+            position: fixed; top: 100px; right: 20px; z-index: 999;
+            background: white; padding: 6px; border-radius: 8px;
+            border: 2px solid var(--warning); text-align: center;
+        }
+        #floating-atraso span { display: block; color: var(--navy); font-size: 9px; font-weight: bold; }
+
+        .container-slides {
+            width: 100%;
+            display: flex; 
+            flex-direction: column;
+        }
+
+        .slide { 
+            min-height: 100vh; 
+            width: 100%;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            padding: 100px 5% 70px 5%; 
+            text-align: center;
+            scroll-snap-align: start; 
+            position: relative;
+        }
+
+        h1 { color: var(--accent); font-size: var(--font-titulo); text-transform: uppercase; margin-bottom: 1.5rem; }
+        p { font-size: var(--font-corpo); line-height: 1.5; max-width: 1100px; }
+        
+        .content-box { 
+            background: rgba(255,255,255,0.05); padding: 2.5rem; 
+            border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 100%;
+        }
+
+        img, table { max-width: 100%; height: auto; }
+
+        /* --- EFEITO DE FLUTUAR NA TRANSIÇÃO --- */
+        .slide > * {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .slide.active > * {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- MEDIA QUERIES (CONSOLIDADAS) --- */
+
+        @media (min-width: 1024px) {
+            .slide { padding: 100px 5% 70px 5%; }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --font-titulo: 1.6rem; 
+                --font-corpo: 1.0rem;  
+            }
+            body { font-size: 90%; }
+            .slide { padding: 80px 20px 60px 20px; }
+            h1 { font-size: 1.6rem !important; }
+            p, li, td { font-size: 1.1rem !important; }
+            .content-box { padding: 1.2rem; }
+            #floating-atraso { display: none !important; } 
+        }
+
+        @media (max-height: 500px) and (orientation: landscape) {
+            .slide { justify-content: flex-start; padding-top: 90px; min-height: 160vh; }
+            h1 { font-size: 1.4rem !important; }
+            p, li, td { font-size: 1rem !important; }
+            html, body { scroll-snap-type: none; }
+            #floating-atraso { display: none !important; }
+        }
+
+        .btn-engajamento {
+            background: var(--accent); color: white; border: none; padding: 15px 30px;
+            border-radius: 10px; font-size: 1.2rem; cursor: pointer; transition: 0.3s;
+        }
+        .btn-engajamento:hover { transform: scale(1.05); filter: brightness(1.1); }
+        
+        .btn-voltar {
+            margin-left: auto; 
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 8px 15px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            transition: 0.3s;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .btn-voltar:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="../img/grafico.svg" alt="Logo" style="height: 70px;">
+		<a href="index.html" class="btn-voltar" onclick="logInteracao('navegacao', 'retorno_portal', 'header')">← Voltar ao Portal da Disciplina</a>
+		<a href="../../index.html" class="btn-voltar">Conheça meu trabalho como perito</a><br>
+    </header>
+
+    <div class="container-slides" id="deck">
+		<section class="slide" id="boas-vindas">
+			<div class="content-box">
+				<p style="color: var(--warning); font-weight: bold; margin-bottom: 0;">
+					Disciplina: Interação Humano-Computador & UX
+				</p>
+				
+				<h1>Prototipagem I:<br>Wireframes de Baixa Fidelidade</h1>
+				
+				<hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); width: 50%; margin: 2rem auto;">
+				
+				<h2 style="color: var(--white); margin-bottom: 0.5rem;">Prof. Dr. Lincoln Sposito</h2>
+				<p style="font-size: 1.4rem; opacity: 0.8;">Data: 20 de Março de 2026</p>
+				
+				<div style="margin-top: 2rem;">
+					<button class="btn-engajamento" onclick="logInteracao('engajamento', 'inicio_aula', 'botao_boas_vindas', '2026-03-20')">
+						Iniciar Experiência de Aula
+					</button>
+				</div>
+			</div>
+		</section>
+		<section class="slide" id="agenda">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 2px;">Roteiro de Atividades</h2>
+				<h1>Agenda do Dia</h1>
+				
+				<ul style="list-style: none; padding: 0; text-align: left; display: inline-block; margin-top: 1rem;">
+					<li style="margin-bottom: 1rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">01</span> 
+						Revisão: UCD, Personas e Jornadas (Aula 06/03)
+					</li>
+					<li style="margin-bottom: 1rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">02</span> 
+						Feedback: Resultados da Pesquisa "Você Aprendeu"
+					</li>
+					<li style="margin-bottom: 1rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">03</span> 
+						Prototipagem I: O "Esqueleto" (Wireframes de Baixa Fidelidade)
+					</li>
+					<li style="margin-bottom: 1rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">04</span> 
+						Estratégia: SEO, Retenção e Conversão na Estrutura
+					</li>
+					<li style="margin-bottom: 1rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">05</span> 
+						Laboratório Prático: Elaboração de Parecer Técnico
+					</li>
+					<li style="margin-bottom: 1rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">06</span> 
+						Recapitulação e Pesquisa de Satisfação (GA4)
+					</li>
+				</ul>
+
+				<div style="margin-top: 2rem;">
+					<button class="btn-engajamento" onclick="logInteracao('engajamento', 'visualizou_agenda', 'botao_agenda', '2026-03-20')">
+						Entendido, vamos começar!
+					</button>
+				</div>
+			</div>
+		</section>		
+		<section class="slide" id="revisao-ucd-1">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px;">Revisão: Aula 06/03</h2>
+				<h1 style="font-size: 3.5rem;">Design Centrado no Usuário (UCD)</h1>
+				
+				<div style="margin-top: 2rem; border-left: 5px solid var(--accent); padding-left: 20px; text-align: left; display: inline-block;">
+					<p style="font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem;">
+						"O código é o <span style="color: var(--accent);">meio</span>,<br>
+						a experiência é o <span style="color: var(--accent);">fim</span>."
+					</p>
+					<p style="font-size: 1.8rem; opacity: 0.9;">
+						Processo iterativo focado nas necessidades,<br> 
+						dores e objetivos do usuário em cada etapa.
+					</p>
+				</div>
+
+				<div style="margin-top: 3rem;">
+					<button class="btn-engajamento" onclick="logInteracao('revisao', 'visualizou_ucd_1', 'slide_revisao_1', '2026-03-20')">
+						Próximo: Personas e Jornadas →
+					</button>
+				</div>
+			</div>
+		</section>
+		<section class="slide" id="revisao-ucd-2">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px;">Revisão: Aula 06/03</h2>
+				<h1 style="font-size: 3.5rem;">Personas & Jornadas</h1>
+				
+				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 2rem; text-align: left;">
+					<div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;">
+						<h3 style="color: var(--accent); font-size: 2rem;">Personas</h3>
+						<p style="font-size: 1.4rem;">Arquétipos baseados em <strong>comportamento</strong> e <strong>dores</strong> (não apenas demografia).</p>
+					</div>
+					<div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;">
+						<h3 style="color: var(--accent); font-size: 2rem;">Jornadas</h3>
+						<p style="font-size: 1.4rem;">Mapeamento do fluxo para reduzir a <strong>Carga Cognitiva</strong> e aumentar a <strong>Retenção</strong>.</p>
+					</div>
+				</div>
+
+				<p style="margin-top: 2.5rem; font-size: 1.6rem; color: var(--warning); font-weight: bold;">
+					Tripé Estratégico: SEO + Usabilidade + Conversão
+				</p>
+
+				<div style="margin-top: 2rem;">
+					<button class="btn-engajamento" onclick="logInteracao('revisao', 'concluiu_revisao', 'slide_revisao_2', '2026-03-20')">
+						Concluir Revisão
+					</button>
+				</div>
+			</div>
+		</section>		
+		<section class="slide" id="feedback-q1">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.2rem; text-transform: uppercase;">02. Feedback: Questão 01</h2>
+				<h1 style="font-size: 2.8rem;">Jornada e Pilares de Benyon</h1>
+				
+				<div style="text-align: left; margin-top: 2rem;">
+					<p style="font-size: 1.6rem; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+						<strong>Pergunta:</strong> Qual pilar é priorizado quando o sistema permite completar o processo de forma rápida e sem obstáculos?
+					</p>
+					
+					<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 1.5rem;">
+						<div style="border-left: 5px solid var(--accent); padding-left: 20px;">
+							<h3 style="color: var(--accent); font-size: 1.8rem;">Gabarito: (C) Eficiência</h3>
+							<p style="font-size: 1.3rem;">Segundo <strong>Benyon (2011)</strong>, a Eficiência trata de realizar a tarefa com o mínimo de tempo e esforço mental possível.</p>
+						</div>
+						<div style="border-left: 5px solid #dc3545; padding-left: 20px; opacity: 0.8;">
+							<h3 style="color: #dc3545; font-size: 1.8rem;">Por que não as outras?</h3>
+							<p style="font-size: 1.3rem;"><strong>Eficácia</strong> foca apenas em "concluir", não na rapidez. <strong>Engajamento</strong> foca na satisfação emocional, não na velocidade técnica.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>	
+		<section class="slide" id="stats-q1">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.2rem; text-transform: uppercase;">Desempenho Coletivo: Questão 01</h2>
+				<h1 style="font-size: 3rem;">Índice de Acerto</h1>
+				
+				<div style="margin-top: 2rem;">
+					<span style="font-size: 8rem; font-weight: bold; color: var(--accent); display: block; line-height: 1;">94%</span>
+					<p style="font-size: 1.8rem; margin-top: 1rem; opacity: 0.9;">
+						A grande maioria associou corretamente a rapidez de fluxo ao pilar da <strong>Eficiência</strong> de Benyon.
+					</p>
+				</div>
+
+				<div style="margin-top: 2rem; background: rgba(40, 167, 69, 0.1); padding: 15px; border-radius: 10px; border: 1px solid var(--accent);">
+					<p style="font-size: 1.2rem; margin: 0;">Insight: A turma demonstra maturidade ao separar "conclusão de tarefa" (Eficácia) de "desempenho técnico" (Eficiência).</p>
+				</div>
+			</div>
+		</section>
+		<section class="slide" id="reforco-eficiencia">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase;">Reforço Conceitual: Benyon (2011)</h2>
+				<h1 style="font-size: 3rem;">Eficiência vs. Eficácia</h1>
+				
+				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 2rem; text-align: left;">
+					<div style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; border-top: 4px solid var(--accent);">
+						<h3 style="color: var(--accent); font-size: 2rem;">Eficácia</h3>
+						<p style="font-size: 1.4rem;">É o <strong>sucesso</strong> na tarefa. <br><br><em>Exemplo: O usuário conseguiu comprar o produto? Sim. Então o sistema é eficaz.</em></p>
+					</div>
+					<div style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; border-top: 4px solid var(--warning);">
+						<h3 style="color: var(--warning); font-size: 2rem;">Eficiência</h3>
+						<p style="font-size: 1.4rem;">É o <strong>desempenho</strong>. <br><br><em>Exemplo: Ele comprou com poucos cliques e sem esforço? Se sim, o sistema é eficiente.</em></p>
+					</div>
+				</div>
+
+				<p style="margin-top: 2rem; font-size: 1.5rem; font-style: italic; opacity: 0.9;">
+					"A eficiência foca na economia de tempo e recursos mentais." — <strong>Benyon</strong>
+				</p>
+
+				<div style="margin-top: 2rem;">
+					<button class="btn-engajamento" onclick="logInteracao('reforco', 'entendeu_eficiencia', 'slide_reforco_q1', '2026-03-20')">
+						Entendi a diferença!
+					</button>
+				</div>
+			</div>
+		</section>	
+		<section class="slide" id="feedback-q2">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.2rem; text-transform: uppercase;">02. Feedback: Questão 02</h2>
+				<h1 style="font-size: 2.8rem;">Violação da Ergonomia Cognitiva</h1>
+				
+				<div style="text-align: left; margin-top: 2rem;">
+					<p style="font-size: 1.6rem; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+						<strong>Pergunta:</strong> Excesso de anúncios e desordem visual prejudicam qual conceito?
+					</p>
+					
+					<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 1.5rem;">
+						<div style="border-left: 5px solid var(--accent); padding-left: 20px;">
+							<h3 style="color: var(--accent); font-size: 1.8rem;">Gabarito: (A) Carga Cognitiva</h3>
+							<p style="font-size: 1.3rem;">A desordem satura a memória de trabalho. <strong>Barreto (2018)</strong> reforça que a interface deve mediar, não confundir.</p>
+						</div>
+						<div style="border-left: 5px solid #dc3545; padding-left: 20px; opacity: 0.8;">
+							<h3 style="color: #dc3545; font-size: 1.8rem;">O Erro Comum</h3>
+							<p style="font-size: 1.3rem;">Confundir com <strong>Affordance</strong>. Affordance é sobre a "pista" de como usar um objeto, não sobre o cansaço mental causado pelo excesso.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>	
+		<section class="slide" id="stats-q2">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.2rem; text-transform: uppercase;">Desempenho Coletivo: Questão 02</h2>
+				<h1 style="font-size: 3rem;">Índice de Acerto</h1>
+				
+				<div style="margin-top: 2rem;">
+					<span style="font-size: 8rem; font-weight: bold; color: var(--accent); display: block; line-height: 1;">89%</span>
+					<p style="font-size: 1.8rem; margin-top: 1rem; opacity: 0.9;">
+						Houve uma forte compreensão sobre como o ruído visual satura a <strong>Memória de Trabalho</strong>.
+					</p>
+				</div>
+
+				<div style="margin-top: 2rem; background: rgba(255, 193, 7, 0.1); padding: 15px; border-radius: 10px; border: 1px solid var(--warning);">
+					<p style="font-size: 1.2rem; margin: 0; color: var(--white);">Atenção: 11% ainda confundem ruído visual com falha de Affordance. Reforçaremos a diferença hoje.</p>
+				</div>
+			</div>
+		</section>	
+		<section class="slide" id="reforco-carga">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase;">Reforço Conceitual: Barreto (2018)</h2>
+				<h1 style="font-size: 3rem;">O Limite da Memória de Trabalho</h1>
+				
+				<div style="text-align: left; margin-top: 2rem;">
+					<p style="font-size: 1.8rem; line-height: 1.6;">
+						A <strong>Carga Cognitiva</strong> não é sobre "como o botão funciona" (isso é Affordance). <br>
+						É sobre a <span style="color: var(--warning); font-weight: bold;">quantidade de ruído</span> que o cérebro precisa processar.
+					</p>
+					
+					<ul style="font-size: 1.4rem; margin-top: 1.5rem; color: var(--accent);">
+						<li style="margin-bottom: 10px;">Anúncios excessivos = Competição por atenção.</li>
+						<li style="margin-bottom: 10px;">Layout desordenado = Saturação da memória de trabalho.</li>
+					</ul>
+				</div>
+
+				<div style="background: rgba(255, 193, 7, 0.1); padding: 20px; border-radius: 15px; margin-top: 2rem;">
+					<p style="font-size: 1.3rem; margin: 0;">
+						<strong>Dica do Professor:</strong> Se o usuário precisa "parar para pensar" demais, você falhou na Ergonomia Cognitiva.
+					</p>
+				</div>
+
+				<div style="margin-top: 2rem;">
+					<button class="btn-engajamento" onclick="logInteracao('reforco', 'entendeu_carga', 'slide_reforco_q2', '2026-03-20')">
+						Ficou claro agora!
+					</button>
+				</div>
+			</div>
+		</section>
+		<section class="slide" id="feedback-q3">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.2rem; text-transform: uppercase;">02. Feedback: Questão 03</h2>
+				<h1 style="font-size: 2.8rem;">Construção de Personas (UCD)</h1>
+				
+				<div style="text-align: left; margin-top: 2rem;">
+					<p style="font-size: 1.6rem; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+						<strong>Pergunta:</strong> Quais elementos devem ser considerados prioritariamente no UCD?
+					</p>
+					
+					<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 1.5rem;">
+						<div style="border-left: 5px solid var(--accent); padding-left: 20px;">
+							<h3 style="color: var(--accent); font-size: 1.8rem;">Gabarito: (D) Necessidades e Dores</h3>
+							<p style="font-size: 1.3rem;">UCD não é estatística pura. <strong>Benyon (2011)</strong> destaca que personas são arquétipos de comportamento e motivação.</p>
+						</div>
+						<div style="border-left: 5px solid #dc3545; padding-left: 20px; opacity: 0.8;">
+							<h3 style="color: #dc3545; font-size: 1.8rem;">A Armadilha</h3>
+							<p style="font-size: 1.3rem;">Focar apenas em <strong>Dados Demográficos</strong> (idade/local). Isso cria um perfil vazio que não explica o "porquê" das decisões do usuário.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="slide" id="stats-q3">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.2rem; text-transform: uppercase;">Desempenho Coletivo: Questão 03</h2>
+				<h1 style="font-size: 3rem;">Índice de Acerto</h1>
+				
+				<div style="margin-top: 2rem;">
+					<span style="font-size: 8rem; font-weight: bold; color: var(--accent); display: block; line-height: 1;">91%</span>
+					<p style="font-size: 1.8rem; margin-top: 1rem; opacity: 0.9;">
+						A turma captou a essência do UCD: desenhar para <strong>pessoas</strong>, não para estatísticas demográficas.
+					</p>
+				</div>
+			</div>
+		</section>
+		<section class="slide" id="reforco-persona">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase;">Reforço Conceitual: UCD e Personas</h2>
+				<h1 style="font-size: 3rem;">Pessoas são Comportamentos</h1>
+				
+				<div style="display: flex; align-items: center; justify-content: center; gap: 50px; margin-top: 2rem;">
+					<div style="text-align: right; opacity: 0.6;">
+						<h3 style="font-size: 1.8rem; color: #dc3545;">O que NÃO É:</h3>
+						<p style="font-size: 1.3rem;">Homem, 35 anos,<br>São Paulo - SP.</p>
+						<span style="font-size: 0.9rem;">(Apenas demografia)</span>
+					</div>
+					
+					<div style="font-size: 4rem; color: var(--accent);">→</div>
+					
+					<div style="text-align: left;">
+						<h3 style="font-size: 1.8rem; color: var(--accent);">O que É (Persona):</h3>
+						<p style="font-size: 1.3rem;"><strong>Dores:</strong> Medo de ser fraudado.<br><strong>Objetivo:</strong> Rapidez na entrega.<br><strong>Motivação:</strong> Praticidade.</p>
+						<span style="font-size: 0.9rem;">(Arquétipo comportamental)</span>
+					</div>
+				</div>
+
+				<p style="margin-top: 3rem; font-size: 1.5rem; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+					No <strong>UCD</strong>, projetamos para as <strong>necessidades</strong> do usuário, não para o seu CEP.
+				</p>
+
+				<div style="margin-top: 2rem;">
+					<button class="btn-engajamento" onclick="logInteracao('reforco', 'entendeu_persona', 'slide_reforco_q3', '2026-03-20')">
+						Perfeito, entendi!
+					</button>
+				</div>
+			</div>
+		</section>
+		<section class="slide" id="feedback-q4">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.2rem; text-transform: uppercase;">02. Feedback: Questão 04</h2>
+				<h1 style="font-size: 2.8rem;">Algoritmos e Pontos de Contato</h1>
+				
+				<div style="text-align: left; margin-top: 2rem;">
+					<p style="font-size: 1.6rem; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+						<strong>Pergunta:</strong> Qual o objetivo de sugerir produtos com base em buscas anteriores?
+					</p>
+					
+					<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 1.5rem;">
+						<div style="border-left: 5px solid var(--accent); padding-left: 20px;">
+							<h3 style="color: var(--accent); font-size: 1.8rem;">Gabarito: (D) Conteúdo no Ponto Certo</h3>
+							<p style="font-size: 1.3rem;">Isso personaliza a jornada para aumentar a conversão. Alinha-se ao conceito de <strong>Eficiência</strong> de Benyon.</p>
+						</div>
+						<div style="border-left: 5px solid #dc3545; padding-left: 20px; opacity: 0.8;">
+							<h3 style="color: #dc3545; font-size: 1.8rem;">O Equívoco</h3>
+							<p style="font-size: 1.3rem;">Achar que é apenas para <strong>"Economizar espaço"</strong>. Sugestão é sobre relevância e jornada, não sobre layout físico.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="slide" id="stats-q4">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.2rem; text-transform: uppercase;">Desempenho Coletivo: Questão 04</h2>
+				<h1 style="font-size: 3rem;">Índice de Acerto</h1>
+				
+				<div style="margin-top: 2rem;">
+					<span style="font-size: 8rem; font-weight: bold; color: var(--accent); display: block; line-height: 1;">96%</span>
+					<p style="font-size: 1.8rem; margin-top: 1rem; opacity: 0.9;">
+						Entendimento consolidado: a personalização é a chave para o <strong>ponto de contato</strong> ideal na jornada.
+					</p>
+				</div>
+			</div>
+		</section>
+		<section class="slide" id="feedback-q5">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.2rem; text-transform: uppercase;">02. Feedback: Questão 05</h2>
+				<h1 style="font-size: 2.8rem;">Metáforas: Carrinho e Favoritos</h1>
+				
+				<div style="text-align: left; margin-top: 2rem;">
+					<p style="font-size: 1.6rem; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+						<strong>Pergunta:</strong> O uso destes termos serve para quê, considerando a Heurística H2?
+					</p>
+					
+					<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 1.5rem;">
+						<div style="border-left: 5px solid var(--accent); padding-left: 20px;">
+							<h3 style="color: var(--accent); font-size: 1.8rem;">Gabarito: (B) Alinhamento ao Mundo Real</h3>
+							<p style="font-size: 1.3rem;">Utilizar conceitos familiares reduz a curva de aprendizado. É a interface falando a língua do usuário, como defende <strong>Valente (2020)</strong>.</p>
+						</div>
+						<div style="border-left: 5px solid #dc3545; padding-left: 20px; opacity: 0.8;">
+							<h3 style="color: #dc3545; font-size: 1.8rem;">A Distração visual</h3>
+							<p style="font-size: 1.3rem;">Muitos acham que é apenas <strong>"Estética"</strong>. Termos familiares são <strong>funcionais</strong>; eles ativam modelos mentais pré-existentes.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="slide" id="stats-q5">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.2rem; text-transform: uppercase;">Desempenho Coletivo: Questão 05</h2>
+				<h1 style="font-size: 3rem;">Índice de Acerto</h1>
+				
+				<div style="margin-top: 2rem;">
+					<span style="font-size: 8rem; font-weight: bold; color: #ffd700; display: block; line-height: 1;">100%</span>
+					<p style="font-size: 2rem; margin-top: 1rem; font-weight: bold; color: var(--accent);">
+						🏆 ACERTO INTEGRAL!
+					</p>
+					<p style="font-size: 1.6rem; opacity: 0.9;">
+						Todos os alunos dominam a importância das metáforas do mundo real para a usabilidade.
+					</p>
+				</div>
+			</div>
+		</section>
+		
+<section class="slide" id="prototipagem-definicao">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px;">03. Prototipagem I</h2>
+        <h1 style="font-size: 3.5rem;">O "Esqueleto" da Interface</h1>
+        
+        <div style="margin-top: 2rem; background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; border-left: 8px solid var(--accent);">
+            <p style="font-size: 2.2rem; line-height: 1.4; text-align: left;">
+                O <strong>Wireframe de Baixa Fidelidade</strong> é a planta baixa do software. <br><br>
+                <span style="color: var(--accent);">Foco:</span> Estrutura, Fluxo e Hierarquia.<br>
+                <span style="color: var(--warning);">Ignoramos:</span> Cores, Imagens e Tipografia final.
+            </p>
+        </div>
+
+        <div style="margin-top: 2rem;">
+            <button class="btn-engajamento" onclick="logInteracao('aula_teorica', 'visualizou_def_wireframe', 'slide_3_1', '2026-03-20')">
+                Por que não usar cores agora? →
+            </button>
+        </div>
+    </div>
+</section>
+<section class="slide" id="prototipagem-autores">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase;">A Visão dos Especialistas</h2>
+        <h1 style="font-size: 3rem;">Funcionalidade > Estética</h1>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 2rem; text-align: left;">
+            <div style="padding: 20px; border-bottom: 2px solid var(--accent);">
+                <h3 style="color: var(--accent); font-size: 1.8rem;">Barreto (2018)</h3>
+                <p style="font-size: 1.4rem;">"A interface deve <strong>mediar</strong> a intenção do usuário. Se a usabilidade falha no rascunho, o visual não salvará o projeto."</p>
+            </div>
+            <div style="padding: 20px; border-bottom: 2px solid var(--accent);">
+                <h3 style="color: var(--accent); font-size: 1.8rem;">Benyon (2011)</h3>
+                <p style="font-size: 1.4rem;">Prototipar em baixa fidelidade é uma ferramenta de <strong>comunicação rápida</strong> e exploração de ideias com baixo custo.</p>
+            </div>
+        </div>
+
+        <p style="margin-top: 2.5rem; font-size: 1.5rem; color: var(--warning); font-weight: bold;">
+            Objetivo: Validar a lógica de navegação antes do código.
+        </p>
+    </div>
+</section>
+<section class="slide" id="prototipagem-iterativa">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase;">Engenharia de Software</h2>
+        <h1 style="font-size: 3rem;">O Processo Iterativo</h1>
+        
+        <div style="margin-top: 2rem; text-align: center;">
+            <p style="font-size: 2rem; line-height: 1.6;">
+                Segundo <strong>Valente (2020)</strong>, a prototipagem é uma técnica fundamental de <strong>redução de riscos</strong>.
+            </p>
+            
+            <div style="display: flex; justify-content: center; gap: 20px; margin-top: 2rem;">
+                <div style="background: var(--navy); border: 2px solid var(--accent); padding: 15px; border-radius: 10px; font-size: 1.5rem;">Projetar</div>
+                <div style="font-size: 2rem;">→</div>
+                <div style="background: var(--navy); border: 2px solid var(--accent); padding: 15px; border-radius: 10px; font-size: 1.5rem;">Testar</div>
+                <div style="font-size: 2rem;">→</div>
+                <div style="background: var(--navy); border: 2px solid var(--accent); padding: 15px; border-radius: 10px; font-size: 1.5rem;">Ajustar</div>
+            </div>
+        </div>
+
+        <p style="margin-top: 3rem; font-size: 1.3rem; opacity: 0.8; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+            Errar no papel custa centavos. Errar no código custa milhares de reais.
+        </p>
+    </div>
+</section>
+<section class="slide" id="prototipagem-tripe">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase;">Visão de Mercado</h2>
+        <h1 style="font-size: 3rem;">SEO, Retenção e Conversão</h1>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-top: 2rem;">
+            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;">
+                <h3 style="color: var(--accent);">SEO</h3>
+                <p style="font-size: 1.1rem;">Hierarquia de tags (H1, H2) definida na estrutura.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;">
+                <h3 style="color: var(--accent);">Retenção</h3>
+                <p style="font-size: 1.1rem;">Uso de <strong>White Space</strong> para reduzir carga cognitiva.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px;">
+                <h3 style="color: var(--accent);">Conversão</h3>
+                <p style="font-size: 1.1rem;">Posicionamento estratégico de <strong>CTAs</strong> via Affordance.</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 3rem;">
+            <button class="btn-engajamento" onclick="logInteracao('aula_teorica', 'concluiu_teoria_wireframe', 'slide_3_4', '2026-03-20')">
+                Ver Exemplo Prático: Do Desenho ao Código →
+            </button>
+        </div>
+    </div>
+</section>
+<section class="slide" id="estratega-tripe-intro">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px;">04. Estratégia na Estrutura</h2>
+        <h1 style="font-size: 3.5rem;">O Tripé Estratégico</h1>
+        
+        <p style="font-size: 1.8rem; margin-bottom: 2rem; opacity: 0.9;">
+            O Wireframe não é apenas um desenho; é a materialização da <span style="color: var(--accent);">estratégia de negócio</span>.
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 30px; margin-top: 1rem;">
+            <div style="background: var(--accent); color: white; padding: 20px; border-radius: 15px; width: 250px;">
+                <h3 style="margin:0; font-size: 2rem;">SEO</h3>
+                <p style="margin:5px 0 0; font-size: 1.1rem;">Atração</p>
+            </div>
+            <div style="background: #0056b3; color: white; padding: 20px; border-radius: 15px; width: 250px;">
+                <h3 style="margin:0; font-size: 2rem;">Retenção</h3>
+                <p style="margin:5px 0 0; font-size: 1.1rem;">Experiência</p>
+            </div>
+            <div style="background: var(--warning); color: var(--navy); padding: 20px; border-radius: 15px; width: 250px;">
+                <h3 style="margin:0; font-size: 2rem;">Conversão</h3>
+                <p style="margin:5px 0 0; font-size: 1.1rem;">Resultado</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="slide" id="estratega-seo">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase;">Estratégia I: SEO</h2>
+        <h1 style="font-size: 3rem;">Hierarquia de Informação</h1>
+        
+        <div style="text-align: left; margin-top: 2rem; border-left: 8px solid var(--accent); padding-left: 30px;">
+            <p style="font-size: 2rem; line-height: 1.4;">
+                No wireframe, definimos o que o Google lerá primeiro.
+            </p>
+            <ul style="font-size: 1.6rem; margin-top: 1rem; color: var(--white);">
+                <li><strong>H1:</strong> O objetivo central da página.</li>
+                <li><strong>H2 e H3:</strong> Escaneabilidade do conteúdo.</li>
+                <li><strong>Fluxo Semântico:</strong> Do topo para a base.</li>
+            </ul>
+        </div>
+
+        <p style="margin-top: 2rem; font-size: 1.3rem; opacity: 0.8; font-style: italic;">
+            "A estrutura dita a relevância." — Conexão técnica com a Engenharia de Software.
+        </p>
+    </div>
+</section>
+<section class="slide" id="exemplo-wireframe-hierarquia">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px;">Exemplo Prático</h2>
+        <h1 style="font-size: 3rem;">Anatomia da Hierarquia</h1>
+        
+        <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; margin-top: 2rem; align-items: center;">
+            
+            <div style="background: white; padding: 20px; border-radius: 10px; border: 3px solid #ccc; color: #333;">
+                <div style="border: 2px dashed #999; height: 40px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; padding: 0 10px;">
+                    <div style="width: 60px; height: 20px; background: #eee;"></div>
+                    <div style="width: 100px; height: 20px; background: var(--navy); border-radius: 4px;"></div>
+                </div>
+                
+                <div style="text-align: left; padding: 10px;">
+                    <div style="width: 80%; height: 35px; background: #333; margin-bottom: 10px;"></div> <div style="width: 60%; height: 35px; background: #333; margin-bottom: 20px;"></div> <div style="width: 90%; height: 12px; background: #aaa; margin-bottom: 8px;"></div>
+                    <div style="width: 85%; height: 12px; background: #aaa; margin-bottom: 25px;"></div>
+                    
+                    <div style="width: 180px; height: 50px; background: var(--accent); border-radius: 8px; margin: 0 auto;"></div> </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 40px; justify-content: space-around;">
+                    <div style="width: 30%; height: 80px; border: 1px solid #ccc; background: #f9f9f9;"></div>
+                    <div style="width: 30%; height: 80px; border: 1px solid #ccc; background: #f9f9f9;"></div>
+                    <div style="width: 30%; height: 80px; border: 1px solid #ccc; background: #f9f9f9;"></div>
+                </div>
+            </div>
+
+            <div style="text-align: left;">
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: var(--accent); font-size: 2rem; margin: 0;">1. O Gancho (H1)</h3>
+                    <p style="font-size: 1.4rem; opacity: 0.9;">O maior peso visual. Deve responder: <em>"O que é isso?"</em> em 3 segundos.</p>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: var(--accent); font-size: 2rem; margin: 0;">2. A Ação (CTA)</h3>
+                    <p style="font-size: 1.4rem; opacity: 0.9;">Destaque via <strong>Affordance</strong>. Mesmo sem cor, o tamanho e o respiro (White Space) indicam que é clicável.</p>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h3 style="color: var(--accent); font-size: 2rem; margin: 0;">3. Escaneabilidade</h3>
+                    <p style="font-size: 1.4rem; opacity: 0.9;">Blocos menores para reduzir a <strong>Carga Cognitiva</strong> e facilitar a retenção.</p>
+                </div>
+            </div>
+        </div>
+
+        <p style="margin-top: 2rem; font-size: 1.2rem; color: var(--warning); font-style: italic;">
+            "A ordem dos elementos no Wireframe dita a jornada mental do usuário." — <strong>Barreto (2018)</strong>
+        </p>
+    </div>
+</section>
+<section class="slide" id="estratega-retencao">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase;">Estratégia II: Retenção</h2>
+        <h1 style="font-size: 3rem;">Ergonomia Cognitiva</h1>
+        
+        <div style="margin-top: 2rem; background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px;">
+            <p style="font-size: 2rem; color: var(--accent); font-weight: bold; margin-bottom: 1rem;">
+                Reduzir o esforço para aumentar o tempo de tela.
+            </p>
+            <p style="font-size: 1.6rem; text-align: left; line-height: 1.5;">
+                Segundo <strong>Barreto (2018)</strong>, o uso estratégico de <strong>White Space</strong> (Espaço Negativo) evita a saturação da memória de trabalho e guia o olhar do usuário.
+            </p>
+        </div>
+
+        <p style="margin-top: 2rem; font-size: 1.4rem; color: var(--warning);">
+            Lei de Fitts: Áreas de interação devem ser fáceis de alcançar.
+        </p>
+    </div>
+</section>
+<section class="slide" id="estratega-conversao">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase;">Estratégia III: Conversão</h2>
+        <h1 style="font-size: 3rem;">Affordance e Call to Action</h1>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 2rem; text-align: left;">
+            <div>
+                <h3 style="color: var(--accent); font-size: 1.8rem;">Affordance</h3>
+                <p style="font-size: 1.3rem;">O wireframe deve deixar óbvio o que é clicável, mesmo sem cores. A forma dita a função.</p>
+            </div>
+            <div>
+                <h3 style="color: var(--accent); font-size: 1.8rem;">O Momento da Dor</h3>
+                <p style="font-size: 1.3rem;">Posicionar o botão de conversão exatamente após o usuário entender a solução do problema.</p>
+            </div>
+        </div>
+
+        <p style="margin-top: 3rem; font-size: 1.5rem; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+            "Sistemas úteis são aqueles que antecipam as necessidades do usuário." — <strong>Benyon (2011)</strong>
+        </p>
+
+        <div style="margin-top: 2rem;">
+            <button class="btn-engajamento" onclick="logInteracao('aula_teorica', 'concluiu_tripe_estrategico', 'slide_4_4', '2026-03-20')">
+                Pronto para o Laboratório Prático! →
+            </button>
+        </div>
+    </div>
+</section>
+<section class="slide" id="lab-desafio">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px;">05. Laboratório Prático</h2>
+        <h1 style="font-size: 3.5rem;">Desafio: O Parecer Técnico</h1>
+        
+        <div style="margin-top: 2rem; background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px; border-left: 8px solid var(--accent);">
+            <p style="font-size: 2rem; line-height: 1.4; text-align: left;">
+                <span style="color: var(--accent);">Atividade:</span> Elaborar um relatório crítico (mínimo 10 linhas).<br><br>
+                <span style="color: var(--accent);">Objetivo:</span> Propor mudanças estruturais em um Artigo Técnico usando <strong>Wireframes de Baixa Fidelidade</strong>.
+            </p>
+        </div>
+
+        <div style="margin-top: 2rem;">
+            <button class="btn-engajamento" onclick="logInteracao('pratica', 'iniciou_lab', 'slide_5_1', '2026-03-20')">
+                Ver Perguntas Norteadoras →
+            </button>
+        </div>
+    </div>
+</section>
+<section class="slide" id="lab-cenario-res4966">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px;">05. Laboratório Prático</h2>
+        <h1 style="font-size: 3rem;">Caso: Resolução 4966 do BC</h1>
+        
+        <div style="margin-top: 2rem; background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; border-left: 8px solid var(--accent); text-align: left;">
+            <p style="font-size: 1.6rem; line-height: 1.5;">
+                <strong>O Desafio:</strong> Como apresentar uma norma densa sobre <strong>Auditoria de Modelos e Algoritmos</strong> sem gerar exaustão mental no usuário? <br><br>
+                <strong>Sua Missão:</strong> Analisar a estrutura do artigo e propor um <strong>Wireframe</strong> que transforme a densidade regulatória em clareza técnica e autoridade.
+            </p>
+        </div>
+
+        <p style="margin-top: 2rem; font-size: 1.2rem; opacity: 0.8;">
+            URL de Análise: <span style="color: var(--accent);">https://spositol.github.io/pericia.judicial/artigo-resolucao-4966-auditoria-algoritmos.html</span>
+        </p>
+    </div>
+</section>
+<section class="slide" id="lab-perguntas">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase;">O que responder?</h2>
+        <h1 style="font-size: 3rem;">Estrutura e Equilíbrio</h1>
+        
+        <div style="text-align: left; margin-top: 2rem;">
+            <p style="font-size: 1.8rem; font-weight: bold; color: var(--accent); margin-bottom: 1.5rem;">
+                Quais seriam as 3 principais mudanças estruturais para equilibrar:
+            </p>
+            <ul style="font-size: 1.6rem; line-height: 1.8; color: var(--white);">
+                <li><strong>SEO:</strong> Como o buscador lerá a estrutura?</li>
+                <li><strong>Retenção:</strong> O que manterá o usuário lendo?</li>
+                <li><strong>Conversão:</strong> Onde está o clique final (CTA)?</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<section class="slide" id="lab-fundamentacao">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase;">Justificativa Técnica</h2>
+        <h1 style="font-size: 2.8rem;">Utilize os Conceitos Chave</h1>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 2rem; text-align: left;">
+            <div style="background: rgba(40, 167, 69, 0.05); padding: 20px; border-radius: 15px; border: 1px solid var(--accent);">
+                <h3 style="color: var(--accent); font-size: 1.8rem;">Hierarquia Visual</h3>
+                <p style="font-size: 1.3rem;">Baseado em <strong>Barreto (2018)</strong>: A ordem de importância dos elementos guia o olhar ou confunde o usuário?</p>
+            </div>
+            <div style="background: rgba(255, 193, 7, 0.05); padding: 20px; border-radius: 15px; border: 1px solid var(--warning);">
+                <h3 style="color: var(--warning); font-size: 1.8rem;">Carga Cognitiva</h3>
+                <p style="font-size: 1.3rem;">Baseado em <strong>Benyon / Valente</strong>: O layout atual satura a memória de trabalho ou permite uma leitura fluida (eficiente)?</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="slide" id="lab-dica">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase;">Dica de Especialista</h2>
+        <h1 style="font-size: 3rem;">O Momento da Maior Dor</h1>
+        
+        <div style="margin-top: 2rem; background: var(--white); color: var(--navy); padding: 30px; border-radius: 20px;">
+            <p style="font-size: 1.8rem; font-weight: bold; line-height: 1.4;">
+                Analise se o ponto de conversão (CTA) está "competindo" com a leitura ou se ele aparece no momento exato em que o usuário identifica o problema.
+            </p>
+        </div>
+
+        <p style="margin-top: 2rem; font-size: 1.4rem; opacity: 0.8;">
+            Projetar o "invisível" é projetar a eficiência da interação.
+        </p>
+
+        <div style="margin-top: 3rem;">
+            <button class="btn-engajamento" onclick="logInteracao('pratica', 'concluiu_instrucoes_lab', 'slide_5_4', '2026-03-20')">
+                Mãos à obra! (Iniciar Atividade)
+            </button>
+        </div>
+    </div>
+</section>
+<section class="slide" id="recapitulacao-1">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px;">06. Encerramento</h2>
+        <h1 style="font-size: 3.5rem;">Recapitulação: O Essencial</h1>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 2rem; text-align: left;">
+            <div style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; border-left: 5px solid var(--accent);">
+                <h3 style="color: var(--accent); font-size: 1.8rem;">Fundamento (Benyon/Valente)</h3>
+                <p style="font-size: 1.3rem;">O wireframe é uma ferramenta de <strong>comunicação rápida</strong> e <strong>redução de custos</strong>. Erramos no papel para acertar no código.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 25px; border-radius: 15px; border-left: 5px solid var(--accent);">
+                <h3 style="color: var(--accent); font-size: 1.8rem;">Técnica (Barreto)</h3>
+                <p style="font-size: 1.3rem;">A <strong>Hierarquia Visual</strong> e o <strong>White Space</strong> ditam a carga cognitiva. Projetamos o "invisível" para guiar a interação.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="slide" id="recapitulacao-2">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase;">A Entrega Profissional</h2>
+        <h1 style="font-size: 3rem;">Estratégia + Código</h1>
+        
+        <div style="margin-top: 2rem; text-align: left; background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px;">
+            <p style="font-size: 1.8rem; line-height: 1.6;">
+                Lembrem-se: O wireframe de hoje dita o <strong>HTML Semântico</strong> de amanhã.
+            </p>
+            <ul style="font-size: 1.5rem; margin-top: 1rem; color: var(--white); display: grid; grid-template-columns: 1fr 1fr;">
+                <li>✓ SEO (Tags H1, H2, H3)</li>
+                <li>✓ Retenção (Ergonomia)</li>
+                <li>✓ Conversão (Affordance)</li>
+                <li>✓ Redução de Riscos</li>
+            </ul>
+        </div>
+
+        <p style="margin-top: 2.5rem; font-size: 1.6rem; color: var(--accent); font-weight: bold;">
+            Próximo Passo: Evolução para Protótipos de Alta Fidelidade.
+        </p>
+    </div>
+</section>
+<section class="slide" id="exercicio-auditoria-tecnica">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px;">05. Laboratório de Auditoria</h2>
+        <h1 style="font-size: 3.2rem;">Auditoria Técnica: Prototipagem e Estrutura</h1>
+        
+        <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; margin-top: 2rem; flex-wrap: wrap; gap: 40px;">
+            
+            <div id="qrcode-exercicio-semana" style="background: white; padding: 20px; border-radius: 20px; border: 8px solid var(--accent); box-shadow: 0 15px 45px rgba(0,0,0,0.6);">
+                </div>
+            
+            <div style="max-width: 550px; text-align: left;">
+                <p style="font-size: 1.8rem; font-weight: bold; color: var(--accent); margin-bottom: 1rem;">Roteiro de Execução:</p>
+                <ul style="font-size: 1.4rem; line-height: 1.6; margin-bottom: 2rem; color: var(--white); list-style-type: none; padding: 0;">
+                    <li style="margin-bottom: 15px;">🔹 <strong>PASSO 1:</strong> Escaneie o QR Code ou clique no botão abaixo;</li>
+                    <li style="margin-bottom: 15px;">🔹 <strong>PASSO 2:</strong> Responda às 5 questões sobre Hierarquia e Carga Cognitiva;</li>
+                    <li style="margin-bottom: 15px;">🔹 <strong>PASSO 3:</strong> Elabore seu <strong>Parecer Técnico</strong> (min. 10 linhas) com foco no tripé estratégico.</li>
+                </ul>
+
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSfKvY764HQ0hry-UQgt9mrIPb8JqWsJFSyotqnN2oiewePFXQ/viewform?usp=dialog" 
+                   id="link-direto-forms" 
+                   target="_blank" 
+                   onclick="logInteracao('pratica', 'abriu_formulario_auditoria', 'botao_acesso_forms', '2026-03-20')"
+                   style="background: var(--accent); color: white; padding: 20px 40px; text-decoration: none; border-radius: 12px; font-weight: bold; font-size: 1.5rem; display: inline-block; transition: 0.3s; box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);">
+                    ABRIR FORMULÁRIO DE AUDITORIA
+                </a>
+            </div>
+        </div>
+
+        <div style="margin-top: 3rem; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-top: 1px solid rgba(255,255,255,0.1);">
+            <p style="font-size: 1.1rem; opacity: 0.8; margin: 0;">
+                Fundamentação: Este laboratório aplica os conceitos de <strong>Barreto (2018)</strong> sobre funcionalidade e <strong>Benyon (2011)</strong> sobre eficiência na jornada.
+            </p>
+        </div>
+
+        <script>
+            // URL real do formulário de Auditoria Técnica
+            const urlFormsAuditoria = "https://docs.google.com/forms/d/e/1FAIpQLSfKvY764HQ0hry-UQgt9mrIPb8JqWsJFSyotqnN2oiewePFXQ/viewform?usp=dialog";
+            
+            // Renderização do QR Code com nível de correção alto para leitura de longe
+            new QRCode(document.getElementById("qrcode-exercicio-semana"), {
+                text: urlFormsAuditoria,
+                width: 280,
+                height: 280,
+                colorDark : "#002147",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        </script>
+    </div>
+</section>
+<section class="slide" id="conclusao">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase;">Finalização e Materiais</h2>
+        <h1 style="font-size: 3rem;">Conclusão da Aula</h1>
+        
+        <div style="margin-top: 2rem; text-align: left; background: rgba(255,255,255,0.05); padding: 30px; border-radius: 20px;">
+            <p style="font-size: 1.8rem; line-height: 1.6;">
+                O wireframe é a fundação para o sucesso técnico e de usabilidade. Baixe os guias de estudo abaixo:
+            </p>
+            
+            <div style="margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                <a href="revisao-aula-06-03-2026-decisao-centrado-no-usuario-ucd-personas-jornadas.pdf" 
+                   target="_blank"
+                   onclick="logInteracao('download_revisao', 'sucesso', 'secao_conclusao')"
+                   style="text-decoration: none; color: var(--white); background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; font-size: 1.2rem; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s;">
+                   <span style="display: block; color: var(--warning); font-weight: bold; margin-bottom: 5px;">📥 REVISÃO 06/03</span>
+                   UCD, Personas e Jornadas
+                </a>
+
+                <a href="aula-20-03-2026-prototipagem-I-wireframes-de-baixa-fidelidade.pdf" 
+                   target="_blank"
+                   onclick="logInteracao('download_aula_hoje', 'sucesso', 'secao_conclusao')"
+                   style="text-decoration: none; color: var(--white); background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; font-size: 1.2rem; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s;">
+                   <span style="display: block; color: var(--accent); font-weight: bold; margin-bottom: 5px;">📥 AULA 20/03</span>
+                   Prototipagem I: Wireframes
+                </a>
+            </div>
+        </div>
+
+        <p style="margin-top: 2.5rem; font-size: 1.6rem; color: var(--accent); font-weight: bold;">
+            Próximo Passo: Evolução para Protótipos de Alta Fidelidade e Testes.
+        </p>
+    </div>
+</section>
+<!-- <section id="conclusao" class="slide"> -->
+    <!-- <div class="content"> -->
+        <!-- <h2>9. CONCLUSÃO</h2> -->
+        <!-- <p> -->
+            <!-- Dominar a <strong>Prototipagem de Baixa Fidelidade</strong> é o que separa o amadorismo da engenharia de interface.  -->
+            <!-- Como vimos, um wireframe bem estruturado é a fundação para o sucesso técnico (código limpo), humano (usabilidade e retenção)  -->
+            <!-- e de negócios (conversão). Ao projetar o "invisível" — a estrutura —, estamos, na verdade, projetando a  -->
+            <!-- eficiência da interação. -->
+        <!-- </p> -->
+
+        <!-- <h3>10. RECAPITULAÇÃO</h3> -->
+        <!-- <ul> -->
+            <!-- <li><strong>Fundamento:</strong> Prototipagem como ferramenta de comunicação e redução de custo (Benyon/Valente).</li> -->
+            <!-- <li><strong>Técnica:</strong> Foco em hierarquia visual, arquitetura da informação e affordance.</li> -->
+            <!-- <li><strong>Estratégia:</strong> Alinhamento com SEO (semântica), Retenção (ergonomia) e Conversão (negócios).</li> -->
+            <!-- <li><strong>Prática:</strong> O wireframe dita a estrutura do código HTML e a jornada do usuário.</li> -->
+        <!-- </ul> -->
+        
+    <!-- </div> -->
+<!-- </section> -->
+<section class="slide" id="pesquisa-satisfacao">
+    <div class="content-box">
+        <h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; letter-spacing: 2px;">Feedback Final</h2>
+        <h1 style="font-size: 3.5rem;">Sua opinião conta!</h1>
+        
+        <p style="font-size: 1.8rem; margin-bottom: 2rem; opacity: 0.9;">
+            Como foi sua experiência com o tema de <br><strong>Prototipagem de Baixa Fidelidade</strong> hoje?
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 2rem;">
+            <button class="btn-engajamento" 
+                    style="background: #28a745; width: 200px; font-size: 1.5rem;" 
+                    onclick="logInteracao('satisfacao_aula', 'excelente', 'botao_final', '2026-03-20'); alert('Obrigado pelo feedback excelente!');">
+                Excelente 🚀
+            </button>
+            <button class="btn-engajamento" 
+                    style="background: #0056b3; width: 200px; font-size: 1.5rem;" 
+                    onclick="logInteracao('satisfacao_aula', 'bom', 'botao_final', '2026-03-20'); alert('Obrigado! Vamos evoluir sempre.');">
+                Bom 👍
+            </button>
+            <button class="btn-engajamento" 
+                    style="background: #dc3545; width: 200px; font-size: 1.5rem;" 
+                    onclick="logInteracao('satisfacao_aula', 'regular', 'botao_final', '2026-03-20'); alert('Feedback registrado. Professor Lincoln entrará em contato.');">
+                Pode Melhorar ⚠️
+            </button>
+        </div>
+
+        <div style="margin-top: 3rem; opacity: 0.7; font-size: 1rem; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+            <p>Os resultados são monitorados em tempo real via <strong>Google Analytics 4</strong>.</p>
+            <p>Até a próxima aula!</p>
+        </div>
+    </div>
+</section>
+
+    <footer>
+        Prof. Dr. Lincoln Sposito | &copy; 2026
+    </footer>
+
+    <script>
+        // Sistema de Observer para o efeito "Flutuar" (Slide Ativo)
+        const observerOptions = { threshold: 0.4 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.slide').forEach(slide => {
+            observer.observe(slide);
+        });
+
+        // Navegação Suave por Teclado (Desktop)
+        document.addEventListener('keydown', (e) => {
+            if (window.innerWidth > 1024) { // Apenas Desktop para não conflitar com o touch do celular
+                const slides = document.querySelectorAll('.slide');
+                let current = [...slides].findIndex(s => s.getBoundingClientRect().top >= -50 && s.getBoundingClientRect().top <= 50);
+                
+                if ((e.key === 'ArrowRight' || e.key === 'ArrowDown') && current < slides.length - 1) {
+                    slides[current + 1].scrollIntoView({ behavior: 'smooth' });
+                }
+                if ((e.key === 'ArrowLeft' || e.key === 'ArrowUp') && current > 0) {
+                    slides[current - 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    </script>
+	<script>
+	(function(){
+		if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>
+			{if(!window.chatbase.q){window.chatbase.q=[]}
+			window.chatbase.q.push(arguments)
+		};
+		window.chatbase=new Proxy(window.chatbase,{
+			get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}
+			})
+		}
+		const onLoad=function(){
+			const script=document.createElement("script");
+			script.src="https://www.chatbase.co/embed.min.js";
+			script.id="uFEke3ZP9R3S3o5CFSMyh";
+			script.domain="www.chatbase.co";
+
+			// --- ADIÇÃO PARA PERFORMANCE ---
+			script.async = true; 
+			script.defer = true;
+			// -------------------------------
+			
+			// Dentro da sua função onLoad, antes do appendChild:
+			script.setAttribute('data-priority', 'low');
+			
+			document.body.appendChild(script)
+		};
+		if(document.readyState==="complete"){
+			onLoad()
+		}else{
+			window.addEventListener("load",onLoad)
+		}
+	})();
+</script>
+</body>
+</html>
