@@ -192,6 +192,74 @@
         </div>
     </section>
 
+
+<a href="https://wa.me/5511914612603?text=Olá Dr. Lincoln, me interessei pelo seu trabalho de perícia. Podemos falar sobre um caso que eu tenho?" 
+   id="cta-whatsapp-stalking"
+   class="whatsapp-flutuante" 
+   target="_blank" 
+   aria-label="Falar com Dr. Lincoln Sposito no WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+/**
+ * Monitoramento Consolidado de Leads - Dr. Lincoln Sposito
+ * Finalidade: Captura de conversões GA4 para botões de WhatsApp e Auditoria
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // 1. Monitoramento do Botão Flutuante (WhatsApp Geral)
+    var btnStalking = document.getElementById('cta-whatsapp-stalking');
+    if (btnStalking) {
+        btnStalking.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    'event_category': 'Contato',
+                    'event_label': 'WhatsApp - Autopsia Stalking',
+                    'method': 'WhatsApp',
+                    'value': 1.0,
+                    'currency': 'BRL',
+                    'content_name': 'A Autópsia do Stalking Bancário'
+                });
+                console.log('Forense: Lead WhatsApp registrado.');
+            }
+        });
+    }
+
+    // 2. Monitoramento do Botão de Auditoria (Final do Artigo)
+    var btnAuditoria = document.getElementById('btn-whatsapp-autopsia');
+    if (btnAuditoria) {
+        btnAuditoria.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    'event_category': 'Conversão Artigo',
+                    'event_label': 'Botão Final - Autópsia Stalking',
+                    'method': 'WhatsApp',
+                    'value': 1.0,
+                    'currency': 'BRL',
+                    'content_name': 'Checklist de Identificação de Stalking'
+                });
+                console.log('Forense: Lead Auditoria registrado.');
+            }
+        });
+    }
+	var btnChecklist = document.getElementById('btn-download-checklist-autopsia');
+    if (btnChecklist) {
+        btnChecklist.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'file_download', {
+                    'event_category': 'Materiais',
+                    'event_label': 'Checklist Admissibilidade - Stalking',
+                    'file_name': 'checklist-admissibilidade-stalking.pdf'
+                });
+                console.log('GA4: Download do Checklist rastreado.');
+            }
+        });
+    }
+});
+</script>
+
+
     <style>
 		/* CSS UNIFICADO PARA ALINHAMENTO PERFEITO */
 		.input-group { margin-bottom: 15px; }
@@ -561,67 +629,6 @@
 				area.scrollIntoView({ behavior: 'smooth' });
 			}
 	</script>	
-	
-	<!--
-	<script>
-			function calcularTaxaImplicita(pv, pmt, n, sistema) {
-				if (sistema !== 'PRICE') {
-					const amort = pv / n;
-					return (pmt - amort) / pv;
-				}
-				let i = 0.01;
-				for (let x = 0; x < 30; x++) {
-					let f = pmt * (1 - Math.pow(1 + i, -n)) / i - pv;
-					let df = pmt * (n * Math.pow(1 + i, -n - 1) * i - (1 - Math.pow(1 + i, -n))) / (i * i);
-					i = i - f / (df || 1);
-				}
-				return i;
-			}
-
-			function calcularCET_Real(p, sistema) {
-				const pvLiquido = p.pvPrin;
-				const n = p.n;
-				const iNom = p.iNom;
-				const pvTotal = p.pvTotal;
-
-				// Se for PRICE, usamos a fórmula de Newton-Raphson para parcelas fixas
-				if (sistema === 'PRICE') {
-					let i = 0.01;
-					const pmt = p.pmtInfo;
-					for (let x = 0; x < 40; x++) {
-						let pot = Math.pow(1 + i, -n);
-						let f = pmt * (1 - pot) / i - pvLiquido;
-						let df = pmt * ((n * pot) / (i * (1 + i)) - (1 - pot) / (i * i));
-						i = i - f / (df || 1);
-					}
-					return i;
-				}
-
-				// Se for SAC ou SACRE, iteramos sobre o fluxo decrescente real
-				let iCET = 0.01; 
-				const amortizacao = pvTotal / n;
-
-				for (let x = 0; x < 60; x++) {
-					let f = -pvLiquido;
-					let df = 0;
-
-					for (let t = 1; t <= n; t++) {
-						// Reconstrói a parcela t do SAC/SACRE para confrontar com o valor líquido
-						let saldoDevedorAnterior = pvTotal - (amortizacao * (t - 1));
-						let pmt_t = amortizacao + (saldoDevedorAnterior * iNom);
-						
-						let pot = Math.pow(1 + iCET, -t);
-						f += pmt_t * pot;
-						df -= t * pmt_t * Math.pow(1 + iCET, -t - 1);
-					}
-
-					iCET = iCET - f / (df || 1);
-					if (Math.abs(f) < 0.0000001) break; 
-				}
-				return iCET;
-			}
-	</script>	
-	-->
-	
+		
 </body>
 </html>
