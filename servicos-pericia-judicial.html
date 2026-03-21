@@ -20,7 +20,8 @@
 	<meta name="twitter:description" content="Do Laudo Essencial à Auditoria Premium. Conheça a estrutura de assistência técnica do Dr. Lincoln Sposito para casos de alta complexidade.">
 	<meta name="twitter:image" content="https://spositol.github.io/pericia.judicial/img/perito-judicial-administracao-lincoln-sposito.webp">
 
-    <link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="cro-system.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>	
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
@@ -922,5 +923,16 @@ window.onload = () => atualizarArea('financeiro');
 		}
 	})();
 </script>
+<script>
+const croConfig = {
+	enableProgressBar: true,
+	enableFloatingBar: true,
+	enableExitIntent: true,
+	floatingBarDelay: 20000,
+	floatingBarMessage: 'Qual perícia sua causa precisa?',
+	floatingBarUrgency: 'Proposta em 24h'
+};
+</script>
+<script src="cro-system.js"></script>
 </body>
 </html>

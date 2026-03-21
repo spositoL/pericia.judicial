@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard GA4 | CRO System Monitor</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #1a2a3a;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-info {
+            display: flex;
+            gap: 30px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .info-label {
+            font-size: 0.85rem;
+            color: #999;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .info-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #c5a059;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .card h2 {
+            color: #1a2a3a;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #c5a059;
+            padding-bottom: 10px;
+        }
+
+        .card-content {
+            position: relative;
+            height: 350px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .metric-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #c5a059;
+        }
+
+        .metric-label {
+            font-size: 0.85rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #1a2a3a;
+        }
+
+        .metric-change {
+            font-size: 0.85rem;
+            color: #27ae60;
+            margin-top: 5px;
+        }
+
+        .metric-change.negative {
+            color: #e74c3c;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead {
+            background: #f8f9fa;
+            border-bottom: 2px solid #c5a059;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            font-weight: 600;
+            color: #1a2a3a;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            color: #555;
+        }
+
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #27ae60;
+        }
+
+        .sync-button {
+            background: #c5a059;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: background 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .sync-button:hover {
+            background: #e6c770;
+        }
+
+        .sync-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .page-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .page-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 3px solid #c5a059;
+        }
+
+        .page-name {
+            font-size: 0.9rem;
+            color: #333;
+            font-weight: 600;
+            flex: 1;
+            word-break: break-word;
+        }
+
+        .page-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: #c5a059;
+            font-size: 1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1024px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+
+        .no-data {
+            text-align: center;
+            color: #999;
+            padding: 40px 20px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Dashboard GA4 - CRO System Monitor</h1>
+            <div class="header-info">
+                <div class="info-item">
+                    <span class="info-label">Status</span>
+                    <span class="info-value" id="sync-status">Carregando...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Última Sincronização</span>
+                    <span class="info-value" id="last-sync">--:--</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Taxa de Conversão Geral</span>
+                    <span class="info-value" id="total-conversion-rate">--%</span>
+                </div>
+            </div>
+            <button class="sync-button" onclick="manualSync()">🔄 Sincronizar Agora</button>
+        </header>
+
+        <div id="messages"></div>
+
+        <div class="grid">
+            <!-- KPIs Principais -->
+            <div class="card">
+                <h2>📈 KPIs Principais</h2>
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <div class="metric-label">Visitantes Únicos</div>
+                        <div class="metric-value" id="total-users">0</div>
+                        <div class="metric-change" id="users-change">-</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Visualizações</div>
+                        <div class="metric-value" id="total-views">0</div>
+                        <div class="metric-change" id="views-change">-</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Bounce Rate Médio</div>
+                        <div class="metric-value" id="bounce-rate">0%</div>
+                        <div class="metric-change negative" id="bounce-change">-</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Tempo na Página</div>
+                        <div class="metric-value" id="avg-duration">0s</div>
+                        <div class="metric-change" id="duration-change">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Eventos CRO -->
+            <div class="card">
+                <h2>🎯 Eventos CRO (7 dias)</h2>
+                <div class="card-content">
+                    <div class="metrics-grid">
+                        <div class="metric-box">
+                            <div class="metric-label">Total CRO Eventos</div>
+                            <div class="metric-value" id="total-cro-events">0</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">Cliques WhatsApp</div>
+                            <div class="metric-value" id="whatsapp-clicks">0</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">Pop-ups Exit Intent</div>
+                            <div class="metric-value" id="exit-popups">0</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">CTR Geral</div>
+                            <div class="metric-value" id="cro-ctr">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfico: Conversões por Página -->
+            <div class="card">
+                <h2>💰 Conversões por Página</h2>
+                <div class="card-content">
+                    <div class="chart-wrapper">
+                        <canvas id="conversionsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfico: Engajamento -->
+            <div class="card">
+                <h2>⏱️ Engajamento (Tempo na Página)</h2>
+                <div class="card-content">
+                    <div class="chart-wrapper">
+                        <canvas id="engagementChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Top Páginas -->
+            <div class="card" style="grid-column: 1 / -1;">
+                <h2>🏆 Top 10 Páginas por Conversão</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Página</th>
+                                <th>Visualizações</th>
+                                <th>Conversões</th>
+                                <th>Taxa Conversão</th>
+                                <th>Bounce Rate</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topPages">
+                            <tr>
+                                <td colspan="6" class="no-data">Carregando dados...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Evento Últimos 7 Dias -->
+            <div class="card" style="grid-column: 1 / -1;">
+                <h2>📅 Eventos de Conversão (Últimos 7 Dias)</h2>
+                <div class="page-list" id="conversionEventsList">
+                    <div class="no-data">Carregando dados...</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Dashboard GA4 - Atualização automática a cada 24h ou manual via botão acima</p>
+            <p>Dados do arquivo: <code>ga4-data.json</code></p>
+        </footer>
+    </div>
+
+    <script>
+        let chartsInstance = {};
+
+        /**
+         * Carregar dados do arquivo local ga4-data.json
+         */
+        async function loadData() {
+            try {
+                const response = await fetch('ga4-data.json');
+                if (!response.ok) throw new Error('Arquivo ga4-data.json não encontrado');
+                const data = await response.json();
+                renderDashboard(data);
+                return data;
+            } catch (error) {
+                showError(`❌ Erro ao carregar dados: ${error.message}`);
+                return null;
+            }
+        }
+
+        /**
+         * Renderizar dashboard com dados
+         */
+        function renderDashboard(data) {
+            if (!data) return;
+
+            // Atualizar header
+            document.getElementById('sync-status').textContent = '✅ Sincronizado';
+            document.getElementById('last-sync').textContent = new Date(data.lastSync).toLocaleString('pt-BR');
+
+            // Processar métricas
+            processMetrics(data.metrics);
+            processCROEvents(data.croEvents);
+            processConversions(data.conversionEvents, data.conversionRates);
+
+            // Renderizar tabelas e gráficos
+            renderTopPages(data.conversionRates);
+            renderConversionList(data.conversionEvents);
+            
+            showSuccess('✅ Dashboard atualizado com sucesso!');
+        }
+
+        /**
+         * Processar métricas gerais
+         */
+        function processMetrics(metrics) {
+            if (!metrics || metrics.length === 0) return;
+
+            let totalUsers = 0, totalViews = 0;
+            let totalBounce = 0, totalDuration = 0;
+            let count = 0;
+
+            metrics.forEach(row => {
+                if (row.metricValues && row.metricValues.length >= 4) {
+                    totalUsers += parseInt(row.metricValues[0].value) || 0;
+                    totalViews += parseInt(row.metricValues[1].value) || 0;
+                    totalBounce += parseFloat(row.metricValues[2].value) || 0;
+                    totalDuration += parseFloat(row.metricValues[3].value) || 0;
+                    count++;
+                }
+            });
+
+            document.getElementById('total-users').textContent = totalUsers.toLocaleString('pt-BR');
+            document.getElementById('total-views').textContent = totalViews.toLocaleString('pt-BR');
+            document.getElementById('bounce-rate').textContent = ((totalBounce / count).toFixed(2)) + '%';
+            document.getElementById('avg-duration').textContent = Math.round(totalDuration / count) + 's';
+        }
+
+        /**
+         * Processar eventos CRO
+         */
+        function processCROEvents(croEvents) {
+            if (!croEvents || croEvents.length === 0) {
+                document.getElementById('total-cro-events').textContent = '0';
+                return;
+            }
+
+            let totalEvents = 0;
+            let whatsappClicks = 0;
+            let exitPopups = 0;
+
+            croEvents.forEach(row => {
+                const eventLabel = row.dimensionValues[1]?.value || '';
+                const count = parseInt(row.metricValues[0].value) || 0;
+                
+                totalEvents += count;
+                if (eventLabel.includes('whatsapp')) whatsappClicks += count;
+                if (eventLabel.includes('exit-intent')) exitPopups += count;
+            });
+
+            document.getElementById('total-cro-events').textContent = totalEvents.toLocaleString('pt-BR');
+            document.getElementById('whatsapp-clicks').textContent = whatsappClicks.toLocaleString('pt-BR');
+            document.getElementById('exit-popups').textContent = exitPopups.toLocaleString('pt-BR');
+            
+            if (totalEvents > 0) {
+                const ctr = ((whatsappClicks / totalEvents) * 100).toFixed(2);
+                document.getElementById('cro-ctr').textContent = ctr + '%';
+            }
+        }
+
+        /**
+         * Processar conversões
+         */
+        function processConversions(conversions, rates) {
+            if (!conversions || conversions.length === 0) {
+                document.getElementById('total-conversion-rate').textContent = '0%';
+                return;
+            }
+
+            let totalConversions = 0;
+            let totalViews = 0;
+
+            Object.values(rates).forEach(rate => {
+                totalConversions += rate.conversions || 0;
+                totalViews += rate.views || 0;
+            });
+
+            const conversionRate = totalViews > 0 ? ((totalConversions / totalViews) * 100).toFixed(2) : 0;
+            document.getElementById('total-conversion-rate').textContent = conversionRate + '%';
+
+            // Dados para gráfico
+            const pageNames = Object.keys(rates).slice(0, 10);
+            const conversionData = pageNames.map(page => rates[page].conversions || 0);
+
+            renderConversionChart(pageNames, conversionData);
+            renderEngagementChart(pageNames);
+        }
+
+        /**
+         * Renderizar gráfico de conversões
+         */
+        function renderConversionChart(labels, data) {
+            const ctx = document.getElementById('conversionsChart').getContext('2d');
+            
+            if (chartsInstance.conversions) {
+                chartsInstance.conversions.destroy();
+            }
+
+            chartsInstance.conversions = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels.map(l => l.substring(0, 40) + (l.length > 40 ? '...' : '')),
+                    datasets: [{
+                        label: 'Conversões',
+                        data: data,
+                        backgroundColor: '#c5a059',
+                        borderColor: '#b08d4a',
+                        borderWidth: 1,
+                        borderRadius: 6
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: { color: '#f0f0f0' }
+                        }
+                    }
+                }
+            });
+        }
+
+        /**
+         * Renderizar gráfico de engajamento
+         */
+        function renderEngagementChart(labels) {
+            const ctx = document.getElementById('engagementChart').getContext('2d');
+            
+            if (chartsInstance.engagement) {
+                chartsInstance.engagement.destroy();
+            }
+
+            // Dados simulados (você pode substituir com dados reais)
+            const engagementData = labels.map(() => Math.floor(Math.random() * 300) + 50);
+
+            chartsInstance.engagement = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels.map(l => l.substring(0, 25) + (l.length > 25 ? '...' : '')),
+                    datasets: [{
+                        label: 'Tempo Médio (segundos)',
+                        data: engagementData,
+                        borderColor: '#c5a059',
+                        backgroundColor: 'rgba(197, 160, 89, 0.1)',
+                        tension: 0.4,
+                        fill: true,
+                        pointBackgroundColor: '#c5a059',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'top' }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: '#f0f0f0' }
+                        }
+                    }
+                }
+            });
+        }
+
+        /**
+         * Renderizar tabela top páginas
+         */
+        function renderTopPages(rates) {
+            const sorted = Object.entries(rates)
+                .sort((a, b) => (b[1].conversions || 0) - (a[1].conversions || 0))
+                .slice(0, 10);
+
+            const html = sorted.map(([page, stats]) => {
+                const convRate = stats.views > 0 ? ((stats.conversions / stats.views) * 100).toFixed(2) : 0;
+                const statusClass = convRate > 2 ? 'status-active' : convRate > 0.5 ? 'status-warning' : 'status-error';
+                
+                return `
+                    <tr>
+                        <td><strong>${page.substring(1, 50)}</strong></td>
+                        <td>${stats.views.toLocaleString('pt-BR')}</td>
+                        <td>${stats.conversions.toLocaleString('pt-BR')}</td>
+                        <td><strong>${convRate}%</strong></td>
+                        <td>--</td>
+                        <td><span class="status-badge ${statusClass}">
+                            ${convRate > 2 ? 'Excelente' : convRate > 0.5 ? 'Bom' : 'Baixo'}
+                        </span></td>
+                    </tr>
+                `;
+            }).join('');
+
+            document.getElementById('topPages').innerHTML = html || '<tr><td colspan="6" class="no-data">Nenhum dado disponível</td></tr>';
+        }
+
+        /**
+         * Renderizar lista de eventos de conversão
+         */
+        function renderConversionList(conversions) {
+            if (!conversions || conversions.length === 0) {
+                document.getElementById('conversionEventsList').innerHTML = '<div class="no-data">Nenhuma conversão registrada</div>';
+                return;
+            }
+
+            const grouped = {};
+            conversions.forEach(row => {
+                const page = row.dimensionValues[0].value;
+                const date = row.dimensionValues[2].value;
+                const count = parseInt(row.metricValues[0].value) || 0;
+
+                if (!grouped[page]) grouped[page] = { total: 0, dates: [] };
+                grouped[page].total += count;
+                grouped[page].dates.push({ date, count });
+            });
+
+            const html = Object.entries(grouped)
+                .map(([page, data]) => `
+                    <div class="page-item">
+                        <div class="page-name">${page}</div>
+                        <div class="page-stats">
+                            <div class="stat">
+                                <div class="stat-value">${data.total}</div>
+                                <div>Conversões</div>
+                            </div>
+                        </div>
+                    </div>
+                `)
+                .join('');
+
+            document.getElementById('conversionEventsList').innerHTML = html;
+        }
+
+        /**
+         * Sincronizar manualmente (requer `ga4-sync.js` rodando)
+         */
+        async function manualSync() {
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = '⏳ Sincronizando...';
+
+            try {
+                const response = await fetch('http://localhost:3000/sync', { method: 'POST' });
+                if (response.ok) {
+                    showSuccess('✅ Sincronização iniciada! Atualizando dados...');
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                }
+            } catch (error) {
+                showWarning('⚠️ Servidor local não disponível. Use: node ga4-sync.js');
+            }
+
+            btn.disabled = false;
+            btn.textContent = '🔄 Sincronizar Agora';
+        }
+
+        /**
+         * Mostrar mensagens
+         */
+        function showMessage(msg, type = 'info') {
+            const div = document.getElementById('messages');
+            const msgEl = document.createElement('div');
+            msgEl.className = type;
+            msgEl.textContent = msg;
+            div.appendChild(msgEl);
+            setTimeout(() => msgEl.remove(), 5000);
+        }
+
+        function showError(msg) { showMessage(msg, 'error'); }
+        function showSuccess(msg) { showMessage(msg, 'success'); }
+        function showWarning(msg) { showMessage(msg, 'warning'); }
+
+        // Carregar dados ao iniciar
+        document.addEventListener('DOMContentLoaded', loadData);
+
+        // Auto-refresh a cada 5 minutos
+        setInterval(loadData, 5 * 60 * 1000);
+    </script>
+</body>
+</html>

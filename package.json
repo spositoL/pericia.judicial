@@ -1,0 +1,31 @@
+{
+  "name": "ga4-pericia-sync",
+  "version": "1.0.0",
+  "description": "GA4 data synchronization for pericia.judicial - CRO monitoring dashboard",
+  "main": "ga4-sync.js",
+  "scripts": {
+    "sync": "node ga4-sync.js",
+    "test": "echo \"No tests configured\" && exit 0"
+  },
+  "keywords": [
+    "ga4",
+    "analytics",
+    "cro",
+    "conversion-rate-optimization",
+    "pericia"
+  ],
+  "author": "Pericia Judicial",
+  "license": "MIT",
+  "dependencies": {
+    "@google-analytics/data": "^3.20.0",
+    "dotenv": "^16.3.1"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/seu-usuario/pericia.judicial"
+  }
+}
