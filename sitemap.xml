@@ -426,4 +426,16 @@
       <priority>0.70</priority>
     </url>
 
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-a-autopsia-do-stalking-bancario-o-guia-definitivo-contra-a-engenharia-do-assedio-e-a-industria-da-coacao-digital.html</loc>
+      <lastmod>2026-03-21</lastmod>
+      <priority>0.80</priority>
+    </url>
+    
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/dossie-saude-mental.html</loc>
+      <lastmod>2026-03-21</lastmod>
+      <priority>1.00</priority>
+    </url>
+
 </urlset>
