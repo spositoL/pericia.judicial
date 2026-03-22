@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula: SD | Microsserviços e API Gateways | Dr. Lincoln Sposito</title>
+    <meta name="description" content="Aula de Sistemas Distribuídos - Microsserviços e Desacoplamento - Universidade São Judas Tadeu - Caminho: /pericia.judicial/professor.lincoln/sistemas-distribuidos/">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>    
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-5F1FGJ25TK');
+
+        // FUNÇÃO MESTRE: Atualizada para o ID da aula de 23/03 (Microsserviços)
+        function logInteracao(nomeEvento, status, origem, aulaId, disciplinaId) {
+                gtag('event', nomeEvento, {
+                    'disciplina': disciplinaId || 'SD_SIST_DISTRIBUIDOS', 
+                    'status_presenca': status,
+                    'origem': origem,
+                    'aula_referencia': aulaId || '2026-03-23-MICROSERVICOS_GATEWAY', // ID atualizado 
+                    'path_servidor': '/pericia.judicial/professor.lincoln/sistemas-distribuidos/' 
+                });
+            }
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            // Se vier pelo QR Code de atraso, loga automaticamente
+            if (urlParams.get('ref') === 'atrasado') {
+                logInteracao('presenca_aula', 'atrasado', 'qrcode_atraso');
+            }
+            
+            const urlAtraso = window.location.origin + window.location.pathname + "?ref=atrasado";
+            new QRCode(document.getElementById("qrcode-persistente"), {
+                text: urlAtraso, width: 70, height: 70, colorDark : "#002147", colorLight : "#ffffff"
+            });
+        };
+    </script>    
+    
+    <style>
+    :root { 
+        /* Paleta de Cores Institucional e Destaques */
+        --navy: #002147; 
+        --white: #ffffff; 
+        --accent: #28a745; 
+        --warning: #ffc107;
+        --gold: #D4AF37;
+        
+        /* Tipografia Dinâmica para Projeção e Mobile */
+        --font-titulo: clamp(2.2rem, 7vw, 4.5rem); 
+        --font-subtitulo: clamp(1.4rem, 4vw, 2.2rem);
+        --font-corpo: clamp(1.1rem, 2.5vw, 1.6rem);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { 
+        margin: 0; padding: 0; width: 100%; height: 100%;
+        overflow-x: hidden; 
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+        background: var(--navy); 
+        color: var(--white);
+        scroll-snap-type: y mandatory; /* Força o enquadramento do slide na tela */
+    }        
+
+    /* Estrutura de Header e Footer Fixos */
+    header {
+        position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+        background: rgba(0, 33, 71, 0.95);
+        display: flex; align-items: center; padding: 0 5%;
+        border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 1000;
+    }
+
+    footer {
+        position: fixed; bottom: 0; left: 0; width: 100%; height: 40px;
+        background: rgba(0, 33, 71, 0.95);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.9rem; opacity: 0.7; z-index: 1000;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Container Principal */
+    .container-slides {
+        width: 100%;
+        display: flex; 
+        flex-direction: column;
+    }
+
+    /* Padrão Único para as Sections (Slides) */
+    .slide { 
+        min-height: 100vh; 
+        width: 100%;
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center;
+        padding: 80px 5% 50px 5%; /* Evita transbordo para header/footer */
+        text-align: center;
+        scroll-snap-align: start; 
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Elementos Internos dos Slides */
+    .content-box { 
+        background: rgba(255,255,255,0.05); 
+        padding: clamp(1.5rem, 5vw, 3rem); 
+        border-radius: 20px; 
+        border: 1px solid rgba(255,255,255,0.1); 
+        width: 100%;
+        max-width: 1100px;
+        box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    }
+
+    h1 { color: var(--white); font-size: var(--font-titulo); text-transform: uppercase; margin-bottom: 1rem; line-height: 1.1; }
+    h2.disciplina-tag {
+        color: var(--gold); 
+        background: rgba(212, 175, 55, 0.1); 
+        border: 2px solid var(--gold); 
+        border-radius: 50px; 
+        display: inline-block; 
+        padding: 0.5rem 2rem; 
+        font-size: clamp(1rem, 3vw, 1.4rem); 
+        text-transform: uppercase; 
+        letter-spacing: 2px; 
+        margin-bottom: 2rem;
+    }
+    
+    p { font-size: var(--font-corpo); line-height: 1.6; margin: 1rem auto; opacity: 0.95; }
+    
+    ul { list-style: none; padding: 0; display: inline-block; text-align: left; }
+    li { font-size: var(--font-corpo); margin-bottom: 1rem; display: flex; align-items: center; }
+
+    /* Botões de Ação */
+    .btn-engajamento {
+        background: var(--accent); color: white; border: none; 
+        padding: 18px 40px; border-radius: 12px; 
+        font-size: 1.3rem; font-weight: bold;
+        cursor: pointer; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .btn-engajamento:hover { transform: scale(1.08); filter: brightness(1.15); box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3); }
+
+    /* --- ANIMAÇÃO DE TRANSIÇÃO (FLUTUAR) --- */
+    .slide > * {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease-out;
+    }
+
+    .slide.active > * {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Responsividade para Dispositivos Móveis */
+    @media (max-width: 768px) {
+        .slide { padding: 70px 15px 50px 15px; }
+        .content-box { padding: 1.5rem; }
+        h1 { margin-bottom: 0.5rem; }
+        .disciplina-tag { padding: 0.4rem 1.2rem; margin-bottom: 1rem; }
+    }
+
+    /* Ajuste para modo paisagem em celulares pequenos */
+    @media (max-height: 500px) and (orientation: landscape) {
+        .slide { justify-content: flex-start; padding-top: 80px; }
+        html, body { scroll-snap-type: none; }
+    }
+    .btn-voltar {
+            margin-left: auto; /* Empurra o botão para a direita */
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 8px 15px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            transition: 0.3s;
+            background: rgba(255,255,255,0.05);
+        }
+
+    .btn-voltar:hover {
+        background: var(--accent);
+        border-color: var(--accent);
+        transform: translateX(-5px); /* Efeito visual de retorno */
+    }
+</style>
+</head>
+<body>
+
+    <header>
+        <img src="../img/grafico.svg" alt="Logo" style="height: 70px;">
+		<a href="index.html" class="btn-voltar" onclick="logInteracao('navegacao', 'retorno_portal', 'header')">← Voltar ao Portal da Disciplina</a>
+		<a href="../../index.html" class="btn-voltar">Conheça meu trabalho como perito</a><br>
+    </header>
+
+    <div class="container-slides" id="deck">
+		<section class="slide" id="boas-vindas" style="
+    height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 2rem; 
+    box-sizing: border-box; 
+    overflow: hidden;">
+    
+    <div class="content-box" style="
+        max-width: 900px; 
+        width: 100%; 
+        text-align: center; 
+        padding: 3rem; 
+        border-radius: 20px; 
+        background: rgba(0, 33, 71, 0.85); 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        
+        <h2 style="
+            color: #D4AF37; 
+            background: rgba(212, 175, 55, 0.1); 
+            border: 2px solid #D4AF37; 
+            border-radius: 50px; 
+            display: inline-block; 
+            padding: 0.5rem 2rem; 
+            font-size: clamp(1.2rem, 4vw, 1.8rem); 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            margin-bottom: 1.5rem;">
+            Disciplina: Sistemas Distribuídos
+        </h2>
+
+        <h1 style="
+            font-size: clamp(2.5rem, 8vw, 4.5rem); 
+            line-height: 1.1; 
+            margin-bottom: 1rem; 
+            color: var(--white);">
+            Microsserviços e API Gateways
+        </h1>
+        
+        <p style="color: var(--gold); font-size: 1.4rem; font-weight: bold; margin-bottom: 1.5rem; letter-spacing: 1px;">
+            Teoria de Desacoplamento e Componentização
+        </p>
+
+        <hr style="border: 0; border-top: 2px solid rgba(255,255,255,0.1); width: 60%; margin: 1.5rem auto;">
+        
+        <h3 style="
+            color: var(--white); 
+            font-size: clamp(1.5rem, 5vw, 2.2rem); 
+            margin-bottom: 0.5rem; 
+            font-weight: 500;">
+            Prof. Dr. Lincoln Sposito
+        </h3>
+        
+        <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; opacity: 0.9;">
+            <p style="font-size: clamp(1.1rem, 3vw, 1.5rem);">📅 23 de Março de 2026</p>
+            <p style="font-size: clamp(1.1rem, 3vw, 1.5rem);">🕒 19h - 21h30</p>
+        </div>
+        
+        <div style="margin-top: 2.5rem;">
+            <button class="btn-engajamento" 
+                    style="padding: 1.2rem 2.5rem; font-size: 1.4rem; cursor: pointer;"
+                    onclick="logInteracao('engajamento_aula', 'ativo', 'botao_inicio', '2026-03-23-MICROSERVICOS_GATEWAY')">
+                Iniciar Experiência de Aula
+            </button>
+        </div>
+    </div>
+</section>
+
+		<section class="slide" id="agenda">
+			<div class="content-box">
+				<h2 style="color: var(--warning); font-size: 1.5rem; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 2px;">Roteiro de Atividades</h2>
+				<h1>Agenda do Dia</h1>
+				
+				<ul style="list-style: none; padding: 0; text-align: left; display: inline-block; margin-top: 0.5rem;">
+					<li style="margin-bottom: 0.5rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">01</span> 
+						Apresentação: De Monólitos a Microsserviços
+					</li>
+					<li style="margin-bottom: 0.5rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">02</span> 
+						Teoria: Desacoplamento e Alta Coesão
+					</li>
+					<li style="margin-bottom: 0.5rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">03</span> 
+						API Gateways: Roteamento e Segurança Centralizada
+					</li>
+					<li style="margin-bottom: 0.5rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">04</span> 
+						Design de Interfaces e Contratos de API
+					</li>
+					<li style="margin-bottom: 0.5rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">05</span> 
+						Hands-on Lab: Integração de Serviços Distribuídos
+					</li>
+					<li style="margin-bottom: 0.5rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">06</span> 
+						Orientação Técnica: Aplicação no Projeto A3
+					</li>
+					<li style="margin-bottom: 0.5rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">07</span> 
+						Pesquisa de Satisfação e Feedback
+					</li>
+					<li style="margin-bottom: 0.5rem; display: flex; align-items: center;">
+						<span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 2.2rem;">08</span> 
+						Recursos e Materiais de Apoio
+					</li>
+				</ul>
+
+				<div style="margin-top: 1rem;">
+					<button class="btn-engajamento" onclick="logInteracao('engajamento_aula', 'ativo', 'visualizou_agenda', '2026-03-23-MICROSERVICOS_GATEWAY')">
+						Entendido, vamos começar!
+					</button>
+				</div>
+			</div>
+		</section>
+		
+		<section class="slide" id="monolitos" style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+    <div class="content-box" style="max-width: 1200px; width: 95%; background: rgba(255, 255, 255, 0.03); border: 2px solid rgba(255, 255, 255, 0.1);">
+        <h2 style="color: var(--warning); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">O Ponto de Partida</h2>
+        <h1 style="font-size: clamp(3rem, 10vw, 5.5rem); margin-bottom: 2rem;">Arquitetura Monolítica</h1>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; text-align: left; align-items: center;">
+            <div style="font-size: var(--font-corpo); border-left: 5px solid var(--warning); padding-left: 2rem;">
+                <p><strong>Unidade Única:</strong> UI, Business Logic e Data Access em um só binário.</p>
+                <p><strong>Risco:</strong> Uma falha em um módulo derruba o sistema inteiro (Tanenbaum, 2007).</p>
+            </div>
+            <div style="font-size: var(--font-corpo); background: rgba(255,0,0,0.1); padding: 2rem; border-radius: 15px;">
+                <ul style="margin: 0;">
+                    <li style="font-size: 1.8rem;">❌ Escalabilidade Ineficiente</li>
+                    <li style="font-size: 1.8rem;">❌ Deploy Arriscado</li>
+                    <li style="font-size: 1.8rem;">❌ Barreira Tecnológica</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="microsservicos-intro" style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+    <div class="content-box" style="max-width: 1200px; width: 95%; background: rgba(40, 167, 69, 0.05); border: 2px solid var(--accent);">
+        <h2 style="color: var(--accent); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">A Solução Distribuída</h2>
+        <h1 style="font-size: clamp(3rem, 10vw, 5.5rem); margin-bottom: 2rem;">Microsserviços</h1>
+        
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <p style="font-size: 2.2rem; line-height: 1.4; max-width: 900px; margin: 0 auto;">
+                "Componentização de sistemas onde cada serviço é um processo independente, comunicando-se via mecanismos leves (APIs)." 
+                <br><span style="color: var(--gold); font-size: 1.4rem;">— Monteiro et al. (2020)</span>
+            </p>
+        </div>
+
+        <div style="display: flex; justify-content: space-around; gap: 2rem; flex-wrap: wrap;">
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem 2.5rem; border-radius: 50px; border: 1px solid var(--accent);">
+                <span style="font-size: 1.8rem; font-weight: bold;">✅ Deploy Independente</span>
+            </div>
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem 2.5rem; border-radius: 50px; border: 1px solid var(--accent);">
+                <span style="font-size: 1.8rem; font-weight: bold;">✅ Tolerância a Falhas</span>
+            </div>
+            <div style="background: rgba(255,255,255,0.1); padding: 1.5rem 2.5rem; border-radius: 50px; border: 1px solid var(--accent);">
+                <span style="font-size: 1.8rem; font-weight: bold;">✅ Stack Poliglota</span>
+            </div>
+        </div>
+
+        <div style="margin-top: 4rem;">
+            <button class="btn-engajamento" onclick="logInteracao('discussao_aula', 'ativo', 'slide_transicao_micro')">
+                Como isso impacta o Projeto A3?
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="desacoplamento" style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+    <div class="content-box" style="max-width: 1200px; width: 95%; background: rgba(255, 255, 255, 0.03); border: 2px solid var(--gold);">
+        <h2 style="color: var(--gold); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">Teoria de Sistemas</h2>
+        <h1 style="font-size: clamp(3rem, 10vw, 5.5rem); margin-bottom: 2rem;">Desacoplamento</h1>
+        
+        <div style="text-align: center; margin-bottom: 3.5rem;">
+            <p style="font-size: 2.2rem; line-height: 1.4; max-width: 950px; margin: 0 auto;">
+                "A capacidade de alterar a implementação de um serviço sem afetar seus clientes." 
+                <br><span style="color: var(--warning); font-size: 1.4rem;">— Coulouris et al. (2013)</span>
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div style="background: rgba(0, 33, 71, 0.6); padding: 2rem; border-radius: 15px; border-left: 8px solid var(--accent);">
+                <h3 style="font-size: 2rem; color: var(--accent); margin-top: 0;">Foco na Interface</h3>
+                <p style="font-size: 1.6rem;">O que importa é o <strong>contrato</strong>, não como o código foi escrito internamente.</p>
+            </div>
+            <div style="background: rgba(0, 33, 71, 0.6); padding: 2rem; border-radius: 15px; border-left: 8px solid var(--warning);">
+                <h3 style="font-size: 2rem; color: var(--warning); margin-top: 0;">Independência</h3>
+                <p style="font-size: 1.6rem;">Serviços podem ser reiniciados ou atualizados isoladamente (Tanenbaum, 2007).</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="coesao" style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+    <div class="content-box" style="max-width: 1200px; width: 95%; background: rgba(212, 175, 55, 0.05); border: 2px solid var(--white);">
+        <h2 style="color: var(--accent); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">Princípio da Responsabilidade</h2>
+        <h1 style="font-size: clamp(3rem, 10vw, 5.5rem); margin-bottom: 2rem;">Alta Coesão</h1>
+        
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+            <div style="background: var(--white); color: var(--navy); padding: 2.5rem; border-radius: 20px; width: 100%; max-width: 800px;">
+                <p style="font-size: 2.4rem; font-weight: bold; margin: 0;">
+                    "Cada microsserviço deve ter uma única e clara razão para existir."
+                </p>
+            </div>
+            
+            <ul style="list-style: none; padding: 0; text-align: left; width: 100%; max-width: 800px;">
+                <li style="font-size: 2rem; margin-bottom: 1.5rem;">
+                    <span style="color: var(--accent); margin-right: 15px;">🎯</span> 
+                    Facilita a compreensão e manutenção do código.
+                </li>
+                <li style="font-size: 2rem; margin-bottom: 1.5rem;">
+                    <span style="color: var(--accent); margin-right: 15px;">🎯</span> 
+                    Reduz efeitos colaterais em mudanças de requisitos.
+                </li>
+                <li style="font-size: 2rem;">
+                    <span style="color: var(--accent); margin-right: 15px;">🎯</span> 
+                    Base para o <strong>Bounded Context</strong> (Contexto Delimitado).
+                </li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 3.5rem;">
+            <button class="btn-engajamento" onclick="logInteracao('engajamento_aula', 'ativo', 'entendeu_coesao', '2026-03-23-MICROSERVICOS_GATEWAY')">
+                Isso faz sentido para o seu serviço?
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="gateway-conceito" style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+    <div class="content-box" style="max-width: 1200px; width: 95%; background: rgba(0, 33, 71, 0.8); border: 2px solid var(--accent);">
+        <h2 style="color: var(--accent); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">Arquitetura de Entrada</h2>
+        <h1 style="font-size: clamp(3rem, 10vw, 5.5rem); margin-bottom: 2rem;">API Gateway</h1>
+        
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <p style="font-size: 2.2rem; line-height: 1.4; max-width: 900px; margin: 0 auto;">
+                "Um ponto único de entrada que encapsula a arquitetura interna do sistema, oferecendo uma API sob medida para cada cliente." 
+                <br><span style="color: var(--gold); font-size: 1.4rem;">— Adaptado de Monteiro et al. (2020)</span>
+            </p>
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 4rem; align-items: center; flex-wrap: wrap;">
+            <div style="text-align: center;">
+                <div style="font-size: 4rem;">📱</div>
+                <p style="font-size: 1.2rem; font-weight: bold;">Cliente Único</p>
+            </div>
+            <div style="font-size: 3rem; color: var(--accent);">➡️</div>
+            <div style="background: var(--accent); color: white; padding: 1.5rem 3rem; border-radius: 10px; font-weight: bold; font-size: 2rem;">
+                GATEWAY
+            </div>
+            <div style="font-size: 3rem; color: var(--accent);">➡️</div>
+            <div style="text-align: center; opacity: 0.7;">
+                <div style="font-size: 2.5rem;">⚙️ ⚙️ ⚙️</div>
+                <p style="font-size: 1.2rem; font-weight: bold;">N Microsserviços</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="gateway-funcoes" style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+    <div class="content-box" style="max-width: 1200px; width: 95%; background: rgba(255, 255, 255, 0.03); border: 2px solid var(--warning);">
+        <h2 style="color: var(--warning); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">Responsabilidades</h2>
+        <h1 style="font-size: clamp(2.5rem, 8vw, 4.5rem); margin-bottom: 2.5rem;">Segurança e Controle</h1>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; text-align: left;">
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 2.5rem; border-radius: 20px;">
+                <h3 style="color: var(--accent); font-size: 2.2rem; margin-top: 0;">🛡️ Segurança</h3>
+                <ul style="list-style: none; padding: 0; font-size: 1.7rem;">
+                    <li style="margin-bottom: 1rem;">• Autenticação Centralizada (JWT)</li>
+                    <li style="margin-bottom: 1rem;">• Proteção contra DoS</li>
+                    <li>• SSL Offloading</li>
+                </ul>
+            </div>
+            
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 2.5rem; border-radius: 20px;">
+                <h3 style="color: var(--warning); font-size: 2.2rem; margin-top: 0;">🚦 Roteamento</h3>
+                <ul style="list-style: none; padding: 0; font-size: 1.7rem;">
+                    <li style="margin-bottom: 1rem;">• Redirecionamento de Tráfego</li>
+                    <li style="margin-bottom: 1rem;">• Load Balancing (Tanenbaum, 2007)</li>
+                    <li>• Agregação de Respostas</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="margin-top: 3.5rem;">
+            <button class="btn-engajamento" onclick="logInteracao('engajamento_aula', 'ativo', 'aprendeu_gateway', '2026-03-23-MICROSERVICOS_GATEWAY')">
+                Entendi o papel do Gateway!
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="design-interfaces" style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+    <div class="content-box" style="max-width: 1200px; width: 95%; background: rgba(255, 255, 255, 0.03); border: 2px solid var(--gold);">
+        <h2 style="color: var(--gold); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">O Acordo entre Serviços</h2>
+        <h1 style="font-size: clamp(2.8rem, 9vw, 5rem); margin-bottom: 2rem;">Design de Interfaces</h1>
+        
+        <div style="text-align: center; margin-bottom: 3rem;">
+            <p style="font-size: 2.2rem; line-height: 1.4; max-width: 950px; margin: 0 auto;">
+                "Interfaces bem definidas permitem que sistemas heterogêneos operem como uma unidade coesa." 
+                <br><span style="color: var(--warning); font-size: 1.4rem;">— Coulouris et al. (2013)</span>
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; text-align: left;">
+            <div style="padding: 1.5rem; border-left: 10px solid var(--accent);">
+                <h3 style="font-size: 2rem; color: var(--white);">Ocultação de Detalhes</h3>
+                <p style="font-size: 1.6rem; opacity: 0.8;">O cliente não precisa saber qual banco de dados ou linguagem o serviço usa.</p>
+            </div>
+            <div style="padding: 1.5rem; border-left: 10px solid var(--warning);">
+                <h3 style="font-size: 2rem; color: var(--white);">Independência</h3>
+                <p style="font-size: 1.6rem; opacity: 0.8;">A implementação interna pode mudar, desde que o <strong>contrato</strong> seja mantido.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="contratos-api" style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+    <div class="content-box" style="max-width: 1200px; width: 95%; background: rgba(0, 33, 71, 0.9); border: 2px solid var(--white);">
+        <h2 style="color: var(--accent); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">Implementação Moderna</h2>
+        <h1 style="font-size: clamp(2.8rem, 9vw, 5rem); margin-bottom: 2rem;">Contratos de API</h1>
+        
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+            <div style="background: var(--white); color: var(--navy); padding: 2rem 4rem; border-radius: 15px; width: fit-content;">
+                <p style="font-size: 2.5rem; font-weight: bold; margin: 0;">API como Produto</p>
+            </div>
+
+            <ul style="list-style: none; padding: 0; text-align: left; width: 100%; max-width: 850px;">
+                <li style="font-size: 2.1rem; margin-bottom: 1.5rem; display: flex; align-items: center;">
+                    <span style="color: var(--accent); margin-right: 20px;">📜</span> 
+                    <strong>Documentação Viva:</strong> Swagger / OpenAPI (Monteiro, 2020).
+                </li>
+                <li style="font-size: 2.1rem; margin-bottom: 1.5rem; display: flex; align-items: center;">
+                    <span style="color: var(--accent); margin-right: 20px;">📜</span> 
+                    <strong>Versionamento:</strong> `/v1/`, `/v2/` para evitar quebras.
+                </li>
+                <li style="font-size: 2.1rem; display: flex; align-items: center;">
+                    <span style="color: var(--accent); margin-right: 20px;">📜</span> 
+                    <strong>Idempotência:</strong> Garantia de estado em redes instáveis.
+                </li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 4rem;">
+            <button class="btn-engajamento" onclick="logInteracao('engajamento_aula', 'ativo', 'aprendeu_contrato', '2026-03-23-MICROSERVICOS_GATEWAY')">
+                Como está o contrato do seu grupo?
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="lab-objetivo" style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+    <div class="content-box" style="max-width: 1200px; width: 95%; background: rgba(40, 167, 69, 0.05); border: 2px solid var(--accent);">
+        <h2 style="color: var(--accent); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">Prática de Laboratório</h2>
+        <h1 style="font-size: clamp(2.8rem, 9vw, 5rem); margin-bottom: 2rem;">Integração de Serviços</h1>
+        
+        <div style="text-align: center; margin-bottom: 3.5rem;">
+            <p style="font-size: 2.3rem; line-height: 1.4; max-width: 1000px; margin: 0 auto;">
+                "O desafio é garantir a <strong>transparência de acesso</strong>: o usuário não deve perceber que os serviços estão em máquinas ou processos distintos." 
+                <br><span style="color: var(--gold); font-size: 1.4rem;">— Adaptado de Tanenbaum & Van Steen (2007)</span>
+            </p>
+        </div>
+
+        <div style="display: flex; justify-content: space-around; gap: 2rem; flex-wrap: wrap;">
+            <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 15px; text-align: center; min-width: 250px;">
+                <span style="font-size: 3rem;">📦</span>
+                <p style="font-size: 1.5rem; font-weight: bold; margin-top: 10px;">Isolamento</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 15px; text-align: center; min-width: 250px;">
+                <span style="font-size: 3rem;">🔗</span>
+                <p style="font-size: 1.5rem; font-weight: bold; margin-top: 10px;">Conectividade</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 15px; text-align: center; min-width: 250px;">
+                <span style="font-size: 3rem;">🛡️</span>
+                <p style="font-size: 1.5rem; font-weight: bold; margin-top: 10px;">Roteamento</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="lab-roteiro" style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+    <div class="content-box" style="max-width: 1200px; width: 95%; background: rgba(255, 255, 255, 0.03); border: 2px solid var(--white);">
+        <h2 style="color: var(--warning); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">Mão na Massa</h2>
+        <h1 style="font-size: clamp(2.5rem, 8vw, 4.5rem); margin-bottom: 2.5rem;">Atividades Práticas</h1>
+        
+        <div style="text-align: left; display: inline-block; width: 100%; max-width: 900px;">
+            <div style="margin-bottom: 2rem; border-left: 10px solid var(--accent); padding-left: 2rem;">
+                <h3 style="font-size: 2.2rem; margin: 0;">1. Subir Microserviços (A e B)</h3>
+                <p style="font-size: 1.7rem; opacity: 0.8;">Utilizar ambientes isolados para simular a distribuição (Monteiro, 2020).</p>
+            </div>
+
+            <div style="margin-bottom: 2rem; border-left: 10px solid var(--gold); padding-left: 2rem;">
+                <h3 style="font-size: 2.2rem; margin: 0;">2. Configurar o API Gateway</h3>
+                <p style="font-size: 1.7rem; opacity: 0.8;">Criar rotas `/servico-a` e `/servico-b` no ponto único de entrada.</p>
+            </div>
+
+            <div style="margin-bottom: 2rem; border-left: 10px solid var(--warning); padding-left: 2rem;">
+                <h3 style="font-size: 2.2rem; margin: 0;">3. Testar a Interoperabilidade</h3>
+                <p style="font-size: 1.7rem; opacity: 0.8;">Validar se o Serviço A consegue disparar uma ação no Serviço B via Gateway.</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 3rem;">
+            <button class="btn-engajamento" onclick="logInteracao('engajamento_aula', 'ativo', 'iniciou_lab', '2026-03-23-MICROSERVICOS_GATEWAY')">
+                Acessar Repositório do Lab
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="a3-visao-geral" style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+    <div class="content-box" style="max-width: 1200px; width: 95%; background: rgba(212, 175, 55, 0.05); border: 2px solid var(--gold);">
+        <h2 style="color: var(--gold); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">Unidade Curricular: Projeto A3</h2>
+        <h1 style="font-size: clamp(2.8rem, 9vw, 5.5rem); margin-bottom: 2rem;">Ecossistema Distribuído</h1>
+        
+        <div style="text-align: center; margin-bottom: 3.5rem;">
+            <p style="font-size: 2.3rem; line-height: 1.4; max-width: 1000px; margin: 0 auto;">
+                "O sucesso de um sistema distribuído reside na sua capacidade de <strong>escalar horizontalmente</strong> e manter a <strong>disponibilidade</strong> sob carga." 
+                <br><span style="color: var(--white); font-size: 1.4rem; opacity: 0.8;">— Baseado em Monteiro et al. (2020)</span>
+            </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; text-align: left;">
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px;">
+                <h3 style="color: var(--accent); font-size: 2rem; margin-top: 0;">🚀 Requisito Técnico</h3>
+                <p style="font-size: 1.6rem;">O sistema <strong>não pode</strong> ser um monólito. Deve haver separação clara entre ao menos dois serviços e um Gateway.</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px;">
+                <h3 style="color: var(--warning); font-size: 2rem; margin-top: 0;">🛡️ Requisito de Gestão</h3>
+                <p style="font-size: 1.6rem;">Uso de protocolos de comunicação padronizados para garantir a <strong>interoperabilidade</strong> (Coulouris, 2013).</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="a3-checklist" style="display: flex; align-items: center; justify-content: center; min-height: 100vh;">
+    <div class="content-box" style="max-width: 1200px; width: 95%; background: rgba(0, 33, 71, 0.9); border: 2px solid var(--white);">
+        <h2 style="color: var(--warning); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">O que será avaliado</h2>
+        <h1 style="font-size: clamp(2.5rem, 8vw, 4.5rem); margin-bottom: 2.5rem;">Checklist Técnico</h1>
+        
+        <div style="text-align: left; display: inline-block; width: 100%; max-width: 950px;">
+            <ul style="list-style: none; padding: 0;">
+                <li style="font-size: 2.1rem; margin-bottom: 1.5rem; display: flex; align-items: flex-start;">
+                    <span style="color: var(--accent); margin-right: 20px;">[ ]</span> 
+                    <div><strong>Diagrama de Arquitetura:</strong> Representação visual do fluxo entre Microsserviços e Gateway.</div>
+                </li>
+                <li style="font-size: 2.1rem; margin-bottom: 1.5rem; display: flex; align-items: flex-start;">
+                    <span style="color: var(--accent); margin-right: 20px;">[ ]</span> 
+                    <div><strong>Isolamento:</strong> Cada serviço deve possuir seu próprio banco de dados ou contexto (Desacoplamento).</div>
+                </li>
+                <li style="font-size: 2.1rem; margin-bottom: 1.5rem; display: flex; align-items: flex-start;">
+                    <span style="color: var(--accent); margin-right: 20px;">[ ]</span> 
+                    <div><strong>Contratos:</strong> Documentação mínima das rotas (Swagger ou similar).</div>
+                </li>
+                <li style="font-size: 2.1rem; display: flex; align-items: flex-start;">
+                    <span style="color: var(--accent); margin-right: 20px;">[ ]</span> 
+                    <div><strong>Segurança:</strong> Demonstração de acesso controlado via Gateway.</div>
+                </li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 3.5rem;">
+            <button class="btn-engajamento" onclick="logInteracao('engajamento_aula', 'ativo', 'duvida_projeto_a3', '2026-03-23-MICROSERVICOS_GATEWAY')">
+                Alguma dúvida sobre os requisitos?
+            </button>
+        </div>
+    </div>
+</section>
+
+
+		
+		
+
+<section class="slide" id="pesquisa-satisfacao-final" style="
+			height: 100vh; 
+			display: flex; 
+			align-items: center; 
+			justify-content: center; 
+			padding: 2rem; 
+			box-sizing: border-box; 
+			overflow: hidden;">
+			
+			<div class="content-box" style="max-width: 1100px; padding: clamp(1.5rem, 5vw, 3.5rem); text-align: center;">
+				<h2 class="disciplina-tag" style="margin-bottom: 2rem;">
+					07 | Pesquisa de Satisfação
+				</h2>
+
+				<div style="width: 100%; margin: 0 auto;">
+					<h1 style="color: var(--warning); font-size: clamp(1.8rem, 5vw, 3rem); margin-bottom: 1.5rem;">
+						Como foi a aula de hoje sobre Microsserviços e API Gateways?
+					</h1>
+					
+					<p style="font-size: 1.3rem; opacity: 0.8; margin-bottom: 3rem;">
+						Sua opinião é fundamental para o ajuste contínuo da nossa disciplina. 
+						<br><span style="color: var(--gold);">Seu voto é anônimo.</span>
+					</p>
+
+					<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+						
+						<button class="btn-engajamento" style="background: #27ae60; padding: 2rem; font-size: 1.5rem;" 
+							onclick="logInteracao('pesquisa_satisfacao', 'excelente', 'aula_23_03', '2026-03-23-MICROSERVICOS_GATEWAY'); alert('Obrigado pelo feedback positivo!')">
+							🤩 Excelente
+						</button>
+
+						<button class="btn-engajamento" style="background: #2980b9; padding: 2rem; font-size: 1.5rem;" 
+							onclick="logInteracao('pesquisa_satisfacao', 'bom', 'aula_23_03', '2026-03-23-MICROSERVICOS_GATEWAY'); alert('Obrigado! Vamos continuar evoluindo.')">
+							🙂 Bom
+						</button>
+
+						<button class="btn-engajamento" style="background: #f39c12; padding: 2rem; font-size: 1.5rem;" 
+							onclick="logInteracao('pesquisa_satisfacao', 'ruim', 'aula_23_03', '2026-03-23-MICROSERVICOS_GATEWAY'); alert('Anotei! O que podemos melhorar?')">
+							😐 Ruim
+						</button>
+
+						<button class="btn-engajamento" style="background: #c0392b; padding: 2rem; font-size: 1.5rem;" 
+							onclick="logInteracao('pesquisa_satisfacao', 'pessimo', 'aula_23_03', '2026-03-23-MICROSERVICOS_GATEWAY'); alert('Sinto muito. Vamos conversar para ajustar?')">
+							😞 Péssimo
+						</button>
+					</div>
+
+					<div style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 2rem;">
+						<p style="font-size: 1.1rem; opacity: 0.7;">
+							<strong>Próxima Aula:</strong> Comunicação Assíncrona, Mensageria (RabbitMQ/Kafka) e Eventos.
+							<br>Até breve, Analistas!
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+<section class="slide" id="recursos-downloads" style="
+    height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 2rem; 
+    box-sizing: border-box;">
+    
+    <div class="content-box" style="max-width: 1100px; width: 100%; text-align: center; border: 2px solid var(--accent); background: rgba(0, 33, 71, 0.9);">
+        <h2 class="disciplina-tag" style="margin-bottom: 1.5rem;">08 | Recursos e Downloads</h2>
+        
+        <h1 style="font-size: clamp(2.2rem, 6vw, 4rem); margin-bottom: 2rem;">Material de Estudo</h1>
+
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 2rem; margin-bottom: 3rem;">
+            <a href="aula-23-03-2026-sistemas-distribuidos-microservicos-e-api-gateway.pdf" 
+               download 
+               class="btn-engajamento" 
+               style="text-decoration: none; display: flex; align-items: center; gap: 15px; padding: 1.5rem 3rem; background: var(--accent);"
+               onclick="logInteracao('download_material', 'concluido', 'botao_pdf', '2026-03-23-MICROSERVICOS_GATEWAY')">
+                <span style="font-size: 2.5rem;">📄</span>
+                <div style="text-align: left;">
+                    <span style="display: block; font-size: 1.6rem;">Baixar PDF da Aula</span>
+                    <span style="display: block; font-size: 0.9rem; opacity: 0.8; font-weight: normal;">Slides, Conceitos e Exercícios de Fixação</span>
+                </div>
+            </a>
+        </div>
+
+        <div style="background: rgba(255, 255, 255, 0.05); padding: 2rem; border-radius: 15px; text-align: left; max-width: 850px; margin: 0 auto;">
+            <h3 style="color: var(--gold); font-size: 1.4rem; margin-top: 0; text-transform: uppercase;">📚 Leitura Recomendada (Ementa)</h3>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="font-size: 1.2rem; margin-bottom: 1rem; opacity: 0.9;">
+                    <strong>Monteiro et al. (2020):</strong> Cap. 4 - Arquitetura de Microsserviços e Nuvem.
+                </li>
+                <li style="font-size: 1.2rem; opacity: 0.9;">
+                    <strong>Tanenbaum & Van Steen (2007):</strong> Cap. 2 - Modelos de Arquitetura e Camadas.
+                </li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 2.5rem; opacity: 0.6;">
+            <p style="font-size: 1rem;">Dúvidas técnicas? Utilize o fórum no Canvas ou procure o Dr. Lincoln no laboratório.</p>
+        </div>
+    </div>
+</section>
+
+	</div>
+
+    <footer>
+        Prof. Dr. Lincoln Sposito | &copy; 2026
+    </footer>
+
+    <script>
+        // Sistema de Observer para o efeito "Flutuar" (Slide Ativo)
+        const observerOptions = { threshold: 0.4 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.slide').forEach(slide => {
+            observer.observe(slide);
+        });
+
+        // Navegação Suave por Teclado (Desktop)
+        document.addEventListener('keydown', (e) => {
+            if (window.innerWidth > 1024) { // Apenas Desktop para não conflitar com o touch do celular
+                const slides = document.querySelectorAll('.slide');
+                let current = [...slides].findIndex(s => s.getBoundingClientRect().top >= -50 && s.getBoundingClientRect().top <= 50);
+                
+                if ((e.key === 'ArrowRight' || e.key === 'ArrowDown') && current < slides.length - 1) {
+                    slides[current + 1].scrollIntoView({ behavior: 'smooth' });
+                }
+                if ((e.key === 'ArrowLeft' || e.key === 'ArrowUp') && current > 0) {
+                    slides[current - 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    </script>
+	<script>
+	(function(){
+		if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>
+			{if(!window.chatbase.q){window.chatbase.q=[]}
+			window.chatbase.q.push(arguments)
+		};
+		window.chatbase=new Proxy(window.chatbase,{
+			get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}
+			})
+		}
+		const onLoad=function(){
+			const script=document.createElement("script");
+			script.src="https://www.chatbase.co/embed.min.js";
+			script.id="uFEke3ZP9R3S3o5CFSMyh";
+			script.domain="www.chatbase.co";
+
+			// --- ADIÇÃO PARA PERFORMANCE ---
+			script.async = true; 
+			script.defer = true;
+			// -------------------------------
+			
+			// Dentro da sua função onLoad, antes do appendChild:
+			script.setAttribute('data-priority', 'low');
+			
+			document.body.appendChild(script)
+		};
+		if(document.readyState==="complete"){
+			onLoad()
+		}else{
+			window.addEventListener("load",onLoad)
+		}
+	})();
+</script>
+</body>
+</html>

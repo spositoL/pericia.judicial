@@ -1,0 +1,1421 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula: Responsividade & Mobile First | Dr. Lincoln Sposito</title>
+    <meta name="description" content="Aula de Usabilidade, Desenvolvimento Web, Mobile e Jogos - USJT - 25/03/2026">
+	
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>    
+	
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-5F1FGJ25TK');
+
+        /**
+         * FUNÇÃO MESTRE: Monitora presença e interações pedagógicas
+         * Contexto: Aula de Mobile First (25/03)
+         */
+        function logInteracao(nomeEvento, status, origem) {
+            gtag('event', nomeEvento, {
+                'disciplina': 'USABILIDADE_WEB_MOBILE_JOGOS',
+                'status_presenca': status,
+                'origem_acesso': origem,
+                'aula_id': '25-03-2026' // Atualizado para a aula de hoje
+            });
+        }
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            if (urlParams.get('ref') === 'atrasado') {
+                logInteracao('presenca_aula', 'atrasado', 'qrcode_atraso');
+            }
+            
+            const urlAtraso = window.location.origin + window.location.pathname + "?ref=atrasado";
+            new QRCode(document.getElementById("qrcode-persistente"), {
+                text: urlAtraso, 
+                width: 70, 
+                height: 70, 
+                colorDark : "#d4af37", 
+                colorLight : "#ffffff"
+            });
+        };
+    </script>
+
+    <style>
+        :root {
+            --navy: #001f3f;
+            --gold: #d4af37;
+            --warning: #ffc107;
+            --accent: #28a745;
+            --white: #ffffff;
+            /* Mobile First: Definimos tamanhos base para telas menores primeiro */
+            --font-titulo: 1.8rem;
+            --font-corpo: 1rem;
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body { 
+            margin: 0; padding: 0; width: 100%; min-height: 100%;
+            overflow-x: hidden; 
+            overflow-y: auto;
+            font-family: 'Segoe UI', sans-serif; 
+            background: var(--navy); 
+            color: var(--white);
+            scroll-snap-type: y proximity;
+        }
+
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            background: rgba(0, 31, 63, 0.95);
+            display: flex; align-items: center; padding: 0 20px; /* Reduzido para mobile */
+            border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 1000;
+        }
+
+        footer {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 50px;
+            background: rgba(0, 31, 63, 0.95);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; opacity: 0.7; z-index: 1000;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        #floating-atraso {
+            position: fixed; top: 90px; right: 15px; z-index: 999;
+            background: white; padding: 6px; border-radius: 8px;
+            border: 2px solid var(--warning); text-align: center;
+        }
+        #floating-atraso span { display: block; color: var(--navy); font-size: 9px; font-weight: bold; }
+
+        .slide { 
+            min-height: 100vh; width: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 100px 5% 70px 5%; 
+            text-align: center;
+            scroll-snap-align: start; 
+            position: relative;
+        }
+
+        h1 { color: var(--accent); font-size: var(--font-titulo); text-transform: uppercase; margin-bottom: 1.5rem; }
+        p { font-size: var(--font-corpo); line-height: 1.6; max-width: 900px; }
+        
+        .content-box { 
+            background: rgba(255,255,255,0.05); padding: 1.5rem; 
+            border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); width: 100%;
+        }
+
+        /* Imagens Responsivas (Tópico da Aula) */
+        img { max-width: 100%; height: auto; border-radius: 10px; }
+
+        .slide > * {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .slide.active > * {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* PROGRESSIVE ADVANCEMENT: Ajustes para telas maiores (Desktop) */
+        @media (min-width: 1024px) {
+            :root {
+                --font-titulo: 2.8rem;
+                --font-corpo: 1.2rem;
+            }
+            header { padding: 0 40px; }
+            .content-box { padding: 2.5rem; }
+            .code-block { width: 60%; }
+        }
+
+        /* Inibição de elementos obstrutivos em telas muito pequenas ou horizontais */
+        @media (max-width: 480px), (max-height: 500px) {
+            #floating-atraso { display: none !important; }
+            header { height: 60px; }
+            .slide { padding-top: 70px; }
+        }
+
+        .btn-engajamento {
+            background: var(--accent); color: white; border: none; padding: 12px 24px;
+            border-radius: 8px; font-size: 1.1rem; cursor: pointer; transition: 0.3s;
+            /* Alvo de toque mínimo de 44px para usabilidade móvel */
+            min-height: 44px;
+        }
+        
+        .btn-voltar {
+            margin-left: auto;
+            color: var(--white);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .code-block { 
+            background: #000; padding: 15px; border-radius: 10px; 
+            font-family: 'Courier New', monospace; overflow-x: auto; 
+            width: 90%; border: 1px solid var(--accent); color: #00ff00; text-align: left; 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="../img/grafico.svg" alt="Logo" style="height: 70px;">
+		<a href="index.html" class="btn-voltar" onclick="logInteracao('navegacao', 'retorno_portal', 'header')">← Voltar ao Portal da Disciplina</a>
+		<a href="../../index.html" class="btn-voltar">Conheça meu trabalho como perito</a><br>
+    </header>
+    
+    <div class="container-slides" id="deck">
+<section class="slide active" id="boas-vindas" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 1.5rem; 
+    box-sizing: border-box; 
+    overflow: hidden;
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1200px; 
+        width: 100%; 
+        padding: clamp(1.5rem, 8vw, 4rem); 
+        text-align: center; 
+        box-sizing: border-box;
+        border: 1px solid rgba(212, 175, 55, 0.2);
+        border-radius: 20px;">
+        
+        <p style="color: var(--gold); font-weight: bold; margin-bottom: 1rem; font-size: clamp(0.9rem, 2vw, 1.2rem); text-transform: uppercase; letter-spacing: 3px;">
+            Usabilidade, desenvolvimento web, mobile e jogos
+        </p>
+
+        <h1 style="color: var(--warning); font-size: clamp(2.2rem, 7vw, 4.2rem); margin-bottom: 1rem; line-height: 1.1; text-transform: uppercase;">
+            Responsividade & <br>Mobile First
+        </h1>
+        
+        <hr style="border: 0; border-top: 2px solid rgba(212, 175, 55, 0.3); width: clamp(50px, 30%, 200px); margin: 2rem auto;">
+        
+        <h2 style="color: var(--white); margin-bottom: 0.5rem; font-size: clamp(1.4rem, 4vw, 2.1rem); font-weight: 400;">
+            Prof. Dr. Lincoln Sposito
+        </h2>
+        
+        <p style="font-size: clamp(1rem, 2.5vw, 1.4rem); opacity: 0.8; color: var(--white); letter-spacing: 1px;">
+            Data: 25 de Março de 2026
+        </p>
+        
+        <div style="margin-top: clamp(2rem, 5vh, 4rem);">
+            <button class="btn-engajamento" 
+                style="padding: 1.2rem 3rem; font-size: 1.2rem; cursor: pointer; min-height: 48px; min-width: 200px;" 
+                onclick="logInteracao('presenca_aula', 'inicio_aula', 'botao_boas_vindas')">
+                Iniciar Experiência de Aula
+            </button>
+        </div>
+
+        <div id="qrcode-boas-vindas" style="margin-top: 2.5rem; display: flex; justify-content: center; opacity: 0.9;"></div>
+    </div>
+</section>		
+		<section class="slide" id="agenda" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 2rem; 
+    box-sizing: border-box; 
+    overflow-y: auto;
+    background-color: var(--navy);">
+
+    <div class="content-box" style="max-width: 1200px; width: 100%; padding: clamp(1.5rem, 5vw, 3rem); text-align: center; box-sizing: border-box;">
+        
+        <h2 style="color: var(--gold); font-size: clamp(1rem, 2vw, 1.5rem); text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 2px; font-weight: bold;">
+            Roteiro de Atividades
+        </h2>
+        <h1 style="color: var(--warning); font-size: clamp(2.2rem, 5vw, 3.5rem); margin-bottom: 2rem; line-height: 1.1;">
+            Agenda do Dia: 25/03
+        </h1>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; text-align: left; margin-top: 1rem;">
+            
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 1.2rem; display: flex; align-items: center; font-size: clamp(1rem, 2vw, 1.3rem); color: var(--white);">
+                    <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 1.6rem;">01</span> 
+                    Filosofia Mobile First: Inversão da Lógica
+                </li>
+                <li style="margin-bottom: 1.2rem; display: flex; align-items: center; font-size: clamp(1rem, 2vw, 1.3rem); color: var(--white);">
+                    <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 1.6rem;">02</span> 
+                    Progressive Advancement vs. Graceful Degradation
+                </li>
+                <li style="margin-bottom: 1.2rem; display: flex; align-items: center; font-size: clamp(1rem, 2vw, 1.3rem); color: var(--white);">
+                    <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 1.6rem;">03</span> 
+                    Fundamentos: Grades Fluidas e Media Queries
+                </li>
+                <li style="margin-bottom: 1.2rem; display: flex; align-items: center; font-size: clamp(1rem, 2vw, 1.3rem); color: var(--white);">
+                    <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 1.6rem;">04</span> 
+                    Viewport, Escalonamento e Densidade de Pixels
+                </li>
+                <li style="margin-bottom: 1.2rem; display: flex; align-items: center; font-size: clamp(1rem, 2vw, 1.3rem); color: var(--white);">
+                    <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 1.6rem;">05</span> 
+                    Imagens Flexíveis e Vetores (SVG)
+                </li>
+            </ul>
+
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 1.2rem; display: flex; align-items: center; font-size: clamp(1rem, 2vw, 1.3rem); color: var(--warning); font-weight: bold;">
+                    <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 1.6rem;">06</span> 
+                    Intervalo (Coffee & Networking)
+                </li>
+                <li style="margin-bottom: 1.2rem; display: flex; align-items: center; font-size: clamp(1rem, 2vw, 1.3rem); color: var(--white);">
+                    <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 1.6rem;">07</span> 
+                    Lab: Construção de Layouts Adaptativos
+                </li>
+                <li style="margin-bottom: 1.2rem; display: flex; align-items: center; font-size: clamp(1rem, 2vw, 1.3rem); color: var(--white);">
+                    <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 1.6rem;">08</span> 
+                    Análise da Zona do Polegar e Alvos de Toque
+                </li>
+                <li style="margin-bottom: 1.2rem; display: flex; align-items: center; font-size: clamp(1rem, 2vw, 1.3rem); color: var(--white);">
+                    <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 1.6rem;">09</span> 
+                    Quiz de Fixação: Usabilidade e Performance
+                </li>
+                <li style="margin-bottom: 1.2rem; display: flex; align-items: center; font-size: clamp(1rem, 2vw, 1.3rem); color: var(--white);">
+                    <span style="color: var(--accent); font-weight: bold; margin-right: 15px; font-size: 1.6rem;">10</span> 
+                    Feedback e Preparação para o Projeto A3
+                </li>
+            </ul>
+        </div>
+
+        <div style="margin-top: clamp(2rem, 5vh, 3.5rem);">
+            <button class="btn-engajamento" style="padding: 1.2rem 3rem; font-size: 1.2rem; cursor: pointer; min-height: 48px;" 
+                onclick="logInteracao('engajamento', 'visualizou_agenda', 'botao_agenda')">
+                Entendido, vamos começar!
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="mobile-first-conceito" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: center; 
+        align-items: center;
+        gap: 2rem;">
+        
+        <header-bundle>
+            <h2 style="color: var(--gold); font-size: clamp(1.2rem, 2.5vw, 1.8rem); text-transform: uppercase; letter-spacing: 4px; margin: 0;">
+                01. Filosofia Mobile First
+            </h2>
+            <h1 style="color: var(--warning); font-size: clamp(2.5rem, 6vw, 4.5rem); margin: 0.5rem 0; line-height: 1.1;">
+                A Inversão da Lógica
+            </h1>
+        </header-bundle>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 3rem; width: 100%; margin-top: 1rem;">
+            <div style="flex: 1; min-width: 300px; padding: 2rem; border-left: 4px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.2);">
+                <h3 style="color: #ff4d4d; font-size: 1.8rem; margin-top: 0;">Desktop First</h3>
+                <p style="font-size: 1.4rem; opacity: 0.8;">Cria-se para a abundância de espaço e "espreme-se" o conteúdo para o celular.</p>
+                <strong style="color: var(--white); display: block; margin-top: 10px;">(Graceful Degradation)</strong>
+            </div>
+
+            <div style="flex: 1; min-width: 300px; padding: 2rem; border-left: 4px solid var(--accent); background: rgba(40, 167, 69, 0.1);">
+                <h3 style="color: var(--accent); font-size: 1.8rem; margin-top: 0;">Mobile First</h3>
+                <p style="font-size: 1.4rem; opacity: 0.8;">Cria-se para o essencial e "expande-se" conforme a tela cresce.</p>
+                <strong style="color: var(--white); display: block; margin-top: 10px;">(Progressive Advancement)</strong>
+            </div>
+        </div>
+
+        <blockquote style="margin-top: 3rem; border-top: 1px solid var(--gold); padding-top: 1.5rem; max-width: 800px;">
+            <p style="font-style: italic; font-size: 1.3rem; color: var(--gold);">
+                "Projetar para dispositivos móveis primeiro força você a focar no que é mais importante, eliminando o ruído visual e priorizando a tarefa do usuário."
+            </p>
+            <cite style="display: block; text-align: right; color: var(--white); font-weight: bold; margin-top: 10px;">
+                — Alves (2015)
+            </cite>
+        </blockquote>
+    </div>
+</section>
+
+<section class="slide" id="mobile-first-por-que" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="max-width: 1200px; width: 100%; text-align: center;">
+        
+        <h2 style="color: var(--accent); font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 2.5rem;">
+            O Coração da Experiência Moderna
+        </h2>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; text-align: left;">
+            <div class="card" style="background: rgba(255,255,255,0.03); padding: 2rem; border-radius: 15px;">
+                <h4 style="color: var(--gold); font-size: 1.6rem; margin-top: 0;">Restrição de Espaço</h4>
+                <p style="font-size: 1.2rem;">Obriga o designer e o desenvolvedor a priorizar o <strong>conteúdo real</strong> sobre a decoração.</p>
+            </div>
+
+            <div class="card" style="background: rgba(255,255,255,0.03); padding: 2rem; border-radius: 15px;">
+                <h4 style="color: var(--gold); font-size: 1.6rem; margin-top: 0;">Contexto de Uso</h4>
+                <p style="font-size: 1.2rem;">Usuários móveis costumam estar em movimento, exigindo <strong>respostas rápidas</strong> e navegação direta.</p>
+            </div>
+
+            <div class="card" style="background: rgba(255,255,255,0.03); padding: 2rem; border-radius: 15px;">
+                <h4 style="color: var(--gold); font-size: 1.6rem; margin-top: 0;">SEO e Google</h4>
+                <p style="font-size: 1.2rem;">Desde 2018, o Google utiliza o <strong>Mobile-First Indexing</strong> para ranquear sites.</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 4rem; padding: 1.5rem; border: 1px dashed var(--warning); border-radius: 10px; display: inline-block;">
+            <p style="font-size: 1.3rem; margin: 0; color: var(--warning);">
+                <strong>Insights de Aula:</strong> Não é sobre diminuir o site, é sobre <strong>escalar a experiência</strong>.
+            </p>
+        </div>
+    </div>
+</section>
+		
+<section class="slide" id="graceful-degradation" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h2 style="color: var(--gold); font-size: clamp(1.2rem, 2.5vw, 1.8rem); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">
+            02. Estratégias de Desenvolvimento
+        </h2>
+        <h1 style="color: #ff4d4d; font-size: clamp(2.5rem, 6vw, 4.5rem); margin: 0; line-height: 1.1;">
+            Graceful Degradation
+        </h1>
+        <p style="color: var(--white); font-size: clamp(1.4rem, 2.5vw, 1.8rem); margin-top: 1rem; opacity: 0.9;">
+            "Degradação Graciosa" ou O Caminho de Cima para Baixo
+        </p>
+
+        <div style="margin-top: 3rem; display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+            <div style="background: rgba(255, 77, 77, 0.1); border: 2px solid #ff4d4d; padding: 2.5rem; border-radius: 20px; max-width: 900px; width: 100%;">
+                <ul style="list-style: none; padding: 0; text-align: left; font-size: 1.6rem; line-height: 1.8;">
+                    <li>❌ Começa pelo <strong>Desktop</strong> (complexidade total).</li>
+                    <li>❌ Tenta "cortar" recursos para caber no mobile.</li>
+                    <li>❌ Resultado: Sites pesados e excesso de <code>display: none</code>.</li>
+                </ul>
+            </div>
+
+            <blockquote style="max-width: 1000px; border-left: 5px solid #ff4d4d; padding-left: 2rem; text-align: left; margin-top: 2rem;">
+                <p style="font-style: italic; font-size: 1.4rem; color: #ffbaba;">
+                    "Neste modelo, o design para navegadores antigos ou dispositivos menores é uma consideração secundária, frequentemente resultando em uma experiência 'quebrada' ou mal adaptada."
+                </p>
+                <cite style="display: block; color: var(--white); font-weight: bold; margin-top: 10px;">— Adaptação de Nielsen (2012)</cite>
+            </blockquote>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="progressive-advancement" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h1 style="color: var(--accent); font-size: clamp(2.5rem, 6vw, 4.5rem); margin: 0; line-height: 1.1;">
+            Progressive Advancement
+        </h1>
+        <p style="color: var(--white); font-size: clamp(1.4rem, 2.5vw, 1.8rem); margin-top: 1rem; opacity: 0.9;">
+            "Avanço Progressivo" ou A Base do Mobile First
+        </p>
+
+        <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem;">
+            <div style="background: rgba(40, 167, 69, 0.15); padding: 2rem; border-radius: 15px; border-bottom: 5px solid var(--accent);">
+                <span style="font-size: 3rem;">📱</span>
+                <h3 style="color: var(--accent); font-size: 1.8rem;">Essencial</h3>
+                <p style="font-size: 1.3rem;">Conteúdo e funções básicas para qualquer dispositivo (Mobile).</p>
+            </div>
+
+            <div style="background: rgba(40, 167, 69, 0.15); padding: 2rem; border-radius: 15px; border-bottom: 5px solid var(--accent);">
+                <span style="font-size: 3rem;">💻</span>
+                <h3 style="color: var(--accent); font-size: 1.8rem;">Melhoria</h3>
+                <p style="font-size: 1.3rem;">Adição de estilos complexos e interações para telas maiores.</p>
+            </div>
+
+            <div style="background: rgba(40, 167, 69, 0.15); padding: 2rem; border-radius: 15px; border-bottom: 5px solid var(--accent);">
+                <span style="font-size: 3rem;">🖥️</span>
+                <h3 style="color: var(--accent); font-size: 1.8rem;">Experiência Total</h3>
+                <p style="font-size: 1.3rem;">Alta performance, efeitos visuais avançados e multicolunas.</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 4rem; background: var(--gold); color: var(--navy); padding: 1.5rem; border-radius: 10px; font-weight: bold; display: inline-block;">
+            <p style="font-size: 1.5rem; margin: 0;">
+                💡 Regra de Ouro: Projete para a menor tela, construa para a maior.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="grades-fluidas" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h2 style="color: var(--gold); font-size: clamp(1.2rem, 2.5vw, 1.8rem); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">
+            03. Fundamentos da Responsividade
+        </h2>
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4rem); margin: 0; line-height: 1.1;">
+            Grades Fluidas (Flexible Grids)
+        </h1>
+
+        <div style="margin-top: 3rem; display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+            <p style="font-size: 1.6rem; max-width: 1000px; line-height: 1.6;">
+                Substituímos valores fixos (<code>px</code>) por valores relativos (<code>%</code>, <code>vw</code>, <code>vh</code>). 
+                O layout deixa de ser uma "caixa rígida" e passa a ser uma <strong>proporção</strong>.
+            </p>
+
+            <div class="code-block" style="width: auto; min-width: 300px; padding: 30px; border: 2px solid var(--accent); background: #000; border-radius: 15px;">
+                <p style="color: var(--accent); font-family: 'Courier New', monospace; font-size: 2rem; margin: 0;">
+                    target / context = result
+                </p>
+                <p style="color: #888; font-size: 1.2rem; margin-top: 10px;">
+                    Ex: 300px / 960px = 31.25%
+                </p>
+            </div>
+
+            <blockquote style="max-width: 900px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 2rem; margin-top: 2rem;">
+                <p style="font-style: italic; font-size: 1.4rem; color: var(--white); opacity: 0.8;">
+                    "Um layout responsivo não é apenas um layout 'elástico', mas um sistema que utiliza grades fluidas para manter o equilíbrio visual em qualquer resolução."
+                </p>
+                <cite style="display: block; color: var(--gold); font-weight: bold; margin-top: 10px;">— Marcotte (2011)</cite>
+            </blockquote>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="media-queries" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4rem); margin: 0; line-height: 1.1;">
+            Media Queries
+        </h1>
+        <p style="color: var(--accent); font-size: 1.8rem; font-weight: bold; margin-top: 1rem;">
+            Os Sentinelas do Layout
+        </p>
+
+        <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 2rem; text-align: left;">
+            <div style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 15px;">
+                <h3 style="color: var(--gold); font-size: 1.8rem;">O que fazem?</h3>
+                <p style="font-size: 1.3rem; line-height: 1.6;">Permitem aplicar estilos CSS baseados nas características do dispositivo, como largura, altura e orientação.</p>
+                <ul style="font-size: 1.2rem; margin-top: 1rem; color: var(--white); opacity: 0.9;">
+                    <li>Definem <strong>Breakpoints</strong> (pontos de interrupção).</li>
+                    <li>No Mobile First, usamos <code>min-width</code>.</li>
+                </ul>
+            </div>
+
+            <div class="code-block" style="font-size: 1.2rem; line-height: 1.4; width: 100%;">
+                <span style="color: #d19a66;">@media</span> (<span style="color: #abb2bf;">min-width:</span> <span style="color: #98c379;">768px</span>) {<br>
+                &nbsp;&nbsp;<span style="color: #e06c75;">.container</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #abb2bf;">display:</span> <span style="color: #d19a66;">grid</span>;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #abb2bf;">grid-template-columns:</span> <span style="color: #d19a66;">1fr 1fr</span>;<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+        </div>
+
+        <div style="margin-top: 3rem; padding: 1.5rem; border: 2px solid var(--accent); border-radius: 10px; display: inline-block;">
+            <p style="font-size: 1.4rem; color: var(--white);">
+                <strong>💡 Conceito A3:</strong> Flexbox e Grid são os motores; Media Queries são os volantes.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="viewport-config" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h2 style="color: var(--gold); font-size: clamp(1.2rem, 2.5vw, 1.8rem); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">
+            04. Viewport e Escalonamento
+        </h2>
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            A Meta Tag Viewport
+        </h1>
+
+        <div style="margin-top: 3rem; display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+            <p style="font-size: 1.6rem; max-width: 1000px; line-height: 1.6;">
+                Sem esta tag, o navegador móvel "finge" que é um desktop (geralmente 980px) e aplica um zoom out, tornando o texto ilegível.
+            </p>
+
+            <div class="code-block" style="width: auto; padding: 25px; border-left: 5px solid var(--accent); background: #000; border-radius: 10px;">
+                <code style="font-size: 1.5rem; color: #98c379;">
+                    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+                </code>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; text-align: left; max-width: 900px;">
+                <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px;">
+                    <strong style="color: var(--accent); font-size: 1.3rem;">width=device-width</strong>
+                    <p style="font-size: 1.1rem; margin-top: 5px;">Ajusta a largura da página para a largura da tela do dispositivo.</p>
+                </div>
+                <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px;">
+                    <strong style="color: var(--accent); font-size: 1.3rem;">initial-scale=1.0</strong>
+                    <p style="font-size: 1.1rem; margin-top: 5px;">Define o nível de zoom inicial quando a página é carregada.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="pixel-density" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            Densidade de Pixels
+        </h1>
+        <p style="color: var(--gold); font-size: 1.8rem; margin-top: 1rem; font-weight: bold;">
+            O desafio das telas Retina e HiDPI
+        </p>
+
+        <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem;">
+            <div style="text-align: left;">
+                <h3 style="color: var(--accent); font-size: 1.8rem;">Pixels de Hardware</h3>
+                <p style="font-size: 1.4rem; opacity: 0.8;">Os pontos físicos de luz na tela (Ex: 1080p, 4K).</p>
+                
+                <h3 style="color: var(--accent); font-size: 1.8rem; margin-top: 2rem;">Pixels CSS (Lógicos)</h3>
+                <p style="font-size: 1.4rem; opacity: 0.8;">A unidade de medida que usamos no código. 1px CSS pode representar 2x ou 3x pixels físicos em telas densas.</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.03); border: 1px dashed var(--gold); padding: 2rem; border-radius: 20px; display: flex; flex-direction: column; justify-content: center;">
+                <p style="font-size: 1.5rem; color: var(--white); line-height: 1.6;">
+                    "Aplicações móveis exigem que o desenvolvedor compreenda a abstração entre a resolução declarada e a resolução real do painel."
+                </p>
+                <cite style="display: block; text-align: right; color: var(--gold); margin-top: 15px; font-weight: bold;">
+                    — Lee, Schneider & Schell (2005)
+                </cite>
+            </div>
+        </div>
+
+        <div style="margin-top: 4rem; background: var(--accent); color: white; padding: 1.5rem; border-radius: 10px; display: inline-block;">
+            <p style="font-size: 1.4rem; margin: 0; font-weight: bold;">
+                🚀 Dica para o Lab: Use SVGs! Por serem vetoriais, ignoram a densidade de pixels e mantêm a nitidez.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="imagens-flexiveis" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h2 style="color: var(--gold); font-size: clamp(1.2rem, 2.5vw, 1.8rem); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">
+            05. Imagens e Vetores
+        </h2>
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            Imagens Flexíveis
+        </h1>
+
+        <div style="margin-top: 3rem; display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+            <p style="font-size: 1.6rem; max-width: 1000px; line-height: 1.6;">
+                Uma imagem com largura fixa (ex: 800px) quebrará o layout no mobile. A solução é torná-la <strong>consciente</strong> do seu container.
+            </p>
+
+            <div class="code-block" style="width: auto; padding: 30px; border: 2px solid var(--accent); background: #000; border-radius: 15px;">
+                <code style="font-size: 1.8rem; color: #e06c75;">img, video, canvas <span style="color: #abb2bf;">{</span></code><br>
+                <code style="font-size: 1.8rem; color: #d19a66; padding-left: 20px;">max-width: <span style="color: #98c379;">100%</span>;</code><br>
+                <code style="font-size: 1.8rem; color: #d19a66; padding-left: 20px;">height: <span style="color: #98c379;">auto</span>;</code><br>
+                <code style="font-size: 1.8rem; color: #abb2bf;">}</code>
+            </div>
+
+            <p style="font-size: 1.3rem; color: var(--gold); margin-top: 1rem;">
+                <strong>Por que max-width e não width?</strong> <code>max-width</code> permite que a imagem diminua, mas impede que ela estique além de seu tamanho original (preservando a qualidade).
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="vetores-svg" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            O Triunfo do SVG
+        </h1>
+        <p style="color: var(--accent); font-size: 1.8rem; font-weight: bold; margin-top: 1rem;">
+            Matemática vs. Pixels
+        </p>
+
+        <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 2.5rem; text-align: left;">
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px; border-left: 5px solid var(--gold);">
+                <h3 style="color: var(--white); font-size: 1.8rem;">Vantagens Mobile</h3>
+                <ul style="font-size: 1.3rem; line-height: 1.8; color: rgba(255,255,255,0.9);">
+                    <li>✅ <strong>Independência de Resolução:</strong> Nitidez infinita em telas Retina/HiDPI.</li>
+                    <li>✅ <strong>Performance:</strong> Arquivos baseados em XML, extremamente leves.</li>
+                    <li>✅ <strong>Manipulação:</strong> Podem ser estilizados via CSS (cores, filtros).</li>
+                </ul>
+            </div>
+
+            <div style="display: flex; flex-direction: column; justify-content: center; background: rgba(0,0,0,0.2); padding: 2rem; border-radius: 15px;">
+                <blockquote style="margin: 0;">
+                    <p style="font-style: italic; font-size: 1.4rem; color: var(--white); opacity: 0.8; line-height: 1.5;">
+                        "Ao contrário das imagens bitmap (JPEG/PNG), os vetores são definidos por caminhos matemáticos, garantindo que a usabilidade visual não degrade em dispositivos de alta densidade."
+                    </p>
+                    <cite style="display: block; text-align: right; color: var(--gold); font-weight: bold; margin-top: 15px;">
+                        — Adaptado de Lee (2005)
+                    </cite>
+                </blockquote>
+            </div>
+        </div>
+
+        <div style="margin-top: 4rem; border: 1px dashed var(--accent); padding: 1.5rem; border-radius: 10px; display: inline-block;">
+            <p style="font-size: 1.3rem; color: var(--white);">
+                <strong>💡 Exercício Prático:</strong> Identifique no seu código onde um ícone PNG pode ser substituído por um SVG para otimizar o carregamento móvel.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="intervalo" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);
+    position: relative;">
+
+    <div class="content-box" style="
+        max-width: 1200px; 
+        width: 100%; 
+        text-align: center;
+        border: 2px solid var(--gold);
+        background: rgba(212, 175, 55, 0.05);
+        padding: clamp(2rem, 8vw, 5rem);
+        border-radius: 30px;">
+        
+        <h2 style="color: var(--accent); font-size: clamp(1.5rem, 3vw, 2.5rem); text-transform: uppercase; letter-spacing: 5px; margin-bottom: 1rem;">
+            Break Time
+        </h2>
+        
+        <h1 style="color: var(--white); font-size: clamp(3.5rem, 10vw, 7rem); margin: 0; line-height: 1;">
+            Intervalo
+        </h1>
+
+        <div style="margin-top: 2.5rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+            <p style="color: var(--warning); font-size: clamp(1.8rem, 4vw, 3rem); font-weight: bold; margin: 0;">
+                20:30 – 20:50
+            </p>
+            <p style="color: var(--white); font-size: 1.4rem; opacity: 0.7; max-width: 600px;">
+                Aproveite para o <strong>Networking</strong>. <br>Grandes ideias e parcerias para o <strong>Projeto A3</strong> costumam surgir no café!
+            </p>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); width: 60%; margin: 3rem auto;">
+
+        <div style="display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap;">
+            <div style="text-align: center;">
+                <span style="font-size: 3rem; display: block;">☕</span>
+                <span style="font-size: 1rem; color: var(--gold); text-transform: uppercase;">Coffee</span>
+            </div>
+            <div style="text-align: center;">
+                <span style="font-size: 3rem; display: block;">🤝</span>
+                <span style="font-size: 1rem; color: var(--gold); text-transform: uppercase;">Networking</span>
+            </div>
+            <div style="text-align: center;">
+                <span style="font-size: 3rem; display: block;">🔋</span>
+                <span style="font-size: 1rem; color: var(--gold); text-transform: uppercase;">Recharge</span>
+            </div>
+        </div>
+    </div>
+
+    <div style="position: absolute; bottom: 80px; right: 40px; text-align: center; opacity: 0.6;">
+        <div id="qrcode-intervalo" style="background: white; padding: 5px; border-radius: 5px;"></div>
+        <span style="font-size: 0.7rem; color: var(--white); display: block; margin-top: 5px;">Presença / Atraso</span>
+    </div>
+</section>
+
+<section class="slide" id="lab-diretrizes" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h2 style="color: var(--gold); font-size: clamp(1.2rem, 2.5vw, 1.8rem); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">
+            07. Prática de Laboratório
+        </h2>
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            Construção Adaptativa
+        </h1>
+
+        <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem; text-align: left;">
+            
+            <div style="background: rgba(40, 167, 69, 0.1); border: 1px solid var(--accent); padding: 2rem; border-radius: 15px;">
+                <h3 style="color: var(--accent); font-size: 1.8rem; margin-top: 0;">Workflow Mobile First</h3>
+                <ol style="font-size: 1.4rem; line-height: 1.8; color: var(--white);">
+                    <li>Configure a <strong>Meta Viewport</strong>.</li>
+                    <li>Codifique o CSS <strong>sem Media Queries</strong> primeiro (foco no mobile).</li>
+                    <li>Use <code>min-width</code> para expandir o layout para Tablet e Desktop.</li>
+                </ol>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px;">
+                <h3 style="color: var(--gold); font-size: 1.8rem; margin-top: 0;">Ferramentas de Debug</h3>
+                <ul style="list-style: none; padding: 0; font-size: 1.4rem; line-height: 1.8;">
+                    <li>🔍 <strong>DevTools (F12):</strong> Ative o <em>Device Mode</em>.</li>
+                    <li>📱 <strong>Throttling:</strong> Simule conexões 3G lentas.</li>
+                    <li>📏 <strong>Inspect:</strong> Verifique se há transbordo (overflow) lateral.</li>
+                </ul>
+            </div>
+        </div>
+
+        <p style="margin-top: 3rem; font-style: italic; font-size: 1.3rem; color: rgba(255,255,255,0.6);">
+            "A usabilidade motora no laboratório é testada pela precisão dos alvos de toque (mínimo 44px)." — Ref. Aula 25/03
+        </p>
+    </div>
+</section>
+
+<section class="slide" id="lab-desafio" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 2rem;">
+            Desafio: Galeria Responsiva
+        </h1>
+
+        <div style="background: #000; padding: 3rem; border-radius: 20px; border: 2px dashed var(--gold); text-align: left; display: inline-block; width: 100%; max-width: 1000px;">
+            <h3 style="color: var(--gold); font-size: 2rem; margin-top: 0;">Requisitos do Layout:</h3>
+            <ul style="font-size: 1.6rem; color: #98c379; font-family: 'Courier New', monospace; line-height: 1.5;">
+                <li>[ ] Mobile: 1 coluna (cards de largura total)</li>
+                <li>[ ] Tablet (min: 768px): 2 colunas</li>
+                <li>[ ] Desktop (min: 1200px): 4 colunas</li>
+                <li>[ ] Imagens: Devem usar <code>max-width: 100%</code></li>
+                <li>[ ] Botões: Área de toque mínima de 48px</li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 3rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+            <div style="background: var(--accent); color: white; padding: 1rem 2rem; border-radius: 50px; font-weight: bold; font-size: 1.2rem;">
+                Duração: 40 minutos
+            </div>
+            <div style="background: var(--gold); color: var(--navy); padding: 1rem 2rem; border-radius: 50px; font-weight: bold; font-size: 1.2rem;">
+                Vale nota de participação (A1/A2)
+            </div>
+        </div>
+
+        <blockquote style="margin-top: 4rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+            <p style="font-size: 1.4rem; color: var(--white); opacity: 0.8; line-height: 1.6;">
+                "O design responsivo não é sobre o que o usuário vê, mas sobre como ele interage com o conteúdo em diferentes contextos físicos."
+            </p>
+            <cite style="display: block; color: var(--gold); font-weight: bold; margin-top: 10px;">— Marcotte (2011)</cite>
+        </blockquote>
+    </div>
+</section>
+
+<section class="slide" id="thumb-zone" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h2 style="color: var(--gold); font-size: clamp(1.2rem, 2.5vw, 1.8rem); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">
+            08. Usabilidade Motora
+        </h2>
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            A Zona do Polegar
+        </h1>
+
+        <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem; align-items: center;">
+            
+            <div style="text-align: left; background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 20px;">
+                <h3 style="color: var(--accent); font-size: 1.8rem;">O Desafio do Alcance</h3>
+                <p style="font-size: 1.4rem; line-height: 1.6;">
+                    Com o aumento das telas, o topo do dispositivo tornou-se a <strong>"Zona de Perigo"</strong>. 
+                </p>
+                <ul style="font-size: 1.3rem; margin-top: 1.5rem; color: var(--white); line-height: 1.8;">
+                    <li>🟢 <strong>Zona Fácil:</strong> Base e centro (alcance natural).</li>
+                    <li>🟡 <strong>Zona de Estiramento:</strong> Centro superior.</li>
+                    <li>🔴 <strong>Zona Difícil:</strong> Topo (exige as duas mãos).</li>
+                </ul>
+            </div>
+
+            <div style="display: flex; flex-direction: column; justify-content: center; border: 2px dashed var(--gold); padding: 2rem; border-radius: 20px;">
+                <blockquote style="margin: 0;">
+                    <p style="font-style: italic; font-size: 1.5rem; color: var(--white); opacity: 0.9;">
+                        "Projetar interfaces que ignoram a fisiologia da mão humana resulta em fadiga muscular e aumento na taxa de erros de navegação."
+                    </p>
+                    <cite style="display: block; text-align: right; color: var(--gold); font-weight: bold; margin-top: 15px;">
+                        — Alves (2015)
+                    </cite>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="touch-targets" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            Alvos de Toque
+        </h1>
+        <p style="color: var(--accent); font-size: 1.8rem; font-weight: bold; margin-top: 1rem;">
+            A Regra dos 44px
+        </p>
+
+        <div style="margin-top: 3rem; display: flex; flex-direction: column; align-items: center; gap: 2.5rem;">
+            <p style="font-size: 1.6rem; max-width: 1000px; line-height: 1.6;">
+                O dedo humano não tem a precisão de um cursor de mouse. Alvos pequenos causam o fenômeno do <strong>"Fat Finger"</strong> (toque acidental).
+            </p>
+
+            <div style="display: flex; gap: 3rem; flex-wrap: wrap; justify-content: center;">
+                <div style="text-align: center;">
+                    <div style="width: 20px; height: 20px; background: #ff4d4d; margin: 0 auto 10px; border-radius: 4px;"></div>
+                    <span style="color: #ff4d4d; font-weight: bold;">20px (Erro)</span>
+                </div>
+                <div style="text-align: center;">
+                    <div style="width: 48px; height: 48px; background: var(--accent); margin: 0 auto 10px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold;">OK</div>
+                    <span style="color: var(--accent); font-weight: bold;">48px (Ideal)</span>
+                </div>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px; width: 100%; max-width: 900px; text-align: left;">
+                <h3 style="color: var(--gold); font-size: 1.6rem; margin-top: 0;">Recomendações de Mercado:</h3>
+                <ul style="font-size: 1.4rem; line-height: 1.8;">
+                    <li>📱 <strong>Apple (iOS):</strong> Mínimo de 44 x 44 pt.</li>
+                    <li>🤖 <strong>Google (Android):</strong> Mínimo de 48 x 48 dp.</li>
+                    <li>↔️ <strong>Espaçamento:</strong> Mínimo de 8px entre elementos clicáveis.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="margin-top: 3rem; padding: 1.2rem; border: 1px dashed var(--accent); border-radius: 10px; display: inline-block;">
+            <p style="font-size: 1.3rem; margin: 0; color: var(--white);">
+                <strong>Insight Técnico:</strong> Use <code>padding</code> para aumentar a área de toque sem alterar o tamanho visual do ícone.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="quiz-01" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h2 style="color: var(--gold); font-size: clamp(1.2rem, 2.5vw, 1.8rem); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">
+            09. Quiz de Fixação
+        </h2>
+        <h1 style="color: var(--warning); font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: 3rem; line-height: 1.2;">
+            Qual a principal vantagem de usar Flexbox/Grid em vez de duplicar conteúdo para Mobile?
+        </h1>
+
+        <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 1000px; margin: 0 auto; text-align: left;">
+            <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); font-size: 1.5rem;">
+                A) Aumenta o tempo de carregamento inicial.
+            </div>
+            <div style="background: rgba(40, 167, 69, 0.1); padding: 1.5rem; border-radius: 12px; border: 2px solid var(--accent); font-size: 1.5rem; font-weight: bold;">
+                B) Garante adaptabilidade sem inflar o HTML (SEO e Performance).
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); font-size: 1.5rem;">
+                C) Facilita apenas o design para navegadores antigos (IE).
+            </div>
+        </div>
+
+        <div style="margin-top: 3rem; color: var(--gold); font-style: italic; font-size: 1.3rem;">
+            Justificativa: Mudar o <code>flex-direction</code> via CSS é a base da "Progressive Advancement".
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="quiz-02" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h1 style="color: var(--warning); font-size: clamp(2rem, 4vw, 3.5rem); margin-bottom: 3rem; line-height: 1.2;">
+            Por que o padrão de mercado para alvos de toque é entre 44px e 48px?
+        </h1>
+
+        <div style="display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 1000px; margin: 0 auto; text-align: left;">
+            <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); font-size: 1.5rem;">
+                A) Para economizar espaço na tela do smartphone.
+            </div>
+            <div style="background: rgba(40, 167, 69, 0.1); padding: 1.5rem; border-radius: 12px; border: 2px solid var(--accent); font-size: 1.5rem; font-weight: bold;">
+                B) Para acomodar a densidade física do dedo humano e reduzir erros.
+            </div>
+            <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); font-size: 1.5rem;">
+                C) É uma limitação técnica puramente do hardware das telas Retina.
+            </div>
+        </div>
+
+        <blockquote style="margin-top: 4rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 1.5rem;">
+            <p style="font-size: 1.3rem; opacity: 0.8;">
+                "Alvos pequenos aumentam a taxa de erro. Seguir padrões é essencial para a acessibilidade e usabilidade motora."
+            </p>
+            <cite style="display: block; text-align: right; color: var(--gold); font-weight: bold; margin-top: 5px;">— Gabarito Aula 25/03</cite>
+        </blockquote>
+    </div>
+</section>
+
+<section class="slide" id="feedback" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h2 style="color: var(--gold); font-size: clamp(1.2rem, 2.5vw, 1.8rem); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">
+            10. Fechamento
+        </h2>
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            Feedback & Conexões
+        </h1>
+
+        <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; text-align: left;">
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px; border-left: 5px solid var(--accent);">
+                <h3 style="color: var(--white); font-size: 1.8rem;">O que aprendemos hoje?</h3>
+                <ul style="font-size: 1.3rem; line-height: 1.8; color: rgba(255,255,255,0.8);">
+                    <li>Inverter a lógica para o <strong>Mobile First</strong>.</li>
+                    <li>Controlar a <strong>Viewport</strong> e o escalonamento.</li>
+                    <li>Matemática de <strong>Grades Fluidas</strong>.</li>
+                    <li>Ergonomia da <strong>Zona do Polegar</strong>.</li>
+                </ul>
+            </div>
+
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(0,0,0,0.2); border-radius: 15px; padding: 2rem;">
+                <p style="font-size: 1.6rem; color: var(--gold); font-weight: bold; margin-bottom: 1rem;">Dúvidas?</p>
+                <p style="font-size: 1.2rem; opacity: 0.7; text-align: center;">A hora de errar e perguntar é agora, no ambiente de laboratório controlado.</p>
+            </div>
+        </div>
+    </div>
+</section>	
+
+<section class="slide" id="preparacao-a3" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;
+        border: 2px solid var(--accent);">
+        
+        <h1 style="color: var(--accent); font-size: clamp(2.5rem, 6vw, 5rem); margin: 0; line-height: 1.1;">
+            Projeto A3
+        </h1>
+        <p style="color: var(--white); font-size: 1.8rem; margin-top: 1rem; font-weight: bold;">
+            O Próximo Milestone
+        </p>
+
+        <div style="margin-top: 3rem; background: rgba(255,255,255,0.03); padding: 2.5rem; border-radius: 20px; text-align: left; max-width: 1000px; margin-left: auto; margin-right: auto;">
+            <h3 style="color: var(--gold); font-size: 1.6rem;">Checklist Estratégico:</h3>
+            <ul style="font-size: 1.4rem; line-height: 2; color: var(--white);">
+                <li>📌 <strong>Foco:</strong> Sua aplicação deve ser 100% funcional no Mobile.</li>
+                <li>📌 <strong>IHC:</strong> Justifique o posicionamento dos botões (Zona do Polegar).</li>
+                <li>📌 <strong>Código:</strong> Repositório Git atualizado com o Lab de hoje.</li>
+                <li>📌 <strong>Mídias:</strong> Utilize SVGs para ícones e logotipos.</li>
+            </ul>
+        </div>
+
+        <blockquote style="margin-top: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+            <p style="font-style: italic; font-size: 1.4rem; color: rgba(255,255,255,0.6);">
+                "A entrega final deve demonstrar a integração entre frontend e serviços de dados, respeitando normas de acessibilidade."
+            </p>
+            <cite style="display: block; text-align: right; color: var(--gold); font-weight: bold;">— Plano de Ensino (Sposito, 2026)</cite>
+        </blockquote>
+
+        <div style="margin-top: 3rem;">
+            <button class="btn-engajamento" onclick="logInteracao('feedback', 'fim_aula', 'botao_encerrar')">
+                Encerrar Sessão e Salvar Progresso
+            </button>
+        </div>
+    </div>
+</section>
+
+		<section class="slide" id="coleta-feedback" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    overflow-y: auto;
+    background-color: var(--navy);">
+
+    <div class="content-box" style="max-width: 1200px; width: 100%; text-align: center; padding: 2.5rem; border-radius: 25px; background: rgba(255,255,255,0.02);">
+        
+        <h2 class="disciplina-tag" style="margin-bottom: 2rem; color: var(--gold); border: 1px solid var(--gold); padding: 0.6rem 1.5rem; display: inline-block; border-radius: 50px; font-size: 1.1rem; letter-spacing: 2px; text-transform: uppercase; font-weight: bold;">
+            Sua Opinião Constrói o Projeto A3
+        </h2>
+
+        <h1 style="color: var(--warning); font-size: clamp(2.2rem, 6vw, 4rem); margin-bottom: 1rem; line-height: 1.1;">
+            O que achou da aula de hoje?
+        </h1>
+        
+        <p style="color: var(--white); font-size: clamp(1.2rem, 2.5vw, 1.6rem); opacity: 0.9; margin-bottom: 3.5rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+            Seu feedback ajuda a refinar a experiência: <strong>Mobile First, Performance e Usabilidade Motora.</strong>
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; justify-content: center; width: 100%;">
+            
+            <button class="btn-feedback" onclick="logInteracao('feedback_aula', 'excelente', 'slide_feedback')" style="background: rgba(40, 167, 69, 0.15); border: 2px solid var(--accent); color: var(--white); padding: 2.5rem 1rem; border-radius: 25px; cursor: pointer; transition: 0.3s; min-height: 180px;">
+                <span style="font-size: 3.5rem; display: block; margin-bottom: 0.8rem;">🤩</span>
+                <strong style="font-size: 1.4rem; display: block; text-transform: uppercase;">Excelente</strong>
+            </button>
+
+            <button class="btn-feedback" onclick="logInteracao('feedback_aula', 'bom', 'slide_feedback')" style="background: rgba(212, 175, 55, 0.15); border: 2px solid var(--gold); color: var(--white); padding: 2.5rem 1rem; border-radius: 25px; cursor: pointer; transition: 0.3s; min-height: 180px;">
+                <span style="font-size: 3.5rem; display: block; margin-bottom: 0.8rem;">🙂</span>
+                <strong style="font-size: 1.4rem; display: block; text-transform: uppercase;">Bom</strong>
+            </button>
+
+            <button class="btn-feedback" onclick="logInteracao('feedback_aula', 'regular', 'slide_feedback')" style="background: rgba(255, 193, 7, 0.15); border: 2px solid var(--warning); color: var(--white); padding: 2.5rem 1rem; border-radius: 25px; cursor: pointer; transition: 0.3s; min-height: 180px;">
+                <span style="font-size: 3.5rem; display: block; margin-bottom: 0.8rem;">😐</span>
+                <strong style="font-size: 1.4rem; display: block; text-transform: uppercase;">Regular</strong>
+            </button>
+
+            <button class="btn-feedback" onclick="logInteracao('feedback_aula', 'pessimo', 'slide_feedback')" style="background: rgba(220, 53, 69, 0.15); border: 2px solid #dc3545; color: var(--white); padding: 2.5rem 1rem; border-radius: 25px; cursor: pointer; transition: 0.3s; min-height: 180px;">
+                <span style="font-size: 3.5rem; display: block; margin-bottom: 0.8rem;">☹️</span>
+                <strong style="font-size: 1.4rem; display: block; text-transform: uppercase;">Péssimo</strong>
+            </button>
+
+        </div>
+
+        <div style="margin-top: 4rem; color: rgba(255,255,255,0.4); font-size: 1rem; letter-spacing: 1px;">
+            Coleta anônima via <strong>GA4</strong> | Contexto: Aula 25/03/2026
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.btn-feedback').forEach(button => {
+            button.addEventListener('click', function() {
+                // Efeito visual reforçado para mobile (toque)
+                this.style.transform = 'scale(0.98)';
+                this.style.backgroundColor = 'var(--white)';
+                this.style.color = 'var(--navy)';
+                
+                // Feedback de sucesso (Usabilidade IHC)
+                const originalText = this.querySelector('strong').innerText;
+                this.querySelector('strong').innerText = 'ENVIADO!';
+                
+                setTimeout(() => {
+                    alert('Dr. Lincoln agradece seu feedback técnico!');
+                }, 100);
+            });
+        });
+    </script>
+</section>
+
+<section class="slide" id="recapitulacao" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;
+        border-top: 4px solid var(--gold);">
+        
+        <h2 style="color: var(--gold); font-size: clamp(1.2rem, 2.5vw, 1.8rem); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">
+            Sintese da Aula
+        </h2>
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            Recapitulação Técnica
+        </h1>
+
+        <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; text-align: left;">
+            
+            <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px;">
+                <strong style="color: var(--accent); font-size: 1.4rem; display: block; margin-bottom: 0.5rem;">01. Mobile First</strong>
+                <p style="font-size: 1.1rem; margin: 0; opacity: 0.8;">Inversão da lógica: projetar para o essencial e expandir progressivamente.</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px;">
+                <strong style="color: var(--accent); font-size: 1.4rem; display: block; margin-bottom: 0.5rem;">02. Viewport</strong>
+                <p style="font-size: 1.1rem; margin: 0; opacity: 0.8;">Ajuste de escala e densidade de pixels para nitidez em telas Retina/HiDPI.</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px;">
+                <strong style="color: var(--accent); font-size: 1.4rem; display: block; margin-bottom: 0.5rem;">03. Adaptabilidade</strong>
+                <p style="font-size: 1.1rem; margin: 0; opacity: 0.8;">Uso de Grades Fluidas (%) e Media Queries para layouts multidirecionais.</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px;">
+                <strong style="color: var(--accent); font-size: 1.4rem; display: block; margin-bottom: 0.5rem;">04. IHC Móvel</strong>
+                <p style="font-size: 1.1rem; margin: 0; opacity: 0.8;">Zona do polegar e alvos de toque (44-48px) para usabilidade motora.</p>
+            </div>
+
+        </div>
+
+        <div style="margin-top: 4rem; padding: 2.5rem; background: rgba(0,0,0,0.3); border-radius: 20px; border: 1px dashed var(--gold);">
+            <h3 style="color: var(--white); font-size: 1.8rem; margin-bottom: 1.5rem;">📚 Material de Estudo (PDF)</h3>
+            
+            <p style="font-size: 1.2rem; color: rgba(255,255,255,0.7); margin-bottom: 2rem;">
+                Acesse o guia completo com exercícios de fixação e gabarito comentado:
+            </p>
+
+            <a href="aula-25-03-2026-usabilidade-web-mobile-jogos-recursividade-mobile-first.pdf" 
+               download
+               class="btn-engajamento" 
+               style="text-decoration: none; display: inline-flex; align-items: center; gap: 15px; background: var(--gold); color: var(--navy); font-weight: bold; padding: 1.2rem 2.5rem;">
+               <span style="font-size: 1.5rem;">📥</span> Baixar Aula 25/03 (PDF)
+            </a>
+        </div>
+
+        <p style="margin-top: 3rem; font-size: 1.1rem; opacity: 0.5;">
+            "A prática leva à consistência. Revise o material para o Projeto A3." — Dr. Lincoln Sposito
+        </p>
+    </div>
+</section>
+		
+	</div>
+
+    <footer>
+        Prof. Dr. Lincoln Sposito | &copy; 2026
+    </footer>
+
+    <script>
+        // Sistema de Observer para o efeito "Flutuar" (Slide Ativo)
+        const observerOptions = { threshold: 0.4 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.slide').forEach(slide => {
+            observer.observe(slide);
+        });
+
+        // Navegação Suave por Teclado (Desktop)
+        document.addEventListener('keydown', (e) => {
+            if (window.innerWidth > 1024) { // Apenas Desktop para não conflitar com o touch do celular
+                const slides = document.querySelectorAll('.slide');
+                let current = [...slides].findIndex(s => s.getBoundingClientRect().top >= -50 && s.getBoundingClientRect().top <= 50);
+                
+                if ((e.key === 'ArrowRight' || e.key === 'ArrowDown') && current < slides.length - 1) {
+                    slides[current + 1].scrollIntoView({ behavior: 'smooth' });
+                }
+                if ((e.key === 'ArrowLeft' || e.key === 'ArrowUp') && current > 0) {
+                    slides[current - 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    </script>
+	<script>
+		// Substitua pela URL real do seu Google Forms
+		const urlForms = "https://forms.gle/m7WZMo3MZEWGYYPj6";						  
+		new QRCode(document.getElementById("qrcode-forms"), {
+			text: urlForms,
+			width: 200,
+			height: 200,
+			colorDark : "#002147",
+			colorLight : "#ffffff"
+		});
+	</script>
+	<script>
+		new QRCode(document.getElementById("qrcode-persistente-final"), {
+		text: window.location.origin + window.location.pathname + "?ref=atrasado",
+		width: 120,
+		height: 120,
+		colorDark : "#002147",
+		colorLight : "#ffffff"
+	});
+	</script>
+	<script>
+	(function(){
+		if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>
+			{if(!window.chatbase.q){window.chatbase.q=[]}
+			window.chatbase.q.push(arguments)
+		};
+		window.chatbase=new Proxy(window.chatbase,{
+			get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}
+			})
+		}
+		const onLoad=function(){
+			const script=document.createElement("script");
+			script.src="https://www.chatbase.co/embed.min.js";
+			script.id="uFEke3ZP9R3S3o5CFSMyh";
+			script.domain="www.chatbase.co";
+
+			// --- ADIÇÃO PARA PERFORMANCE ---
+			script.async = true; 
+			script.defer = true;
+			// -------------------------------
+			
+			// Dentro da sua função onLoad, antes do appendChild:
+			script.setAttribute('data-priority', 'low');
+			
+			document.body.appendChild(script)
+		};
+		if(document.readyState==="complete"){
+			onLoad()
+		}else{
+			window.addEventListener("load",onLoad)
+		}
+	})();
+</script>
+</body>
+</html>

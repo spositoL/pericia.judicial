@@ -1,0 +1,1430 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aula: Sistemas Operacionais & Firmware | Dr. Lincoln Sposito</title>
+    <meta name="description" content="Aula de Sistemas Computacionais e Segurança - USJT - 26/03/2026">
+	
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>    
+	<script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-5F1FGJ25TK');
+
+          /**
+           * FUNÇÃO MESTRE: Monitora tanto presença quanto cliques em botões
+           * Contexto: Sistemas Operacionais e Firmware (26/03)
+           */
+          function logInteracao(nomeEvento, status, origem, aulaId, disciplinaId) {
+              gtag('event', nomeEvento, {
+                  'disciplina': disciplinaId || 'Sistemas_Computacionais_Seguranca',
+                  'status_presenca': status,              
+                  'origem': origem,                      
+                  'aula_referencia': aulaId || '2026-03-26' // Atualizado para a data correta
+              });
+          }
+
+          window.onload = function() {
+              const urlParams = new URLSearchParams(window.location.search);
+              if (urlParams.get('ref') === 'atrasado') {
+                  logInteracao('presenca_aula', 'atrasado', 'qrcode_atraso');
+              }
+              
+              const urlAtraso = window.location.origin + window.location.pathname + "?ref=atrasado";
+              new QRCode(document.getElementById("qrcode-persistente"), {
+                  text: urlAtraso, width: 70, height: 70, colorDark : "#002147", colorLight : "#ffffff"
+              });
+
+              // Sistema de animação scroll-reveal
+              const observerOptions = { threshold: 0.4 };
+              const observer = new IntersectionObserver((entries) => {
+                  entries.forEach(entry => {
+                      if (entry.isIntersecting) {
+                          entry.target.classList.add('active');
+                      }
+                  });
+              }, observerOptions);
+
+              document.querySelectorAll('.slide').forEach(slide => {
+                  observer.observe(slide);
+              });
+          };
+    </script>	
+    <style>
+        :root { 
+            --navy: #002147; --white: #ffffff; --accent: #28a745; --warning: #ffc107;
+            --font-titulo: 3.2rem; --font-corpo: 1.8rem;
+            --gold: #d4af37; /* Destaque para termos técnicos e acadêmicos */
+        }
+
+        * { box-sizing: border-box; }
+
+        html, body { 
+            margin: 0; padding: 0; width: 100%; min-height: 100%;
+            overflow-x: hidden; 
+            overflow-y: auto;
+            font-family: 'Segoe UI', sans-serif; 
+            background: var(--navy); 
+            color: var(--white);
+            scroll-snap-type: y proximity;
+        }
+
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            background: rgba(0, 33, 71, 0.95);
+            display: flex; align-items: center; padding: 0 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1); z-index: 1000;
+        }
+
+        footer {
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 50px;
+            background: rgba(0, 33, 71, 0.95);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem; opacity: 0.7; z-index: 1000;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        #floating-atraso {
+            position: fixed; top: 100px; right: 20px; z-index: 999;
+            background: white; padding: 6px; border-radius: 8px;
+            border: 2px solid var(--warning); text-align: center;
+        }
+        #floating-atraso span { display: block; color: var(--navy); font-size: 9px; font-weight: bold; }
+
+        .slide { 
+            min-height: 100vh; 
+            width: 100%;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            padding: 100px 5% 70px 5%; 
+            text-align: center;
+            scroll-snap-align: start; 
+            position: relative;
+        }
+
+        h1 { color: var(--accent); font-size: var(--font-titulo); text-transform: uppercase; margin-bottom: 1.5rem; }
+        p { font-size: var(--font-corpo); line-height: 1.5; max-width: 1100px; }
+        
+        .content-box { 
+            background: rgba(255,255,255,0.05); padding: 2.5rem; 
+            border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); width: 100%;
+        }
+
+        /* Animações de entrada */
+        .slide > * {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .slide.active > * {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsividade Mobile First */
+        @media (max-width: 480px) {
+            :root {
+                --font-titulo: 1.6rem; 
+                --font-corpo: 1.1rem;  
+            }
+            .slide { padding: 80px 20px 60px 20px; }
+            h1 { font-size: 1.6rem !important; }
+            p, li { font-size: 1.1rem !important; }
+            #floating-atraso { display: none !important; } 
+        }
+
+        .btn-engajamento {
+            background: var(--accent); color: white; border: none; padding: 15px 30px;
+            border-radius: 10px; font-size: 1.2rem; cursor: pointer; transition: 0.3s;
+            margin: 10px;
+            min-height: 44px; /* Acessibilidade Mobile */
+        }
+        .btn-engajamento:hover { transform: scale(1.05); filter: brightness(1.1); }
+		
+        .btn-voltar {
+            margin-left: auto;
+            color: var(--white);
+            text-decoration: none;
+            padding: 8px 15px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        /* Bloco para comandos CLI ou Logs (Comum nesta aula) */
+        .code-block { 
+            background: #000; padding: 20px; border-radius: 10px; 
+            font-family: 'Courier New', monospace; overflow-x: auto; 
+            width: 100%; max-width: 800px; border: 1px solid var(--accent); 
+            color: #00ff00; text-align: left; margin: 20px auto; 
+        }
+        
+        .disciplina-tag {
+            background: var(--gold);
+            color: var(--navy);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="../img/grafico.svg" alt="Logo" style="height: 70px;">
+		<a href="index.html" class="btn-voltar" onclick="logInteracao('navegacao', 'retorno_portal', 'header')">← Voltar ao Portal da Disciplina</a>
+		<a href="../../index.html" class="btn-voltar">Conheça meu trabalho como perito</a><br>
+    </header>
+
+    <div class="container-slides" id="deck">	
+		<section class="slide active" id="capa-so-firmware" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    background: linear-gradient(135deg, var(--navy) 0%, #00152e 100%);
+    padding: 2rem;">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        margin: 0 auto; 
+        text-align: center; 
+        border: none; 
+        background: transparent;">
+        
+        <div style="margin-bottom: 2.5rem;">
+            <span style="background: var(--warning); color: var(--navy); padding: 12px 35px; border-radius: 50px; font-weight: 800; font-size: clamp(1rem, 2vw, 1.4rem); text-transform: uppercase; letter-spacing: 4px; box-shadow: 0 4px 15px rgba(255,193,7,0.3);">
+                Módulo II: Arquitetura de Software
+            </span>
+        </div>
+
+        <h1 style="font-size: clamp(2.5rem, 7vw, 5rem); margin: 0; color: var(--white); line-height: 1.1; font-weight: 800; text-transform: uppercase;">
+            Sistemas Operacionais <br>
+            <span style="color: var(--accent); text-shadow: 0 0 20px rgba(40,167,69,0.4);">& Firmware</span>
+        </h1>
+
+        <hr style="border: 0; border-top: 4px solid var(--accent); width: clamp(100px, 25vw, 300px); margin: 2.5rem auto;">
+
+        <h2 style="font-size: clamp(1.5rem, 4vw, 2.8rem); font-weight: 300; margin: 0; color: rgba(255,255,255,0.9);">
+            Prof. Dr. Lincoln Sposito
+        </h2>
+        
+        <p style="font-size: clamp(1rem, 2vw, 1.5rem); opacity: 0.8; margin-top: 1rem; font-weight: 400; letter-spacing: 1px;">
+            Sistemas Computacionais e Segurança | <span style="color: var(--warning);">26 de Março de 2026</span>
+        </p>
+
+        <div style="margin-top: clamp(3rem, 8vh, 5rem);">
+            <button class="btn-engajamento" style="
+                padding: clamp(15px, 3vh, 25px) clamp(40px, 6vw, 90px); 
+                font-size: clamp(1.2rem, 3vw, 2rem); 
+                font-weight: bold; 
+                box-shadow: 0 10px 20px rgba(0,0,0,0.3);" 
+                onclick="logInteracao('inicio_aula', 'presencial', 'capa', '2026-03-26', 'Sistemas_Computacionais_Seguranca'); window.location.href='#agenda';">
+                Iniciar Inicialização (Boot) 🚀
+            </button>
+        </div>
+    </div>
+</section>
+		
+		<section class="slide" id="agenda-so" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 4rem 2rem;">
+    <div class="content-box" style="max-width: 1400px; width: 100%; margin: 0 auto; padding: clamp(1.5rem, 5vw, 3rem); background: rgba(255,255,255,0.03);">
+        
+        <h2 style="color: var(--warning); font-size: clamp(0.9rem, 2vw, 1.3rem); text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 4px; font-weight: 800;">
+            Roteiro de Atividades
+        </h2>
+        <h1 style="font-size: clamp(2rem, 5vw, 3.8rem); margin-bottom: clamp(2rem, 5vh, 3.5rem); color: var(--white); font-weight: 800; line-height: 1.1;">
+            Agenda do Dia: SO e Firmware
+        </h1>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(1rem, 4vw, 4rem); text-align: left;">
+            
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+                    <span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">01</span> 
+                    Abertura: O Elo entre Hardware e Inteligência
+                </li>
+                <li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+                    <span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">02</span> 
+                    Firmware: Anatomia da BIOS e Evolução UEFI
+                </li>
+                <li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+                    <span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">03</span> 
+                    Segurança no Boot: Secure Boot e Rootkits
+                </li>
+                <li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+                    <span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">04</span> 
+                    Arquitetura do SO: Kernel, Shell e Drivers
+                </li>
+                <li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+                    <span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">05</span> 
+                    Gerenciamento de Recursos: CPU, Memória e E/S
+                </li>
+                <li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4; color: var(--warning);">
+                    <span style="color: var(--warning); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">06</span> 
+                    Intervalo (20 minutos): Ciclo de Refresh
+                </li>
+            </ul>
+
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+                    <span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">07</span> 
+                    Preparação: Mídias, ISOs e Verificação de Integridade
+                </li>
+                <li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+                    <span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">08</span> 
+                    Particionamento de Disco: MBR vs. GPT
+                </li>
+                <li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+                    <span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">09</span> 
+                    Hardening Inicial: Patches de Segurança "Dia Zero"
+                </li>
+                <li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+                    <span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">10</span> 
+                    Logs de Eventos: Diagnóstico e Auditoria de Sistema
+                </li>
+                <li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+                    <span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">11</span> 
+                    Lab: Instalação e Configuração Otimizada de SO
+                </li>
+                <li style="margin-bottom: 1.5rem; display: flex; align-items: flex-start; font-size: clamp(1.1rem, 1.8vw, 1.5rem); line-height: 1.4;">
+                    <span style="color: var(--accent); font-weight: 900; margin-right: 15px; font-size: 1.8rem;">12</span> 
+                    Projeto A3: Discussão de Requisitos de Arquitetura
+                </li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 3rem; padding: 1.5rem; background: rgba(255, 193, 7, 0.05); border-radius: 15px; border-left: 5px solid var(--warning); text-align: left;">
+            <p style="margin: 0; font-size: clamp(0.9rem, 1.5vw, 1.2rem); line-height: 1.5; opacity: 0.9;">
+                <strong>📚 Base Teórica:</strong> Esta agenda baseia-se em <strong>Tanenbaum (2007)</strong> e <strong>Machado & Maia (2013)</strong>, conectando o papel do Firmware na inicialização do hardware às camadas lógicas de gerenciamento que compõem os Sistemas Operacionais modernos.
+            </p>
+        </div>
+
+        <div style="margin-top: clamp(2rem, 5vh, 3.5rem);">
+            <button class="btn-engajamento" style="padding: 18px 60px; font-size: clamp(1.1rem, 2vw, 1.5rem); font-weight: bold; border-radius: 50px;" 
+                onclick="logInteracao('engajamento', 'visualizou_agenda_so', 'botao_agenda', '2026-03-26', 'Sistemas_Computacionais_Seguranca'); window.location.href='#introducao-firmware';">
+                Entendido, vamos começar! 🚀
+            </button>
+        </div>
+    </div>
+</section>
+		
+<section class="slide" id="abertura-elo" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    background: radial-gradient(circle at center, #003366 0%, var(--navy) 100%);
+    padding: clamp(2rem, 5vw, 4rem);">
+
+    <div class="content-box" style="
+        max-width: 1200px; 
+        width: 100%; 
+        text-align: center; 
+        border: none;
+        background: transparent;">
+        
+        <div class="disciplina-tag" style="margin-bottom: 2rem;">Item 01: Introdução</div>
+
+        <h1 style="font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--warning); line-height: 1.1; margin-bottom: 2rem;">
+            O Elo entre Hardware <br>
+            <span style="color: var(--white); opacity: 0.9;">e Inteligência</span>
+        </h1>
+
+        <p style="font-size: clamp(1.4rem, 2.5vw, 2.2rem); color: var(--white); max-width: 900px; margin: 0 auto; line-height: 1.6;">
+            Como transformamos pulsos elétricos e transistores em uma interface capaz de gerenciar decisões complexas e proteger dados?
+        </p>
+
+        <div style="margin-top: 4rem; display: flex; justify-content: center; gap: 2rem;">
+            <div style="padding: 20px; border: 1px solid var(--accent); border-radius: 15px; background: rgba(40, 167, 69, 0.1);">
+                <span style="display: block; font-size: 2.5rem;">🔌</span>
+                <small style="color: var(--accent); font-weight: bold; text-transform: uppercase;">Hardware (Corpo)</small>
+            </div>
+            <div style="align-self: center; font-size: 2rem; color: var(--gold);">➔</div>
+            <div style="padding: 20px; border: 1px solid var(--warning); border-radius: 15px; background: rgba(255, 193, 7, 0.1);">
+                <span style="display: block; font-size: 2.5rem;">🧠</span>
+                <small style="color: var(--warning); font-weight: bold; text-transform: uppercase;">Software (Mente)</small>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="bios-legacy" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background: linear-gradient(180deg, var(--navy) 0%, #001a35 100%);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: left;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h1 style="color: var(--warning); font-size: clamp(2rem, 4vw, 3.5rem); margin: 0;">
+                BIOS: Basic Input/Output System
+            </h1>
+            <span class="disciplina-tag" style="background: rgba(255,193,7,0.2); color: var(--warning); border: 1px solid var(--warning);">Legacy Mode</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+            <div>
+                <p style="font-size: 1.4rem; color: var(--accent); font-weight: bold; margin-bottom: 1rem;">O que é?</p>
+                <p style="font-size: 1.2rem; line-height: 1.6; opacity: 0.9;">
+                    Firmware armazenado em um chip ROM/Flash na placa-mãe. É o primeiro código executado ao ligar o hardware (Cold Boot).
+                </p>
+                
+                <p style="font-size: 1.4rem; color: var(--warning); font-weight: bold; margin-top: 2rem; margin-bottom: 1rem;">Limitações Críticas:</p>
+                <ul style="font-size: 1.1rem; line-height: 1.8;">
+                    <li><strong>Modo Real (16 bits):</strong> Acesso limitado à memória RAM (1MB).</li>
+                    <li><strong>MBR (Master Boot Record):</strong> Suporta apenas discos de até 2TB e 4 partições primárias.</li>
+                    <li><strong>Interface:</strong> Apenas teclado, sem suporte a rede ou gráficos avançados no boot.</li>
+                </ul>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 15px;">
+                <p style="text-align: center; color: var(--gold); font-weight: bold; margin-bottom: 1rem;">Fluxo de Execução (POST)</p>
+                <div class="code-block" style="font-size: 0.9rem; margin: 0; border-color: var(--warning); color: var(--warning);">
+                    1. Power On<br>
+                    2. CPU Init (Reset Vector)<br>
+                    3. POST (Diagnóstico de Hardware)<br>
+                    4. Leitura do Setor 0 (MBR)<br>
+                    5. Salto para o Bootloader do SO
+                </div>
+                <p style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.7; font-style: italic;">
+                    "A BIOS não entende sistemas de arquivos, ela apenas lê setores físicos."
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="uefi-evolution" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background-color: var(--navy);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: center;">
+        
+        <h2 style="color: var(--gold); font-size: 1.2rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">A Modernidade</h2>
+        <h1 style="color: var(--accent); font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 3rem;">
+            UEFI: Unified Extensible Firmware Interface
+        </h1>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+            
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px; border-bottom: 4px solid var(--accent);">
+                <h3 style="color: var(--white);">Arquitetura 32/64 bits</h3>
+                <p style="font-size: 1.1rem; opacity: 0.8;">Permite drivers independentes de CPU e inicialização muito mais veloz.</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px; border-bottom: 4px solid var(--accent);">
+                <h3 style="color: var(--white);">Suporte GPT</h3>
+                <p style="font-size: 1.1rem; opacity: 0.8;">Discos de até 9.4 Zettabytes e partições virtualmente ilimitadas.</p>
+            </div>
+
+            <div style="background: rgba(40, 167, 69, 0.1); padding: 2rem; border-radius: 15px; border: 1px solid var(--accent);">
+                <h3 style="color: var(--accent);">🛡️ Secure Boot</h3>
+                <p style="font-size: 1.1rem; opacity: 0.9;"><strong>Pilar de Segurança:</strong> Verifica a assinatura digital do Bootloader. Impede que Rootkits iniciem antes do SO.</p>
+            </div>
+
+        </div>
+
+        <div style="margin-top: 4rem; padding: 2rem; background: rgba(0,0,0,0.2); border-radius: 15px; text-align: left;">
+            <p style="margin: 0; font-size: 1.1rem; line-height: 1.6;">
+                <strong style="color: var(--warning);">Nota de Segurança:</strong> Conforme <strong>Stallings (2012)</strong>, a UEFI permite que o firmware tenha sua própria pilha de rede, possibilitando diagnósticos remotos e atualizações de segurança mesmo sem um HD instalado.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<section class="slide" id="secure-boot" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background: radial-gradient(circle at center, #001f3f 0%, #000c1a 100%);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: center;">
+        
+        <div class="disciplina-tag" style="background: var(--accent); color: white;">Pilar de Segurança</div>
+        
+        <h1 style="color: var(--white); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 1rem 0; line-height: 1.1;">
+            Secure Boot
+        </h1>
+        <p style="color: var(--accent); font-size: 1.8rem; font-weight: bold; margin-bottom: 3rem;">
+            A Cadeia de Custódia do Software
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem; text-align: left;">
+            <div style="background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 20px; border-left: 8px solid var(--accent);">
+                <h3 style="color: var(--white); font-size: 1.8rem; margin-top: 0;">Como Funciona?</h3>
+                <p style="font-size: 1.3rem; line-height: 1.6; opacity: 0.9;">
+                    O Firmware UEFI valida a <strong>Assinatura Digital</strong> do carregador de inicialização (Bootloader) contra um banco de chaves confiáveis armazenado no hardware.
+                </p>
+                <ul style="font-size: 1.2rem; margin-top: 1.5rem; color: var(--warning); font-weight: bold;">
+                    <li>✓ Apenas SOs autorizados iniciam.</li>
+                    <li>✓ Bloqueia códigos não assinados.</li>
+                    <li>✓ Protege a integridade do Kernel.</li>
+                </ul>
+            </div>
+
+            <div style="display: flex; flex-direction: column; justify-content: center;">
+                <blockquote style="margin: 0; background: rgba(0,0,0,0.3); padding: 2rem; border-radius: 15px;">
+                    <p style="font-style: italic; font-size: 1.4rem; color: var(--white); line-height: 1.6;">
+                        "A segurança do sistema operacional é irrelevante se o processo de boot puder ser subvertido antes mesmo do kernel carregar suas políticas de proteção."
+                    </p>
+                    <cite style="display: block; text-align: right; color: var(--gold); font-weight: bold; margin-top: 15px;">
+                        — Stallings (2012)
+                    </cite>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="rootkits-threat" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background-color: var(--navy);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: center;">
+        
+        <h1 style="color: #ff4d4d; font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            Rootkits & Bootkits
+        </h1>
+        <p style="color: var(--warning); font-size: 1.8rem; font-weight: bold; margin-top: 1rem;">
+            Ameaças Invisíveis ao Sistema Operacional
+        </p>
+
+        <div style="margin-top: 4rem; display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem;">
+            
+            <div style="flex: 1; min-width: 320px; background: rgba(255, 77, 77, 0.1); border: 1px solid #ff4d4d; padding: 2rem; border-radius: 15px; text-align: left;">
+                <h3 style="color: #ff4d4d; font-size: 1.6rem;">O que são?</h3>
+                <p style="font-size: 1.2rem; line-height: 1.5;">Malwares projetados para infectar o <strong>MBR/VBR</strong> ou o próprio <strong>Firmware</strong>. Eles "sobem" antes do antivírus.</p>
+            </div>
+
+            <div style="flex: 1; min-width: 320px; background: rgba(255, 77, 77, 0.1); border: 1px solid #ff4d4d; padding: 2rem; border-radius: 15px; text-align: left;">
+                <h3 style="color: #ff4d4d; font-size: 1.6rem;">O Perigo</h3>
+                <p style="font-size: 1.2rem; line-height: 1.5;">Podem interceptar chamadas do Sistema Operacional, esconder arquivos e processos, tornando-se <strong>persistentes</strong> mesmo após a formatação do SO.</p>
+            </div>
+
+        </div>
+
+        <div style="margin-top: 4rem; padding: 1.5rem; border: 2px dashed var(--warning); border-radius: 10px; display: inline-block; max-width: 900px;">
+            <p style="font-size: 1.3rem; color: var(--white); margin: 0;">
+                <strong style="color: var(--warning);">Conexão A3:</strong> Ao projetar um ambiente seguro, a ativação do <strong>Secure Boot</strong> e a configuração de <strong>Senhas de Supervisor</strong> no Setup são os primeiros passos do <em>Hardening</em> de infraestrutura.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="camadas-so" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background: radial-gradient(circle at center, #002147 0%, #000 100%);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: center; border: none; background: transparent;">
+        
+        <h2 style="color: var(--gold); font-size: 1.2rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">04. Arquitetura Interna</h2>
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4.5rem); margin-bottom: 3rem;">
+            Anatomia do Sistema
+        </h1>
+
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+            <div style="width: 80%; padding: 1.5rem; background: rgba(255,255,255,0.1); border: 2px solid var(--white); border-radius: 10px;">
+                <strong style="font-size: 1.5rem;">USUÁRIO / APLICAÇÕES</strong>
+            </div>
+            <div style="color: var(--gold); font-size: 1.5rem;">↓ ↑</div>
+            <div style="width: 70%; padding: 1.5rem; background: rgba(255, 193, 7, 0.2); border: 2px solid var(--warning); border-radius: 10px;">
+                <strong style="font-size: 1.5rem; color: var(--warning);">SHELL / INTERFACE (GUI & CLI)</strong>
+            </div>
+            <div style="color: var(--gold); font-size: 1.5rem;">↓ ↑</div>
+            <div style="width: 60%; padding: 2rem; background: rgba(40, 167, 69, 0.2); border: 2px solid var(--accent); border-radius: 10px; box-shadow: 0 0 20px rgba(40,167,69,0.3);">
+                <strong style="font-size: 2rem; color: var(--accent);">KERNEL (NÚCLEO)</strong>
+            </div>
+            <div style="color: var(--gold); font-size: 1.5rem;">↓ ↑</div>
+            <div style="width: 50%; padding: 1.5rem; background: #333; border: 2px solid #666; border-radius: 10px;">
+                <strong style="font-size: 1.5rem; color: #aaa;">HARDWARE (CPU, RAM, I/O)</strong>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="slide" id="kernel-drivers" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background-color: var(--navy);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: left;">
+        
+        <h1 style="color: var(--accent); font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 2.5rem; text-align: center;">
+            Kernel & Drivers
+        </h1>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem;">
+            
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px;">
+                <h3 style="color: var(--gold); font-size: 1.8rem;">O Kernel</h3>
+                <p style="font-size: 1.3rem; line-height: 1.6;">É a parte "residente" do SO. Gerencia:</p>
+                <ul style="font-size: 1.2rem; margin-top: 1rem; color: var(--white); opacity: 0.9;">
+                    <li>Acesso à Memória RAM (Proteção).</li>
+                    <li>Escalonamento da CPU.</li>
+                    <li>Chamadas de Sistema (System Calls).</li>
+                </ul>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px;">
+                <h3 style="color: var(--gold); font-size: 1.8rem;">Os Drivers</h3>
+                <p style="font-size: 1.3rem; line-height: 1.6;">Atuam como "tradutores" específicos. Sem o driver correto, o Kernel não sabe como operar o hardware físico.</p>
+                <p style="font-size: 1.2rem; margin-top: 1rem; padding: 10px; border: 1px dashed var(--warning); color: var(--warning);">
+                    ⚠️ Falhas em drivers são a causa principal de interrupções críticas (Tela Azul).
+                </p>
+            </div>
+
+        </div>
+
+        <blockquote style="margin-top: 4rem; border-left: 5px solid var(--accent); padding-left: 2rem; max-width: 1000px;">
+            <p style="font-style: italic; font-size: 1.4rem; color: var(--white); opacity: 0.8;">
+                "O kernel utiliza drivers para abstrair o hardware, permitindo que o mesmo código de aplicação funcione em periféricos de diferentes fabricantes."
+            </p>
+            <cite style="display: block; margin-top: 10px; color: var(--gold); font-weight: bold; text-align: right;">
+                — Tanenbaum (2007)
+            </cite>
+        </blockquote>
+    </div>
+</section>
+
+<section class="slide" id="gestao-cpu-ram" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background: radial-gradient(circle at center, #002147 0%, #000c1a 100%);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: left;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h1 style="color: var(--warning); font-size: clamp(2rem, 4vw, 3.5rem); margin: 0;">
+                Gerenciamento de Recursos
+            </h1>
+            <span class="disciplina-tag">CPU & Memória</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+            <div style="background: rgba(40, 167, 69, 0.05); padding: 2rem; border-radius: 15px; border-top: 5px solid var(--accent);">
+                <h3 style="color: var(--accent); font-size: 1.8rem;">Processador (CPU)</h3>
+                <p style="font-size: 1.3rem; line-height: 1.6;">O SO decide quem "usa a vez".</p>
+                <ul style="font-size: 1.2rem; margin-top: 1rem;">
+                    <li><strong>Escalonamento:</strong> Alternância rápida entre processos (Ilusão de paralelismo).</li>
+                    <li><strong>Prioridades:</strong> Processos críticos do sistema vs. Aplicações de usuário.</li>
+                </ul>
+            </div>
+
+            <div style="background: rgba(212, 175, 55, 0.05); padding: 2rem; border-radius: 15px; border-top: 5px solid var(--gold);">
+                <h3 style="color: var(--gold); font-size: 1.8rem;">Memória RAM</h3>
+                <p style="font-size: 1.3rem; line-height: 1.6;">O SO atua como um "corretor de imóveis".</p>
+                <ul style="font-size: 1.2rem; margin-top: 1rem;">
+                    <li><strong>Isolamento:</strong> Garante que o App A não leia dados do App B.</li>
+                    <li><strong>Memória Virtual:</strong> Uso do disco para "fingir" ter mais RAM disponível.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div style="margin-top: 3rem; text-align: center;">
+            <blockquote style="margin: 0; display: inline-block; max-width: 900px;">
+                <p style="font-style: italic; font-size: 1.4rem; opacity: 0.8;">
+                    "Sem o gerenciamento de memória do kernel, um único erro de programação em uma aplicação poderia corromper todo o sistema."
+                </p>
+                <cite style="display: block; text-align: right; color: var(--gold); font-weight: bold; margin-top: 10px;">— Machado & Maia (2013)</cite>
+            </blockquote>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="gestao-io" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background-color: var(--navy);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: center;">
+        
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            Gerenciamento de E/S
+        </h1>
+        <p style="color: var(--accent); font-size: 1.8rem; font-weight: bold; margin-top: 1rem;">
+            A Comunicação com o Mundo Externo
+        </p>
+
+        <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; text-align: left;">
+            <div style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 15px;">
+                <h4 style="color: var(--gold); font-size: 1.6rem; margin-top: 0;">Interrupções</h4>
+                <p style="font-size: 1.2rem;">O dispositivo avisa a CPU que terminou uma tarefa ou precisa de atenção imediata.</p>
+            </div>
+
+            <div style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 15px;">
+                <h4 style="color: var(--gold); font-size: 1.6rem; margin-top: 0;">Buffering & Caching</h4>
+                <p style="font-size: 1.2rem;">O SO armazena dados temporariamente para compensar a diferença de velocidade entre dispositivos.</p>
+            </div>
+
+            <div style="padding: 2rem; background: rgba(255,255,255,0.05); border-radius: 15px;">
+                <h4 style="color: var(--gold); font-size: 1.6rem; margin-top: 0;">Spooling</h4>
+                <p style="font-size: 1.2rem;">Gerenciamento de filas (ex: impressoras) para que múltiplos processos não conflitem no mesmo recurso.</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 4rem; padding: 1.5rem; border: 1px dashed var(--accent); border-radius: 10px; display: inline-block;">
+            <p style="font-size: 1.3rem; color: var(--white);">
+                <strong>💡 Foco em Segurança:</strong> O SO deve validar toda entrada de periféricos para evitar ataques de injeção de hardware (BadUSB).
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="intervalo-refresh" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);
+    position: relative;">
+
+    <div class="content-box" style="
+        max-width: 1200px; 
+        width: 100%; 
+        text-align: center;
+        border: 2px solid var(--accent);
+        background: rgba(40, 167, 69, 0.05);
+        padding: clamp(2rem, 8vw, 5rem);
+        border-radius: 30px;
+        box-shadow: 0 0 30px rgba(40, 167, 69, 0.2);">
+        
+        <h2 style="color: var(--gold); font-size: clamp(1.2rem, 3vw, 2rem); text-transform: uppercase; letter-spacing: 5px; margin-bottom: 1rem;">
+            SYSTEM PAUSE
+        </h2>
+        
+        <h1 style="color: var(--white); font-size: clamp(3.5rem, 10vw, 7rem); margin: 0; line-height: 1;">
+            Intervalo
+        </h1>
+
+        <div style="margin-top: 2.5rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+            <p style="color: var(--warning); font-size: clamp(1.8rem, 4vw, 3rem); font-weight: bold; margin: 0;">
+                20:30 – 20:50
+            </p>
+            <p style="color: var(--white); font-size: 1.4rem; opacity: 0.8; max-width: 700px; line-height: 1.5;">
+                Momento de <strong>Refresh</strong>: Assim como a DRAM precisa de recarga para não perder dados, o cérebro precisa de pausa para consolidar a <strong>Arquitetura de Sistemas</strong>.
+            </p>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); width: 60%; margin: 3rem auto;">
+
+        <div style="display: flex; justify-content: center; gap: clamp(2rem, 8vw, 5rem); flex-wrap: wrap;">
+            <div style="text-align: center;">
+                <span style="font-size: 3.5rem; display: block;">☕</span>
+                <span style="font-size: 1rem; color: var(--gold); text-transform: uppercase; font-weight: bold; margin-top: 10px; display: block;">Recharge</span>
+            </div>
+            <div style="text-align: center;">
+                <span style="font-size: 3.5rem; display: block;">🔋</span>
+                <span style="font-size: 1rem; color: var(--gold); text-transform: uppercase; font-weight: bold; margin-top: 10px; display: block;">Battery</span>
+            </div>
+            <div style="text-align: center;">
+                <span style="font-size: 3.5rem; display: block;">☁️</span>
+                <span style="font-size: 1rem; color: var(--gold); text-transform: uppercase; font-weight: bold; margin-top: 10px; display: block;">Buffer</span>
+            </div>
+        </div>
+    </div>
+
+    <div style="position: absolute; bottom: 80px; right: 40px; text-align: center; opacity: 0.6;">
+        <div id="qrcode-intervalo" style="background: white; padding: 5px; border-radius: 5px;"></div>
+        <span style="font-size: 0.7rem; color: var(--white); display: block; margin-top: 8px; font-weight: bold;">Log: Presença Tardia</span>
+    </div>
+</section>
+
+<section class="slide" id="origem-iso" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background: radial-gradient(circle at center, #002147 0%, #000 100%);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: left;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h1 style="color: var(--warning); font-size: clamp(2rem, 4vw, 3.5rem); margin: 0;">
+                Mídias e Imagens ISO
+            </h1>
+            <span class="disciplina-tag" style="background: rgba(255,193,7,0.2); color: var(--warning);">Segurança de Origem</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
+            <div>
+                <p style="font-size: 1.5rem; color: var(--white); font-weight: bold; margin-bottom: 1.5rem;">A Regra de Ouro do Analista:</p>
+                <p style="font-size: 1.2rem; line-height: 1.6; opacity: 0.9;">
+                    Sistemas Operacionais devem ser baixados <strong>apenas</strong> de fontes oficiais (Microsoft, Debian, Canonical, etc.). 
+                </p>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(220, 53, 69, 0.1); border: 1px solid #dc3545; border-radius: 10px;">
+                    <strong style="color: #ff4d4d; display: block; margin-bottom: 5px;">⚠️ O Perigo das ISOs Modificadas:</strong>
+                    <span style="font-size: 1.1rem;">Versões "Lite" ou "Otimizadas" de terceiros podem conter Backdoors e Keyloggers pré-instalados no Kernel.</span>
+                </div>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px; text-align: center;">
+                <p style="font-size: 1.3rem; color: var(--gold); font-weight: bold;">Por que ISOs Estáticas são um risco?</p>
+                <p style="font-size: 1.1rem; line-height: 1.5; margin-top: 10px;">
+                    Vulnerabilidades de <strong>Dia Zero (0-Day)</strong> podem surgir após a criação da mídia. A instalação offline deixa o sistema exposto até o primeiro ciclo de update.
+                </p>
+                <cite style="display: block; margin-top: 15px; font-size: 0.9rem; opacity: 0.6;">— Ref: Machado & Maia (2013)</cite>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="checksum-integridade" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background-color: var(--navy);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: center;">
+        
+        <h1 style="color: var(--accent); font-size: clamp(2.5rem, 5vw, 4rem); margin: 0; line-height: 1.1;">
+            Verificação de Integridade
+        </h1>
+        <p style="color: var(--white); font-size: 1.8rem; font-weight: bold; margin-top: 1rem;">
+            A Assinatura Matemática do Arquivo
+        </p>
+
+        <div style="margin-top: 3rem; display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+            <p style="font-size: 1.5rem; max-width: 1000px; line-height: 1.6;">
+                Como garantir que a ISO não foi corrompida no download ou alterada por um atacante (Man-in-the-Middle)? 
+                Usamos algoritmos de <strong>Hash (SHA-256)</strong>.
+            </p>
+
+            <div class="code-block" style="width: auto; padding: 25px; border: 2px solid var(--accent); background: #000; border-radius: 10px;">
+                <p style="color: #888; font-size: 1rem; margin-bottom: 5px;"># Exemplo de verificação via CLI (Linux/PowerShell)</p>
+                <code style="font-size: 1.3rem; color: #98c379;">
+                    Get-FileHash ./ubuntu-24.04.iso -Algorithm SHA256
+                </code>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; border-left: 5px solid var(--gold); text-align: left; max-width: 900px;">
+                <p style="margin: 0; font-size: 1.2rem;">
+                    <strong>Princípio da Segurança:</strong> Se um único bit for alterado na ISO original, o Hash gerado será completamente diferente.
+                </p>
+            </div>
+        </div>
+
+        <blockquote style="margin-top: 4rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+            <p style="font-style: italic; font-size: 1.3rem; color: rgba(255,255,255,0.6);">
+                "A integridade dos dados assegura que a informação não foi modificada de forma não autorizada desde sua criação."
+            </p>
+            <cite style="display: block; text-align: right; color: var(--gold); font-weight: bold;">— Stallings (2012)</cite>
+        </blockquote>
+    </div>
+</section>
+
+<section class="slide" id="mbr-legacy" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background: linear-gradient(180deg, var(--navy) 0%, #001a35 100%);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: left;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h1 style="color: #ff4d4d; font-size: clamp(2rem, 4vw, 3.5rem); margin: 0;">
+                MBR: Master Boot Record
+            </h1>
+            <span class="disciplina-tag" style="background: rgba(255, 77, 77, 0.2); color: #ff4d4d; border: 1px solid #ff4d4d;">Padrão 1983</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+            <div>
+                <p style="font-size: 1.5rem; color: var(--white); font-weight: bold; margin-bottom: 1.5rem;">Características e Limites:</p>
+                <ul style="font-size: 1.3rem; line-height: 2;">
+                    <li>📍 <strong>Localização:</strong> Reside no primeiro setor do disco (Setor 0).</li>
+                    <li>📏 <strong>Capacidade:</strong> Limite máximo de <strong>2.2 Terabytes</strong>.</li>
+                    <li>🧩 <strong>Partições:</strong> Máximo de 4 partições primárias.</li>
+                    <li>⚠️ <strong>Risco:</strong> Se o setor do MBR corromper, o disco inteiro fica inacessível (Ponto Único de Falha).</li>
+                </ul>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.3); padding: 2rem; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; justify-content: center;">
+                <p style="font-size: 1.1rem; line-height: 1.6; opacity: 0.8; font-style: italic;">
+                    "O MBR funciona em conjunto com a BIOS Legacy. Ele contém a Tabela de Partição e o código de inicialização que aponta para o Sistema Operacional."
+                </p>
+                <cite style="display: block; margin-top: 15px; color: var(--gold); font-weight: bold; text-align: right;">— Ref: Stallings (2012)</cite>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="gpt-modern" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background-color: var(--navy);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: center;">
+        
+        <h1 style="color: var(--accent); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            GPT: GUID Partition Table
+        </h1>
+        <p style="color: var(--white); font-size: 1.8rem; font-weight: bold; margin-top: 1rem;">
+            O Parceiro Nativo do UEFI
+        </p>
+
+        <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; text-align: left;">
+            <div style="background: rgba(40, 167, 69, 0.1); padding: 2rem; border-radius: 15px; border-left: 8px solid var(--accent);">
+                <h3 style="color: var(--accent); font-size: 1.6rem; margin-top: 0;">Escalabilidade</h3>
+                <p style="font-size: 1.2rem; line-height: 1.6;">Suporta discos de até <strong>9.4 Zettabytes</strong> e permite até 128 partições primárias nativamente.</p>
+            </div>
+
+            <div style="background: rgba(40, 167, 69, 0.1); padding: 2rem; border-radius: 15px; border-left: 8px solid var(--accent);">
+                <h3 style="color: var(--accent); font-size: 1.6rem; margin-top: 0;">Resiliência (Redundância)</h3>
+                <p style="font-size: 1.2rem; line-height: 1.6;">Armazena cópias da tabela de partição no início <strong>e no fim</strong> do disco. Recuperação automática em caso de erro.</p>
+            </div>
+        </div>
+
+        
+
+        <div style="margin-top: 4rem; padding: 1.5rem; background: rgba(255, 193, 7, 0.1); border: 1px dashed var(--warning); border-radius: 10px; display: inline-block;">
+            <p style="font-size: 1.3rem; color: var(--white); margin: 0;">
+                <strong style="color: var(--warning);">Dica Técnica:</strong> Para instalar sistemas modernos (Windows 11) com <strong>Secure Boot</strong> ativo, o disco <strong>deve</strong> estar em GPT.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="zero-day-threat" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background: radial-gradient(circle at center, #1a0000 0%, var(--navy) 100%);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: left;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h1 style="color: #ff4d4d; font-size: clamp(2rem, 4vw, 3.5rem); margin: 0;">
+                Ameaças de "Dia Zero"
+            </h1>
+            <span class="disciplina-tag" style="background: rgba(255, 77, 77, 0.2); color: #ff4d4d; border: 1px solid #ff4d4d;">Risco Crítico</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+            <div>
+                <p style="font-size: 1.5rem; color: var(--white); font-weight: bold; margin-bottom: 1.5rem;">O que é um 0-Day?</p>
+                <p style="font-size: 1.2rem; line-height: 1.6; opacity: 0.9;">
+                    É uma vulnerabilidade de software que é explorada por atacantes <strong>antes</strong> que o fabricante tenha conhecimento dela ou lance uma correção.
+                </p>
+                
+                <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(255, 193, 7, 0.1); border-left: 5px solid var(--warning); border-radius: 10px;">
+                    <p style="margin: 0; font-size: 1.1rem; color: var(--warning);">
+                        <strong>Por que na instalação?</strong> ISOs são estáticas. Uma mídia de 6 meses atrás está exposta a todas as vulnerabilidades descobertas nesse intervalo.
+                    </p>
+                </div>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.3); padding: 2.5rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+                <blockquote style="margin: 0;">
+                    <p style="font-style: italic; font-size: 1.4rem; color: var(--white); line-height: 1.6;">
+                        "O tempo entre a descoberta de uma vulnerabilidade e a aplicação do patch é a janela de oportunidade mais valiosa para um intruso."
+                    </p>
+                    <cite style="display: block; text-align: right; color: var(--gold); font-weight: bold; margin-top: 15px;">
+                        — Machado & Maia (2013)
+                    </cite>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="hardening-so" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background-color: var(--navy);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: center;">
+        
+        <h1 style="color: var(--accent); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            Hardening Inicial
+        </h1>
+        <p style="color: var(--white); font-size: 1.8rem; font-weight: bold; margin-top: 1rem;">
+            Protocolo de Pós-Instalação
+        </p>
+
+        <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; text-align: left;">
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px; border-top: 5px solid var(--accent);">
+                <h3 style="color: var(--accent); font-size: 1.6rem;">1. Patch Management</h3>
+                <p style="font-size: 1.2rem;">Executar o ciclo completo de atualizações (Update) antes de qualquer outra configuração.</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px; border-top: 5px solid var(--accent);">
+                <h3 style="color: var(--accent); font-size: 1.6rem;">2. Desativação de Serviços</h3>
+                <p style="font-size: 1.2rem;">Encerrar protocolos legados e serviços desnecessários para reduzir a <strong>Superfície de Ataque</strong>.</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px; border-top: 5px solid var(--accent);">
+                <h3 style="color: var(--accent); font-size: 1.6rem;">3. Políticas de Conta</h3>
+                <p style="font-size: 1.2rem;">Renomear contas de administrador, forçar senhas fortes e ativar MFA onde disponível.</p>
+            </div>
+        </div>
+
+        
+
+        <div style="margin-top: 4rem; padding: 1.5rem; background: rgba(40, 167, 69, 0.1); border: 1px dashed var(--accent); border-radius: 10px; display: inline-block;">
+            <p style="font-size: 1.3rem; color: var(--white); margin: 0;">
+                <strong style="color: var(--accent);">Conexão A3:</strong> Um relatório técnico de SO deve listar quais serviços foram desativados para justificar a segurança da arquitetura proposta.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="logs-sistema" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background: radial-gradient(circle at center, #001a35 0%, var(--navy) 100%);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: left;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+            <h1 style="color: var(--warning); font-size: clamp(2rem, 4vw, 3.5rem); margin: 0;">
+                Logs de Eventos
+            </h1>
+            <span class="disciplina-tag">Auditoria & Diagnóstico</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+            <div>
+                <p style="font-size: 1.5rem; color: var(--accent); font-weight: bold; margin-bottom: 1rem;">O que são?</p>
+                <p style="font-size: 1.2rem; line-height: 1.6; opacity: 0.9;">
+                    Registros históricos gerados pelo Kernel, drivers e aplicações. São a primeira fonte de dados para o <strong>Troubleshooting</strong>.
+                </p>
+                
+                <p style="font-size: 1.4rem; color: var(--gold); font-weight: bold; margin-top: 2rem; margin-bottom: 1rem;">Categorias Principais:</p>
+                <ul style="font-size: 1.1rem; line-height: 1.8;">
+                    <li>🔴 <strong>Erro:</strong> Falha crítica (ex: Driver não carregado).</li>
+                    <li>🟡 <strong>Aviso:</strong> Problema potencial (ex: Disco quase cheio).</li>
+                    <li>🔵 <strong>Informação:</strong> Operação bem-sucedida (ex: Serviço iniciado).</li>
+                </ul>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.4); padding: 2rem; border-radius: 15px; border: 1px solid var(--accent);">
+                <p style="color: var(--accent); font-weight: bold; margin-bottom: 1rem;">Visão Proativa:</p>
+                <p style="font-size: 1.1rem; line-height: 1.6;">
+                    Muitas vezes o sistema inicia, mas o log mostra que um recurso (como aceleração de hardware) foi desativado por erro. O log permite a <strong>correção proativa</strong> antes do usuário reclamar.
+                </p>
+                <cite style="display: block; margin-top: 15px; font-size: 0.9rem; opacity: 0.6; text-align: right;">— Ref: Machado & Maia (2013)</cite>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="ntp-security" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem);
+    background-color: var(--navy);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: center;">
+        
+        <h1 style="color: var(--accent); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            O Fator Tempo (NTP)
+        </h1>
+        <p style="color: var(--white); font-size: 1.8rem; font-weight: bold; margin-top: 1rem;">
+            Por que relógios errados quebram a segurança?
+        </p>
+
+        <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; text-align: left;">
+            <div style="background: rgba(255, 77, 77, 0.1); border: 1px solid #ff4d4d; padding: 2.5rem; border-radius: 20px;">
+                <h3 style="color: #ff4d4d; font-size: 1.6rem; margin-top: 0;">O Caos na Auditoria</h3>
+                <p style="font-size: 1.2rem; line-height: 1.6;">
+                    Se um ataque ocorre às 22h e o log registra 15h por fuso horário ou relógio dessincronizado, a <strong>correlação de eventos</strong> com firewalls e outros servidores torna-se impossível.
+                </p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2.5rem; border-radius: 20px; display: flex; flex-direction: column; justify-content: center;">
+                <p style="font-size: 1.3rem; line-height: 1.6; font-style: italic;">
+                    "A evidência digital só tem valor legal e técnico se puder ser situada com precisão em uma linha do tempo confiável."
+                </p>
+                <cite style="display: block; margin-top: 15px; color: var(--gold); font-weight: bold; text-align: right;">— Stallings (2012)</cite>
+            </div>
+        </div>
+
+        <div style="margin-top: 4rem; padding: 1.5rem; border: 2px dashed var(--warning); border-radius: 10px; display: inline-block;">
+            <p style="font-size: 1.3rem; color: var(--white); margin: 0;">
+                <strong style="color: var(--warning);">Insight Lab:</strong> No laboratório, verifique se o serviço de tempo está sincronizado com <code>a.ntp.br</code> antes de iniciar a análise de logs.
+            </p>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="lab-diretrizes-so" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h2 style="color: var(--gold); font-size: clamp(1.2rem, 2.5vw, 1.8rem); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">
+            11. Prática de Laboratório
+        </h2>
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            Instalação Otimizada
+        </h1>
+
+        <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 3rem; text-align: left;">
+            
+            <div style="background: rgba(40, 167, 69, 0.1); border: 1px solid var(--accent); padding: 2rem; border-radius: 15px;">
+                <h3 style="color: var(--accent); font-size: 1.8rem; margin-top: 0;">Configuração de Firmware</h3>
+                <ul style="font-size: 1.3rem; line-height: 1.8; color: var(--white); list-style-type: '➔ ';">
+                    <li>Ativar <strong>Secure Boot</strong> (Modo UEFI).</li>
+                    <li>Habilitar <strong>Virtualização</strong> (VT-x / AMD-V).</li>
+                    <li>Definir a Ordem de Boot (Mídia Oficial Primeiro).</li>
+                    <li>Ativar <strong>TPM 2.0</strong> (Se Windows 11).</li>
+                </ul>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px;">
+                <h3 style="color: var(--gold); font-size: 1.8rem; margin-top: 0;">Estratégia de Disco</h3>
+                <ul style="list-style: none; padding: 0; font-size: 1.3rem; line-height: 1.8;">
+                    <li>🗂️ <strong>Tabela:</strong> Converter disco para <strong>GPT</strong>.</li>
+                    <li>🛡️ <strong>Partição:</strong> Criar partição de Sistema (EFI).</li>
+                    <li>🚀 <strong>Swap/Paging:</strong> Definir tamanho fixo (Otimização).</li>
+                    <li>🧹 <strong>Limpeza:</strong> Remover partições residuais de mídias anteriores.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="lab-checklist-so" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;">
+        
+        <h1 style="color: var(--accent); font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 2rem;">
+            Checklist de Entrega
+        </h1>
+
+        <div style="background: #000; padding: 3rem; border-radius: 20px; border: 2px dashed var(--gold); text-align: left; display: inline-block; width: 100%; max-width: 1000px;">
+            <h3 style="color: var(--gold); font-size: 2rem; margin-top: 0;">Status de Configuração:</h3>
+            <ul style="font-size: 1.6rem; color: #98c379; font-family: 'Courier New', monospace; line-height: 1.5;">
+                <li>[ ] SO instalado e Kernel reconhecendo Hardware.</li>
+                <li>[ ] Drivers críticos atualizados (Chipset/Rede).</li>
+                <li>[ ] Ciclo de Windows Update / Apt Upgrade finalizado.</li>
+                <li>[ ] Relógio sincronizado via NTP (a.ntp.br).</li>
+                <li>[ ] Log de Eventos verificado (Sem Erros Críticos).</li>
+            </ul>
+        </div>
+
+        <div style="margin-top: 4rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+            <div style="background: var(--accent); color: white; padding: 1rem 2rem; border-radius: 50px; font-weight: bold; font-size: 1.2rem;">
+                Duração: 60 minutos
+            </div>
+            <div style="background: var(--warning); color: var(--navy); padding: 1rem 2rem; border-radius: 50px; font-weight: bold; font-size: 1.2rem;">
+                Atividade Prática Avaliativa
+            </div>
+        </div>
+
+        <p style="margin-top: 3rem; font-style: italic; font-size: 1.3rem; color: rgba(255,255,255,0.6); max-width: 900px; margin-left: auto; margin-right: auto;">
+            "A configuração correta do ambiente de laboratório é o que separa um instalador de software de um Analista de Sistemas."
+        </p>
+    </div>
+</section>
+
+<section class="slide" id="projeto-a3-requisitos" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background: radial-gradient(circle at center, #001a35 0%, var(--navy) 100%);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;
+        border: 2px solid var(--accent);">
+        
+        <h2 style="color: var(--gold); font-size: clamp(1.2rem, 2.5vw, 1.8rem); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">
+            Entrega Final
+        </h2>
+        <h1 style="color: var(--white); font-size: clamp(2.5rem, 6vw, 5rem); margin: 0; line-height: 1.1;">
+            Projeto A3
+        </h1>
+        <p style="color: var(--accent); font-size: 1.8rem; margin-top: 1rem; font-weight: bold;">
+            Integração SO & Segurança
+        </p>
+
+        <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; text-align: left;">
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px;">
+                <h3 style="color: var(--gold); font-size: 1.6rem; margin-top: 0;">Camada de Boot</h3>
+                <p style="font-size: 1.2rem; opacity: 0.9;">Documentar a ativação do <strong>Secure Boot</strong> e justificativa do uso de <strong>GPT</strong> para resiliência de dados.</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px;">
+                <h3 style="color: var(--gold); font-size: 1.6rem; margin-top: 0;">Hardening do Kernel</h3>
+                <p style="font-size: 1.2rem; opacity: 0.9;">Listar patches críticos aplicados e serviços desativados para redução da superfície de ataque.</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px;">
+                <h3 style="color: var(--gold); font-size: 1.6rem; margin-top: 0;">Auditoria Temporal</h3>
+                <p style="font-size: 1.2rem; opacity: 0.9;">Configuração de <strong>NTP</strong> e política de retenção de logs para rastreabilidade de incidentes.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="slide" id="fechamento-feedback" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    background: radial-gradient(circle at center, var(--navy) 0%, #000 100%);">
+
+    <div class="content-box" style="max-width: 1400px; width: 100%; text-align: center; border: none; background: transparent;">
+        
+        <div class="disciplina-tag" style="margin-bottom: 2rem;">Sessão Finalizada</div>
+        
+        <h1 style="font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--white); margin-bottom: 1rem; font-weight: 800;">
+            Inicialização Concluída!
+        </h1>
+        
+        <p style="font-size: clamp(1.2rem, 2.5vw, 1.8rem); opacity: 0.9; margin-bottom: 4rem; color: var(--gold);">
+            Como foi a sua experiência com <strong>SO & Firmware</strong> hoje?
+        </p>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+            
+            <button class="btn-engajamento" style="background: var(--accent); min-width: 280px;" 
+                onclick="logInteracao('feedback_aula', 'excelente', 'final_aula', '2026-03-26', 'Sistemas_Computacionais_Seguranca'); alert('Excelente! O Kernel do seu conhecimento foi atualizado.');">
+                Excelente! 🚀
+            </button>
+
+            <button class="btn-engajamento" style="background: var(--warning); color: var(--navy); min-width: 280px;" 
+                onclick="logInteracao('feedback_aula', 'bom', 'final_aula', '2026-03-26', 'Sistemas_Computacionais_Seguranca'); alert('Boa! Desafios técnicos geram resiliência.');">
+                Bom / Desafiador 🧠
+            </button>
+
+            <button class="btn-engajamento" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); min-width: 280px;" 
+                onclick="window.location.href='#agenda-so';">
+                Rever Roteiro 🔄
+            </button>
+        </div>
+
+        <div style="margin-top: clamp(3rem, 8vh, 5rem); display: flex; flex-direction: column; align-items: center;">
+            <div id="qrcode-persistente" style="background: white; padding: 12px; border-radius: 12px; box-shadow: 0 0 20px rgba(255,255,255,0.1);"></div>
+            <p style="margin-top: 1.5rem; font-size: 1rem; font-weight: bold; color: var(--white); letter-spacing: 3px; opacity: 0.8;">
+                LOG DE PRESENÇA FINAL
+            </p>
+        </div>
+
+        <footer style="margin-top: 5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); width: 100%;">
+            <p style="font-size: 1rem; opacity: 0.6;">
+                © 2026 | <strong>Prof. Dr. Lincoln Sposito</strong> | Sistemas Computacionais e Segurança
+            </p>
+        </footer>
+    </div>
+</section>
+
+<section class="slide" id="recapitulacao-so" style="
+    min-height: 100vh; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    padding: clamp(2rem, 5vw, 4rem); 
+    box-sizing: border-box; 
+    background-color: var(--navy);">
+
+    <div class="content-box" style="
+        max-width: 1400px; 
+        width: 100%; 
+        text-align: center;
+        border-top: 4px solid var(--gold);">
+        
+        <h2 style="color: var(--gold); font-size: clamp(1.2rem, 2.5vw, 1.8rem); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 1rem;">
+            Consolidação do Conhecimento
+        </h2>
+        <h1 style="color: var(--warning); font-size: clamp(2.5rem, 5vw, 4.5rem); margin: 0; line-height: 1.1;">
+            Sistemas & Segurança
+        </h1>
+
+        <div style="margin-top: 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; text-align: left;">
+            
+            <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--accent);">
+                <strong style="color: var(--accent); font-size: 1.4rem; display: block; margin-bottom: 0.5rem;">Firmware (UEFI)</strong>
+                <p style="font-size: 1.1rem; margin: 0; opacity: 0.8;">O papel do Secure Boot e GPT na criação de uma raiz de confiança (Root of Trust).</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--accent);">
+                <strong style="color: var(--accent); font-size: 1.4rem; display: block; margin-bottom: 0.5rem;">Arquitetura SO</strong>
+                <p style="font-size: 1.1rem; margin: 0; opacity: 0.8;">A hierarquia Kernel-Shell e o isolamento de processos para estabilidade do sistema.</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--accent);">
+                <strong style="color: var(--accent); font-size: 1.4rem; display: block; margin-bottom: 0.5rem;">Hardening</strong>
+                <p style="font-size: 1.1rem; margin: 0; opacity: 0.8;">Protocolos de pós-instalação e mitigação de ameaças de Dia Zero (0-Day).</p>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--accent);">
+                <strong style="color: var(--accent); font-size: 1.4rem; display: block; margin-bottom: 0.5rem;">Auditoria</strong>
+                <p style="font-size: 1.1rem; margin: 0; opacity: 0.8;">Logs de eventos e a importância do NTP para a correlação forense de dados.</p>
+            </div>
+
+        </div>
+
+        <div style="margin-top: 4rem; padding: 2.5rem; background: rgba(0,0,0,0.3); border-radius: 20px; border: 1px dashed var(--gold);">
+            <h3 style="color: var(--white); font-size: 1.8rem; margin-bottom: 1.5rem;">📚 Guia de Estudos e Práticas</h3>
+            
+            <p style="font-size: 1.2rem; color: rgba(255,255,255,0.7); margin-bottom: 2rem;">
+                Acesse o conteúdo completo, incluindo os exercícios de fixação e gabarito:
+            </p>
+
+            <a href="aula-26-03-2026-sistemas-computacionais-e-segurança-sistemas-operacionais-e-firmware.pdf" 
+               download
+               class="btn-engajamento" 
+               style="text-decoration: none; display: inline-flex; align-items: center; gap: 15px; background: var(--gold); color: var(--navy); font-weight: bold; padding: 1.2rem 2.5rem; border-radius: 50px;">
+               <span style="font-size: 1.5rem;">📥</span> Baixar Aula 26/03 (PDF)
+            </a>
+        </div>
+
+        <p style="margin-top: 3rem; font-size: 1.1rem; opacity: 0.5; letter-spacing: 1px;">
+            "A segurança não é um produto, mas um processo contínuo de configuração." — Ref: Stallings (2012)
+        </p>
+    </div>
+</section>
+
+	
+
+	</div>
+
+    <script>
+        // Sistema de Observer para o efeito "Flutuar" (Slide Ativo)
+        const observerOptions = { threshold: 0.4 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.slide').forEach(slide => {
+            observer.observe(slide);
+        });
+
+        // Navegação Suave por Teclado (Desktop)
+        document.addEventListener('keydown', (e) => {
+            if (window.innerWidth > 1024) { // Apenas Desktop para não conflitar com o touch do celular
+                const slides = document.querySelectorAll('.slide');
+                let current = [...slides].findIndex(s => s.getBoundingClientRect().top >= -50 && s.getBoundingClientRect().top <= 50);
+                
+                if ((e.key === 'ArrowRight' || e.key === 'ArrowDown') && current < slides.length - 1) {
+                    slides[current + 1].scrollIntoView({ behavior: 'smooth' });
+                }
+                if ((e.key === 'ArrowLeft' || e.key === 'ArrowUp') && current > 0) {
+                    slides[current - 1].scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    </script>
+    <script>
+	(function(){
+		if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>
+			{if(!window.chatbase.q){window.chatbase.q=[]}
+			window.chatbase.q.push(arguments)
+		};
+		window.chatbase=new Proxy(window.chatbase,{
+			get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}
+			})
+		}
+		const onLoad=function(){
+			const script=document.createElement("script");
+			script.src="https://www.chatbase.co/embed.min.js";
+			script.id="uFEke3ZP9R3S3o5CFSMyh";
+			script.domain="www.chatbase.co";
+
+			// --- ADIÇÃO PARA PERFORMANCE ---
+			script.async = true; 
+			script.defer = true;
+			// -------------------------------
+			
+			// Dentro da sua função onLoad, antes do appendChild:
+			script.setAttribute('data-priority', 'low');
+			
+			document.body.appendChild(script)
+		};
+		if(document.readyState==="complete"){
+			onLoad()
+		}else{
+			window.addEventListener("load",onLoad)
+		}
+	})();
+</script>
+</body>
+</html>

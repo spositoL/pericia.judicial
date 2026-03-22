@@ -467,6 +467,10 @@
                 renderDashboard(data);
                 return data;
             } catch (error) {
+                document.getElementById('sync-status').textContent = '❌ Sem sincronização';
+                document.getElementById('last-sync').textContent = '--:--';
+                document.getElementById('topPages').innerHTML = '<tr><td colspan="6" class="no-data">Sem dados locais. Rode: node ga4-sync.js</td></tr>';
+                document.getElementById('conversionEventsList').innerHTML = '<div class="no-data">Sem dados locais. Gere ga4-data.json primeiro.</div>';
                 showError(`❌ Erro ao carregar dados: ${error.message}`);
                 return null;
             }
@@ -478,8 +482,13 @@
         function renderDashboard(data) {
             if (!data) return;
 
+            const isEmptySync =
+                (!data.metrics || data.metrics.length === 0) &&
+                (!data.croEvents || data.croEvents.length === 0) &&
+                (!data.conversionEvents || data.conversionEvents.length === 0);
+
             // Atualizar header
-            document.getElementById('sync-status').textContent = '✅ Sincronizado';
+            document.getElementById('sync-status').textContent = isEmptySync ? '⚠️ Sincronizado sem dados' : '✅ Sincronizado';
             document.getElementById('last-sync').textContent = new Date(data.lastSync).toLocaleString('pt-BR');
 
             // Processar métricas
@@ -491,7 +500,11 @@
             renderTopPages(data.conversionRates);
             renderConversionList(data.conversionEvents);
             
-            showSuccess('✅ Dashboard atualizado com sucesso!');
+            if (isEmptySync) {
+                showWarning('⚠️ Sincronização concluída, mas sem dados. Verifique credenciais GA4 e permissões da propriedade.');
+            } else {
+                showSuccess('✅ Dashboard atualizado com sucesso!');
+            }
         }
 
         /**

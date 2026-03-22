@@ -137,9 +137,9 @@ ROADMAP - FASE POR FASE
 TAREFAS:
 ✅ Verificar CRO funcionando (F12 > Console)
 ✅ Validação técnica automática (includes CRO + croConfig + eventos GA4 no código)
-☐ Testar em 2 navegadores (Chrome, Firefox)
-☐ Verificar responsividade mobile
-☐ Confirmar GA4 capturando eventos
+☑ Testar em 2 navegadores (Chrome, Edge) - PARCIAL (exit-intent pendente no Edge)
+☑ Verificar responsividade mobile (emulação Chrome/Edge OK para floating bar)
+☑ Confirmar GA4 capturando eventos (generate_lead validado)
 ☐ Monitorar bounce rate vs baseline
 ☐ Testar cliques em todos 7 elementos
 
@@ -150,11 +150,11 @@ MÉTRICAS PARA COLETAR (baseline):
 ☐ Visitantes únicos semana: _____
 
 VALIDAÇÃO:
-☑ Progress bar atualizando? PARCIAL (código validado; faltando teste manual visual)
-☑ Floating bar aparecendo? PARCIAL (código validado; faltando teste manual visual)
-☑ Exit-intent acionando? PARCIAL (código validado; faltando teste manual visual)
-☐ GA4 capturando events? SIM/NÃO (pendente DebugView)
-☑ Nenhum erro no console? PARCIAL (sem erros relevantes no CRO via validação técnica)
+☑ Progress bar atualizando? PARCIAL (validado em Chrome; pendente confirmação completa no Edge)
+☑ Floating bar aparecendo? SIM (Chrome, Edge e emulação mobile; gatilho ~20s)
+☑ Exit-intent acionando? PARCIAL (Chrome SIM; Edge NÃO reproduziu no teste)
+☑ GA4 capturando events? SIM (generate_lead = 3 no relatório)
+☑ Nenhum erro no console? PARCIAL (sem erros no Chrome durante teste funcional)
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │ SEMANA 2: EXPANSÃO RÁPIDA (28-03 ABRIL 2026)                               │
@@ -364,12 +364,12 @@ CHECKLIST SEMANAL
 ================================================================================
 
 SEMANA 1 (21-27 MAR):
-[ ] Testar CRO em Chrome
-[ ] Testar CRO em Firefox
-[ ] Verificar mobile
-[ ] GA4 capturando?
+[x] Testar CRO em Chrome
+[x] Testar CRO em Edge (exit-intent com pendência)
+[x] Verificar mobile
+[x] GA4 capturando? (generate_lead = 3)
 [ ] Baseline de conversão coletado
-[ ] Nenhum bug no console?
+[x] Nenhum bug no console? (Chrome)
 
 SEMANA 2 (28-03):
 [x] Expandido para 3 páginas novas (feito em 10 páginas)

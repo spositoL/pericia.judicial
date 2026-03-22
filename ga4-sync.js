@@ -18,11 +18,28 @@ const CREDENTIALS_PATH = process.env.GOOGLE_APPLICATION_CREDENTIALS || './ga4-cr
 
 class GA4Sync {
   constructor() {
+    this.credentialsPath = path.resolve(CREDENTIALS_PATH);
     this.client = new BetaAnalyticsDataClient({
-      keyFilename: CREDENTIALS_PATH
+      keyFilename: this.credentialsPath
     });
     this.propertyId = `properties/${GA4_PROPERTY_ID}`;
     this.dataFile = path.join(__dirname, 'ga4-data.json');
+  }
+
+  /**
+   * Validar pré-requisitos antes de sincronizar
+   */
+  validateConfig() {
+    if (!fs.existsSync(this.credentialsPath)) {
+      throw new Error(
+        `Credenciais GA4 não encontradas em: ${this.credentialsPath}\n` +
+        `Crie o arquivo ga4-credentials.json ou defina GOOGLE_APPLICATION_CREDENTIALS.`
+      );
+    }
+
+    if (!GA4_PROPERTY_ID || String(GA4_PROPERTY_ID).trim() === '') {
+      throw new Error('GA4_PROPERTY_ID não definido. Configure no .env ou variável de ambiente.');
+    }
   }
 
   /**
@@ -270,6 +287,8 @@ class GA4Sync {
    */
   async sync() {
     try {
+      this.validateConfig();
+
       const metrics = await this.fetchMetrics();
       const croEvents = await this.fetchCROEvents();
       const conversionEvents = await this.fetchConversionEvents();
@@ -301,7 +320,8 @@ class GA4Sync {
       console.log(`   Última sincronização: ${new Date().toLocaleString('pt-BR')}`);
       
     } catch (error) {
-      console.error('❌ Erro geral na sincronização:', error);
+      console.error('❌ Erro geral na sincronização:');
+      console.error(error.message || error);
       process.exit(1);
     }
   }
