@@ -7,6 +7,12 @@
   </url>
 
   <url>
+    <loc>https://spositol.github.io/pericia.judicial/en/index.html</loc>
+    <lastmod>2026-03-23</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
     <loc>https://spositol.github.io/pericia.judicial/sobre.html</loc>
     <lastmod>2026-02-13</lastmod>
     <priority>0.80</priority>
@@ -142,6 +148,12 @@
 	</url>		
 
   <url>
+    <loc>https://spositol.github.io/pericia.judicial/en/servicos-pericia-judicial.html</loc>
+    <lastmod>2026-03-23</lastmod>
+    <priority>0.50</priority>
+  </url>		
+
+  <url>
 	  <loc>https://spositol.github.io/pericia.judicial/reorganizacao-calculo-financiamento-sistema-sac-price-sacre-pericia-backend.html</loc>
 	  <lastmod>2026-02-18</lastmod>
 	  <priority>0.60</priority>
@@ -223,6 +235,12 @@
       <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/sistemas-distribuidos/index.html</loc>
       <lastmod>2026-03-01</lastmod>
       <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/sistemas-distribuidos/en/index.html</loc>
+      <lastmod>2026-03-23</lastmod>
+      <priority>0.50</priority>
     </url>
 
     <url>
