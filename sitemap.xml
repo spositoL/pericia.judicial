@@ -10,11 +10,6 @@
     <loc>https://spositol.github.io/pericia.judicial/sobre.html</loc>
     <lastmod>2026-02-13</lastmod>
     <priority>0.80</priority>
-  </url>
-
-  <url>
-    <loc>https://spositol.github.io/pericia.judicial/materiais.html</loc>
-    <lastmod>2026-02-13</lastmod>
     <priority>0.70</priority>
   </url>
 
@@ -28,11 +23,6 @@
     <loc>https://spositol.github.io/pericia.judicial/artigo-plano-saude-445.html</loc>	
     <lastmod>2026-02-13</lastmod>
     <priority>0.60</priority>
-  </url>
-
-  <url>
-    <loc>https://spositol.github.io/pericia.judicial/artigo-pericia-financeira.html</loc>	
-    <lastmod>2026-02-13</lastmod>
     <priority>0.60</priority>
   </url>
   
@@ -46,11 +36,6 @@
     <loc>https://spositol.github.io/pericia.judicial/artigo-pericia-cdc-abusividade.html</loc>	
     <lastmod>2026-02-13</lastmod>
     <priority>0.60</priority>
-  </url>
-
-  <url>
-    <loc>https://spositol.github.io/pericia.judicial/artigo-pericia-financeira-revisao-contrato-1988.html</loc>	
-    <lastmod>2026-02-13</lastmod>
     <priority>0.60</priority>
   </url>  
 
@@ -163,7 +148,7 @@
 	</url>	
 
   <url>
-	  <loc>https://spositol.github.io/pericia.judicial/validador-simples-financiamento-2026-dr-lincoln-sposito.html/<loc>	  
+    <loc>https://spositol.github.io/pericia.judicial/validador-simples-financiamento-2026-dr-lincoln-sposito.html</loc>
 	  <lastmod>2026-02-19</lastmod>
 	  <priority>0.60</priority>
 	</url>	
@@ -265,26 +250,8 @@
     </url>
 
     <url>
-      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/sistemas-distribuidos/aula-09-03-2026.html</loc>
-      <lastmod>2026-03-07</lastmod>
-      <priority>0.60</priority>
-    </url>
-
-    <url>
-      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/web-mobile-jogos/aula-11-03-2026.html</loc>
-      <lastmod>2026-03-07</lastmod>
-      <priority>0.60</priority>
-    </url>
-
-    <url>
       <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/computacionais-seguranca/aula-05-03-2026.html</loc>
       <lastmod>2026-03-05</lastmod>
-      <priority>0.60</priority>
-    </url>
-
-    <url>
-      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/computacionais-seguranca/aula-12-03-2026.html</loc>
-      <lastmod>2026-03-07</lastmod>
       <priority>0.60</priority>
     </url>
 
@@ -385,21 +352,9 @@
     </url>
 
     <url>
-      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/computacionais-seguranca/aula-19-03-2026.html</loc>
-      <lastmod>2026-03-16</lastmod>
-      <priority>0.60</priority>
-    </url>
-
-    <url>
       <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/web-mobile-jogos/aula-18-03-2026.html</loc>
       <lastmod>2026-03-16</lastmod>
       <priority>0.60</priority>
-    </url>
-
-    <url>
-      <loc>https://spositol.github.io/index.html</loc>
-      <lastmod>2026-03-18</lastmod>
-      <priority>1.00</priority>
     </url>
 
     <url>
