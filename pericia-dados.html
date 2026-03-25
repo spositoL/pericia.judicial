@@ -417,8 +417,39 @@ const croConfig = {
 	enableFloatingBar: true,
 	enableExitIntent: true,
 	floatingBarDelay: 20000,
-	floatingBarMessage: 'Precisa auditar seus dados?',
-	floatingBarUrgency: 'Resposta técnica rápida'
+	floatingBarMessage: 'Seus dados provam o dano?',
+	floatingBarUrgency: 'Parecer técnico rápido',
+	abTests: {
+		floating_bar_color: {
+			enabled: true,
+			variants: {
+				A: { weight: 50, overrides: { floatingBarButtonBg: '#c5a059', floatingBarButtonHoverBg: '#e6c770', floatingBarButtonTextColor: '#1a2a3a' } },
+				B: { weight: 50, overrides: { floatingBarButtonBg: '#25d366', floatingBarButtonHoverBg: '#1fbd56', floatingBarButtonTextColor: '#ffffff' } }
+			}
+		},
+		floating_bar_urgency: {
+			enabled: true,
+			variants: {
+				A: { weight: 50, overrides: { floatingBarUrgency: '3 de 10 slots disponíveis' } },
+				B: { weight: 50, overrides: { floatingBarUrgency: 'Últimas 24h para agenda de Março' } }
+			}
+		},
+		floating_bar_delay: {
+			enabled: true,
+			variants: {
+				A: { weight: 34, overrides: { floatingBarDelay: 20000 } },
+				B: { weight: 33, overrides: { floatingBarDelay: 8000 } },
+				C: { weight: 33, overrides: { floatingBarDelay: 35000 } }
+			}
+		},
+		exit_intent_copy: {
+			enabled: true,
+			variants: {
+				A: { weight: 50, overrides: { exitIntentTitle: 'Espera! 👋', exitIntentSubtitle: 'Você encontrou a resposta para seu caso? Ou ainda tem dúvidas técnicas?' } },
+				B: { weight: 50, overrides: { exitIntentTitle: 'Ainda tem dúvidas técnicas?', exitIntentSubtitle: 'Antes de sair, valide sua situação com uma análise especializada.' } }
+			}
+		}
+	}
 };
 </script>
 <script src="cro-system.js"></script>

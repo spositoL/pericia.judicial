@@ -255,6 +255,45 @@ node ga4-sync.js
 
 ## 📚 Próximos Passos
 
+---
+
+## 🌐 Etapa 6: Monitoramento Online (Tempo quase real)
+
+Para evitar sincronização manual e manter o dashboard sempre atualizado:
+
+### 6.1 Subir monitor local
+
+```powershell
+npm run monitor
+```
+
+Saída esperada:
+
+```text
+🚀 GA4 Monitor Server rodando em http://localhost:3000
+🔁 Auto-sync configurado para cada 5 min
+✅ Primeira sincronização concluída.
+```
+
+### 6.2 Verificar saúde da API
+
+Abra no navegador:
+
+- `http://localhost:3000/health`
+- `http://localhost:3000/api/ga4/latest`
+
+### 6.3 Sincronização manual via API (opcional)
+
+```powershell
+Invoke-RestMethod -Method POST -Uri http://localhost:3000/api/ga4/sync
+```
+
+### 6.4 Dashboard com auto-refresh
+
+Com o monitor ativo, o `ga4-dashboard.html` atualiza automaticamente a cada 60 segundos.
+
+---
+
 ### Fase 1: ✅ Monitoramento (Pronto)
 - [x] ga4-sync.js sincronizando dados
 - [x] ga4-dashboard.html visualizando dados

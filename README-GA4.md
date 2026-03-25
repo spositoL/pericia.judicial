@@ -47,6 +47,26 @@ Saída esperada:
 2. Clique **Preview** 
 3. Veja os gráficos lindíssimos! 📈
 
+## 🌐 Monitoramento Online (Recomendado)
+
+Para monitoramento contínuo (quase em tempo real), use o servidor local de monitor:
+
+```powershell
+npm run monitor
+```
+
+Isso sobe uma API em `http://localhost:3000` com:
+
+- `GET /health` → status do monitor e última sincronização
+- `GET /api/ga4/latest` → dados consolidados mais recentes
+- `POST /api/ga4/sync` → força sincronização imediata
+
+Com o monitor online ativo, o `ga4-dashboard.html` passa a:
+
+- Buscar dados da API primeiro
+- Atualizar automaticamente a cada 60 segundos
+- Fazer fallback para `ga4-data.json` quando necessário
+
 ## 📁 Arquivos Criados
 
 | Arquivo | Função |

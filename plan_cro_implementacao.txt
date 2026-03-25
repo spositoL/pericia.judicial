@@ -178,18 +178,19 @@ Prioridade 2 (após Semana 2):
 CUSTOMIZAÇÕES POR PÁGINA:
 [Página] = [Floating Bar Message] | [Urgency Text]
 
-index.html = "Você tem um caso de perícia?" | "Consultores disponíveis"
-artigo-lei-14905 = "Lei 14.905 afetou seu contrato?" | "Análise em 2h"
-pericia-dados = "Precisa auditar seus dados?" | "Resposta técnica rápida"
-validador-fin = "Laudo pronto?" | "Validar com especialista"
-servicos = "Qual perícia sua causa precisa?" | "Proposta em 24h"
-artigo-pericia-fin = "Contratos abusivos?" | "Investigamos"
-materiais = "Quer templates de perícia?" | "Acesso imediato"
-casos = "Seu caso é parecido?" | "Mesma decisão possível"
-faq = "Dúvida resolvida?" | "Fale com especialista"
-sobre = "Quer contratar Dr. Lincoln?" | "Agenda disponível"
+index.html = "Seu caso tem indício técnico? Faça triagem com especialista" | "Resposta inicial em até 2h"
+artigo-lei-14905 = "Lei 14.905 impactou seus juros?" | "Diagnóstico técnico em 2h"
+pericia-dados = "Seus dados provam o dano?" | "Parecer técnico rápido"
+validador-fin = "Seu resultado indica abuso financeiro?" | "Validação pericial imediata"
+servicos = "Qual perícia fortalece sua ação?" | "Proposta técnica em 24h"
+artigo-pericia-fin = "Há abuso no contrato? Vamos periciar" | "Análise pericial prioritária"
+materiais = "Quer material forense aplicado ao seu caso?" | "Acesso imediato + orientação"
+casos = "Seu caso lembra estes precedentes?" | "Avaliação de viabilidade em 2h"
+faq = "Ainda ficou dúvida técnica no seu caso?" | "Especialista online agora"
+sobre = "Quer falar direto com Dr. Lincoln?" | "Agenda limitada desta semana"
 
 MÉTRICA: Cada página deve ter >2% taxa de conversão
+Status Copy (23/03/2026): ✅ V2 orientada por intenção aplicada nas 10 páginas
 
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │ SEMANA 3-4: A/B TESTS & OTIMIZAÇÃO (04-17 ABRIL 2026)                      │
@@ -200,25 +201,38 @@ Grupo A (Controle): #c5a059 (dourado - atual)
 Grupo B (Teste): #25d366 (verde WhatsApp)
 Duração: 2 semanas
 Métrica esperada: Ganho +15-20% CTR
-Como rodar: Criar 2 versões do cro-system.js com cores diferentes
+Status Infra (23/03/2026): ✅ PRONTA no cro-system.js
+Como rodar: Ativar croConfig.abTests.floating_bar_color.enabled = true
+QA rápido: usar ?ab_floating_bar_color=A ou ?ab_floating_bar_color=B na URL
+Rollout (23/03/2026): ✅ ATIVO nas 10 páginas prioritárias (50/50)
 
 A/B TEST #2: MENSAGEM DE URGÊNCIA
 Controle: "3 de 10 slots disponíveis"
 Variante: "Últimas 24h para agenda de Março"
 Expectativa: +8% conversão
-Como rodar: Alternar croConfig.floatingBarUrgency
+Status Infra (23/03/2026): ✅ PRONTA no cro-system.js
+Como rodar: Ativar croConfig.abTests.floating_bar_urgency.enabled = true
+QA rápido: usar ?ab_floating_bar_urgency=A ou ?ab_floating_bar_urgency=B na URL
+Rollout (23/03/2026): ✅ ATIVO nas 10 páginas prioritárias (50/50)
 
 A/B TEST #3: DELAY DO FLOATING BAR
 Controle: 20,000ms (20 segundos)
 Variante A: 8,000ms (muito agressivo)
 Variante B: 35,000ms (menos agressivo)
 Métrica: Abandonos vs Conversões
-Como rodar: GA4 > Criar cohorts por delay
+Status Infra (23/03/2026): ✅ PRONTA no cro-system.js
+Como rodar: Ativar croConfig.abTests.floating_bar_delay.enabled = true
+QA rápido: usar ?ab_floating_bar_delay=A, ?ab_floating_bar_delay=B ou ?ab_floating_bar_delay=C na URL
+Rollout (23/03/2026): ✅ ATIVO nas 10 páginas prioritárias (A=20s, B=8s, C=35s)
 
 A/B TEST #4: COPY DO EXIT-INTENT
 Controle: "Espera! Você encontrou a resposta?"
 Variante: "Ainda tem dúvidas técnicas?"
 Expectativa: Afeta taxa de conversão do popup
+Status Infra (23/03/2026): ✅ PRONTA no cro-system.js
+Como rodar: Ativar croConfig.abTests.exit_intent_copy.enabled = true
+QA rápido: usar ?ab_exit_intent_copy=A ou ?ab_exit_intent_copy=B na URL
+Rollout (23/03/2026): ✅ ATIVO nas 10 páginas prioritárias (50/50)
 
 RESULTADO ESPERADO: Winner claro em cada teste
 Aplicar winner em 100% das páginas
@@ -295,6 +309,49 @@ Card 3: "Taxa de Conversão Real"
 ALERTAS CONFIGURAR (GA4):
 Alert 1: generate_lead events > 5/dia (ganho)
 Alert 2: generate_lead events < 2/dia (queda)
+
+PAINEL SEMANAL OPERACIONAL (ATUALIZAR TODA SEGUNDA)
+================================================================================
+
+SEMANA DE REFERÊNCIA: ____ / ____ / ______ até ____ / ____ / ______
+
+KPI PRINCIPAIS (TOP 10 PÁGINAS CRO)
+- Sessões únicas: __________
+- Leads WhatsApp (generate_lead): __________
+- Taxa de conversão geral (%): __________
+- Scroll depth médio (%): __________
+- Tempo médio na página (s): __________
+- Bounce rate (%): __________
+
+PLACAR A/B TEST #1 - COR DO BOTÃO (floating_bar_color)
+- Exposição Variante A: __________
+- Exposição Variante B: __________
+- Leads Variante A: __________
+- Leads Variante B: __________
+- Conversão A (%): __________
+- Conversão B (%): __________
+- Diferença relativa (%): __________
+
+REGRA DE DECISÃO (WINNER)
+1) Só decidir winner com mínimo de 200 exposições por variante.
+2) Variante vencedora precisa ter ganho >= 10% em conversão.
+3) Se diferença for menor que 10%, manter teste por +7 dias.
+4) Ao definir winner: aplicar em 100% das páginas e documentar data.
+
+REGISTRO DE DECISÕES
+- Data: ____ / ____ / ______
+- Teste: ______________________
+- Winner: _____________________
+- Ação aplicada: __________________________________________
+- Responsável: __________________
+
+CHECKLIST OPERACIONAL DA SEMANA
+[ ] Validar 2 URLs com override (?ab_floating_bar_color=A e B)
+[ ] Confirmar evento cro_ab_exposure no GA4 DebugView
+[ ] Comparar CTR do floating bar (A vs B)
+[ ] Comparar generate_lead por variante
+[ ] Registrar conclusão no bloco "REGISTRO DE DECISÕES"
+[ ] Atualizar checklist das fases abaixo
 
 VERIFICAR SEMANALMENTE:
 ☐ CSS cro-system.css carregando (DevTools > Aba Styles)
@@ -376,11 +433,13 @@ SEMANA 2 (28-03):
 [x] Copy customizado por página
 [x] GA4 rastreando 3 páginas (instrumentado em 10 páginas)
 [ ] Métrica de bounce rate comparada
-[ ] 1º A/B test planejado
+[x] 1º A/B test implementado (cores, 50/50 em 10 páginas)
 
 SEMANA 3-4 (04-17):
-[ ] A/B Test #1 rodando (cores)
-[ ] A/B Test #2 rodando (urgency)
+[x] A/B Test #1 rodando (cores)
+[x] A/B Test #2 rodando (urgency)
+[x] A/B Test #3 rodando (delay)
+[x] A/B Test #4 rodando (exit-intent copy)
 [ ] Resultados de ambos?
 [ ] Winner aplicado em 100%
 [ ] Taxa de conversão > 2%?
@@ -401,7 +460,7 @@ Bugs JavaScript: Verificar console (F12 > Console)
 Responsividade: Testar em mobile real (DevTools simulador)
 
 ================================================================================
-VERSÃO: 1.0 - 21/03/2026
+VERSÃO: 1.1 - 23/03/2026
 PRÓXIMA REVIEW: 28/03/2026 (Semana 1)
-STATUS: EXPANSÃO CRO CONCLUÍDA (12 PÁGINAS)
+STATUS: EXPANSÃO CRO + A/B #1 ATIVO (10 PÁGINAS PRIORITÁRIAS)
 ================================================================================

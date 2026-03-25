@@ -455,22 +455,45 @@
 
     <script>
         let chartsInstance = {};
+        const dashboardParams = new URLSearchParams(window.location.search);
+        const GA4_API_BASE = dashboardParams.get('apiBase')
+            || localStorage.getItem('ga4ApiBase')
+            || 'http://localhost:3000';
+
+        if (dashboardParams.get('apiBase')) {
+            localStorage.setItem('ga4ApiBase', dashboardParams.get('apiBase'));
+        }
 
         /**
-         * Carregar dados do arquivo local ga4-data.json
+         * Carregar dados preferencialmente da API local (online), com fallback para arquivo local.
          */
         async function loadData() {
             try {
-                const response = await fetch('ga4-data.json');
-                if (!response.ok) throw new Error('Arquivo ga4-data.json não encontrado');
-                const data = await response.json();
+                let data = null;
+
+                try {
+                    const apiResponse = await fetch(`${GA4_API_BASE}/api/ga4/latest`, { cache: 'no-store' });
+                    if (apiResponse.ok) {
+                        const apiPayload = await apiResponse.json();
+                        data = apiPayload?.data || null;
+                    }
+                } catch {
+                    // segue para fallback local
+                }
+
+                if (!data) {
+                    const localResponse = await fetch('ga4-data.json', { cache: 'no-store' });
+                    if (!localResponse.ok) throw new Error('API local e ga4-data.json indisponíveis');
+                    data = await localResponse.json();
+                }
+
                 renderDashboard(data);
                 return data;
             } catch (error) {
                 document.getElementById('sync-status').textContent = '❌ Sem sincronização';
                 document.getElementById('last-sync').textContent = '--:--';
-                document.getElementById('topPages').innerHTML = '<tr><td colspan="6" class="no-data">Sem dados locais. Rode: node ga4-sync.js</td></tr>';
-                document.getElementById('conversionEventsList').innerHTML = '<div class="no-data">Sem dados locais. Gere ga4-data.json primeiro.</div>';
+                document.getElementById('topPages').innerHTML = '<tr><td colspan="6" class="no-data">Sem dados. Rode: npm run monitor (online) ou node ga4-sync.js (local)</td></tr>';
+                document.getElementById('conversionEventsList').innerHTML = '<div class="no-data">Sem dados de GA4 disponíveis no momento.</div>';
                 showError(`❌ Erro ao carregar dados: ${error.message}`);
                 return null;
             }
@@ -749,20 +772,20 @@
          * Sincronizar manualmente (requer `ga4-sync.js` rodando)
          */
         async function manualSync() {
-            const btn = event.target;
+            const btn = document.querySelector('.sync-button');
             btn.disabled = true;
             btn.textContent = '⏳ Sincronizando...';
 
             try {
-                const response = await fetch('http://localhost:3000/sync', { method: 'POST' });
+                const response = await fetch(`${GA4_API_BASE}/api/ga4/sync`, { method: 'POST' });
                 if (response.ok) {
                     showSuccess('✅ Sincronização iniciada! Atualizando dados...');
-                    setTimeout(() => {
-                        location.reload();
-                    }, 2000);
+                    setTimeout(loadData, 1500);
+                } else {
+                    showWarning('⚠️ Sincronização recusada. Verifique status do monitor.');
                 }
             } catch (error) {
-                showWarning('⚠️ Servidor local não disponível. Use: node ga4-sync.js');
+                showWarning('⚠️ Servidor online não disponível. Use: npm run monitor');
             }
 
             btn.disabled = false;
@@ -788,8 +811,8 @@
         // Carregar dados ao iniciar
         document.addEventListener('DOMContentLoaded', loadData);
 
-        // Auto-refresh a cada 5 minutos
-        setInterval(loadData, 5 * 60 * 1000);
+        // Auto-refresh a cada 60 segundos (monitoramento online)
+        setInterval(loadData, 60 * 1000);
     </script>
 </body>
 </html>

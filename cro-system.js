@@ -20,14 +20,25 @@ class CROSystem {
             floatingBarDelay: 10000, // 10s
             floatingBarMessage: 'Dr. Lincoln responde em até 2h',
             floatingBarUrgency: '3 slots disponíveis esta semana',
+            floatingBarButtonBg: '#c5a059',
+            floatingBarButtonHoverBg: '#e6c770',
+            floatingBarButtonTextColor: '#1a2a3a',
+            exitIntentTitle: 'Espera! 👋',
+            exitIntentSubtitle: 'Você encontrou a resposta para seu caso? Ou ainda tem dúvidas técnicas?',
+            abTests: {},
             ...config
         };
 
+        this.abAssignments = {};
         this.exitIntentTriggered = false;
         this.init();
     }
 
     init() {
+        this.resolveABTests();
+        this.applyABOverrides();
+        this.trackABExposure();
+
         if (this.config.enableProgressBar) this.setupProgressBar();
         if (this.config.enableFloatingBar) this.setupFloatingBar();
         if (this.config.enableExitIntent) this.setupExitIntent();
@@ -76,9 +87,28 @@ class CROSystem {
                 <div style="font-size: 0.85rem; opacity: 0.9;">🎯 ${this.config.floatingBarUrgency}</div>
             </div>
             <div class="cro-floating-bar-urgency">⚡ AGENDE AGORA</div>
-            <button class="cro-floating-bar-btn" onclick="CROSystem.triggerWhatsApp()">Falar Agora</button>
+            <button class="cro-floating-bar-btn" onclick="CROSystem.triggerWhatsApp('floating-bar')">Falar Agora</button>
             <button class="cro-floating-bar-close" onclick="this.parentElement.classList.remove('show')">✕</button>
         `;
+
+        const floatingBarButton = floatingBar.querySelector('.cro-floating-bar-btn');
+        if (floatingBarButton) {
+            const defaultBackground = this.config.floatingBarButtonBg || '#c5a059';
+            const defaultHoverBackground = this.config.floatingBarButtonHoverBg || '#e6c770';
+            const defaultTextColor = this.config.floatingBarButtonTextColor || '#1a2a3a';
+
+            floatingBarButton.style.background = defaultBackground;
+            floatingBarButton.style.color = defaultTextColor;
+
+            floatingBarButton.addEventListener('mouseenter', () => {
+                floatingBarButton.style.background = defaultHoverBackground;
+            });
+
+            floatingBarButton.addEventListener('mouseleave', () => {
+                floatingBarButton.style.background = defaultBackground;
+            });
+        }
+
         document.body.appendChild(floatingBar);
 
         // Mostrar após delay
@@ -93,6 +123,119 @@ class CROSystem {
     }
 
     /**
+     * AB TEST INFRA - Resolve variantes com persistência e override por URL
+     */
+    resolveABTests() {
+        const tests = this.config.abTests;
+        if (!tests || typeof tests !== 'object') return;
+
+        const params = new URLSearchParams(window.location.search);
+
+        Object.entries(tests).forEach(([testName, definition]) => {
+            if (!definition || !definition.enabled || !definition.variants) return;
+
+            const variants = Object.entries(definition.variants);
+            if (!variants.length) return;
+
+            const overrideParam = params.get(`ab_${testName}`) || params.get(`cro_ab_${testName}`);
+            const storageKey = definition.storageKey || `cro_ab_${testName}`;
+            const persistedVariant = localStorage.getItem(storageKey);
+
+            const hasOverride = overrideParam && definition.variants[overrideParam];
+            const hasPersisted = persistedVariant && definition.variants[persistedVariant];
+
+            let selectedVariant = null;
+            let assignmentSource = 'weighted';
+
+            if (hasOverride) {
+                selectedVariant = overrideParam;
+                assignmentSource = 'url_override';
+            } else if (hasPersisted) {
+                selectedVariant = persistedVariant;
+                assignmentSource = 'storage';
+            } else {
+                selectedVariant = this.pickWeightedVariant(variants);
+            }
+
+            localStorage.setItem(storageKey, selectedVariant);
+
+            this.abAssignments[testName] = {
+                variant: selectedVariant,
+                source: assignmentSource
+            };
+
+            document.body.setAttribute(`data-cro-ab-${testName}`, selectedVariant);
+        });
+    }
+
+    /**
+     * AB TEST INFRA - Sorteio ponderado
+     */
+    pickWeightedVariant(variants) {
+        const weighted = variants.map(([name, variantConfig]) => ({
+            name,
+            weight: Number(variantConfig.weight ?? 1)
+        }));
+
+        const totalWeight = weighted.reduce((sum, item) => sum + (item.weight > 0 ? item.weight : 0), 0);
+
+        if (totalWeight <= 0) {
+            return weighted[0].name;
+        }
+
+        let random = Math.random() * totalWeight;
+        for (const item of weighted) {
+            const safeWeight = item.weight > 0 ? item.weight : 0;
+            random -= safeWeight;
+            if (random <= 0) {
+                return item.name;
+            }
+        }
+
+        return weighted[weighted.length - 1].name;
+    }
+
+    /**
+     * AB TEST INFRA - Aplica overrides no config base
+     */
+    applyABOverrides() {
+        const tests = this.config.abTests;
+        if (!tests || typeof tests !== 'object') return;
+
+        Object.entries(this.abAssignments).forEach(([testName, assignment]) => {
+            const definition = tests[testName];
+            const variantConfig = definition?.variants?.[assignment.variant];
+            const overrides = variantConfig?.overrides;
+
+            if (overrides && typeof overrides === 'object') {
+                this.config = {
+                    ...this.config,
+                    ...overrides
+                };
+            }
+        });
+    }
+
+    /**
+     * AB TEST INFRA - Track exposure por teste/variante
+     */
+    trackABExposure() {
+        Object.entries(this.abAssignments).forEach(([testName, assignment]) => {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'cro_ab_exposure', {
+                    event_category: 'CRO AB Test',
+                    event_label: `${testName}:${assignment.variant}`,
+                    test_name: testName,
+                    variant: assignment.variant,
+                    assignment_source: assignment.source,
+                    page_title: document.title,
+                    page_path: window.location.pathname
+                });
+            }
+        });
+    }
+
+    /**
      * 3. EXIT-INTENT POPUP - Aparece quando mouse sai da página
      */
     setupExitIntent() {
@@ -103,9 +246,9 @@ class CROSystem {
         exitPopup.innerHTML = `
             <div class="cro-exit-popup-content">
                 <button class="cro-exit-popup-close" onclick="this.closest('.cro-exit-popup').classList.remove('show')">✕</button>
-                <h2 class="cro-exit-popup-title">Espera! 👋</h2>
+                <h2 class="cro-exit-popup-title">${this.config.exitIntentTitle}</h2>
                 <p class="cro-exit-popup-subtitle">
-                    Você encontrou a resposta para seu caso? Ou ainda tem dúvidas técnicas?
+                    ${this.config.exitIntentSubtitle}
                 </p>
                 <div class="cro-exit-popup-buttons">
                     <button class="cro-exit-btn cro-exit-btn-yes" onclick="CROSystem.triggerWhatsApp('exit-intent')">
@@ -279,7 +422,30 @@ document.addEventListener('DOMContentLoaded', () => {
             enableProgressBar: true,
             enableFloatingBar: true,
             enableExitIntent: true,
-            floatingBarDelay: 15000 // 15 segundos
+            floatingBarDelay: 15000, // 15 segundos
+            abTests: {
+                floating_bar_color: {
+                    enabled: false,
+                    variants: {
+                        A: {
+                            weight: 50,
+                            overrides: {
+                                floatingBarButtonBg: '#c5a059',
+                                floatingBarButtonHoverBg: '#e6c770',
+                                floatingBarButtonTextColor: '#1a2a3a'
+                            }
+                        },
+                        B: {
+                            weight: 50,
+                            overrides: {
+                                floatingBarButtonBg: '#25d366',
+                                floatingBarButtonHoverBg: '#1fbd56',
+                                floatingBarButtonTextColor: '#ffffff'
+                            }
+                        }
+                    }
+                }
+            }
         });
     }
 });

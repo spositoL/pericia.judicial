@@ -5,6 +5,9 @@
   "main": "ga4-sync.js",
   "scripts": {
     "sync": "node ga4-sync.js",
+    "ga4:doctor": "node ga4-doctor.js",
+    "monitor": "node server-ga4.js",
+    "monitor:dev": "node server-ga4.js",
     "test": "echo \"No tests configured\" && exit 0"
   },
   "keywords": [

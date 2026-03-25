@@ -10,36 +10,174 @@
 
 const fs = require('fs');
 const path = require('path');
-const { BetaAnalyticsDataClient } = require('@google-analytics/data');
-require('dotenv').config();
+const crypto = require('crypto');
+
+function loadEnvFile() {
+  const envPath = path.join(__dirname, '.env');
+  if (!fs.existsSync(envPath)) return;
+
+  const content = fs.readFileSync(envPath, 'utf8');
+  content.split(/\r?\n/).forEach((line) => {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) return;
+
+    const separator = trimmed.indexOf('=');
+    if (separator <= 0) return;
+
+    const key = trimmed.slice(0, separator).trim();
+    const value = trimmed.slice(separator + 1).trim();
+
+    if (!process.env[key]) {
+      process.env[key] = value;
+    }
+  });
+}
+
+loadEnvFile();
 
 const GA4_PROPERTY_ID = process.env.GA4_PROPERTY_ID || '471852848'; // SEU PROPERTY ID
 const CREDENTIALS_PATH = process.env.GOOGLE_APPLICATION_CREDENTIALS || './ga4-credentials.json';
+const INLINE_CREDENTIALS = process.env.GA4_CREDENTIALS_JSON || process.env.GOOGLE_CREDENTIALS_JSON || '';
 
 class GA4Sync {
   constructor() {
     this.credentialsPath = path.resolve(CREDENTIALS_PATH);
-    this.client = new BetaAnalyticsDataClient({
-      keyFilename: this.credentialsPath
-    });
-    this.propertyId = `properties/${GA4_PROPERTY_ID}`;
+    this.propertyId = String(GA4_PROPERTY_ID).trim();
     this.dataFile = path.join(__dirname, 'ga4-data.json');
+    this.credentials = null;
   }
 
   /**
    * Validar pré-requisitos antes de sincronizar
    */
   validateConfig() {
-    if (!fs.existsSync(this.credentialsPath)) {
-      throw new Error(
-        `Credenciais GA4 não encontradas em: ${this.credentialsPath}\n` +
-        `Crie o arquivo ga4-credentials.json ou defina GOOGLE_APPLICATION_CREDENTIALS.`
-      );
-    }
-
     if (!GA4_PROPERTY_ID || String(GA4_PROPERTY_ID).trim() === '') {
       throw new Error('GA4_PROPERTY_ID não definido. Configure no .env ou variável de ambiente.');
     }
+
+    let parsed = null;
+
+    if (INLINE_CREDENTIALS && String(INLINE_CREDENTIALS).trim() !== '') {
+      parsed = this.parseInlineCredentials(INLINE_CREDENTIALS);
+    } else {
+      if (!fs.existsSync(this.credentialsPath)) {
+        throw new Error(
+          `Credenciais GA4 não encontradas em: ${this.credentialsPath}\n` +
+          `Crie o arquivo ga4-credentials.json, ou defina GOOGLE_APPLICATION_CREDENTIALS, ou GA4_CREDENTIALS_JSON.`
+        );
+      }
+
+      const raw = fs.readFileSync(this.credentialsPath, 'utf8');
+      parsed = JSON.parse(raw);
+    }
+
+    if (!parsed.client_email || !parsed.private_key) {
+      throw new Error('Credenciais inválidas: client_email/private_key ausentes.');
+    }
+
+    this.credentials = parsed;
+  }
+
+  parseInlineCredentials(value) {
+    const input = String(value || '').trim();
+    if (!input) {
+      throw new Error('GA4_CREDENTIALS_JSON está vazio.');
+    }
+
+    const attempts = [
+      () => JSON.parse(input.replace(/\\n/g, '\n')),
+      () => JSON.parse(Buffer.from(input, 'base64').toString('utf8'))
+    ];
+
+    for (const attempt of attempts) {
+      try {
+        return attempt();
+      } catch {
+        // tenta próximo formato
+      }
+    }
+
+    throw new Error('Não foi possível parsear GA4_CREDENTIALS_JSON (JSON ou base64 JSON).');
+  }
+
+  base64Url(input) {
+    const value = Buffer.isBuffer(input)
+      ? input.toString('base64')
+      : Buffer.from(input).toString('base64');
+
+    return value.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+  }
+
+  createSignedJwt() {
+    const now = Math.floor(Date.now() / 1000);
+    const header = { alg: 'RS256', typ: 'JWT' };
+    const payload = {
+      iss: this.credentials.client_email,
+      scope: 'https://www.googleapis.com/auth/analytics.readonly',
+      aud: this.credentials.token_uri || 'https://oauth2.googleapis.com/token',
+      exp: now + 3600,
+      iat: now - 60
+    };
+
+    const encodedHeader = this.base64Url(JSON.stringify(header));
+    const encodedPayload = this.base64Url(JSON.stringify(payload));
+    const unsignedToken = `${encodedHeader}.${encodedPayload}`;
+
+    const signer = crypto.createSign('RSA-SHA256');
+    signer.update(unsignedToken);
+    signer.end();
+
+    const signature = signer.sign(this.credentials.private_key);
+    return `${unsignedToken}.${this.base64Url(signature)}`;
+  }
+
+  async getAccessToken() {
+    const assertion = this.createSignedJwt();
+    const tokenUrl = this.credentials.token_uri || 'https://oauth2.googleapis.com/token';
+
+    const response = await fetch(tokenUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+        assertion
+      }).toString()
+    });
+
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`Falha ao obter token OAuth (${response.status}): ${text}`);
+    }
+
+    const json = await response.json();
+    if (!json.access_token) {
+      throw new Error('Resposta OAuth sem access_token.');
+    }
+
+    return json.access_token;
+  }
+
+  async runReport(request) {
+    const token = await this.getAccessToken();
+    const endpoint = `https://analyticsdata.googleapis.com/v1beta/properties/${this.propertyId}:runReport`;
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(request)
+    });
+
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`Falha runReport (${response.status}): ${text}`);
+    }
+
+    return response.json();
   }
 
   /**
@@ -50,7 +188,6 @@ class GA4Sync {
       console.log('🔄 Sincronizando dados do GA4...');
       
       const request = {
-        property: this.propertyId,
         dateRanges: [
           {
             startDate: this.getDateString(7),
@@ -85,11 +222,11 @@ class GA4Sync {
         limit: 100000
       };
 
-      const [response] = await this.client.runReport(request);
+      const response = await this.runReport(request);
       return this.parseResponse(response);
     } catch (error) {
       console.error('❌ Erro ao sincronizar GA4:', error.message);
-      return null;
+      throw error;
     }
   }
 
@@ -101,7 +238,6 @@ class GA4Sync {
       console.log('🎯 Sincronizando eventos CRO...');
       
       const request = {
-        property: this.propertyId,
         dateRanges: [
           {
             startDate: this.getDateString(7),
@@ -138,11 +274,11 @@ class GA4Sync {
         }
       };
 
-      const [response] = await this.client.runReport(request);
+      const response = await this.runReport(request);
       return this.parseResponse(response);
     } catch (error) {
       console.error('❌ Erro ao buscar eventos CRO:', error.message);
-      return null;
+      throw error;
     }
   }
 
@@ -154,7 +290,6 @@ class GA4Sync {
       console.log('💰 Sincronizando eventos de conversão...');
       
       const request = {
-        property: this.propertyId,
         dateRanges: [
           {
             startDate: this.getDateString(7),
@@ -188,11 +323,11 @@ class GA4Sync {
         }
       };
 
-      const [response] = await this.client.runReport(request);
+      const response = await this.runReport(request);
       return this.parseResponse(response);
     } catch (error) {
       console.error('❌ Erro ao buscar eventos de conversão:', error.message);
-      return null;
+      throw error;
     }
   }
 
@@ -322,7 +457,7 @@ class GA4Sync {
     } catch (error) {
       console.error('❌ Erro geral na sincronização:');
       console.error(error.message || error);
-      process.exit(1);
+      throw error;
     }
   }
 }
