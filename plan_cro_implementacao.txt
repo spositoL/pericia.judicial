@@ -144,10 +144,10 @@ TAREFAS:
 ☐ Testar cliques em todos 7 elementos
 
 MÉTRICAS PARA COLETAR (baseline):
-☐ Taxa de conversão pré-CRO: ____%
-☐ Tempo médio na página: _____s
+☑ Taxa de conversão pré-CRO: 0,00% (generate_lead=0 / usuários ativos=83)
+☑ Tempo médio na página: 221,95s (baseline 14-20/03/2026)
 ☑ Bounce rate: 51,25% (baseline 14-20/03/2026)
-☐ Visitantes únicos semana: _____
+☑ Visitantes únicos semana: 83 (baseline 14-20/03/2026)
 
 VALIDAÇÃO:
 ☑ Progress bar atualizando? PARCIAL (validado em Chrome; pendente confirmação completa no Edge)
@@ -313,17 +313,18 @@ Alert 2: generate_lead events < 2/dia (queda)
 PAINEL SEMANAL OPERACIONAL (ATUALIZAR TODA SEGUNDA)
 ================================================================================
 
-SEMANA DE REFERÊNCIA: ____ / ____ / ______ até ____ / ____ / ______
+SEMANA DE REFERÊNCIA: 14 / 03 / 2026 até 20 / 03 / 2026
 
 KPI PRINCIPAIS (TOP 10 PÁGINAS CRO)
-- Sessões únicas: __________
-- Leads WhatsApp (generate_lead): __________
-- Taxa de conversão geral (%): __________
-- Scroll depth médio (%): __________
-- Tempo médio na página (s): __________
-- Bounce rate (%): __________
+- Sessões únicas: 160
+- Leads WhatsApp (generate_lead): 0
+- Taxa de conversão geral (%): 0,00%
+- Scroll depth médio (%): N/D no agregado atual (captura por evento ativa)
+- Tempo médio na página (s): 221,95
+- Bounce rate (%): 51,25
 
 PLACAR A/B TEST #1 - COR DO BOTÃO (floating_bar_color)
+- Snapshot 28/03: Exposições A/B totais=48 | Leads A/B totais=0 (quebra por variante ainda inconsistente: "(not set)/unknown")
 - Exposição Variante A: __________
 - Exposição Variante B: __________
 - Leads Variante A: __________
@@ -339,17 +340,20 @@ REGRA DE DECISÃO (WINNER)
 4) Ao definir winner: aplicar em 100% das páginas e documentar data.
 
 REGISTRO DE DECISÕES
-- Data: ____ / ____ / ______
-- Teste: ______________________
-- Winner: _____________________
-- Ação aplicada: __________________________________________
-- Responsável: __________________
+- Data: 28 / 03 / 2026
+- Teste: A/B CRO (cores, urgency, delay, exit-intent copy)
+- Winner: NÃO DEFINIDO (amostra insuficiente)
+- Ação aplicada: manter teste por +7 dias; coletar mínimo de 200 exposições por variante; validar preenchimento de test_name/variant (evitar "(not set)"); manter rotina `npm run ga4:ab-report`
+- Responsável: Lincoln
+- Próxima reavaliação: 04 / 04 / 2026
 
 CHECKLIST OPERACIONAL DA SEMANA
+[x] Atualizar Painel Semanal com números reais do GA4
 [ ] Validar 2 URLs com override (?ab_floating_bar_color=A e B)
-[ ] Confirmar evento cro_ab_exposure no GA4 DebugView
+☑ Confirmar evento cro_ab_exposure no GA4 DebugView (evento ativo)
 [ ] Comparar CTR do floating bar (A vs B)
-[ ] Comparar generate_lead por variante
+☑ Configurar dimensões GA4: test_name, variant, lead_source (criadas; monitorar propagação)
+[ ] Comparar generate_lead por variante (via `npm run ga4:ab-report`)
 [ ] Registrar conclusão no bloco "REGISTRO DE DECISÕES"
 [ ] Atualizar checklist das fases abaixo
 
@@ -425,7 +429,7 @@ SEMANA 1 (21-27 MAR):
 [x] Testar CRO em Edge (exit-intent com pendência)
 [x] Verificar mobile
 [x] GA4 capturando? (generate_lead = 3)
-[ ] Baseline de conversão coletado
+[x] Baseline de conversão coletado (0,00% no período 14-20/03)
 [x] Nenhum bug no console? (Chrome)
 
 SEMANA 2 (28-03):
@@ -440,7 +444,7 @@ SEMANA 3-4 (04-17):
 [x] A/B Test #2 rodando (urgency)
 [x] A/B Test #3 rodando (delay)
 [x] A/B Test #4 rodando (exit-intent copy)
-[ ] Resultados de ambos?
+[ ] Resultados de ambos? (28/03: 48 exposições totais; abaixo do mínimo e com parte dos dados em "(not set)")
 [ ] Winner aplicado em 100%
 [ ] Taxa de conversão > 2%?
 
@@ -460,7 +464,7 @@ Bugs JavaScript: Verificar console (F12 > Console)
 Responsividade: Testar em mobile real (DevTools simulador)
 
 ================================================================================
-VERSÃO: 1.1 - 23/03/2026
-PRÓXIMA REVIEW: 28/03/2026 (Semana 1)
-STATUS: EXPANSÃO CRO + A/B #1 ATIVO (10 PÁGINAS PRIORITÁRIAS)
+VERSÃO: 1.2 - 28/03/2026
+PRÓXIMA REVIEW: 04/04/2026 (fechamento Semana 3-4)
+STATUS: BASELINE GA4 CONSOLIDADO | A/B EM COLETA (SEM WINNER)
 ================================================================================

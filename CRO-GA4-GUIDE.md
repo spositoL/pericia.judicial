@@ -127,6 +127,33 @@ Condição: generate_lead events < 2 (dia)
 Aviso: Verificar se CRO system está ativo
 ```
 
+### 4.1 CONFIGURAR DIMENSÕES PARA A/B (OBRIGATÓRIO PARA WINNER)
+
+No GA4 (Admin > Definições personalizadas > Criar dimensão personalizada):
+
+1. Dimensão: `test_name`
+  - Escopo: Evento
+  - Parâmetro do evento: `test_name`
+
+2. Dimensão: `variant`
+  - Escopo: Evento
+  - Parâmetro do evento: `variant`
+
+3. Dimensão: `lead_source`
+  - Escopo: Evento
+  - Parâmetro do evento: `lead_source`
+
+Após criar, aguarde propagação (até 24h) e execute:
+
+```powershell
+npm run ga4:ab-report
+```
+
+Esse comando gera `ga4-ab-report.json` com:
+- exposição por teste/variante (`cro_ab_exposure`)
+- leads por teste/variante (`cro_ab_generate_lead`)
+- decisão automática com regra do plano (200 exposições por variante e lift mínimo de 10%)
+
 ---
 
 ### 5. RELATÓRIO SEMANAL (Copy/Cola no Google Sheets)

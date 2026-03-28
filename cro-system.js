@@ -343,6 +343,7 @@ class CROSystem {
 
         const message = encodeURIComponent(messages[source] || messages['default']);
         const whatsappURL = `https://wa.me/5511914612603?text=${message}`;
+        const abContext = CROSystem.getABEventParams();
         
         window.open(whatsappURL, '_blank', 'rel=noopener noreferrer');
 
@@ -353,9 +354,47 @@ class CROSystem {
                 'event_label': 'CRO System - ' + source,
                 'method': 'WhatsApp',
                 'value': 1.0,
-                'currency': 'BRL'
+                'currency': 'BRL',
+                ...abContext
+            });
+
+            // Emite uma conversão por teste/variante para calcular CR por variante.
+            Object.entries(CROSystem.getABAssignments()).forEach(([testName, variant]) => {
+                gtag('event', 'cro_ab_generate_lead', {
+                    event_category: 'CRO AB Test',
+                    event_label: `${testName}:${variant}`,
+                    test_name: testName,
+                    variant,
+                    lead_source: source,
+                    page_title: document.title,
+                    page_path: window.location.pathname
+                });
             });
         }
+    }
+
+    static getABAssignments() {
+        const assignments = window.CROSystem?.abAssignments || {};
+        const map = {};
+
+        Object.entries(assignments).forEach(([testName, assignment]) => {
+            if (assignment?.variant) {
+                map[testName] = assignment.variant;
+            }
+        });
+
+        return map;
+    }
+
+    static getABEventParams() {
+        const assignments = CROSystem.getABAssignments();
+
+        return {
+            ab_floating_bar_color: assignments.floating_bar_color || 'NA',
+            ab_floating_bar_urgency: assignments.floating_bar_urgency || 'NA',
+            ab_floating_bar_delay: assignments.floating_bar_delay || 'NA',
+            ab_exit_intent_copy: assignments.exit_intent_copy || 'NA'
+        };
     }
 
     /**
@@ -370,7 +409,8 @@ class CROSystem {
                     gtag('event', 'cro_interaction', {
                         'event_category': 'CRO System',
                         'event_label': elementClass,
-                        'interaction_type': 'click'
+                        'interaction_type': 'click',
+                        ...CROSystem.getABEventParams()
                     });
                 }
             }
