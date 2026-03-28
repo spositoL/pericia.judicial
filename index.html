@@ -776,6 +776,7 @@
 						<option value="Assédio Digital">Assédio Digital</option>
 						<option value="Saúde Mental">Saúde Mental</option>						
 						<option value="Resolução 4966">Resolução 4966</option>						
+						<option value="Pericia Judicial">Perícia Judicial</option>						
 						<option value="Outros">Outras Demandas</option>
                     </select>
                 </div>
@@ -1251,6 +1252,29 @@ window.addEventListener('load', function() {
 		// 3. Mensagem personalizada focada no Nexo Causal entre Dados e Adoecimento
 		if (campoMensagem) {
 			campoMensagem.value = "Dr. Lincoln, li seu artigo sobre o impacto do assédio bancário na saúde mental. Preciso de uma perícia de dados que materialize o nexo causal entre o cerco dos discadores automáticos e o meu quadro clínico (ansiedade/depressão). Gostaria de uma análise técnica dos logs para fundamentar o dano moral.";
+		}
+		
+		// 4. Foco automático no campo nome para conversão imediata (Pilar de Conversão do Roteiro 7.0)
+		if (campoNome) {
+			setTimeout(() => { campoNome.focus(); }, 600);
+		}
+	}
+	else if (tema === 'ResponsabilidadeSolidaria') {
+		// 1. Decodifica os parâmetros da URL para tratar acentos e espaços
+		const areaDecodificada = areaParam ? decodeURIComponent(areaParam) : "Pericia Judicial";
+		const assuntoDecodificado = assuntoParam ? decodeURIComponent(assuntoParam) : "Prova Tecnica:Nexo Causal Banco Assessoria";
+
+		// 2. Preenche a Área e o Assunto nos campos do formulário (Pilar de Autoridade)
+		if (campoArea) {
+			campoArea.value = areaDecodificada;
+		}
+		if (campoAssunto) {
+			campoAssunto.value = assuntoDecodificado;
+		}
+		
+		// 3. Mensagem personalizada focada no Nexo Causal entre Dados e Adoecimento
+		if (campoMensagem) {
+			campoMensagem.value = "Dr. Lincoln, li seu artigo sobre a Responsabilidade Solidária do Banco. Preciso de uma perícia de dados que materialize o nexo técnico entre a instituição e o assédio da assessoria. O objetivo é desconstruir a tese de 'culpa de terceiro' e fundamentar o nexo causal sistêmico para o dano moral.";
 		}
 		
 		// 4. Foco automático no campo nome para conversão imediata (Pilar de Conversão do Roteiro 7.0)
