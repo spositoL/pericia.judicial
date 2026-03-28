@@ -124,6 +124,22 @@ node ga4-sync.js
 
 Dashboard vai ler `ga4-data.json` e mostrar dados atualizados.
 
+### Comparar Bounce Rate vs Baseline
+
+Para medir o item do plano de CRO com comparacao entre periodos:
+
+```powershell
+npm run ga4:bounce
+```
+
+Opcionalmente, passe janelas personalizadas:
+
+```powershell
+node ga4-bounce-baseline.js --baselineStart=20260314 --baselineEnd=20260320 --currentStart=20260321 --currentEnd=20260327
+```
+
+O comando gera resumo no terminal e salva `ga4-bounce-baseline-report.json`.
+
 ## 🔧 Configuração
 
 ### Variáveis (.env)

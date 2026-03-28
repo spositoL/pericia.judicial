@@ -214,9 +214,6 @@ class GA4Sync {
           },
           {
             name: 'averageSessionDuration',
-          },
-          {
-            name: 'conversionRate',
           }
         ],
         limit: 100000
@@ -247,9 +244,6 @@ class GA4Sync {
         dimensions: [
           {
             name: 'eventName',
-          },
-          {
-            name: 'eventLabel',
           },
           {
             name: 'date',
@@ -299,9 +293,6 @@ class GA4Sync {
         dimensions: [
           {
             name: 'pagePath',
-          },
-          {
-            name: 'eventLabel',
           },
           {
             name: 'date',
@@ -409,12 +400,12 @@ class GA4Sync {
   }
 
   /**
-   * Formatar data para YYYYMMDD
+   * Formatar data para YYYY-MM-DD
    */
   getDateString(daysAgo) {
     const date = new Date();
     date.setDate(date.getDate() - daysAgo);
-    return date.toISOString().split('T')[0].replace(/-/g, '');
+    return date.toISOString().split('T')[0];
   }
 
   /**

@@ -544,7 +544,8 @@
                 if (row.metricValues && row.metricValues.length >= 4) {
                     totalUsers += parseInt(row.metricValues[0].value) || 0;
                     totalViews += parseInt(row.metricValues[1].value) || 0;
-                    totalBounce += parseFloat(row.metricValues[2].value) || 0;
+                    const rawBounce = parseFloat(row.metricValues[2].value) || 0;
+                    totalBounce += rawBounce <= 1 ? rawBounce * 100 : rawBounce;
                     totalDuration += parseFloat(row.metricValues[3].value) || 0;
                     count++;
                 }
@@ -570,12 +571,13 @@
             let exitPopups = 0;
 
             croEvents.forEach(row => {
-                const eventLabel = row.dimensionValues[1]?.value || '';
+                const eventName = (row.dimensionValues[0]?.value || '').toLowerCase();
+                const secondaryValue = (row.dimensionValues[1]?.value || '').toLowerCase();
                 const count = parseInt(row.metricValues[0].value) || 0;
                 
                 totalEvents += count;
-                if (eventLabel.includes('whatsapp')) whatsappClicks += count;
-                if (eventLabel.includes('exit-intent')) exitPopups += count;
+                if (eventName.includes('generate_lead') || secondaryValue.includes('whatsapp')) whatsappClicks += count;
+                if (eventName.includes('exit_intent') || secondaryValue.includes('exit-intent')) exitPopups += count;
             });
 
             document.getElementById('total-cro-events').textContent = totalEvents.toLocaleString('pt-BR');
@@ -743,12 +745,10 @@
             const grouped = {};
             conversions.forEach(row => {
                 const page = row.dimensionValues[0].value;
-                const date = row.dimensionValues[2].value;
                 const count = parseInt(row.metricValues[0].value) || 0;
 
                 if (!grouped[page]) grouped[page] = { total: 0, dates: [] };
                 grouped[page].total += count;
-                grouped[page].dates.push({ date, count });
             });
 
             const html = Object.entries(grouped)
