@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora de Financiamento Judicial | Dr. Lincoln Sposito</title>
+        <meta name="description" content="Simulador de amortizacao pericial para triagem de contratos em SAC, Price e SACRE com base tecnica para revisional.">
+        <link rel="canonical" href="https://spositol.github.io/pericia.judicial/teste.html" />
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://spositol.github.io/pericia.judicial/teste.html">
+        <meta property="og:title" content="Simulador de Amortizacao Pericial | Dr. Lincoln Sposito">
+        <meta property="og:description" content="Valide rapidamente a consistencia tecnica do contrato e gere base para laudo preliminar.">
+        <meta property="og:image" content="https://spositol.github.io/pericia.judicial/img/perito-judicial-simulador-financeiro.webp">
+
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Simulador de Amortizacao Pericial">
+        <meta name="twitter:description" content="Ferramenta de triagem tecnica para pericia em financiamento.">
+        <meta name="twitter:image" content="https://spositol.github.io/pericia.judicial/img/perito-judicial-simulador-financeiro.webp">
+
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-5F1FGJ25TK');
+        </script>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
@@ -27,6 +48,8 @@
 
     <main class="container" style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
         <h1 style="font-family: 'Playfair Display'; color: #1a2a3a;">Simulador de Amortização Pericial</h1>
+        <p style="color: #566; margin-top: -10px; margin-bottom: 20px;">Para orientacao rapida, fale com especialista antes de protocolar a inicial.</p>
+        <p><a id="btn-teste-whatsapp-topo" href="https://wa.me/5511914612603?text=Ola%20Dr.%20Lincoln,%20quero%20orientacao%20sobre%20os%20resultados%20do%20simulador%20de%20amortizacao." class="btn-primary" style="display: inline-block; padding: 10px 14px; margin-bottom: 20px; text-decoration: none;">Falar no WhatsApp antes do calculo</a></p>
         
         <div class="card-contato">
             <h3 style="color: #c5a059; margin-top: 0;">Dados do Interessado</h3>
@@ -91,7 +114,7 @@
                 </select>
             </div>
             
-            <button onclick="processarCalculo()" class="btn-primary" style="width: 100%; padding: 15px; background: #1a2a3a; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
+            <button id="btn-teste-calcular" onclick="processarCalculo()" class="btn-primary" style="width: 100%; padding: 15px; background: #1a2a3a; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
                 CALCULAR E GERAR LAUDO
             </button>
         </div>
@@ -170,6 +193,38 @@
                 </div>`;
             area.scrollIntoView({ behavior: 'smooth' });
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var btnTesteTopo = document.getElementById('btn-teste-whatsapp-topo');
+            if (btnTesteTopo) {
+                btnTesteTopo.addEventListener('click', function() {
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'generate_lead', {
+                            'event_category': 'Contato',
+                            'event_label': 'Teste Simulador - WhatsApp Topo',
+                            'method': 'WhatsApp',
+                            'value': 1.0,
+                            'currency': 'BRL'
+                        });
+                    }
+                });
+            }
+
+            var btnTesteCalcular = document.getElementById('btn-teste-calcular');
+            if (btnTesteCalcular) {
+                btnTesteCalcular.addEventListener('click', function() {
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'generate_lead', {
+                            'event_category': 'Conversao Simulador',
+                            'event_label': 'Teste Simulador - Calcular',
+                            'method': 'Simulador',
+                            'value': 1.0,
+                            'currency': 'BRL'
+                        });
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>

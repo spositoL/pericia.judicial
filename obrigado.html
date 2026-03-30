@@ -80,13 +80,72 @@
         <p>Obrigado pelo contato. Uma janela do <strong>WhatsApp</strong> deve ter sido aberta para iniciarmos seu atendimento.</p>
         <p style="color: #666; font-size: 0.9rem;">Caso a janela não tenha aberto, verifique se o seu navegador não bloqueou o pop-up.</p>
         
-        <a href="index.html" class="btn-home">Voltar para o Início</a>
+      <a id="btn-obrigado-home" href="index.html" class="btn-home">Voltar para o Início</a>
+      <a id="btn-obrigado-materiais" href="materiais.html" class="btn-home" style="margin-left: 10px;">Acessar Materiais Técnicos</a>
+      <div style="margin-top: 18px;">
+        <a id="btn-obrigado-whatsapp" href="https://wa.me/5511914612603?text=Ol%C3%A1%20Dr.%20Lincoln,%20o%20WhatsApp%20n%C3%A3o%20abriu%20automaticamente%20e%20quero%20continuar%20o%20atendimento." style="color: #1a2a3a; font-weight: 700;">Nao abriu? Clique aqui para falar no WhatsApp</a>
+      </div>
+
+      <div style="margin-top: 26px; text-align: left; border-top: 1px solid #e7edf2; padding-top: 18px;">
+        <h2 style="font-family: 'Playfair Display', serif; color: #1a2a3a; font-size: 1.2rem; margin-top: 0;">Próximos passos</h2>
+        <ul style="margin: 0 0 10px; color: #445; line-height: 1.7;">
+          <li>Revisar a metodologia em <a href="pericia-dados.html">Perícia de Dados</a>.</li>
+          <li>Baixar materiais de suporte em <a href="materiais.html">Materiais</a>.</li>
+          <li>Consultar dúvidas objetivas no <a href="faq.html">FAQ Técnico</a>.</li>
+        </ul>
+        <p style="margin: 0; color: #445;"><strong>FAQ:</strong> Se ainda restar dúvida sobre prova técnica, clique no WhatsApp e envie a fase processual do caso.</p>
+      </div>
     </div>
 
 <footer>
     <p>&copy; 2026 Dr. Lincoln Sposito | Perícia Judicial e Assistência Técnica. </p>
 	<p>Todos os direitos reservados.</p>
 </footer>	
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var btnObrigadoHome = document.getElementById('btn-obrigado-home');
+  if (btnObrigadoHome) {
+    btnObrigadoHome.addEventListener('click', function() {
+      if (typeof gtag === 'function') {
+        gtag('event', 'select_content', {
+          'event_category': 'Navegacao',
+          'event_label': 'Obrigado - Home',
+          'content_type': 'post_conversion'
+        });
+      }
+    });
+  }
+
+  var btnObrigadoMateriais = document.getElementById('btn-obrigado-materiais');
+  if (btnObrigadoMateriais) {
+    btnObrigadoMateriais.addEventListener('click', function() {
+      if (typeof gtag === 'function') {
+        gtag('event', 'file_download', {
+          'event_category': 'Materiais',
+          'event_label': 'Obrigado - Materiais Tecnicos',
+          'file_name': 'materiais.html'
+        });
+      }
+    });
+  }
+
+  var btnObrigadoWhatsapp = document.getElementById('btn-obrigado-whatsapp');
+  if (btnObrigadoWhatsapp) {
+    btnObrigadoWhatsapp.addEventListener('click', function() {
+      if (typeof gtag === 'function') {
+        gtag('event', 'generate_lead', {
+          'event_category': 'Contato',
+          'event_label': 'Obrigado - Reabrir WhatsApp',
+          'method': 'WhatsApp',
+          'value': 1.0,
+          'currency': 'BRL'
+        });
+      }
+    });
+  }
+});
+</script>
 
 </body>
 </html>

@@ -4,6 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard GA4 | CRO System Monitor</title>
+        <meta name="description" content="Painel operacional de monitoramento GA4 para performance de paginas, conversao e saude do funil CRO.">
+        <link rel="canonical" href="https://spositol.github.io/pericia.judicial/ga4-dashboard.html" />
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://spositol.github.io/pericia.judicial/ga4-dashboard.html">
+        <meta property="og:title" content="Dashboard GA4 | CRO System Monitor">
+        <meta property="og:description" content="Acompanhe KPIs de conversao, eventos e desempenho das paginas em GA4.">
+        <meta property="og:image" content="https://spositol.github.io/pericia.judicial/img/perito-judicial-administracao-lincoln-sposito.webp">
+
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Dashboard GA4 | CRO Monitor">
+        <meta name="twitter:description" content="Painel tecnico para auditoria de eventos e conversao no ecossistema pericia.judicial.">
+        <meta name="twitter:image" content="https://spositol.github.io/pericia.judicial/img/perito-judicial-administracao-lincoln-sposito.webp">
+
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-5F1FGJ25TK');
+        </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
@@ -244,6 +265,24 @@
             cursor: not-allowed;
         }
 
+        .header-links {
+            margin-top: 16px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .header-link {
+            display: inline-block;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: #f3f6f8;
+            color: #1a2a3a;
+        }
+
         .page-list {
             display: flex;
             flex-direction: column;
@@ -337,6 +376,10 @@
                 </div>
             </div>
             <button class="sync-button" onclick="manualSync()">🔄 Sincronizar Agora</button>
+            <div class="header-links">
+                <a id="btn-ga4-home" class="header-link" href="index.html">Voltar ao site</a>
+                <a id="btn-ga4-whatsapp" class="header-link" href="https://wa.me/5511914612603?text=Ola%20Dr.%20Lincoln,%20quero%20ajuda%20com%20o%20painel%20de%20monitoramento%20GA4.">Suporte via WhatsApp</a>
+            </div>
         </header>
 
         <div id="messages"></div>
@@ -809,7 +852,37 @@
         function showWarning(msg) { showMessage(msg, 'warning'); }
 
         // Carregar dados ao iniciar
-        document.addEventListener('DOMContentLoaded', loadData);
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+
+            var btnGa4Home = document.getElementById('btn-ga4-home');
+            if (btnGa4Home) {
+                btnGa4Home.addEventListener('click', function() {
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'select_content', {
+                            'event_category': 'Navegacao',
+                            'event_label': 'GA4 Dashboard - Voltar Site',
+                            'content_type': 'navigation_link'
+                        });
+                    }
+                });
+            }
+
+            var btnGa4Whatsapp = document.getElementById('btn-ga4-whatsapp');
+            if (btnGa4Whatsapp) {
+                btnGa4Whatsapp.addEventListener('click', function() {
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'generate_lead', {
+                            'event_category': 'Contato',
+                            'event_label': 'GA4 Dashboard - WhatsApp Suporte',
+                            'method': 'WhatsApp',
+                            'value': 1.0,
+                            'currency': 'BRL'
+                        });
+                    }
+                });
+            }
+        });
 
         // Auto-refresh a cada 60 segundos (monitoramento online)
         setInterval(loadData, 60 * 1000);

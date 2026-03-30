@@ -3,16 +3,79 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SpositoL | Serviços</title>
+  <title>SpositoL | Hub de Servicos e Projetos</title>
+  <meta name="description" content="Hub principal de projetos do ecossistema SpositoL: pericia judicial, professor Lincoln e consultoria empresarial.">
+  <link rel="canonical" href="https://spositol.github.io/pericia.judicial/index-spositol-hub.html" />
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://spositol.github.io/pericia.judicial/index-spositol-hub.html">
+  <meta property="og:title" content="SpositoL | Hub de Servicos e Projetos">
+  <meta property="og:description" content="Acesse rapidamente os ambientes de pericia judicial, docencia e consultoria empresarial.">
+  <meta property="og:image" content="https://spositol.github.io/pericia.judicial/img/perito-judicial-administracao-lincoln-sposito.webp">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SpositoL | Hub de Servicos">
+  <meta name="twitter:description" content="Navegue entre pericia judicial, professor Lincoln e consultoria empresarial.">
+  <meta name="twitter:image" content="https://spositol.github.io/pericia.judicial/img/perito-judicial-administracao-lincoln-sposito.webp">
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-5F1FGJ25TK');
+  </script>
 </head>
 <body>
   <main>
-    <h1>SpositoL | Serviços</h1>
+    <h1>SpositoL | Servicos</h1>
+    <p>Selecione o ambiente que deseja acessar.</p>
     <ul>
-      <li><a href="https://spositol.github.io/pericia.judicial/">Perícia Judicial</a></li>
-      <li><a href="https://spositol.github.io/professor.lincoln/">Professor Lincoln</a></li>
-      <li><a href="https://spositol.github.io/consultoria.empresarial/">Consultoria Empresarial</a></li>
+      <li><a id="btn-hub-pericia" href="https://spositol.github.io/pericia.judicial/">Pericia Judicial</a></li>
+      <li><a id="btn-hub-professor" href="https://spositol.github.io/professor.lincoln/">Professor Lincoln</a></li>
+      <li><a id="btn-hub-consultoria" href="https://spositol.github.io/consultoria.empresarial/">Consultoria Empresarial</a></li>
     </ul>
+    <p><a id="btn-hub-whatsapp" href="https://wa.me/5511914612603?text=Ola%20Dr.%20Lincoln,%20vim%20do%20hub%20e%20quero%20orientacao%20sobre%20qual%20servico%20e%20ideal%20para%20meu%20caso.">Precisa de orientacao? Fale no WhatsApp</a></p>
   </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var map = [
+        { id: 'btn-hub-pericia', label: 'Hub - Pericia Judicial' },
+        { id: 'btn-hub-professor', label: 'Hub - Professor Lincoln' },
+        { id: 'btn-hub-consultoria', label: 'Hub - Consultoria Empresarial' }
+      ];
+
+      map.forEach(function(item) {
+        var el = document.getElementById(item.id);
+        if (el) {
+          el.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+              gtag('event', 'select_content', {
+                'event_category': 'Navegacao',
+                'event_label': item.label,
+                'content_type': 'hub_link'
+              });
+            }
+          });
+        }
+      });
+
+      var btnHubWhats = document.getElementById('btn-hub-whatsapp');
+      if (btnHubWhats) {
+        btnHubWhats.addEventListener('click', function() {
+          if (typeof gtag === 'function') {
+            gtag('event', 'generate_lead', {
+              'event_category': 'Contato',
+              'event_label': 'Hub - WhatsApp',
+              'method': 'WhatsApp',
+              'value': 1.0,
+              'currency': 'BRL'
+            });
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>

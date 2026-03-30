@@ -1,0 +1,184 @@
+{
+  "generatedAt": "2026-03-30T14:29:08.427Z",
+  "topCore": [
+    {
+      "prioridade": 1,
+      "file": "index.html",
+      "score": 100,
+      "views28d": 211,
+      "seo": 40,
+      "retencao": 30,
+      "conversao": 30
+    },
+    {
+      "prioridade": 2,
+      "file": "artigo-modelagem-dados-forense.html",
+      "score": 96,
+      "views28d": 34,
+      "seo": 40,
+      "retencao": 30,
+      "conversao": 26
+    },
+    {
+      "prioridade": 3,
+      "file": "artigo-stalking-bancario-dossie-investigativo.html",
+      "score": 96,
+      "views28d": 25,
+      "seo": 40,
+      "retencao": 30,
+      "conversao": 26
+    },
+    {
+      "prioridade": 4,
+      "file": "sobre.html",
+      "score": 92,
+      "views28d": 24,
+      "seo": 40,
+      "retencao": 26,
+      "conversao": 26
+    },
+    {
+      "prioridade": 5,
+      "file": "artigo-stalking-bancario-cobranca-indevida.html",
+      "score": 96,
+      "views28d": 16,
+      "seo": 40,
+      "retencao": 30,
+      "conversao": 26
+    },
+    {
+      "prioridade": 6,
+      "file": "materiais.html",
+      "score": 92,
+      "views28d": 12,
+      "seo": 40,
+      "retencao": 26,
+      "conversao": 26
+    },
+    {
+      "prioridade": 7,
+      "file": "casos-emblematicos.html",
+      "score": 96,
+      "views28d": 9,
+      "seo": 40,
+      "retencao": 30,
+      "conversao": 26
+    },
+    {
+      "prioridade": 8,
+      "file": "links.html",
+      "score": 85,
+      "views28d": 8,
+      "seo": 40,
+      "retencao": 19,
+      "conversao": 26
+    },
+    {
+      "prioridade": 9,
+      "file": "artigo-42-cdc-escudo-constrangimento-bancario.html",
+      "score": 96,
+      "views28d": 8,
+      "seo": 40,
+      "retencao": 30,
+      "conversao": 26
+    },
+    {
+      "prioridade": 10,
+      "file": "pericia-dados.html",
+      "score": 92,
+      "views28d": 7,
+      "seo": 38,
+      "retencao": 28,
+      "conversao": 26
+    },
+    {
+      "prioridade": 11,
+      "file": "artigo-stalking-financiamento-veiculos-busca-apreensao.html",
+      "score": 100,
+      "views28d": 6,
+      "seo": 40,
+      "retencao": 30,
+      "conversao": 30
+    },
+    {
+      "prioridade": 12,
+      "file": "artigo-pericia-reforma-tributaria-2026-aliquota-teste.html",
+      "score": 96,
+      "views28d": 5,
+      "seo": 40,
+      "retencao": 30,
+      "conversao": 26
+    },
+    {
+      "prioridade": 13,
+      "file": "artigo-assedio-bancario-saude-mental-depressao.html",
+      "score": 100,
+      "views28d": 5,
+      "seo": 40,
+      "retencao": 30,
+      "conversao": 30
+    },
+    {
+      "prioridade": 14,
+      "file": "artigo-a-autopsia-do-stalking-bancario-o-guia-definitivo-contra-a-engenharia-do-assedio-e-a-industria-da-coacao-digital.html",
+      "score": 96,
+      "views28d": 4,
+      "seo": 40,
+      "retencao": 30,
+      "conversao": 26
+    },
+    {
+      "prioridade": 15,
+      "file": "artigo-pericia-cdc-abusividade.html",
+      "score": 96,
+      "views28d": 3,
+      "seo": 40,
+      "retencao": 30,
+      "conversao": 26
+    }
+  ],
+  "supportList": [
+    {
+      "file": "obrigado.html",
+      "score": 87,
+      "views28d": 1
+    },
+    {
+      "file": "google7930c0800e7edef1.html",
+      "score": 1,
+      "views28d": 0
+    },
+    {
+      "file": "index-spositol-hub.html",
+      "score": 75,
+      "views28d": 0
+    },
+    {
+      "file": "404.html",
+      "score": 76,
+      "views28d": 0
+    },
+    {
+      "file": "ga4-dashboard.html",
+      "score": 76,
+      "views28d": 0
+    },
+    {
+      "file": "obrigadomateriais.html",
+      "score": 77,
+      "views28d": 0
+    },
+    {
+      "file": "teste.html",
+      "score": 81,
+      "views28d": 0
+    },
+    {
+      "file": "validador-simples-financiamento-2026-dr-lincoln-sposito-obscuro.html",
+      "score": 88,
+      "views28d": 0
+    }
+  ],
+  "coreCount": 38,
+  "supportCount": 8
+}

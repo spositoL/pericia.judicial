@@ -25,7 +25,6 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">		
-    <title>Sucesso! Seu material está a caminho | Dr. Lincoln Sposito</title>
 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>
 <script>
@@ -77,8 +76,8 @@
 			Dr(a), o material que você solicitou já deve estar na sua pasta de <strong>Downloads</strong>. 			
 		</p>
 
-		<p style="font-size: 0.9rem; color: #888;">
-			Não iniciou? <a href="javascript:history.back()" style="color: #c5a059;">Tente novamente</a> ou fale comigo pelo WhatsApp.
+    <p style="font-size: 0.9rem; color: #888;">
+      Nao iniciou? <a id="btn-obrigadomateriais-tentar" href="javascript:history.back()" style="color: #c5a059;">Tente novamente</a> ou fale comigo pelo WhatsApp.
 		</p>
 	
         <div style="background: #fff9eb; padding: 30px; border: 1px solid #c5a059; border-radius: 8px; text-align: left;">
@@ -89,15 +88,16 @@
                 Se você já tem uma demanda em andamento e precisa de um parecer preliminar ou auxílio na elaboração de quesitos específicos, pode falar diretamente comigo agora:
             </p>
             
-			<a href="https://wa.me/5511914612603?text=Olá Dr. Lincoln, acabei de solicitar o seu material técnico no site e gostaria de tirar uma dúvida sobre a viabilidade de um caso real." 
+      <a id="btn-obrigadomateriais-whatsapp" href="https://wa.me/5511914612603?text=Olá Dr. Lincoln, acabei de solicitar o seu material técnico no site e gostaria de tirar uma dúvida sobre a viabilidade de um caso real." 
 			   target="_blank" 
+         rel="noopener noreferrer"
 			   style="display: inline-block; background: #25D366; color: white; padding: 18px 30px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 1.1rem; width: 100%; text-align: center; box-sizing: border-box; transition: transform 0.2s;">
 				💬 Falar com o Dr. Lincoln via WhatsApp
 			</a>
         </div>
 
         <div style="margin-top: 40px;">
-            <a href="index.html" style="color: #1a2a3a; text-decoration: underline; font-weight: 600;">Voltar para o site principal</a>
+            <a id="btn-obrigadomateriais-home" href="index.html" style="color: #1a2a3a; text-decoration: underline; font-weight: 600;">Voltar para o site principal</a>
         </div>
     </div>
 
@@ -105,6 +105,51 @@
     <p>&copy; 2026 Dr. Lincoln Sposito | Perícia Judicial e Assistência Técnica. </p>
 	<p>Todos os direitos reservados.</p>
 </footer>	
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var btnVoltar = document.getElementById('btn-obrigadomateriais-home');
+  if (btnVoltar) {
+    btnVoltar.addEventListener('click', function() {
+      if (typeof gtag === 'function') {
+        gtag('event', 'select_content', {
+          'event_category': 'Navegacao',
+          'event_label': 'Obrigado Materiais - Voltar Inicio',
+          'content_type': 'post_download'
+        });
+      }
+    });
+  }
+
+  var btnWhats = document.getElementById('btn-obrigadomateriais-whatsapp');
+  if (btnWhats) {
+    btnWhats.addEventListener('click', function() {
+      if (typeof gtag === 'function') {
+        gtag('event', 'generate_lead', {
+          'event_category': 'Contato',
+          'event_label': 'Obrigado Materiais - WhatsApp',
+          'method': 'WhatsApp',
+          'value': 1.0,
+          'currency': 'BRL'
+        });
+      }
+    });
+  }
+
+  var btnTentar = document.getElementById('btn-obrigadomateriais-tentar');
+  if (btnTentar) {
+    btnTentar.addEventListener('click', function() {
+      if (typeof gtag === 'function') {
+        gtag('event', 'select_content', {
+          'event_category': 'Navegacao',
+          'event_label': 'Obrigado Materiais - Tentar Novamente',
+          'content_type': 'retry_download'
+        });
+      }
+    });
+  }
+});
+</script>
 
 </body>
 </html>

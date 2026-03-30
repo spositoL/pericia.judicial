@@ -244,11 +244,26 @@
         </div>
     </section>
 
+	<section style="padding: 0 0 45px;">
+		<div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+			<div style="background: #f7fbff; border: 1px solid #d8e8f6; border-radius: 10px; padding: 24px;">
+				<h2 style="margin-top: 0; color: #1a2a3a;">Depois da simulação: próximos passos técnicos</h2>
+				<p style="margin: 0 0 12px; color: #445;">Com o resultado em mãos, você pode transformar a simulação em prova técnica para o processo.</p>
+				<ul style="margin: 0; padding-left: 20px; color: #445;">
+					<li><a id="cta-calc-back-faq" href="faq.html">FAQ técnico</a> para validar critérios de cálculo.</li>
+					<li><a id="cta-calc-back-quesitos" href="materiais.html">Modelos de quesitos</a> para petição e impugnação.</li>
+					<li><a id="cta-calc-back-pericia" href="pericia-financeira.html">Perícia financeira estratégica</a> para laudo completo.</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
 	
 <a href="https://wa.me/5511914612603?text=Olá Dr. Lincoln, me interessei pelo seu trabalho de perícia. Podemos falar sobre um caso que eu tenho?" 
    id="cta-whatsapp-stalking"
    class="whatsapp-flutuante" 
    target="_blank" 
+   rel="noopener noreferrer"
    aria-label="Falar com Dr. Lincoln Sposito no WhatsApp">
     <i class="fab fa-whatsapp"></i>
 </a>
@@ -259,6 +274,47 @@
  * Finalidade: Captura de conversões GA4 para botões de WhatsApp e Auditoria
  */
 document.addEventListener('DOMContentLoaded', function() {
+
+	var ctaCalcBackFaq = document.getElementById('cta-calc-back-faq');
+	if (ctaCalcBackFaq) {
+		ctaCalcBackFaq.addEventListener('click', function() {
+			if (typeof gtag === 'function') {
+				gtag('event', 'select_content', {
+					'event_category': 'Navegacao',
+					'event_label': 'Calculadora Backend - FAQ Tecnico',
+					'content_type': 'internal_link',
+					'content_name': 'Continuacao Calculadora Backend - FAQ'
+				});
+			}
+		});
+	}
+
+	var ctaCalcBackQuesitos = document.getElementById('cta-calc-back-quesitos');
+	if (ctaCalcBackQuesitos) {
+		ctaCalcBackQuesitos.addEventListener('click', function() {
+			if (typeof gtag === 'function') {
+				gtag('event', 'file_download', {
+					'event_category': 'Materiais',
+					'event_label': 'Calculadora Backend - Modelos de Quesitos',
+					'file_name': 'materiais.html'
+				});
+			}
+		});
+	}
+
+	var ctaCalcBackPericia = document.getElementById('cta-calc-back-pericia');
+	if (ctaCalcBackPericia) {
+		ctaCalcBackPericia.addEventListener('click', function() {
+			if (typeof gtag === 'function') {
+				gtag('event', 'select_content', {
+					'event_category': 'Navegacao',
+					'event_label': 'Calculadora Backend - Pericia Financeira',
+					'content_type': 'internal_link',
+					'content_name': 'Continuacao Calculadora Backend - Pericia'
+				});
+			}
+		});
+	}
     
     // 1. Monitoramento do Botão Flutuante (WhatsApp Geral)
     var btnStalking = document.getElementById('cta-whatsapp-stalking');
@@ -641,7 +697,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							<div id="cta-pericial" style="margin-top: 40px; padding: 30px; background: #fdf8ef; border: 2px dashed #c5a059; border-radius: 8px; text-align: center;">
 								<h3 style="font-family: 'Playfair Display', serif; color: #1a2a3a; margin-bottom: 15px;">Deseja uma análise jurídica detalhada deste contrato?</h3>
 								<p style="color: #666; margin-bottom: 25px;">Nossa equipe de especialistas em direito bancário pode ajudar você a recuperar valores pagos indevidamente.</p>
-								<a href="https://wa.me/11914612603" target="_blank" class="btn-primary" style="padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius:5px; display: inline-block;">Falar com Dr Lincoln agora</a>
+								<a href="https://wa.me/11914612603" target="_blank" rel="noopener noreferrer" class="btn-primary" style="padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius:5px; display: inline-block;">Falar com Dr Lincoln agora</a>
 							</div>                        
 						</div>
 					</div>`;

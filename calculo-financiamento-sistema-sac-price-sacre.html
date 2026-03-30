@@ -201,11 +201,26 @@
         </div>
     </section>
 
+	<section style="padding: 0 0 45px;">
+		<div class="container" style="max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+			<div style="background: #f7fbff; border: 1px solid #d8e8f6; border-radius: 10px; padding: 24px;">
+				<h2 style="margin-top: 0; color: #1a2a3a;">Depois da simulação: o que fazer com o resultado?</h2>
+				<p style="margin: 0 0 12px; color: #445;">Use o valor revisado para comparar com a planilha do banco e preparar os quesitos técnicos.</p>
+				<ul style="margin: 0; padding-left: 20px; color: #445;">
+					<li><a id="cta-calc-faq" href="faq.html">Consultar o FAQ técnico</a> para dúvidas de metodologia.</li>
+					<li><a id="cta-calc-quesitos" href="materiais.html">Baixar modelos de quesitos</a> para anexar no processo.</li>
+					<li><a id="cta-calc-pericia" href="pericia-financeira.html">Avaliar perícia financeira</a> para laudo completo.</li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
 
 <a href="https://wa.me/5511914612603?text=Olá Dr. Lincoln, me interessei pelo seu trabalho de perícia. Podemos falar sobre um caso que eu tenho?" 
    id="cta-whatsapp-stalking"
    class="whatsapp-flutuante" 
    target="_blank" 
+   rel="noopener noreferrer"
    aria-label="Falar com Dr. Lincoln Sposito no WhatsApp">
     <i class="fab fa-whatsapp"></i>
 </a>
@@ -216,6 +231,47 @@
  * Finalidade: Captura de conversões GA4 para botões de WhatsApp e Auditoria
  */
 document.addEventListener('DOMContentLoaded', function() {
+
+	var ctaCalcFaq = document.getElementById('cta-calc-faq');
+	if (ctaCalcFaq) {
+		ctaCalcFaq.addEventListener('click', function() {
+			if (typeof gtag === 'function') {
+				gtag('event', 'select_content', {
+					'event_category': 'Navegacao',
+					'event_label': 'Calculadora - FAQ Tecnico',
+					'content_type': 'internal_link',
+					'content_name': 'Continuacao Calculadora - FAQ'
+				});
+			}
+		});
+	}
+
+	var ctaCalcQuesitos = document.getElementById('cta-calc-quesitos');
+	if (ctaCalcQuesitos) {
+		ctaCalcQuesitos.addEventListener('click', function() {
+			if (typeof gtag === 'function') {
+				gtag('event', 'file_download', {
+					'event_category': 'Materiais',
+					'event_label': 'Calculadora - Modelos de Quesitos',
+					'file_name': 'materiais.html'
+				});
+			}
+		});
+	}
+
+	var ctaCalcPericia = document.getElementById('cta-calc-pericia');
+	if (ctaCalcPericia) {
+		ctaCalcPericia.addEventListener('click', function() {
+			if (typeof gtag === 'function') {
+				gtag('event', 'select_content', {
+					'event_category': 'Navegacao',
+					'event_label': 'Calculadora - Pericia Financeira',
+					'content_type': 'internal_link',
+					'content_name': 'Continuacao Calculadora - Pericia'
+				});
+			}
+		});
+	}
     
     // 1. Monitoramento do Botão Flutuante (WhatsApp Geral)
     var btnStalking = document.getElementById('cta-whatsapp-stalking');
@@ -598,7 +654,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							<div id="cta-pericial" style="margin-top: 40px; padding: 30px; background: #fdf8ef; border: 2px dashed #c5a059; border-radius: 8px; text-align: center;">
 								<h3 style="font-family: 'Playfair Display', serif; color: #1a2a3a; margin-bottom: 15px;">Deseja uma análise jurídica detalhada deste contrato?</h3>
 								<p style="color: #666; margin-bottom: 25px;">Nossa equipe de especialistas em direito bancário pode ajudar você a recuperar valores pagos indevidamente.</p>
-								<a href="https://wa.me/11914612603" target="_blank" class="btn-primary" style="padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius:5px; display: inline-block;">Falar com Dr Lincoln agora</a>
+								<a href="https://wa.me/11914612603" target="_blank" rel="noopener noreferrer" class="btn-primary" style="padding: 15px 30px; text-decoration: none; font-weight: bold; border-radius:5px; display: inline-block;">Falar com Dr Lincoln agora</a>
 							</div>                        
 						</div>
 					</div>`;

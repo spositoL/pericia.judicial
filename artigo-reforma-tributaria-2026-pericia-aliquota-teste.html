@@ -157,6 +157,15 @@
 		<h1 style="margin-top: 20px; font-family: 'Playfair Display', serif; color: #1a2a3a; font-size: 2.2rem; line-height: 1.2;">
 			O "Ano Teste" de 2026: Sua Empresa está Preparada para a Alíquota de 1% da Reforma Tributária?
 		</h1>
+
+		<div style="margin: 22px auto 10px; max-width: 900px; background: #f7fbff; border: 1px solid #d9e8fb; border-radius: 10px; padding: 16px; text-align: left;">
+			<p style="margin: 0 0 10px; color: #1a2a3a; font-weight: 700;">Sua empresa precisa validar a compensação da alíquota de 1% agora?</p>
+			<p style="margin: 0; color: #334;">Solicitar triagem técnica por 
+				<a id="cta-tributario-hero-whatsapp" href="https://wa.me/5511914612603?text=Quero%20validar%20a%20compensa%C3%A7%C3%A3o%20da%20al%C3%ADquota%20de%201%25%20na%20Reforma%20Tribut%C3%A1ria%202026." target="_blank" rel="noopener noreferrer" style="font-weight: 700;">WhatsApp</a>
+				ou baixar 
+				<a id="cta-tributario-hero-checklist" href="checklist-admissibilidade.html?foco=reftributaria" style="font-weight: 700;">checklist de conformidade</a>.
+			</p>
+		</div>
 		
 		<div class="resumo-estrategico" style="background-color: #f8f9fa; border-left: 5px solid #c5a059; padding: 25px; margin: 30px auto; border-radius: 0 8px 8px 0; max-width: 900px; text-align: left;">
 			<p style="margin-top: 0; color: #1a2a3a; font-weight: 700; font-size: 1.1em;">
@@ -491,6 +500,7 @@
    id="cta-whatsapp-stalking"
    class="whatsapp-flutuante" 
    target="_blank" 
+	rel="noopener noreferrer"
    aria-label="Falar com Dr. Lincoln Sposito no WhatsApp">
     <i class="fab fa-whatsapp"></i>
 </a>
@@ -501,6 +511,35 @@
  * Finalidade: Captura de conversões GA4 para botões de WhatsApp e Auditoria
  */
 document.addEventListener('DOMContentLoaded', function() {
+
+	var ctaTributarioHeroWhatsapp = document.getElementById('cta-tributario-hero-whatsapp');
+	if (ctaTributarioHeroWhatsapp) {
+		ctaTributarioHeroWhatsapp.addEventListener('click', function() {
+			if (typeof gtag === 'function') {
+				gtag('event', 'generate_lead', {
+					'event_category': 'Contato',
+					'event_label': 'Reforma Tributaria 2026 - CTA Hero WhatsApp',
+					'method': 'WhatsApp',
+					'value': 1.0,
+					'currency': 'BRL',
+					'content_name': 'Reforma Tributaria 2026 - Aliquota Teste'
+				});
+			}
+		});
+	}
+
+	var ctaTributarioHeroChecklist = document.getElementById('cta-tributario-hero-checklist');
+	if (ctaTributarioHeroChecklist) {
+		ctaTributarioHeroChecklist.addEventListener('click', function() {
+			if (typeof gtag === 'function') {
+				gtag('event', 'file_download', {
+					'event_category': 'Materiais',
+					'event_label': 'Reforma Tributaria 2026 - Checklist Conformidade',
+					'file_name': 'checklist-admissibilidade.html?foco=reftributaria'
+				});
+			}
+		});
+	}
     
     // 1. Monitoramento do Botão Flutuante (WhatsApp Geral)
     var btnStalking = document.getElementById('cta-whatsapp-stalking');
@@ -509,11 +548,11 @@ document.addEventListener('DOMContentLoaded', function() {
             if (typeof gtag === 'function') {
                 gtag('event', 'generate_lead', {
                     'event_category': 'Contato',
-                    'event_label': 'WhatsApp - Autopsia Stalking',
+					'event_label': 'Reforma Tributaria 2026 - WhatsApp Flutuante',
                     'method': 'WhatsApp',
                     'value': 1.0,
                     'currency': 'BRL',
-                    'content_name': 'A Autópsia do Stalking Bancário'
+					'content_name': 'Reforma Tributaria 2026 - Aliquota Teste'
                 });
                 console.log('Forense: Lead WhatsApp registrado.');
             }

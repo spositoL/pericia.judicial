@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Conheça o Dr. Lincoln Sposito, Doutor em Administração e Perito Judicial especialista em Finanças, Tributos e TI.">
+    <meta name="keywords" content="Solicitar perícia, contato técnico, WhatsApp pericial, baixar materiais jurídicos, validar estratégia técnica">
     <title>Sobre Dr. Lincoln Sposito | Expertise e Rigor Técnico</title>
 	<link rel="canonical" href="https://spositol.github.io/pericia.judicial/sobre.html" />
 	
@@ -106,6 +107,16 @@
 
 
 <main class="container" style="padding: 60px 0;">
+    <section style="margin-bottom: 28px; background: #f5f9ff; border: 1px solid #d9e8fb; border-radius: 10px; padding: 16px 20px;">
+        <p style="margin: 0 0 10px; color: #1a2a3a; font-weight: 700;">Deseja validar a estratégia técnica do seu caso antes da audiência?</p>
+        <p style="margin: 0; color: #334;">Solicitar avaliação técnica agora: 
+            <a id="cta-sobre-hero-whatsapp" href="https://wa.me/5511914612603?text=Ol%C3%A1%2C%20quero%20uma%20avalia%C3%A7%C3%A3o%20t%C3%A9cnica%20do%20meu%20caso." target="_blank" rel="noopener noreferrer" style="font-weight: 700;">falar no WhatsApp</a>
+            ou 
+            <a id="cta-sobre-hero-materiais" href="materiais.html" style="font-weight: 700;">acessar materiais</a>.
+        </p>
+        <p style="margin: 10px 0 0; color: #42556b; font-size: 0.95rem;">Também posso validar sua documentação, organizar o contato técnico com o escritório e indicar o melhor caminho para baixar modelos de quesitos antes da audiência.</p>
+    </section>
+
     <section class="sobre-perfil" style="display: flex; gap: 40px; flex-wrap: wrap; align-items: center;">
         <div class="foto-perfil" style="flex: 1; min-width: 300px;">
             <img src="img/perito-judicial-administracao-lincoln-sposito.webp" loading="lazy" alt="Retrato do Dr. Lincoln Sposito, Doutor em Administração e Perito Judicial especializado em saúde suplementar e finanças." style="width: 100%; border-radius: 8px; box-shadow: 10px 10px 0px #c5a059;">
@@ -145,6 +156,14 @@
 			</ul>
         </div>
     </section>
+
+    <section style="margin-top: 26px; background: #ffffff; border: 1px solid #e6e9ef; border-radius: 10px; padding: 22px;">
+        <h2 style="margin-top: 0; color: #1a2a3a;">Como eu atuo na prática pericial</h2>
+        <p style="color: #3d4652; line-height: 1.7; margin-bottom: 14px;">Minha atuação combina análise estatística, engenharia financeira e auditoria de sistemas para transformar dados complexos em prova técnica compreensível para o juízo. Em casos bancários, por exemplo, a avaliação não se limita ao valor da parcela: eu reviso a lógica de amortização, a composição do CET, a rastreabilidade de encargos e a aderência do contrato ao princípio da transparência informacional previsto no CDC. Em saúde suplementar e em perícia de dados, aplico metodologia semelhante: reconstrução do fluxo decisório, verificação de consistência entre documentos e validação técnica do que foi efetivamente executado pelo sistema.</p>
+        <p style="color: #3d4652; line-height: 1.7; margin-bottom: 0;">Esse modelo de trabalho permite que advogados e escritórios recebam uma base robusta para impugnação, negociação ou sustentação de tese em audiência. O foco é reduzir incerteza: identificar o que é tecnicamente defensável, separar ruído de evidência e estruturar quesitos que direcionem a perícia judicial para os pontos de maior impacto processual. Se você quiser aprofundar por área, recomendo seguir para <a href="pericia-financeira.html">Perícia Financeira</a>, <a href="pericia-dados.html">Perícia de Dados</a> e <a href="faq.html">FAQ Técnico</a>.</p>
+        <p style="color: #3d4652; line-height: 1.7; margin-top: 14px; margin-bottom: 0;">Também trabalho com leitura crítica de laudos e pareceres já juntados aos autos, apontando inconsistências metodológicas, premissas estatísticas frágeis e lacunas de rastreabilidade que costumam passar despercebidas em análises exclusivamente jurídicas. Em termos práticos, isso significa comparar versões de planilhas, reconstruir fórmulas, testar cenários com bases independentes e documentar a diferença entre o resultado declarado e o resultado verificável. Quando necessário, realizo parecer técnico para fase pré-processual, assistência técnica durante a produção de prova e apoio em quesitos suplementares, sempre com linguagem objetiva para facilitar a tomada de decisão do juiz e o posicionamento estratégico da equipe jurídica.</p>
+        <p style="color: #3d4652; line-height: 1.7; margin-top: 14px; margin-bottom: 0;">A cada projeto, a prioridade é reduzir risco processual com método verificável: hipóteses explícitas, critérios de validação, trilha de auditoria e relatório final apto para contraditório técnico. Essa abordagem aumenta a previsibilidade da estratégia jurídica e fortalece a qualidade da prova produzida em juízo.</p>
+    </section>
 </main>
 
 <footer>
@@ -159,6 +178,7 @@
    id="cta-whatsapp-stalking"
    class="whatsapp-flutuante" 
    target="_blank" 
+    rel="noopener noreferrer"
    aria-label="Falar com Dr. Lincoln Sposito no WhatsApp">
     <i class="fab fa-whatsapp"></i>
 </a>
@@ -169,6 +189,35 @@
  * Finalidade: Captura de conversões GA4 para botões de WhatsApp e Auditoria
  */
 document.addEventListener('DOMContentLoaded', function() {
+
+    var btnSobreHeroWhatsapp = document.getElementById('cta-sobre-hero-whatsapp');
+    if (btnSobreHeroWhatsapp) {
+        btnSobreHeroWhatsapp.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    'event_category': 'Contato',
+                    'event_label': 'Sobre - CTA Hero WhatsApp',
+                    'method': 'WhatsApp',
+                    'value': 1.0,
+                    'currency': 'BRL',
+                    'content_name': 'Pagina Sobre'
+                });
+            }
+        });
+    }
+
+    var btnSobreHeroMateriais = document.getElementById('cta-sobre-hero-materiais');
+    if (btnSobreHeroMateriais) {
+        btnSobreHeroMateriais.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'file_download', {
+                    'event_category': 'Materiais',
+                    'event_label': 'Sobre - Materiais',
+                    'file_name': 'materiais.html'
+                });
+            }
+        });
+    }
     
     // 1. Monitoramento do Botão Flutuante (WhatsApp Geral)
     var btnStalking = document.getElementById('cta-whatsapp-stalking');
@@ -177,44 +226,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (typeof gtag === 'function') {
                 gtag('event', 'generate_lead', {
                     'event_category': 'Contato',
-                    'event_label': 'WhatsApp - Autopsia Stalking',
+                    'event_label': 'Sobre - WhatsApp Flutuante',
                     'method': 'WhatsApp',
                     'value': 1.0,
                     'currency': 'BRL',
-                    'content_name': 'A Autópsia do Stalking Bancário'
+                    'content_name': 'Pagina Sobre'
                 });
                 console.log('Forense: Lead WhatsApp registrado.');
-            }
-        });
-    }
-
-    // 2. Monitoramento do Botão de Auditoria (Final do Artigo)
-    var btnAuditoria = document.getElementById('btn-whatsapp-autopsia');
-    if (btnAuditoria) {
-        btnAuditoria.addEventListener('click', function() {
-            if (typeof gtag === 'function') {
-                gtag('event', 'generate_lead', {
-                    'event_category': 'Conversão Artigo',
-                    'event_label': 'Botão Final - Autópsia Stalking',
-                    'method': 'WhatsApp',
-                    'value': 1.0,
-                    'currency': 'BRL',
-                    'content_name': 'Checklist de Identificação de Stalking'
-                });
-                console.log('Forense: Lead Auditoria registrado.');
-            }
-        });
-    }
-	var btnChecklist = document.getElementById('btn-download-checklist-autopsia');
-    if (btnChecklist) {
-        btnChecklist.addEventListener('click', function() {
-            if (typeof gtag === 'function') {
-                gtag('event', 'file_download', {
-                    'event_category': 'Materiais',
-                    'event_label': 'Checklist Admissibilidade - Stalking',
-                    'file_name': 'checklist-admissibilidade-stalking.pdf'
-                });
-                console.log('GA4: Download do Checklist rastreado.');
             }
         });
     }

@@ -7,7 +7,17 @@
     <title>FAQ - Dúvidas Frequentes | Dr. Lincoln Sposito</title>
     
     <link rel="canonical" href="https://spositol.github.io/pericia.judicial/faq.html" />
+    <meta property="og:type" content="website">
 	<meta property="og:url" content="https://spositol.github.io/pericia.judicial/faq.html">
+    <meta property="og:title" content="FAQ Pericia Judicial | Dr. Lincoln Sposito">
+    <meta property="og:description" content="Perguntas frequentes sobre pericia bancaria, saude, dados forenses e estrategia processual.">
+    <meta property="og:image" content="https://spositol.github.io/pericia.judicial/img/perito-judicial-administracao-lincoln-sposito.webp">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@lincolnsposito">
+    <meta name="twitter:title" content="FAQ Tecnico | Dr. Lincoln Sposito">
+    <meta name="twitter:description" content="Respostas objetivas para advogados e consumidores sobre estrategia pericial.">
+    <meta name="twitter:image" content="https://spositol.github.io/pericia.judicial/img/perito-judicial-administracao-lincoln-sposito.webp">
     
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="cro-system.css">
@@ -16,6 +26,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-5F1FGJ25TK');
+</script>
 
 <style>
     /* Margem proporcional entre a busca e a lista */
@@ -285,7 +303,7 @@
 </div>
   <div style="text-align: center; padding-bottom: 60px;">
         <p>Ainda tem dúvidas?</p>
-        <a href="https://wa.me/5511914612603" class="btn-primary" style="text-decoration: none; padding: 15px 30px; display: inline-block; background-color: #1a2a3a; color: white; border-radius: 5px; font-weight: bold;">Falar Direto no WhatsApp</a>
+        <a id="btn-faq-whatsapp" href="https://wa.me/5511914612603" class="btn-primary" style="text-decoration: none; padding: 15px 30px; display: inline-block; background-color: #1a2a3a; color: white; border-radius: 5px; font-weight: bold;">Falar Direto no WhatsApp</a>
     </div>
 </main>
 
@@ -301,6 +319,7 @@
    id="cta-whatsapp-stalking"
    class="whatsapp-flutuante" 
    target="_blank" 
+    rel="noopener noreferrer"
    aria-label="Falar com Dr. Lincoln Sposito no WhatsApp">
     <i class="fab fa-whatsapp"></i>
 </a>
@@ -311,6 +330,21 @@
  * Finalidade: Captura de conversões GA4 para botões de WhatsApp e Auditoria
  */
 document.addEventListener('DOMContentLoaded', function() {
+    var btnFaqWhats = document.getElementById('btn-faq-whatsapp');
+    if (btnFaqWhats) {
+        btnFaqWhats.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    'event_category': 'Contato',
+                    'event_label': 'FAQ - WhatsApp Principal',
+                    'method': 'WhatsApp',
+                    'value': 1.0,
+                    'currency': 'BRL',
+                    'content_name': 'FAQ Tecnico'
+                });
+            }
+        });
+    }
     
     // 1. Monitoramento do Botão Flutuante (WhatsApp Geral)
     var btnStalking = document.getElementById('cta-whatsapp-stalking');

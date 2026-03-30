@@ -2,6 +2,8 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pagina nao encontrada. Retorne ao portal principal ou solicite atendimento pericial via WhatsApp.">
     <title>Página não encontrada | Dr. Lincoln Sposito</title>
 	<link rel="canonical" href="https://spositol.github.io/pericia.judicial/404.html" />
     <link rel="stylesheet" href="style.css">
@@ -22,6 +24,9 @@
         .error-container { text-align: center; padding: 100px 20px; }
         .error-container h1 { font-size: 80px; color: #c5a059; margin-bottom: 10px; }
         .error-container p { font-size: 1.2rem; margin-bottom: 30px; }
+        .error-cta { text-decoration: none; }
+        .error-subcopy { margin-top: 15px; color: #666; }
+        .error-cta-secondary { text-decoration: none; margin-left: 8px; }
     </style>
 	
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>
@@ -39,7 +44,41 @@
         <h1>404</h1>
         <h2>Ops! Página não encontrada.</h2>
         <p>O conteúdo que você procura foi movido ou não existe mais.</p>
-        <a href="index.html" class="btn-contato" style="text-decoration: none;">Voltar para o Início</a>
+        <a id="btn-404-home" href="index.html" class="btn-contato error-cta">Voltar para o Início</a>
+        <p class="error-subcopy">Se preferir, fale agora com a equipe técnica:</p>
+        <a id="btn-404-whatsapp" href="https://wa.me/5511914612603?text=Ol%C3%A1%20Dr.%20Lincoln,%20ca%C3%AD%20na%20p%C3%A1gina%20404%20e%20quero%20orienta%C3%A7%C3%A3o%20sobre%20per%C3%ADcia." class="btn-contato error-cta-secondary">Falar no WhatsApp</a>
     </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var btn404Home = document.getElementById('btn-404-home');
+    if (btn404Home) {
+        btn404Home.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'select_content', {
+                    'event_category': 'Navegacao',
+                    'event_label': '404 - Voltar Inicio',
+                    'content_type': 'recovery_link'
+                });
+            }
+        });
+    }
+
+    var btn404Whatsapp = document.getElementById('btn-404-whatsapp');
+    if (btn404Whatsapp) {
+        btn404Whatsapp.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    'event_category': 'Contato',
+                    'event_label': '404 - WhatsApp',
+                    'method': 'WhatsApp',
+                    'value': 1.0,
+                    'currency': 'BRL'
+                });
+            }
+        });
+    }
+});
+</script>
 </body>
 </html>
