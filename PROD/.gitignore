@@ -1,0 +1,27 @@
+# Google Sheets
+*.gsheet
+
+# ====================================
+# GA4 Integration (Sensitive Data)
+# ====================================
+# Google Cloud Service Account credentials
+ga4-credentials.json
+ga4-*.json
+.env
+.env.local
+
+# ====================================
+# Node.js
+# ====================================
+node_modules/
+package-lock.json
+npm-debug.log*
+yarn-*.log*
+
+# ====================================
+# OS files
+# ====================================
+.DS_Store
+Thumbs.db
+*.log
+*.tmp

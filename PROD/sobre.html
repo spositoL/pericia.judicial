@@ -15,26 +15,70 @@
 	<meta property="og:profile:first_name" content="Lincoln">
 	<meta property="og:profile:last_name" content="Sposito">
 	<meta property="og:profile:username" content="drlincolnsposito">	
-    <link rel="stylesheet" href="style.css">
+    
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@lincolnsposito">
+	<meta name="twitter:creator" content="@lincolnsposito">
+	<meta name="twitter:title" content="Sobre o Dr. Lincoln Sposito | Perito Judicial PhD">
+	<meta name="twitter:description" content="Conheça a trajetória do Dr. Lincoln Sposito: Doutor em Administração e Perito especialista em auditoria algorítmica de finanças, saúde e TI.">
+	<meta name="twitter:image" content="https://spositol.github.io/pericia.judicial/img/perito-judicial-administracao-lincoln-sposito.webp">
+	
+	<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cro-system.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">	
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5F1FGJ25TK');
+</script>
 	
-	<script type="application/ld+json">
-	{
-	  "@context": "https://schema.org",
-	  "@type": "Person",
-	  "name": "Lincoln Sposito",
-	  "jobTitle": "Perito Judicial",
-	  "honorificPrefix": "Dr.",
-	  "url": "https://spositol.github.io/pericia.judicial/",
-	  "sameAs": [
-		"https://www.linkedin.com/in/lincolnsposito/",
-		"http://lattes.cnpq.br/4917125955922920"
-	  ],
-	  "description": "Doutor em Administração e Perito Judicial especialista em Finanças, Tributos e TI."
-	}
-	</script>
-	
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://spositol.github.io/pericia.judicial/#person",
+      "name": "Lincoln Sposito",
+      "alternateName": "Dr. Lincoln Sposito",
+      "jobTitle": "Perito Judicial e Doutor em Administração",
+      "description": "Doutor em Administração e Perito Judicial especializado em auditoria de contratos bancários, saúde suplementar e análise de sistemas forense. Mais de 22 anos de atuação com rigor acadêmico e Ciência de Dados.",
+      "url": "https://spositol.github.io/pericia.judicial/sobre.html",
+      "image": "https://spositol.github.io/pericia.judicial/img/perito-judicial-administracao-lincoln-sposito.webp",
+      "sameAs": [
+        "https://www.linkedin.com/in/lincolnsposito",
+        "http://lattes.cnpq.br/4917125955922920",
+        "https://www.instagram.com/lincolnsposito"
+      ],
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "Doutorado em Administração / Gestão de Projetos"
+      },
+      "knowsAbout": [
+        "Perícia Judicial",
+        "Engenharia Financeira",
+        "Auditoria de Dados",
+        "Direito Bancário",
+        "Saúde Suplementar"
+      ]
+    },
+    {
+      "@type": "WebPage",
+      "url": "https://spositol.github.io/pericia.judicial/sobre.html",
+      "name": "Sobre Dr. Lincoln Sposito | Expertise e Rigor Técnico",
+      "about": { "@id": "https://spositol.github.io/pericia.judicial/#person" }
+    }
+  ]
+}
+</script>
 	
 </head>
 <body>
@@ -42,16 +86,18 @@
 <header style="background-color: #1a2a3a; padding: 15px 0; border-bottom: 2px solid #c5a059;">
     <div class="container" style="display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
         <a href="index.html" style="text-decoration: none; display: block; width: 220px;">
-            <img src="grafico.svg">
+            <img src="grafico.svg" width="220" height="60" loading="lazy" alt="Logo Dr. Lincoln Sposito">
         </a>
         <nav>
             <ul style="list-style: none; display: flex; gap: 20px; margin: 0; padding: 0;">
                 <li><a href="index.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Início</a></li>
                 <li><a href="sobre.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Sobre</a></li>
 				<li><a href="index.html#servicos" class="btn-nav">Serviços</a></li>
+				<li><a href="pericia-dados.html" class="btn-nav">Perícia de Dados</a></li>
 				<li><a href="index.html#blog"     class="btn-nav">Artigos</a></li>
 				<li><a href="casos-emblematicos.html"     class="btn-nav">Casos emblemáticos</a></li>
                 <li><a href="materiais.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Materiais</a></li>
+				<li><a href="faq.html" class="btn-nav" style="color: var(--accent); font-weight: bold;">FAQ</a></li>
                 <li><a href="index.html#contato"  class="btn-nav">Contato</a></li>				
             </ul>
         </nav>		
@@ -62,7 +108,7 @@
 <main class="container" style="padding: 60px 0;">
     <section class="sobre-perfil" style="display: flex; gap: 40px; flex-wrap: wrap; align-items: center;">
         <div class="foto-perfil" style="flex: 1; min-width: 300px;">
-            <img src="img/perito-judicial-administracao-lincoln-sposito.webp" alt="Retrato do Dr. Lincoln Sposito, Doutor em Administração e Perito Judicial especializado em saúde suplementar e finanças." style="width: 100%; border-radius: 8px; box-shadow: 10px 10px 0px #c5a059;">
+            <img src="img/perito-judicial-administracao-lincoln-sposito.webp" loading="lazy" alt="Retrato do Dr. Lincoln Sposito, Doutor em Administração e Perito Judicial especializado em saúde suplementar e finanças." style="width: 100%; border-radius: 8px; box-shadow: 10px 10px 0px #c5a059;">
 			<!--Dr. Lincoln Sposito, Doutor em Administração e Perito Judicial atuante em tribunais de São Paulo-->
         </div>
         
@@ -84,12 +130,12 @@
 			<h2 style="margin-top: 30px; color: #1a2a3a;">Certificações e Registros Oficiais:</h2>
 			<ul style="list-style: none; padding: 0;">
 				<li style="margin-bottom: 10px;">
-					<img src="img/icon-lattes.png" alt="Currículo Lattes do Dr. Lincoln Sposito no CNPq" style="width: 20px; vertical-align: middle;">
+					<img src="img/icon-lattes.png" loading="lazy" alt="Currículo Lattes do Dr. Lincoln Sposito no CNPq" style="width: 20px; vertical-align: middle;">
 					<strong>Currículo Lattes (CNPq):</strong> 
 					<a href="http://lattes.cnpq.br/4917125955922920" target="_blank" style="color: #c5a059; text-decoration: underline;">Acessar Registro Acadêmico</a>
 				</li>
 				<li style="margin-bottom: 10px;">
-					<img src="img/icon-linkedin.png" alt="Perfil profissional do perito judicial Lincoln Sposito no LinkedIn" style="width: 20px; vertical-align: middle;">
+					<img src="img/icon-linkedin.png" loading="lazy" alt="Perfil profissional do perito judicial Lincoln Sposito no LinkedIn" style="width: 20px; vertical-align: middle;">
 					<strong>Perfil Profissional:</strong> 
 					<a href="https://www.linkedin.com/in/lincolnsposito/" target="_blank" style="color: #c5a059; text-decoration: underline;">LinkedIn</a>
 				</li>
@@ -101,9 +147,155 @@
     </section>
 </main>
 
-<footer style="margin-top: 40px;">
-    <p>&copy; 2026 Dr. Lincoln Sposito. Todos os direitos reservados.</p>
-</footer>
+<footer>
+    <p>&copy; 2026 Dr. Lincoln Sposito | Perícia Judicial e Assistência Técnica. </p>
+	<p>Todos os direitos reservados.
+		(<a href="faq.html" style="color: #c5a059; margin: 0 15px; text-decoration: none; font-weight: bold;">FAQ Técnico</a>)
+	</p>
+</footer>	
 
+
+<a href="https://wa.me/5511914612603?text=Olá Dr. Lincoln, me interessei pelo seu trabalho de perícia. Podemos falar sobre um caso que eu tenho?" 
+   id="cta-whatsapp-stalking"
+   class="whatsapp-flutuante" 
+   target="_blank" 
+   aria-label="Falar com Dr. Lincoln Sposito no WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+/**
+ * Monitoramento Consolidado de Leads - Dr. Lincoln Sposito
+ * Finalidade: Captura de conversões GA4 para botões de WhatsApp e Auditoria
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // 1. Monitoramento do Botão Flutuante (WhatsApp Geral)
+    var btnStalking = document.getElementById('cta-whatsapp-stalking');
+    if (btnStalking) {
+        btnStalking.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    'event_category': 'Contato',
+                    'event_label': 'WhatsApp - Autopsia Stalking',
+                    'method': 'WhatsApp',
+                    'value': 1.0,
+                    'currency': 'BRL',
+                    'content_name': 'A Autópsia do Stalking Bancário'
+                });
+                console.log('Forense: Lead WhatsApp registrado.');
+            }
+        });
+    }
+
+    // 2. Monitoramento do Botão de Auditoria (Final do Artigo)
+    var btnAuditoria = document.getElementById('btn-whatsapp-autopsia');
+    if (btnAuditoria) {
+        btnAuditoria.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    'event_category': 'Conversão Artigo',
+                    'event_label': 'Botão Final - Autópsia Stalking',
+                    'method': 'WhatsApp',
+                    'value': 1.0,
+                    'currency': 'BRL',
+                    'content_name': 'Checklist de Identificação de Stalking'
+                });
+                console.log('Forense: Lead Auditoria registrado.');
+            }
+        });
+    }
+	var btnChecklist = document.getElementById('btn-download-checklist-autopsia');
+    if (btnChecklist) {
+        btnChecklist.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'file_download', {
+                    'event_category': 'Materiais',
+                    'event_label': 'Checklist Admissibilidade - Stalking',
+                    'file_name': 'checklist-admissibilidade-stalking.pdf'
+                });
+                console.log('GA4: Download do Checklist rastreado.');
+            }
+        });
+    }
+});
+</script>
+
+
+<script>
+	(function(){
+		if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>
+			{if(!window.chatbase.q){window.chatbase.q=[]}
+			window.chatbase.q.push(arguments)
+		};
+		window.chatbase=new Proxy(window.chatbase,{
+			get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}
+			})
+		}
+		const onLoad=function(){
+			const script=document.createElement("script");
+			script.src="https://www.chatbase.co/embed.min.js";
+			script.id="uFEke3ZP9R3S3o5CFSMyh";
+			script.domain="www.chatbase.co";
+
+			// --- ADIÇÃO PARA PERFORMANCE ---
+			script.async = true; 
+			script.defer = true;
+			// -------------------------------
+			
+			// Dentro da sua função onLoad, antes do appendChild:
+			script.setAttribute('data-priority', 'low');
+			
+			document.body.appendChild(script)
+		};
+		if(document.readyState==="complete"){
+			onLoad()
+		}else{
+			window.addEventListener("load",onLoad)
+		}
+	})();
+</script>
+<script>
+const croConfig = {
+    enableProgressBar: true,
+    enableFloatingBar: true,
+    enableExitIntent: true,
+    floatingBarDelay: 20000,
+    floatingBarMessage: 'Quer falar direto com Dr. Lincoln?',
+    floatingBarUrgency: 'Agenda limitada desta semana',
+    abTests: {
+        floating_bar_color: {
+            enabled: true,
+            variants: {
+                A: { weight: 50, overrides: { floatingBarButtonBg: '#c5a059', floatingBarButtonHoverBg: '#e6c770', floatingBarButtonTextColor: '#1a2a3a' } },
+                B: { weight: 50, overrides: { floatingBarButtonBg: '#25d366', floatingBarButtonHoverBg: '#1fbd56', floatingBarButtonTextColor: '#ffffff' } }
+            }
+        },
+        floating_bar_urgency: {
+            enabled: true,
+            variants: {
+                A: { weight: 50, overrides: { floatingBarUrgency: '3 de 10 slots disponíveis' } },
+                B: { weight: 50, overrides: { floatingBarUrgency: 'Últimas 24h para agenda de Março' } }
+            }
+        },
+        floating_bar_delay: {
+            enabled: true,
+            variants: {
+                A: { weight: 34, overrides: { floatingBarDelay: 20000 } },
+                B: { weight: 33, overrides: { floatingBarDelay: 8000 } },
+                C: { weight: 33, overrides: { floatingBarDelay: 35000 } }
+            }
+        },
+        exit_intent_copy: {
+            enabled: true,
+            variants: {
+                A: { weight: 50, overrides: { exitIntentTitle: 'Espera! 👋', exitIntentSubtitle: 'Você encontrou a resposta para seu caso? Ou ainda tem dúvidas técnicas?' } },
+                B: { weight: 50, overrides: { exitIntentTitle: 'Ainda tem dúvidas técnicas?', exitIntentSubtitle: 'Antes de sair, valide sua situação com uma análise especializada.' } }
+            }
+        }
+    }
+};
+</script>
+<script src="cro-system.js"></script>
 </body>
 </html>

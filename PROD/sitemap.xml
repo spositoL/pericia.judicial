@@ -2,68 +2,447 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://spositol.github.io/pericia.judicial/index.html</loc>
-    <lastmod>2026-02-09</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <priority>1.00</priority>
   </url>
 
   <url>
+    <loc>https://spositol.github.io/pericia.judicial/en/index.html</loc>
+    <lastmod>2026-03-23</lastmod>
+    <priority>0.70</priority>
+  </url>
+
+  <url>
     <loc>https://spositol.github.io/pericia.judicial/sobre.html</loc>
-    <lastmod>2026-02-09</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <priority>0.80</priority>
-  </url>
-
-  <url>
-    <loc>https://spositol.github.io/pericia.judicial/materiais.html</loc>
-    <lastmod>2026-02-09</lastmod>
-    <priority>0.50</priority>
-  </url>
-
-  <url>
-    <loc>https://spositol.github.io/pericia.judicial/artigo-jurisprudencia-planos-saude.html</loc>
-    <lastmod>2026-02-09</lastmod>
     <priority>0.70</priority>
   </url>
 
   <url>
-    <loc>https://spositol.github.io/pericia.judicial/artigo-plano-saude-445.html</loc>
-    <lastmod>2026-02-09</lastmod>
-    <priority>0.70</priority>
+    <loc>https://spositol.github.io/pericia.judicial/artigo-jurisprudencia-planos-saude.html</loc>	
+    <lastmod>2026-02-13</lastmod>
+    <priority>0.60</priority>
   </url>
 
   <url>
-    <loc>https://spositol.github.io/pericia.judicial/artigo-pericia-financeira.html</loc>
-    <lastmod>2026-02-09</lastmod>
-    <priority>0.70</priority>
+    <loc>https://spositol.github.io/pericia.judicial/artigo-plano-saude-445.html</loc>	
+    <lastmod>2026-02-13</lastmod>
+    <priority>0.60</priority>
+    <priority>0.60</priority>
   </url>
   
   <url>
-    <loc>https://spositol.github.io/pericia.judicial/artigo-vcmh-caixa-preta.html</loc>
-    <lastmod>2026-02-09</lastmod>
-    <priority>0.70</priority>
+    <loc>https://spositol.github.io/pericia.judicial/artigo-vcmh-caixa-preta.html</loc>	
+    <lastmod>2026-02-13</lastmod>
+    <priority>0.60</priority>
   </url>
   
   <url>
-    <loc>https://spositol.github.io/pericia.judicial/artigo-pericia-cdc-abusividade.html</loc>
-    <lastmod>2026-02-09</lastmod>
-    <priority>0.70</priority>
-  </url>
-
-  <url>
-    <loc>https://spositol.github.io/pericia.judicial/artigo-pericia-financeira-revisao-contrato-1988.html</loc>
-    <lastmod>2026-02-09</lastmod>
-    <priority>0.70</priority>
+    <loc>https://spositol.github.io/pericia.judicial/artigo-pericia-cdc-abusividade.html</loc>	
+    <lastmod>2026-02-13</lastmod>
+    <priority>0.60</priority>
+    <priority>0.60</priority>
   </url>  
 
   <url>
     <loc>https://spositol.github.io/pericia.judicial/casos-emblematicos.html</loc>
-    <lastmod>2026-02-09</lastmod>
+    <lastmod>2026-02-13</lastmod>
     <priority>0.70</priority>
   </url> 
 
   <url>
-    <loc>https://spositol.github.io/pericia.judicial/artigo-modelagem-dados-forense.html</loc>
-    <lastmod>2026-02-09</lastmod>
+    <loc>https://spositol.github.io/pericia.judicial/artigo-modelagem-dados-forense.html</loc>	
+    <lastmod>2026-02-13</lastmod>
+    <priority>0.60</priority>
+  </url>  
+
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/pericia-dados.html</loc>
+    <lastmod>2026-02-13</lastmod>
     <priority>0.70</priority>
-  </url>      
+  </url>  
+
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/links.html</loc>
+    <lastmod>2026-02-13</lastmod>
+    <priority>0.80</priority>
+  </url> 
   
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/checklist-admissibilidade.html</loc>
+    <lastmod>2026-02-13</lastmod>
+    <priority>1.00</priority>
+  </url> 
+  
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/arquivos/checklist-indicadores-risco-dados-lincoln-sposito.pdf</loc>
+    <lastmod>2026-02-13</lastmod>
+    <priority>0.70</priority>
+  </url>
+  
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/arquivos/checklist-revisao-contrato-1988-SFH-lincoln-sposito.pdf</loc>
+    <lastmod>2026-02-13</lastmod>
+    <priority>0.70</priority>
+  </url>
+  
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/arquivos/checklist-saude-produto-445-lincoln-sposito.pdf</loc>
+    <lastmod>2026-02-13</lastmod>
+    <priority>0.70</priority>
+  </url>
+  
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/arquivos/checklist-revisional-veiculos-cdc-lincoln-sposito.pdf</loc>
+    <lastmod>2026-02-13</lastmod>
+    <priority>0.70</priority>
+  </url>
+  
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/arquivos/checklist-tabela-price-gauss-lincoln-sposito.pdf</loc>
+    <lastmod>2026-02-13</lastmod>
+    <priority>0.70</priority>
+  </url>
+  
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/arquivos/modelo-quesitos-bancarios-lincoln-sposito.pdf</loc>
+    <lastmod>2026-01-12</lastmod>
+    <priority>0.70</priority>
+  </url>
+    
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/artigo-armadilha-carencia-bancaria.html</loc>
+    <lastmod>2026-02-13</lastmod>
+    <priority>0.60</priority>
+  </url>
+  
+   <url>
+    <loc>https://spositol.github.io/pericia.judicial/artigo-falha-gestao-ccb.html</loc>	
+    <lastmod>2026-02-14</lastmod>
+    <priority>0.60</priority>
+  </url>
+  
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/artigo-erro-calculo-iof-parcela.html</loc>	
+    <lastmod>2026-02-15</lastmod>
+    <priority>0.60</priority>
+  </url>
+
+	<url>
+	  <loc>https://spositol.github.io/pericia.judicial/artigo-biografia-carl-friedrich-gauss-metodo-matematico.html</loc>	  
+	  <lastmod>2026-02-17</lastmod>
+	  <priority>0.60</priority>
+	</url>
+	
+	<url>
+	  <loc>https://spositol.github.io/pericia.judicial/artigo-heranca-richard-price-sistema-frances-amortizacao.html</loc>	  
+	  <lastmod>2026-02-18</lastmod>
+	  <priority>0.60</priority>
+	</url>		
+
+  <url>
+	  <loc>https://spositol.github.io/pericia.judicial/servicos-pericia-judicial.html</loc>
+	  <lastmod>2026-02-18</lastmod>
+	  <priority>0.60</priority>
+	</url>		
+
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/en/servicos-pericia-judicial.html</loc>
+    <lastmod>2026-03-23</lastmod>
+    <priority>0.50</priority>
+  </url>		
+
+  <url>
+	  <loc>https://spositol.github.io/pericia.judicial/reorganizacao-calculo-financiamento-sistema-sac-price-sacre-pericia-backend.html</loc>
+	  <lastmod>2026-02-18</lastmod>
+	  <priority>0.60</priority>
+	</url>	
+
+  <url>
+    <loc>https://spositol.github.io/pericia.judicial/validador-simples-financiamento-2026-dr-lincoln-sposito.html</loc>
+	  <lastmod>2026-02-19</lastmod>
+	  <priority>0.60</priority>
+	</url>	
+
+  <url>
+	  <loc>https://spositol.github.io/pericia.judicial/artigo-taxa-de-juros-financiamento-veiculo-2026.html</loc>	  
+	  <lastmod>2026-02-19</lastmod>
+	  <priority>0.70</priority>
+	</url>	
+
+  <url>
+	  <loc>https://spositol.github.io/pericia.judicial/faq.html</loc>
+	  <lastmod>2026-02-21</lastmod>
+	  <priority>0.80</priority>
+	</url>	  
+
+  <url>
+	  <loc>https://spositol.github.io/pericia.judicial/artigo-lei-14905-juros-financiamento.html</loc>
+	  <lastmod>2026-02-23</lastmod>
+	  <priority>0.60</priority>
+	</url>	  
+
+  <url>
+	  <loc>https://spositol.github.io/pericia.judicial/artigo-reforma-tributaria-2026-pericia-aliquota-teste.html</loc>
+	  <lastmod>2026-02-23</lastmod>
+	  <priority>0.60</priority>
+	</url>	  
+
+  <url>
+	  <loc>https://spositol.github.io/pericia.judicial/artigo-pericia-reforma-tributaria-2026-aliquota-teste.html</loc>
+	  <lastmod>2026-02-23</lastmod>
+	  <priority>0.50</priority>
+	</url>	  
+
+  <url>
+	  <loc>https://spositol.github.io/pericia.judicial/pericia-resolucao-4966.html</loc>
+	  <lastmod>2026-02-25</lastmod>
+	  <priority>1.00</priority>
+	</url>	  
+
+  <url>
+	  <loc>https://spositol.github.io/pericia.judicial/pericia-aml-kyc.html</loc>
+	  <lastmod>2026-02-25</lastmod>
+	  <priority>1.00</priority>
+	</url>	  
+
+  <url>
+	  <loc>https://spositol.github.io/pericia.judicial/aula/aula-ICH-UX-27-02-2026-professor-dr-lincoln-sposito.html</loc>
+	  <lastmod>2026-02-27</lastmod>
+	  <priority>0.50</priority>
+	</url>	  
+
+  <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/index.html</loc>
+      <lastmod>2026-03-01</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/ihc-ux/index.html</loc>
+      <lastmod>2026-03-01</lastmod>
+      <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/ihc-ux/aula-06-03-2026.html</loc>
+      <lastmod>2026-03-01</lastmod>
+      <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/sistemas-distribuidos/index.html</loc>
+      <lastmod>2026-03-01</lastmod>
+      <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/sistemas-distribuidos/en/index.html</loc>
+      <lastmod>2026-03-23</lastmod>
+      <priority>0.50</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/sistemas-distribuidos/aula-02-03-2026.html</loc>
+      <lastmod>2026-03-01</lastmod>
+      <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/web-mobile-jogos/index.html</loc>
+      <lastmod>2026-03-03</lastmod>
+      <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/web-mobile-jogos/aula-04-03-2026.html</loc>
+      <lastmod>2026-03-03</lastmod>
+      <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/computacionais-seguranca/index.html</loc>
+      <lastmod>2026-03-05</lastmod>
+      <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/computacionais-seguranca/aula-05-03-2026.html</loc>
+      <lastmod>2026-03-05</lastmod>
+      <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-stalking-bancario-cobranca-indevida.html</loc>
+      <lastmod>2026-03-07</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-42-cdc-escudo-constrangimento-bancario.html</loc>
+      <lastmod>2026-03-07</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/arquivos/checklist-stalking-bancario-2026-pericia-dr-lincoln-sposito.pdf</loc>
+      <lastmod>2026-03-08</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/arquivos/modelo-quesitos-aml-kyc-dr-lincoln-sposito.pdf</loc>
+      <lastmod>2026-03-08</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/arquivos/modelo-quesitos-resolucao-4966-dr-lincoln-sposito.pdf</loc>
+      <lastmod>2026-03-08</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/arquivos/checklist-reforma-tributaria-2026-pericia-dr-lincoln-sposito.pdf</loc>
+      <lastmod>2026-03-08</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/arquivos/checklist-conformidade-com-a-lei-14905-2024.pdf</loc>
+      <lastmod>2026-03-08</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/arquivos/checklist-indicadores-risco-dados.pdf</loc>
+      <lastmod>2026-03-08</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/arquivos/Guia-Auditoria-IOF-Dr-Lincoln-Sposito.pdf</loc>
+      <lastmod>2026-03-08</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/arquivos/Consultoria Estratégica, Perícia Financeira e Transformação Digital.pdf</loc>
+      <lastmod>2026-03-08</lastmod>
+      <priority>0.70</priority>
+    </url>
+    
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/arquivos/dossie-de-impacto-pericia-de-dados-em-saude-mental.pdf</loc>
+      <lastmod>2026-03-08</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-assedio-bancario-saude-mental-depressao.html</loc>
+      <lastmod>2026-03-08</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-stalking-financiamento-veiculos-busca-apreensao.html</loc>
+      <lastmod>2026-03-09</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-resolucao-4966-auditoria-algoritmos.html</loc>
+      <lastmod>2026-03-11</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-stalking-bancario-dossie-investigativo.html</loc>
+      <lastmod>2026-03-12</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/sistemas-distribuidos/aula-16-03-2026.html</loc>
+      <lastmod>2026-03-16</lastmod>
+      <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/web-mobile-jogos/aula-18-03-2026.html</loc>
+      <lastmod>2026-03-16</lastmod>
+      <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/computacionais-seguranca/aula-19-03-2026.html</loc>
+      <lastmod>2026-03-19</lastmod>
+      <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/ihc-ux/aula-20-03-2026.html</loc>
+      <lastmod>2026-03-20</lastmod>
+      <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/ihc-ux/revisao-aula-06-03-2026-decisao-centrado-no-usuario-ucd-personas-jornadas.pdf</loc>
+      <lastmod>2026-03-20</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/ihc-ux/aula-20-03-2026-prototipagem-I-wireframes-de-baixa-fidelidade.pdf</loc>
+      <lastmod>2026-03-20</lastmod>
+      <priority>0.70</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-a-autopsia-do-stalking-bancario-o-guia-definitivo-contra-a-engenharia-do-assedio-e-a-industria-da-coacao-digital.html</loc>
+      <lastmod>2026-03-21</lastmod>
+      <priority>0.80</priority>
+    </url>
+    
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/dossie-saude-mental.html</loc>
+      <lastmod>2026-03-21</lastmod>
+      <priority>1.00</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-stalking-bancario-voce-esta-pagando-para-ser-torturado.html</loc>                                                       
+      <lastmod>2026-03-21</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/sistemas-distribuidos/aula-23-03-2026.html</loc>                                                       
+      <lastmod>2026-03-21</lastmod>
+      <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/computacionais-seguranca/aula-26-03-2026.html</loc>                                                       
+      <lastmod>2026-03-21</lastmod>
+      <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/professor.lincoln/web-mobile-jogos/aula-25-03-2026.html</loc>                                                       
+      <lastmod>2026-03-21</lastmod>
+      <priority>0.60</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-banco-responsabilidade-solidaria-cobranca-abusiva-assedio.html</loc>                                                       
+      <lastmod>2026-03-28</lastmod>
+      <priority>0.80</priority>
+    </url>
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/arquivos/checklist-stalking-bancario-responsabilidade-solidária-e-assedio-algorítmico-dr-lincoln-sposito.pdf</loc>
+      <lastmod>2026-03-28</lastmod>
+      <priority>0.50</priority>
+    </url>    
 </urlset>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tire suas dúvidas sobre perícia judicial financeira, TI e reajustes de saúde. Entenda a metodologia de trabalho do Dr. Lincoln Sposito.">
+    <title>FAQ - Dúvidas Frequentes | Dr. Lincoln Sposito</title>
+    
+    <link rel="canonical" href="https://spositol.github.io/pericia.judicial/faq.html" />
+	<meta property="og:url" content="https://spositol.github.io/pericia.judicial/faq.html">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cro-system.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>	
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
+<style>
+    /* Margem proporcional entre a busca e a lista */
+    .faq-header-static {
+        text-align: center;
+        padding-top: 40px;
+        margin-bottom: 80px; /* Aumentado para criar um respiro visual claro */
+    }
+
+    .faq-container {
+        max-width: 950px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+
+    .faq-item {
+        margin-bottom: 25px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 15px;
+    }
+
+    /* Estrutura de colunas para Questão e Tag */
+    .faq-question-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        gap: 30px; /* Espaço entre texto e tag */
+    }
+
+    .faq-question-text {
+        font-family: 'Playfair Display', serif;
+        color: #1a2a3a;
+        font-size: 1.15rem;
+        flex: 1; /* Faz o texto ocupar todo o lado esquerdo */
+        margin: 0;
+    }
+
+    /* Tag Fixa na Direita */
+    .faq-tag {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        padding: 6px 12px;
+        border-radius: 4px;
+        min-width: 150px; /* Largura fixa para alinhar todas as tags em coluna */
+        text-align: center;
+        white-space: nowrap;
+    }
+    
+    /* Cores das Tags (Mantidas as anteriores) */
+    .tag-financeiro { background: #e3f2fd; color: #1976d2; border: 1px solid #bbdefb; }
+    .tag-ti { background: #f3e5f5; color: #7b1fa2; border: 1px solid #e1bee7; }
+    .tag-saude { background: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+    .tag-processual { background: #fff3e0; color: #ef6c00; border: 1px solid #ffe0b2; }
+
+    .faq-answer {
+        display: none;
+        padding: 20px 180px 20px 0; /* Margem direita maior para não sobrepor a tag visualmente */
+        color: #555;
+        line-height: 1.7;
+    }
+
+    .faq-item.active .faq-answer { display: block; }
+</style>
+    
+    </head>
+
+<body>
+
+<header style="background-color: #1a2a3a; padding: 15px 0; border-bottom: 2px solid #c5a059;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+        <a href="index.html" style="text-decoration: none; display: block; width: 220px;">
+            <img src="grafico.svg" width="220" height="60" loading="lazy" alt="Logo Dr. Lincoln Sposito">
+        </a>
+        <nav>
+            <ul style="list-style: none; display: flex; gap: 20px; margin: 0; padding: 0;">
+                <li><a href="index.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Início</a></li>
+                <li><a href="sobre.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Sobre</a></li>
+				<li><a href="index.html#servicos" class="btn-nav">Serviços</a></li>
+				<li><a href="pericia-dados.html" class="btn-nav">Perícia de Dados</a></li>
+				<li><a href="index.html#blog"     class="btn-nav">Artigos</a></li>
+				<li><a href="casos-emblematicos.html"     class="btn-nav">Casos emblemáticos</a></li>
+                <li><a href="materiais.html" style="color: white; text-decoration: none; font-family: 'Inter', sans-serif; font-weight: 600;">Materiais</a></li>
+				<li><a href="faq.html" class="btn-nav" style="color: var(--accent); font-weight: bold;">FAQ</a></li>
+                <li><a href="index.html#contato"  class="btn-nav">Contato</a></li>				
+            </ul>
+        </nav>		
+    </div>
+</header>
+
+<main>
+    <div class="faq-header-static">
+        <h1 style="font-family: 'Playfair Display', serif; color: #1a2a3a;">FAQ: Perguntas frequentes</h1>
+        <p style="font-family: 'Inter', sans-serif; color: #666;">Recursos exclusivos para advogados tirarem suas dúvidas.</p>
+        
+        <div class="filter-container" style="margin-top: 25px;">
+            <button class="btn-filtro active" data-filter="todos">Todos</button>
+            <button class="btn-filtro" data-filter="financeiro">Financeiro/Bancário</button>
+            <button class="btn-filtro" data-filter="saude">Saúde (VCMH)</button>
+            <button class="btn-filtro" data-filter="ti">TI/Dados Forense</button>
+            <button class="btn-filtro" data-filter="processual">Processual/Honorários</button>
+        </div>
+
+        <div style="max-width: 800px; margin: 20px auto 0 auto; padding: 0 20px;">
+            <input type="text" id="inputBuscaFaq" placeholder="🔍 Digite sua dúvida (ex: honorários, CET, VCMH...)" 
+                style="width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 8px; font-family: 'Inter', sans-serif; outline: none;">
+        </div>
+    </div>
+
+<div class="faq-container" id="faqLista">
+
+	<div class="faq-item" data-category="financeiro">
+        <div class="faq-question-wrapper">
+            <div class="faq-question-text">Como a Lei 14.905/2024 altera o cálculo de juros nos financiamentos em 2026? <span class="icon-toggle">+</span></div>
+            <span class="faq-tag tag-financeiro">Bancário/Civil</span>
+        </div>
+        <div class="faq-answer">
+            A nova lei estabelece que, na ausência de taxa convencionada, os juros de mora devem ser a <strong>Taxa Selic deduzida da variação do IPCA</strong>. Como Analista de Sistemas, identificamos que muitos cálculos ignoram o "Piso Zero" (quando o IPCA supera a Selic), gerando excesso de execução que pode ser expurgado via perícia.
+            <br><a href="artigo-lei-14905-juros-financiamento.html" style="color: #c5a059; font-weight: bold;">Veja como anular erros de cálculo com a nova Lei 14.905.</a>
+        </div>
+    </div>
+	<div class="faq-item" data-category="financeiro">
+        <div class="faq-question-wrapper">
+            <div class="faq-question-text">Como a carência em financiamentos pode esconder o anatocismo? <span class="icon-toggle">+</span></div>
+            <span class="faq-tag tag-financeiro">Bancário/SFH</span>
+        </div>
+        <div class="faq-answer">
+            Durante a carência, se os juros não forem pagos mensalmente, eles são incorporados ao saldo devedor (incorporação de juros), gerando capitalização indevida. 
+            <br><a href="artigo-armadilha-carencia-bancaria.html" style="color: #c5a059; font-weight: bold;">Veja a análise sobre Juros na Carência.</a>
+        </div>
+    </div>
+
+    <div class="faq-item" data-category="financeiro">
+        <div class="faq-question-wrapper">
+            <div class="faq-question-text">O Método de Gauss é aceito para substituir a Tabela Price? <span class="icon-toggle">+</span></div>
+            <span class="faq-tag tag-financeiro">Bancário/SFH</span>
+        </div>
+        <div class="faq-answer">
+            Sim. O Método de Gauss aplica juros simples e é uma alternativa técnica sólida para afastar a capitalização de juros do Sistema Francês. 
+            <br><a href="artigo-biografia-carl-friedrich-gauss-metodo-matematico.html" style="color: #c5a059; font-weight: bold;">Entenda o Método de Gauss na prova pericial.</a>
+        </div>
+    </div>
+
+    <div class="faq-item" data-category="financeiro">
+        <div class="faq-question-wrapper">
+            <div class="faq-question-text">O que é o erro de 'Gross Up' no cálculo do IOF? <span class="icon-toggle">+</span></div>
+            <span class="faq-tag tag-financeiro">Bancário/SFH</span>
+        </div>
+        <div class="faq-answer">
+            É uma falha na fórmula de cálculo do imposto que distorce o valor das parcelas e eleva o Custo Efetivo Total (CET) indevidamente. 
+            <br><a href="artigo-erro-calculo-iof-parcela.html" style="color: #c5a059; font-weight: bold;">Leia sobre a tese do Gross Up no IOF.</a>
+        </div>
+    </div>
+
+    <div class="faq-item" data-category="financeiro">
+        <div class="faq-question-wrapper">
+            <div class="faq-question-text">Como o erro material em CCBs pode anular a força do título? <span class="icon-toggle">+</span></div>
+            <span class="faq-tag tag-financeiro">Bancário/SFH</span>
+        </div>
+        <div class="faq-answer">
+            Inconsistências algorítmicas na Cédula de Crédito Bancário retiram a liquidez e certeza do título, podendo invalidar execuções. 
+            <br><a href="artigo-falha-gestao-ccb.html" style="color: #c5a059; font-weight: bold;">Saiba como identificar nulidades em CCBs.</a>
+        </div>
+    </div>
+
+    <div class="faq-item" data-category="financeiro">
+        <div class="faq-question-wrapper">
+            <div class="faq-question-text">A Tabela Price mascara a ocorrência de juros sobre juros? <span class="icon-toggle">+</span></div>
+            <span class="faq-tag tag-financeiro">Bancário/SFH</span>
+        </div>
+        <div class="faq-answer">
+            Sim, a estrutura matemática da Price pressupõe capitalização. A auditoria revela como o anatocismo oculto lesa o consumidor. 
+            <br><a href="artigo-heranca-richard-price-sistema-frances-amortizacao.html" style="color: #c5a059; font-weight: bold;">Entenda a auditoria do Sistema Price.</a>
+        </div>
+    </div>
+
+    <div class="faq-item" data-category="financeiro">
+        <div class="faq-question-wrapper">
+            <div class="faq-question-text">O 'Mínimo Existencial' pode limitar os descontos de CDC? <span class="icon-toggle">+</span></div>
+            <span class="faq-tag tag-financeiro">Bancário/SFH</span>
+        </div>
+        <div class="faq-answer">
+            Pela Lei do Superendividamento, as parcelas não podem comprometer a subsistência básica, fato comprovado via perícia. 
+            <br><a href="artigo-pericia-cdc-abusividade.html" style="color: #c5a059; font-weight: bold;">Veja a perícia em CDC e Mínimo Existencial.</a>
+        </div>
+    </div>
+
+    <div class="faq-item" data-category="financeiro">
+        <div class="faq-question-wrapper">
+            <div class="faq-question-text">É possível quitar resíduos do SFH em contratos de 1988? <span class="icon-toggle">+</span></div>
+            <span class="faq-tag tag-financeiro">Bancário/SFH</span>
+        </div>
+        <div class="faq-answer">
+            Sim, através da reconstrução do saldo devedor auditando planos econômicos e expurgos do FCVS. 
+            <br><a href="artigo-pericia-financeira-revisao-contrato-1988.html" style="color: #c5a059; font-weight: bold;">Saiba mais sobre SFH e quitação de resíduos.</a>
+        </div>
+    </div>
+
+    <div class="faq-item" data-category="financeiro">
+        <div class="faq-question-wrapper">
+            <div class="faq-question-text">O erro no CET pode anular uma Busca e Apreensão de veículo? <span class="icon-toggle">+</span></div>
+            <span class="faq-tag tag-financeiro">Bancário/SFH</span>
+        </div>
+        <div class="faq-answer">
+            Divergências entre o Custo Efetivo Total contratado e o real podem descaracterizar a mora, impedindo a apreensão. 
+            <br><a href="artigo-taxa-de-juros-financiamento-veiculo-2026.html" style="color: #c5a059; font-weight: bold;">Entenda o Erro no CET em veículos.</a>
+        </div>
+    </div>
+
+    <div class="faq-item" data-category="saude">
+        <div class="faq-question-wrapper">
+            <div class="faq-question-text">Como o Tema 1016 do STJ impacta os reajustes de saúde? <span class="icon-toggle">+</span></div>
+            <span class="faq-tag tag-saude">Saúde (VCMH)</span>
+        </div>
+        <div class="faq-answer">
+            O STJ exige prova da sinistralidade. A perícia de dados é a ferramenta para desconstruir reajustes sem transparência. 
+            <br><a href="artigo-jurisprudencia-planos-saude.html" style="color: #c5a059; font-weight: bold;">Leia sobre o Tema 1016 e Sinistralidade.</a>
+        </div>
+    </div>
+
+    <div class="faq-item" data-category="saude">
+        <div class="faq-question-wrapper">
+            <div class="faq-question-text">O reajuste do Produto 445 (Qualicorp) pode ser auditado? <span class="icon-toggle">+</span></div>
+            <span class="faq-tag tag-saude">Saúde (VCMH)</span>
+        </div>
+        <div class="faq-answer">
+            Sim. Analisamos os extratos e o pool de risco para identificar se o reajuste aplicado pela Qualicorp respeita os limites legais. 
+            <br><a href="artigo-plano-saude-445.html" style="color: #c5a059; font-weight: bold;">Veja a estratégia para o Produto 445.</a>
+        </div>
+    </div>
+
+    <div class="faq-item" data-category="saude">
+        <div class="faq-question-wrapper">
+            <div class="faq-question-text">Como abrir a 'Caixa-Preta' do VCMH em planos coletivos? <span class="icon-toggle">+</span></div>
+            <span class="faq-tag tag-saude">Saúde (VCMH)</span>
+        </div>
+        <div class="faq-answer">
+            Através da perícia atuarial que verifica se a variação de custos hospitalares apresentada é real ou inflada artificialmente. 
+            <br><a href="artigo-vcmh-caixa-preta.html" style="color: #c5a059; font-weight: bold;">Entenda a auditoria do VCMH.</a>
+        </div>
+    </div>
+
+    <div class="faq-item" data-category="ti">
+        <div class="faq-question-wrapper">
+            <div class="faq-question-text">O que é Modelagem de Dados Forense em processos? <span class="icon-toggle">+</span></div>
+            <span class="faq-tag tag-ti">TI Forense</span>
+        </div>
+        <div class="faq-answer">
+            É a técnica de auditar a arquitetura de bancos de dados para transformar logs e registros digitais em provas materiais. 
+            <br><a href="artigo-modelagem-dados-forense.html" style="color: #c5a059; font-weight: bold;">Saiba como dados viram provas judiciais.</a>
+        </div>
+    </div>
+
+    <div class="faq-item" data-category="ti">
+        <div class="faq-question-wrapper">
+            <div class="faq-question-text">Por que auditar a Transparência Algorítmica corporativa? <span class="icon-toggle">+</span></div>
+            <span class="faq-tag tag-ti">TI Forense</span>
+        </div>
+        <div class="faq-answer">
+            Para garantir que sistemas automáticos de cálculo e crédito não operem com viés ou erros lógicos prejudiciais. 
+            <br><a href="pericia-dados.html" style="color: #c5a059; font-weight: bold;">Explore a Perícia de Dados.</a>
+        </div>
+    </div>
+
+</div>
+  <div style="text-align: center; padding-bottom: 60px;">
+        <p>Ainda tem dúvidas?</p>
+        <a href="https://wa.me/5511914612603" class="btn-primary" style="text-decoration: none; padding: 15px 30px; display: inline-block; background-color: #1a2a3a; color: white; border-radius: 5px; font-weight: bold;">Falar Direto no WhatsApp</a>
+    </div>
+</main>
+
+<footer>
+    <p>&copy; 2026 Dr. Lincoln Sposito | Perícia Judicial e Assistência Técnica. </p>
+	<p>Todos os direitos reservados.
+		(<a href="faq.html" style="color: #c5a059; margin: 0 15px; text-decoration: none; font-weight: bold;">FAQ Técnico</a>)
+	</p>
+</footer>	
+
+
+<a href="https://wa.me/5511914612603?text=Olá Dr. Lincoln, me interessei pelo seu trabalho de perícia. Podemos falar sobre um caso que eu tenho?" 
+   id="cta-whatsapp-stalking"
+   class="whatsapp-flutuante" 
+   target="_blank" 
+   aria-label="Falar com Dr. Lincoln Sposito no WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+/**
+ * Monitoramento Consolidado de Leads - Dr. Lincoln Sposito
+ * Finalidade: Captura de conversões GA4 para botões de WhatsApp e Auditoria
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // 1. Monitoramento do Botão Flutuante (WhatsApp Geral)
+    var btnStalking = document.getElementById('cta-whatsapp-stalking');
+    if (btnStalking) {
+        btnStalking.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    'event_category': 'Contato',
+                    'event_label': 'WhatsApp - Autopsia Stalking',
+                    'method': 'WhatsApp',
+                    'value': 1.0,
+                    'currency': 'BRL',
+                    'content_name': 'A Autópsia do Stalking Bancário'
+                });
+                console.log('Forense: Lead WhatsApp registrado.');
+            }
+        });
+    }
+
+    // 2. Monitoramento do Botão de Auditoria (Final do Artigo)
+    var btnAuditoria = document.getElementById('btn-whatsapp-autopsia');
+    if (btnAuditoria) {
+        btnAuditoria.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    'event_category': 'Conversão Artigo',
+                    'event_label': 'Botão Final - Autópsia Stalking',
+                    'method': 'WhatsApp',
+                    'value': 1.0,
+                    'currency': 'BRL',
+                    'content_name': 'Checklist de Identificação de Stalking'
+                });
+                console.log('Forense: Lead Auditoria registrado.');
+            }
+        });
+    }
+	var btnChecklist = document.getElementById('btn-download-checklist-autopsia');
+    if (btnChecklist) {
+        btnChecklist.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'file_download', {
+                    'event_category': 'Materiais',
+                    'event_label': 'Checklist Admissibilidade - Stalking',
+                    'file_name': 'checklist-admissibilidade-stalking.pdf'
+                });
+                console.log('GA4: Download do Checklist rastreado.');
+            }
+        });
+    }
+});
+</script>
+
+
+<script>
+    const inputBusca = document.getElementById('inputBuscaFaq');
+    const botoesFiltro = document.querySelectorAll('.btn-filtro');
+    const itensFaq = document.querySelectorAll('.faq-item');
+
+    function filtrarFaq() {
+        const termoBusca = inputBusca.value.toLowerCase();
+        const filtroAtivo = document.querySelector('.btn-filtro.active').getAttribute('data-filter');
+
+        itensFaq.forEach(item => {
+            // BUSCA CORRETA: Agora olha dentro do .faq-question-text
+            const pergunta = item.querySelector('.faq-question-text').innerText.toLowerCase();
+            const resposta = item.querySelector('.faq-answer').innerText.toLowerCase();
+            const categoria = item.getAttribute('data-category');
+
+            const matchesBusca = pergunta.includes(termoBusca) || resposta.includes(termoBusca);
+            const matchesFiltro = (filtroAtivo === 'todos' || categoria === filtroAtivo);
+
+            item.style.display = (matchesBusca && matchesFiltro) ? 'block' : 'none';
+        });
+    }
+
+    inputBusca.addEventListener('input', filtrarFaq);
+
+    botoesFiltro.forEach(btn => {
+        btn.addEventListener('click', () => {
+            botoesFiltro.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            filtrarFaq();
+        });
+    });
+
+    // Abrir/Fechar
+    document.querySelectorAll('.faq-question-wrapper').forEach(wrapper => {
+        wrapper.addEventListener('click', () => {
+            const item = wrapper.parentElement;
+            item.classList.toggle('active');
+            const icon = wrapper.querySelector('.icon-toggle');
+            if(icon) icon.innerText = item.classList.contains('active') ? '-' : '+';
+        });
+    });
+</script>
+
+<script>
+const croConfig = {
+    enableProgressBar: true,
+    enableFloatingBar: true,
+    enableExitIntent: true,
+    floatingBarDelay: 20000,
+    floatingBarMessage: 'Ainda ficou dúvida técnica no seu caso?',
+    floatingBarUrgency: 'Especialista online agora',
+    abTests: {
+        floating_bar_color: {
+            enabled: true,
+            variants: {
+                A: { weight: 50, overrides: { floatingBarButtonBg: '#c5a059', floatingBarButtonHoverBg: '#e6c770', floatingBarButtonTextColor: '#1a2a3a' } },
+                B: { weight: 50, overrides: { floatingBarButtonBg: '#25d366', floatingBarButtonHoverBg: '#1fbd56', floatingBarButtonTextColor: '#ffffff' } }
+            }
+        },
+        floating_bar_urgency: {
+            enabled: true,
+            variants: {
+                A: { weight: 50, overrides: { floatingBarUrgency: '3 de 10 slots disponíveis' } },
+                B: { weight: 50, overrides: { floatingBarUrgency: 'Últimas 24h para agenda de Março' } }
+            }
+        },
+        floating_bar_delay: {
+            enabled: true,
+            variants: {
+                A: { weight: 34, overrides: { floatingBarDelay: 20000 } },
+                B: { weight: 33, overrides: { floatingBarDelay: 8000 } },
+                C: { weight: 33, overrides: { floatingBarDelay: 35000 } }
+            }
+        },
+        exit_intent_copy: {
+            enabled: true,
+            variants: {
+                A: { weight: 50, overrides: { exitIntentTitle: 'Espera! 👋', exitIntentSubtitle: 'Você encontrou a resposta para seu caso? Ou ainda tem dúvidas técnicas?' } },
+                B: { weight: 50, overrides: { exitIntentTitle: 'Ainda tem dúvidas técnicas?', exitIntentSubtitle: 'Antes de sair, valide sua situação com uma análise especializada.' } }
+            }
+        }
+    }
+};
+</script>
+<script src="cro-system.js"></script>
+</body>
+</html>

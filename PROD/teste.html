@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Financiamento Judicial | Dr. Lincoln Sposito</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: 600; color: #1a2a3a; }
+        .input-group input, .input-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        .card-contato { background: #fdfaf4; border: 1px solid #c5a059; padding: 20px; border-radius: 8px; margin-bottom: 25px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar" style="background-color: #1a2a3a; padding: 15px 0; border-bottom: 2px solid #c5a059;">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 0 auto; padding: 0 20px;">
+            <div class="logo-wrapper">
+                <a href="index.html" style="text-decoration: none;">
+                    <img src="grafico.svg" width="220" alt="Logo Dr. Lincoln Sposito">
+                </a>                
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
+        <h1 style="font-family: 'Playfair Display'; color: #1a2a3a;">Simulador de Amortização Pericial</h1>
+        
+        <div class="card-contato">
+            <h3 style="color: #c5a059; margin-top: 0;">Dados do Interessado</h3>
+            <div class="input-group">
+                <label for="nome">Nome Completo</label>
+                <input type="text" id="nome" placeholder="Nome do cliente">
+            </div>
+            <div style="display: flex; gap: 15px;">
+                <div class="input-group" style="flex: 1;">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" placeholder="cliente@email.com">
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label for="whatsapp">WhatsApp/Telemóvel</label>
+                    <input type="text" id="whatsapp" placeholder="(00) 00000-0000">
+                </div>
+            </div>
+            <div style="display: flex; gap: 15px;">
+                <div class="input-group" style="flex: 1;">
+                    <label for="documento">CPF/CNPJ</label>
+                    <input type="text" id="documento" placeholder="000.000.000-00">
+                </div>
+                <div class="input-group" style="flex: 1;">
+                    <label for="tipoFinanciamento">Tipo de Crédito</label>
+                    <select id="tipoFinanciamento">
+                        <option value="Veículo">Financiamento de Veículo</option>
+                        <option value="SFH">SFH (Imobiliário)</option>
+                        <option value="Empréstimo">Empréstimo / Consignado</option>
+                        <option value="Outro">Outro</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-financeiro">
+            <div class="input-group">
+                <label for="pvTotal">Valor Total Financiado (R$)</label>
+                <input type="number" id="pvTotal" step="0.01" value="100000">
+            </div>
+            <div class="input-group">
+                <label for="pvPrin">Valor Líquido (Sem taxas adicionais) (R$)</label>
+                <input type="number" id="pvPrin" step="0.01" value="95000">
+            </div>
+            <div class="input-group">
+                <label for="n">Número de Parcelas</label>
+                <input type="number" id="n" value="36">
+            </div>
+            <div class="input-group">
+                <label for="iNom">Taxa Contratual (% ao mês)</label>
+                <input type="number" id="iNom" step="0.0001" value="1.5">
+            </div>
+            <div class="input-group">
+                <label for="pmtInfo">Valor da Parcela no Contrato (R$)</label>
+                <input type="number" id="pmtInfo" step="0.01" value="3615.24">
+            </div>
+            <div class="input-group">
+                <label for="sistema">Sistema de Amortização</label>
+                <select id="sistema">
+                    <option value="PRICE">PRICE (Prestações Fixas)</option>
+                    <option value="SAC">SAC (Prestações Decrescentes)</option>
+                    <option value="SACRE">SACRE (Misto)</option>
+                </select>
+            </div>
+            
+            <button onclick="processarCalculo()" class="btn-primary" style="width: 100%; padding: 15px; background: #1a2a3a; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">
+                CALCULAR E GERAR LAUDO
+            </button>
+        </div>
+
+        <div id="resultado" style="margin-top: 30px;"></div>
+    </main>
+
+    <script>
+        async function processarCalculo() {
+            // Captura segura de dados com Optional Chaining (?.)
+            const dados = {
+                pvTotal: parseFloat(document.getElementById('pvTotal')?.value) || 0,
+                pvPrin: parseFloat(document.getElementById('pvPrin')?.value) || 0,
+                n: parseInt(document.getElementById('n')?.value) || 0,
+                iNom: (parseFloat(document.getElementById('iNom')?.value) || 0) / 100,
+                pmtInfo: parseFloat(document.getElementById('pmtInfo')?.value) || 0,
+                sistema: document.getElementById('sistema')?.value || 'PRICE',
+                nome: document.getElementById('nome')?.value || "Não informado",
+                documento: document.getElementById('documento')?.value || "Não informado",
+                email: document.getElementById('email')?.value || "Não informado",
+                whatsapp: document.getElementById('whatsapp')?.value || "Não informado",
+                tipoFinanciamento: document.getElementById('tipoFinanciamento')?.value || "Outro"
+            };
+
+            const area = document.getElementById('resultado');
+            area.innerHTML = '<p style="color: #c5a059; font-weight: bold;">Conectando ao motor pericial... Isto pode demorar 30s no primeiro acesso.</p>';
+
+            try {
+                const response = await fetch("https://pericia-backend.onrender.com/calcular", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dados)
+                });
+
+                const resJson = await response.json();
+
+                if (resJson.sucesso) {
+                    renderizarLaudoUnificado(resJson.auditoriaBanco, null, dados, 'banco', dados.sistema, resJson.cetCalculado, 0);
+                } else {
+                    area.innerHTML = `<p style="color: red;">Erro: ${resJson.erro}</p>`;
+                }
+            } catch (error) {
+                console.error(error);
+                area.innerHTML = '<p style="color: red;">O servidor está a acordar. Por favor, clique em Calcular novamente em 20 segundos.</p>';
+            }
+        }
+
+        function renderizarLaudoUnificado(dadosExibir, _, p, visao, nomeSistema, cetCalc, cetInfo) {
+            const area = document.getElementById('resultado');
+            const formatarMoeda = v => v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            
+            area.innerHTML = `
+                <div class="card" style="border: 2px solid #1a2a3a; padding: 20px; border-radius: 8px; background: white;">
+                    <h2 style="color: #1a2a3a; border-bottom: 2px solid #c5a059;">Laudo Técnico Preliminar</h2>
+                    <p><strong>Sistema:</strong> ${nomeSistema}</p>
+                    <p><strong>CET Pericial Calculado:</strong> ${(cetCalc * 100).toFixed(4)}% ao mês</p>
+                    <p><strong>Valor Sugerido para o Laudo:</strong> R$ ${formatarMoeda(50 + p.n)}</p>
+                    
+                    <div style="overflow-x: auto; margin-top: 20px;">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead style="background: #1a2a3a; color: white;">
+                                <tr><th>Nº</th><th>Parcela</th><th>Juros</th><th>Amortização</th><th>Saldo</th></tr>
+                            </thead>
+                            <tbody>
+                                ${dadosExibir.tabela.map(it => `
+                                    <tr style="border-bottom: 1px solid #ddd;">
+                                        <td style="padding: 8px;">${it.n}</td>
+                                        <td>R$ ${formatarMoeda(it.pmt)}</td>
+                                        <td>R$ ${formatarMoeda(it.jur)}</td>
+                                        <td>R$ ${formatarMoeda(it.amort)}</td>
+                                        <td>R$ ${formatarMoeda(it.saldo)}</td>
+                                    </tr>`).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>`;
+            area.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

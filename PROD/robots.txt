@@ -1,8 +1,12 @@
 User-agent: *
-Allow: /
+Allow: /checklist-admissibilidade.html
 Disallow: /404.html
 Disallow: /obrigado.html
 Disallow: /obrigadomateriais.html
-Disallow: /checklist-admissibilidade.html
+Disallow: /calculo-financiamento-sistema-sac-price-sacre-pericia-backend.html
+Disallow: /calculo-financiamento-sistema-sac-price-sacre.html
+Disallow: /modelo-quesitos-bancarios-lincoln-sposito.docx
+Disallow: /validador-financiamento-dr-lincoln-sposito.html
+Disallow: /validador-simples-financiamento-2026-dr-lincoln-sposito-obscuro.html
 
 Sitemap: https://spositol.github.io/pericia.judicial/sitemap.xml

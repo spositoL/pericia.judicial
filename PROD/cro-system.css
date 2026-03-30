@@ -1,0 +1,410 @@
+/* ═══════════════════════════════════════════════════════════════
+   CONVERSION RATE OPTIMIZATION (CRO) SYSTEM
+   Dr. Lincoln Sposito - Perícia Judicial
+   ═══════════════════════════════════════════════════════════════ */
+
+/* 1. STICKY PROGRESS BAR (Top) */
+.cro-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #f0f0f0;
+    z-index: 999;
+}
+
+.cro-progress-bar::after {
+    content: '';
+    display: block;
+    height: 100%;
+    background: linear-gradient(90deg, #c5a059 0%, #e6c770 100%);
+    width: 0%;
+    transition: width 0.1s ease;
+}
+
+/* 2. FLOATING URGENCY BAR (Bottom) */
+.cro-floating-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(90deg, #1a2a3a 0%, #2c3e50 100%);
+    color: white;
+    padding: 15px 20px;
+    z-index: 998;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    border-top: 3px solid #c5a059;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.15);
+}
+
+.cro-floating-bar.show {
+    display: flex;
+}
+
+.cro-floating-bar-text {
+    flex: 1;
+}
+
+.cro-floating-bar-urgency {
+    color: #ff6b6b;
+    font-weight: bold;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.cro-floating-bar-btn {
+    background: #c5a059;
+    color: #1a2a3a;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    white-space: nowrap;
+}
+
+.cro-floating-bar-btn:hover {
+    background: #e6c770;
+}
+
+.cro-floating-bar-close {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.5rem;
+    margin-left: 15px;
+}
+
+/* 3. CONTEXTUAL MICRO-CTA (Post-Section) */
+.cro-micro-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff9e6;
+    border-left: 4px solid #c5a059;
+    padding: 12px 20px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    margin: 20px 0;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.cro-micro-cta:hover {
+    background: #fff0cc;
+    transform: translateX(5px);
+}
+
+.cro-micro-cta-icon {
+    color: #c5a059;
+    font-weight: bold;
+}
+
+/* 4. EXIT-INTENT POPUP */
+.cro-exit-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.cro-exit-popup.show {
+    display: flex;
+}
+
+.cro-exit-popup-content {
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.cro-exit-popup-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #999;
+}
+
+.cro-exit-popup-title {
+    font-family: 'Playfair Display', serif;
+    color: #1a2a3a;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+.cro-exit-popup-subtitle {
+    color: #666;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.cro-exit-popup-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.cro-exit-btn {
+    padding: 15px 20px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.95rem;
+}
+
+.cro-exit-btn-yes {
+    background: #c5a059;
+    color: white;
+}
+
+.cro-exit-btn-yes:hover {
+    background: #e6c770;
+}
+
+.cro-exit-btn-no {
+    background: white;
+    color: #1a2a3a;
+    border: 2px solid #ddd;
+}
+
+.cro-exit-btn-no:hover {
+    background: #f8f9fa;
+    border-color: #c5a059;
+}
+
+/* 5. SOCIAL PROOF BADGE */
+.cro-social-proof {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.85rem;
+    color: #666;
+    margin: 15px 0;
+}
+
+.cro-social-proof-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.cro-social-proof-number {
+    font-weight: bold;
+    color: #c5a059;
+    font-size: 1.1rem;
+}
+
+.cro-badge {
+    display: inline-block;
+    background: #fff9e6;
+    border: 1px solid #c5a059;
+    color: #c5a059;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 5px;
+}
+
+/* 6. URGENCY BANNER (Slots, Limited Time) */
+.cro-urgency-banner {
+    background: linear-gradient(90deg, #ff6b6b 0%, #ff5252 100%);
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    font-weight: bold;
+    margin: 20px 0;
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+.cro-urgency-banner-highlight {
+    background: rgba(255, 255, 255, 0.3);
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin: 0 5px;
+}
+
+/* 7. CTA BUTTON VARIANTS */
+.cro-cta-primary {
+    background: #c5a059;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cro-cta-primary:hover {
+    background: #e6c770;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3);
+}
+
+.cro-cta-secondary {
+    background: white;
+    color: #1a2a3a;
+    border: 2px solid #c5a059;
+    padding: 13px 28px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cro-cta-secondary:hover {
+    background: #fff9e6;
+    border-color: #e6c770;
+}
+
+/* 8. HESITATION PATH BUTTON */
+.cro-hesitation-btn {
+    background: white;
+    color: #1a2a3a;
+    border: 2px solid #999;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+}
+
+.cro-hesitation-btn:hover {
+    border-color: #c5a059;
+    color: #c5a059;
+}
+
+/* 9. SCARCITY INDICATOR */
+.cro-scarcity {
+    display: inline-block;
+    background: #fff9e6;
+    border: 1px solid #c5a059;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #1a2a3a;
+    margin: 10px 0;
+    font-weight: 600;
+}
+
+.cro-scarcity-progress {
+    width: 100px;
+    height: 6px;
+    background: #f0f0f0;
+    border-radius: 3px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.cro-scarcity-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #c5a059 0%, #e6c770 100%);
+    width: 70%;
+}
+
+/* 10. MOBILE RESPONSIVE */
+@media (max-width: 768px) {
+    .cro-floating-bar {
+        padding: 12px 15px;
+        font-size: 0.85rem;
+    }
+
+    .cro-exit-popup-content {
+        padding: 30px 20px;
+        margin: 20px;
+    }
+
+    .cro-exit-popup-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .cro-micro-cta {
+        font-size: 0.85rem;
+        padding: 10px 15px;
+    }
+}
+
+/* 11. ANIMATION CLASSES */
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.cro-animate-slide-up {
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.cro-pulse {
+    animation: pulse 2s infinite;
+}
+
+/* 12. WHATSAPP BUTTON STYLE */
+.cro-whatsapp-btn {
+    background: #25d366;
+    color: white;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.cro-whatsapp-btn:hover {
+    background: #1fbd56;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
+}
