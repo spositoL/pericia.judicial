@@ -256,6 +256,24 @@
             margin-bottom: 20px;
         }
 
+        .local-button {
+            background: #1a2a3a;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95rem;
+            transition: background 0.3s;
+            margin-bottom: 20px;
+            margin-left: 10px;
+        }
+
+        .local-button:hover {
+            background: #2c3e50;
+        }
+
         .sync-button:hover {
             background: #e6c770;
         }
@@ -376,6 +394,8 @@
                 </div>
             </div>
             <button class="sync-button" onclick="manualSync()">🔄 Sincronizar Agora</button>
+            <button id="load-local-json" class="local-button" onclick="openJsonPicker()" hidden>📂 Carregar ga4-data.json</button>
+            <input id="ga4-json-file" type="file" accept="application/json,.json" hidden>
             <div class="header-links">
                 <a id="btn-ga4-home" class="header-link" href="index.html">Voltar ao site</a>
                 <a id="btn-ga4-whatsapp" class="header-link" href="https://wa.me/5511914612603?text=Ola%20Dr.%20Lincoln,%20quero%20ajuda%20com%20o%20painel%20de%20monitoramento%20GA4.">Suporte via WhatsApp</a>
@@ -498,6 +518,7 @@
 
     <script>
         let chartsInstance = {};
+        const IS_FILE_PROTOCOL = window.location.protocol === 'file:';
         const dashboardParams = new URLSearchParams(window.location.search);
         const GA4_API_BASE = dashboardParams.get('apiBase')
             || localStorage.getItem('ga4ApiBase')
@@ -514,20 +535,31 @@
             try {
                 let data = null;
 
-                try {
-                    const apiResponse = await fetch(`${GA4_API_BASE}/api/ga4/latest`, { cache: 'no-store' });
-                    if (apiResponse.ok) {
-                        const apiPayload = await apiResponse.json();
-                        data = apiPayload?.data || null;
+                if (!IS_FILE_PROTOCOL) {
+                    try {
+                        const apiResponse = await fetch(`${GA4_API_BASE}/api/ga4/latest`, { cache: 'no-store' });
+                        if (apiResponse.ok) {
+                            const apiPayload = await apiResponse.json();
+                            data = apiPayload?.data || null;
+                        }
+                    } catch {
+                        // segue para fallback local
                     }
-                } catch {
-                    // segue para fallback local
                 }
 
                 if (!data) {
-                    const localResponse = await fetch('ga4-data.json', { cache: 'no-store' });
-                    if (!localResponse.ok) throw new Error('API local e ga4-data.json indisponíveis');
-                    data = await localResponse.json();
+                    if (!IS_FILE_PROTOCOL) {
+                        const localResponse = await fetch('ga4-data.json', { cache: 'no-store' });
+                        if (!localResponse.ok) throw new Error('API local e ga4-data.json indisponíveis');
+                        data = await localResponse.json();
+                    } else {
+                        const cachedLocalData = localStorage.getItem('ga4DashboardLocalData');
+                        if (cachedLocalData) {
+                            data = JSON.parse(cachedLocalData);
+                        } else {
+                            throw new Error('Modo local detectado. Clique em "Carregar ga4-data.json".');
+                        }
+                    }
                 }
 
                 renderDashboard(data);
@@ -535,11 +567,35 @@
             } catch (error) {
                 document.getElementById('sync-status').textContent = '❌ Sem sincronização';
                 document.getElementById('last-sync').textContent = '--:--';
-                document.getElementById('topPages').innerHTML = '<tr><td colspan="6" class="no-data">Sem dados. Rode: npm run monitor (online) ou node ga4-sync.js (local)</td></tr>';
+                document.getElementById('topPages').innerHTML = '<tr><td colspan="6" class="no-data">Sem dados. Rode: npm run monitor (online) ou use o botao "Carregar ga4-data.json" (modo local).</td></tr>';
                 document.getElementById('conversionEventsList').innerHTML = '<div class="no-data">Sem dados de GA4 disponíveis no momento.</div>';
                 showError(`❌ Erro ao carregar dados: ${error.message}`);
                 return null;
             }
+        }
+
+        function openJsonPicker() {
+            const fileInput = document.getElementById('ga4-json-file');
+            if (fileInput) fileInput.click();
+        }
+
+        function handleJsonFileSelect(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(loadEvent) {
+                try {
+                    const text = loadEvent.target.result;
+                    const parsed = JSON.parse(text);
+                    localStorage.setItem('ga4DashboardLocalData', text);
+                    renderDashboard(parsed);
+                    showSuccess('✅ ga4-data.json carregado em modo local.');
+                } catch {
+                    showError('❌ JSON inválido. Selecione um ga4-data.json válido.');
+                }
+            };
+            reader.readAsText(file);
         }
 
         /**
@@ -815,6 +871,11 @@
          * Sincronizar manualmente (requer `ga4-sync.js` rodando)
          */
         async function manualSync() {
+            if (IS_FILE_PROTOCOL) {
+                showWarning('⚠️ Em file:// não há API para sincronizar. Use "Carregar ga4-data.json".');
+                return;
+            }
+
             const btn = document.querySelector('.sync-button');
             btn.disabled = true;
             btn.textContent = '⏳ Sincronizando...';
@@ -853,6 +914,21 @@
 
         // Carregar dados ao iniciar
         document.addEventListener('DOMContentLoaded', function() {
+            if (IS_FILE_PROTOCOL) {
+                const localButton = document.getElementById('load-local-json');
+                const syncButton = document.querySelector('.sync-button');
+                if (localButton) localButton.hidden = false;
+                if (syncButton) {
+                    syncButton.textContent = '🔄 Sincronizacao via API';
+                    syncButton.disabled = true;
+                }
+            }
+
+            const localFileInput = document.getElementById('ga4-json-file');
+            if (localFileInput) {
+                localFileInput.addEventListener('change', handleJsonFileSelect);
+            }
+
             loadData();
 
             var btnGa4Home = document.getElementById('btn-ga4-home');
@@ -885,7 +961,9 @@
         });
 
         // Auto-refresh a cada 60 segundos (monitoramento online)
-        setInterval(loadData, 60 * 1000);
+        if (!IS_FILE_PROTOCOL) {
+            setInterval(loadData, 60 * 1000);
+        }
     </script>
 </body>
 </html>
