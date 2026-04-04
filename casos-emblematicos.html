@@ -111,6 +111,10 @@
 		<div class="search-container" style="max-width: 800px; margin: 0 auto 40px; text-align: center;">
 			<div class="filtros-casos">
 				<button class="btn-filtro active" data-categoria="todos" onclick="setCategoria('todos')">Todos</button>
+				<button class="btn-filtro" data-categoria="tributario" onclick="setCategoria('tributario')">Tributário</button>
+				<button class="btn-filtro" data-categoria="resolucao4966" onclick="setCategoria('resolucao4966')">Resolução 4966</button>
+				<button class="btn-filtro" data-categoria="stalking" onclick="setCategoria('stalking')">Stalking Bancário</button>
+				<button class="btn-filtro" data-categoria="fgipeac" onclick="setCategoria('fgipeac')">FGI/PEAC</button>
 				<button class="btn-filtro" data-categoria="saude" onclick="setCategoria('saude')">Plano de Saúde</button>
 				<button class="btn-filtro" data-categoria="bancario" onclick="setCategoria('bancario')">Bancário / CDC</button>
 				<button class="btn-filtro" data-categoria="revisional" onclick="setCategoria('revisional')">Imobiliário / SFH</button>
@@ -124,6 +128,74 @@
 		</div>	
 
 		<div id="lista-casos">
+			<section class="caso-box filtro-tributario" style="background: #fff; padding: 40px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+				<div style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px;">
+					<span style="background: #2c3e50; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">TRIBUTÁRIO</span>
+					<h2 style="margin: 0; font-size: 1.8rem; color: var(--primary);">Simulação Pericial de Alíquota-Teste na Reforma Tributária 2026</h2>
+				</div>
+				<p><strong>Cenário:</strong> Empresa com incerteza sobre carga tributária futura e risco de formação inadequada de preço em contratos de médio prazo.</p>
+				<p><strong>Atuação Técnica:</strong> Construção de cenário pericial com alíquota-teste, validando sensibilidade de margem operacional e impactos em fluxo de caixa para litígios e renegociações.</p>
+				<p style="color: var(--accent); font-weight: bold;">Impacto: A análise antecipada reduziu assimetria de informação e fortaleceu a estratégia jurídica e contábil da empresa na transição de regime.</p>
+
+				<p style="margin-top: 15px; font-size: 0.9rem;">
+					📚 <strong>Artigo equivalente:</strong>
+					<a href="artigo-reforma-tributaria-2026-pericia-aliquota-teste.html" style="color: var(--primary); text-decoration: underline;">
+						Reforma Tributária 2026 e perícia de alíquota-teste
+					</a>
+				</p>
+			</section>
+
+			<section class="caso-box filtro-resolucao4966" style="background: #fff; padding: 40px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+				<div style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px;">
+					<span style="background: #1f4e79; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">RESOLUÇÃO 4966</span>
+					<h2 style="margin: 0; font-size: 1.8rem; color: var(--primary);">Auditoria de Modelos de Risco e Governança de Provisões</h2>
+				</div>
+				<p><strong>Cenário:</strong> Divergências entre classificação de ativos e lógica de provisão em ambiente bancário regulado, com reflexo direto em cobrança e negociação.</p>
+				<p><strong>Atuação Técnica:</strong> Auditoria de trilha algorítmica, regras de classificação de risco e consistência da documentação para verificar aderência aos critérios regulatórios.</p>
+				<p style="color: var(--accent); font-weight: bold;">Impacto: A prova técnica delimitou falhas de governança e sustentou pedido de revisão dos parâmetros usados na formação da dívida discutida em juízo.</p>
+
+				<p style="margin-top: 15px; font-size: 0.9rem;">
+					📚 <strong>Artigo equivalente:</strong>
+					<a href="artigo-resolucao-4966-auditoria-algoritmos.html" style="color: var(--primary); text-decoration: underline;">
+						Resolução 4966 e auditoria de algoritmos bancários
+					</a>
+				</p>
+			</section>
+
+			<section class="caso-box filtro-stalking" style="background: #fff; padding: 40px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+				<div style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px;">
+					<span style="background: #7f1d1d; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">STALKING BANCÁRIO</span>
+					<h2 style="margin: 0; font-size: 1.8rem; color: var(--primary);">Prova Técnica por Logs de Chamadas em Cobrança Abusiva</h2>
+				</div>
+				<p><strong>Cenário:</strong> Consumidor submetido a contatos repetitivos e automatizados por múltiplos números, com impacto em rotina, trabalho e saúde mental.</p>
+				<p><strong>Atuação Técnica:</strong> Consolidação de logs, horários e frequência de chamadas para materializar padrão de insistência indevida e violação do dever de boa-fé.</p>
+				<p style="color: var(--accent); font-weight: bold;">Impacto: A estruturação probatória permitiu demonstrar assédio sistêmico, fortalecendo pedidos de tutela inibitória e reparação por danos morais.</p>
+
+				<p style="margin-top: 15px; font-size: 0.9rem;">
+					📚 <strong>Artigo equivalente:</strong>
+					<a href="artigo-log-chamadas-prova-judicial-assedio-bancario.html" style="color: var(--primary); text-decoration: underline;">
+						Logs de chamadas como prova judicial de assédio bancário
+					</a>
+				</p>
+			</section>
+
+			<section class="caso-box filtro-fgipeac" style="background: #fff; padding: 40px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+				<div style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px;">
+					<span style="background: #14532d; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">FGI / PEAC</span>
+					<h2 style="margin: 0; font-size: 1.8rem; color: var(--primary);">Análise Pericial de CCB com Garantias FGI/PEAC</h2>
+				</div>
+				<p><strong>Cenário:</strong> Empresa executada com base em CCB contendo discussão sobre composição de encargos, liquidez do título e coerência da memória de cálculo.</p>
+				<p><strong>Atuação Técnica:</strong> Verificação matemática da cadeia de cálculo, confronto de cláusulas financeiras e identificação de inconsistências entre taxa nominal, CET e acessórios.</p>
+				<p style="color: var(--accent); font-weight: bold;">Impacto: O laudo pericial delimitou pontos críticos para revisão da exigibilidade, abrindo espaço para negociação qualificada e redução do passivo discutido.</p>
+
+				<p style="margin-top: 15px; font-size: 0.9rem;">
+					📚 <strong>Artigo equivalente:</strong>
+					<a href="artigo-analise-pericial-ccb-fgi-peac-dr-lincoln-sposito.html" style="color: var(--primary); text-decoration: underline;">
+						Análise pericial em CCB FGI/PEAC
+					</a>
+				</p>
+			</section>
+
 			<section class="caso-box filtro-dados" style="background: #fff; padding: 40px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
 				<div style="display: flex; gap: 20px; align-items: center; margin-bottom: 20px;">
 					<span style="background: #1a2a3a; color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">TI / ENGENHARIA DE DADOS</span>
