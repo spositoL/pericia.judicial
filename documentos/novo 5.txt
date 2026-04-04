@@ -1,0 +1,54 @@
+Excelente, Dr. Lincoln. Com os nomes de arquivos padronizados e a identidade visual definida, o próximo passo é a montagem do "esqueleto" técnico. Seguindo o **Roteiro 6.1**, este novo artigo tributário precisa ser mais do que um texto; deve ser uma central de inteligência para o advogado e o empresário.
+
+Abaixo, apresento o **Checklist de Implementação HTML** para o artigo da Reforma Tributária:
+
+---
+
+### 📋 Checklist de Estrutura: artigo-reforma-tributaria-2026-pericia-aliquota-teste.html
+
+#### 1. Cabeçalho e Metadados (Pilar SEO)
+
+* [FEITO] **Title Tag:** Mínimo de 50 e máximo de 70 caracteres.
+* *Sugestão:* `Reforma Tributária 2026: Como Auditar a Alíquota Teste de 1% | Dr. Lincoln Sposito`
+
+
+* [FEITO ] **Meta Description:** Focar na dor do "caos da transição".
+* *Sugestão:* `Sua empresa está pronta para a transição tributária de 2026? Entenda como a perícia evita a bitributação na alíquota teste de 1% (CBS/IBS) e protege seu caixa.`
+
+
+* [FEITO ] **JSON-LD (FAQPage):** Estruturar os dados para que as dúvidas do FAQ apareçam diretamente na busca do Google.
+* [FEITO ] **Canonical Link:** Apontar para a URL final para evitar conteúdo duplicado.
+
+---
+
+#### 2. Layout e Identidade Visual (Pilar Retenção)
+
+* [FEITO ] **Inserção da Capa:** Tag `<img>` com a nova arte, utilizando o `alt` rico em palavras-chave.
+* [FEITO ] **Míssil Argumentativo (Resumo):** Bloco de destaque logo após o H1 explicando que 2026 não é apenas um "teste", mas um risco real de **Sonegação Involuntária**.
+* [FEITO ] **Tabela de Diagnóstico de Transição:** Comparativo visual entre o sistema antigo (PIS/COFINS) e o novo (IVA Dual 1%).
+* [FEITO ] **Bloco "O Olhar do Analista de Sistemas":** Seção com fundo escuro (como fizemos no anterior) explicando que a conformidade tributária em 2026 depende de **Engenharia de Dados** para cruzar sistemas legados com os novos.
+
+---
+
+#### 3. Ferramentas Dinâmicas (Pilar Conversão)
+
+* [FEITO] **Fichário Dinâmico (Tabs):**
+* **Aba Quesitos:** Perguntas para advogados usarem em ações de repetição de indébito ou preventivas.
+* **Aba FAQ:** Focada em "Bitributação", "Compensação" e "Créditos Acumulados".
+* **Aba Simulador:** Espaço para o link ou widget do simulador interativo (Chatbase treinado).
+
+
+* [FEITO] **Exemplo de Impacto Financeiro:** Bloco simulando o erro de apuração em uma empresa de lucro real durante a transição.
+* [FEITO] **CTA Parametrizado:** Botão final apontando para:
+`index.html?tema=Tributario&area=Reforma Tributaria&assunto=Auditoria Aliquota Teste 1#contato`
+
+---
+
+#### 4. Arquivos de Apoio e Scripts
+
+* [FEITO ] **Checklist PDF:** Criar o arquivo `checklist-reforma-tributaria-2026-dr-lincoln.pdf` para download.
+* [FEITO] **Script de Abas:** Reutilizar e testar o JS de navegação das tabs.
+* [FEITO] **Chatbase Widget:** Inserção do script do Chatbase personalizado com a base de conhecimento da Reforma.
+
+---
+

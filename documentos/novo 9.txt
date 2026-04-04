@@ -1,0 +1,63 @@
+Perfeito — vamos em passo a passo, focado no que falta do Ponto 1: **replay distribuído com TTL no GCP**.
+
+**Pré-requisitos**
+- Projeto: `somosands-middleware`
+- Definir região única para tudo (ex.: `southamerica-east1`) para reduzir latência.
+- Cloud Run já existente (ou pronto para deploy).
+
+**1) Habilitar APIs**
+- Ative: `Cloud Run`, `Memorystore for Redis`, `VPC Access`, `Secret Manager`, `Cloud Logging`, `Cloud Monitoring`.
+- No terminal (`gcloud`):  
+  `gcloud services enable run.googleapis.com redis.googleapis.com vpcaccess.googleapis.com secretmanager.googleapis.com logging.googleapis.com monitoring.googleapis.com --project=somosands-middleware`
+
+**2) Criar Redis (Memorystore)**
+- Console: Memorystore > Redis > Create.
+- Configurar:
+  - mesma região do Cloud Run
+  - tier básico para homologação
+  - tamanho inicial pequeno (ex.: 1GB)
+  - TTL será aplicado pela app (com `SET EX NX`).
+- Anote `host` e `port`.
+
+**3) Configurar rede privada**
+- Crie Serverless VPC Connector na mesma região.
+- Associe Cloud Run ao conector.
+- Egress do Cloud Run: `Private ranges only` (ou `All traffic` se necessário pela arquitetura).
+- Isso é obrigatório para Cloud Run acessar Redis privado.
+
+**4) Secret e variáveis**
+- Salve a URL do Redis no Secret Manager (ex.: `REDIS_URL` = `redis://HOST:PORT`).
+- No Cloud Run, injete:
+  - `REDIS_URL` (via Secret)
+  - `REPLAY_TTL_SECONDS` (ex.: `60` ou conforme contrato)
+  - `TIMESTAMP_TOLERANCE_SECONDS` (mesmo valor do contrato)
+- Garanta que a service account do Cloud Run tenha acesso ao secret (`Secret Manager Secret Accessor`).
+
+**5) Deploy do serviço**
+- Faça deploy da versão atual da API com suporte a `RedisReplayStore`.
+- Configure:
+  - `startup CPU boost` habilitado
+  - `min-instances` conforme SLO (começar com 0/1 em homologação)
+  - timeout HTTP conforme contrato.
+
+**6) Validar anti-replay em homologação**
+- Teste 1: enviar evento com `event_id=A` → deve aceitar.
+- Teste 2: repetir `event_id=A` em seguida → deve rejeitar como replay.
+- Teste 3: após TTL expirar, reenviar `event_id=A` → deve aceitar.
+- Teste 4: simular duas instâncias (concorrência) e repetir `event_id` → segunda deve ser bloqueada.
+
+**7) Evidências para fechar Ponto 1**
+- Exportar logs com:
+  - `event_id`, `correlation_id`, `reason=replay_detected`
+- Registrar no plano:
+  - link do serviço Cloud Run
+  - configuração do Redis/connector
+  - evidência dos testes acima
+  - artefato CI cruzado WP↔API.
+
+**8) Critério de sucesso (go/no-go)**
+- Replay bloqueado de forma consistente em multi-instância.
+- Sem regressão de latência p95/p99 no checkout.
+- Evidências anexadas no plano → marcar item como concluído.
+
+Se quiser, no próximo passo eu te passo um checklist de execução “copiar e colar” para você ir marcando no Console enquanto configura.

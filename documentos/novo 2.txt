@@ -1,0 +1,18 @@
+📋 Diagnóstico de Necessidade (Para nota 100):
+feito: Corrigir Twitter Cards: O conteúdo das tags do Twitter deve refletir o artigo de VCMH, não o de veículos.
+
+feito: Resumo Estratégico + Chave de Impugnação: ❌ Ausente/Incompleto. O texto possui uma seção de "Resumo", mas falta o bloco visual destacado com a "Chave de Impugnação" (o míssil argumentativo focado em liminar) que o advogado busca.
+
+feito: Inserir o "Olhar do Perito em TI": Adicionar o bloco que justifica por que um Doutor em Adm + Analista de Sistemas é superior a um perito comum para "quebrar" o algoritmo do VCMH.
+
+feito: ponto de avaliação (Titulo, Descrição, Keyword em metatags e JSON-LD)
+
+FEITO: fichário dinâmico com quesitos e faq
+
+FEITO: Melhora na localização e no texto da prova social
+
+FEITO Refatorar o CTA: Parametrizar o link para o formulário da index.html injetar o assunto automaticamente.
+
+FEITO Adicionar Tabela de Diagnóstico: Criar um bloco visual mostrando a diferença entre o VCMH alegado pelas operadoras e o VCMH real auditado por você. (Incluída a introdução e o parágrafo explicativo)
+
+FEITO Prova Social Numérica: Inserir no corpo do texto o selo de "+22 anos de experiência" e "Expert em Saúde Suplementar".

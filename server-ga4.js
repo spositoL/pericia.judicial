@@ -77,6 +77,22 @@ function readLocalData() {
   }
 }
 
+function serveStaticFile(res, filePath, contentType) {
+  if (!fs.existsSync(filePath)) {
+    sendJson(res, 404, { ok: false, error: 'Arquivo não encontrado.' });
+    return;
+  }
+
+  try {
+    const data = fs.readFileSync(filePath);
+    res.statusCode = 200;
+    res.setHeader('Content-Type', contentType);
+    res.end(data);
+  } catch {
+    sendJson(res, 500, { ok: false, error: 'Falha ao servir arquivo.' });
+  }
+}
+
 async function runSync() {
   if (syncRunning) {
     return { ok: false, message: 'Sincronização já em execução.' };
@@ -124,6 +140,11 @@ function scheduleSync() {
 const server = http.createServer(async (req, res) => {
   const parsed = url.parse(req.url, true);
   const pathname = parsed.pathname;
+
+  if (req.method === 'GET' && (pathname === '/' || pathname === '/ga4-dashboard.html')) {
+    serveStaticFile(res, path.join(__dirname, 'ga4-dashboard.html'), 'text/html; charset=utf-8');
+    return;
+  }
 
   if (req.method === 'OPTIONS') {
     withCors(res);

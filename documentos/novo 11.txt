@@ -1,0 +1,46 @@
+Read [](file:///g%3A/Meu%20Drive/PROFISSIONAL/CONSULTORIA/CLIENTES/ANDS/INTEGRA%C3%87%C3%83O%20GATEWAY/api.integracao.gcp.linsp/plan/diario_execucao_plugin_api_gcp.md#94-94), lines 94 to 120
+
+Read [](file:///g%3A/Meu%20Drive/PROFISSIONAL/CONSULTORIA/CLIENTES/ANDS/INTEGRA%C3%87%C3%83O%20GATEWAY/api.integracao.gcp.linsp/plan/diario_execucao_plugin_api_gcp.md#140-140), lines 140 to 180
+
+Read [](file:///g%3A/Meu%20Drive/PROFISSIONAL/CONSULTORIA/CLIENTES/ANDS/INTEGRA%C3%87%C3%83O%20GATEWAY/api.integracao.gcp.linsp/plan/diario_execucao_plugin_api_gcp.md#187-187), lines 187 to 240
+
+Conforme registrado no diário, os **próximos passos** de hoje são:
+
+## **1. Alinhamento de gaps (código vs contrato v1.2)** — ~15 min
+Decidir se ajusta código ou contrato nos 3 pontos:
+- **TTL de idempotência**: contrato diz 24h, código padrão é 1h (parametrizável). (OK)
+- **`order_id` no webhook**: contrato marca obrigatório, implementação envia só se houver no request. (Em andamento)
+- **`event_id` anti-replay**: contrato trata como obrigatório, código o aplica apenas se presente.
+
+**Opções**: aceitar como está + documentar exceções, ou normatizar no código.
+
+---
+
+## **2. Configurar homologação com endpoints de QA** — ~30 min
+Receber e validar:
+- Base URL do gateway PayStore em QA.
+- Paths de auth (`/oauth/token`), create, get pagamento.
+- Username/password ou token estático.
+- CNPJ/ApiKey para testes.
+
+Depois: testar auth → create pagamento → get.
+
+---
+
+## **3. Executar smoke por método** — ~45 min
+Rodas testes de ponta a ponta:
+- `PIX` (QR Code + "copia e cola")
+- `CREDIT` (cartão ou token)
+- `DEBIT` (débito)
+- `BOLETO` (boleto URL + linha digitável)
+
+Cada um com assinatura HMAC válida, idempotência e status HTTP correto.
+
+---
+
+## **4. Consolidar go/no-go** — ~15 min
+Decisão sobre sequência da homologação ponta a ponta (Plugin + API + QA real).
+
+---
+
+**Qual quer começar por qual?** Recomendo nessa ordem, mas posso começar direto por (2) ou (3) se tiver os dados de QA já mapeados.

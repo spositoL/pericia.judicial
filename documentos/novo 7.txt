@@ -1,0 +1,30 @@
+Resumo de Ações para a index.html (Próximos 7 dias):
+
+FEITO - Inserir o Bloco JSON-LD: Para garantir que o Google te veja como uma entidade profissional de alta confiança (E-E-A-T).
+	- O que falta: O title e a meta description são genéricos. O Google valoriza o hibridismo (Adm + TI).
+	- Ação: Precisa de Dados Estruturados (JSON-LD) de ProfessionalService. Isso é o que faz o Google entender que o "Lincoln" não é apenas uma pessoa, mas uma autoridade técnica com 22 anos de dados.
+	- Injeção de JSON-LD: Adicionar o código que "fala com o robô do Google", provando sua expertise técnica e localização.
+	
+FEITO - AJUSTE DAS META TAGS 
+
+FEITO - Ajustar o H1/H2: Colocar o "Doutor em Administração" e "Analista de Sistemas" em destaque hierárquico.
+FEITO	- O que falta: O H1 (Dr. Lincoln Sposito) é puramente institucional. No Roteiro 6.1, o H1 deve ser o Míssil Argumentativo. O usuário que cai na index vindo de um anúncio ou busca orgânica precisa ler o diferencial de 22 anos e o título de Doutor nos primeiros 3 segundos sem rolar a tela.
+FEITO	- Ação: Mudar o H1 para algo como: Perícias Judiciais: Onde a Ciência da Administração encontra a Engenharia de Dados.
+FEITO	- Cabeçalho Magnético: Ajustar a hierarquia de títulos para destacar o tempo de atuação e a formação acadêmica logo no topo.
+
+FEITO - Implementar o "Badge de 22 Anos": Um elemento visual (pode ser um ícone ou um selo) que acompanhe o scroll ou esteja no topo.
+FEITO 	- O que falta: Falta um Badge de Autoridade. Selos visuais (ex: "22 anos de experiência", "Doutor em Gestão") aumentam a taxa de clique no botão de contato.
+FEITO 	- Ação: Alterar o texto do CTA de Enviar via WhatsApp para Solicitar Análise de Viabilidade Técnica. Isso remove a barreira da "venda" e estabelece uma relação de consulta técnica.
+
+FEITO - Otimizar o Alt das Imagens: No código, verifiquei que algumas imagens podem ter alt mais descritivos, como alt="Dr. Lincoln Sposito - Perito Judicial especialista em cálculos de SFH".
+
+FEITO - Fichário Dinâmico de Especialidades: Em vez de uma lista longa de serviços, use abas (como fizemos no artigo da Reforma Tributária). Isso aumenta o tempo de permanência na página (Retenção).
+
+FEITO - ADEQUAÇÃO DE ITENS SOLTOS AO CONCEITO DE HUB DE SERVIÇOS, INTEGRANDO SERVIÇOS, FERRAMENTA DE CÁLCULO, SELO DE METODOLOGIA E vídeo do LAUDO PREMIUN
+
+- RESTILIZAÇÃO DA PÁGINA COM O REAGRUPAMENTO ESTRATÉGICO DO CONTEÚDO (LAYOUT, DISPOSIÇÃO, CONTEÚDO)
+	- INCLUSÃO DE DEPOIMENTOS.
+
+FEITO - Área de depoimentos	
+
+FEITO - inclusão das redes sociais na Index (footer? precisa avaliar) (Header & Footer)

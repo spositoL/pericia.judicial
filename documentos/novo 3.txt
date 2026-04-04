@@ -1,0 +1,51 @@
+Análise técnica do arquivo **`artigo-modelagem-dados-forense.html`** sob o rigor do **Roteiro de Equalização 6.1** e a estratégia de funil de **TI e Dados (IA/Big Data)**.
+
+### **Nota Final de Performance: 75/100 (Nível Prata)**
+
+O artigo é tecnicamente brilhante, mas ainda está formatado como um "ensaio acadêmico" e não como uma "ferramenta de conversão 6.1". Ele possui o conteúdo de **Meio de Funil (MoFu)**, mas falta a "mordida" comercial e a infraestrutura de SEO que implementamos no artigo de VCMH.
+
+---
+
+### **1. Pilar: SEO (Arquitetura de Atração) — Nota: 65/100**
+
+* **Crítica Técnica:** O `title` e o `H1` são muito longos e teóricos ("Da Arquitetura Relacional à Prova Material"). Para o Google e para o advogado, precisamos de termos de busca.
+* **Oportunidade (IA/Big Data):** O artigo ignora a "onda" de IA mencionada na sua análise estratégica.
+* **JSON-LD:** Está presente, mas é básico. Falta a estrutura de autoridade vinculada ao Lattes e ao "Doutor em Administração" que injetamos no VCMH.
+* **Twitter Cards:** A descrição está genérica e a imagem não possui o nexo visual de "perícia em dados".
+
+### **2. Pilar: RETENÇÃO (Arquitetura de Confiança) — Nota: 75/100**
+
+* **Ausência de Bloco de Impacto:** Falta o **Resumo Estratégico + Chave de Impugnação**. O advogado precisa saber: "Como a modelagem de dados ganha o processo?".
+* **Conteúdo Denso:** O texto é excelente para especialistas, mas para o advogado, precisamos do bloco **"O Olhar do Perito em TI"** para traduzir o tecniquês para o jurídico.
+* **Selo de Autoridade:** Ausente no corpo do texto. O leitor precisa ver os **+22 anos de experiência** enquanto lê sobre modelagem complexa para sentir segurança.
+
+### **3. Pilar: CONVERSÃO (Arquitetura de Desfecho) — Nota: 85/100**
+
+* **Fichário Dinâmico:** Você já implementou a estrutura de abas (Tabs), o que é ótimo! Porém, os quesitos estão muito teóricos. Precisamos de quesitos que "ataquem" a integridade da prova da parte contrária.
+* **CTA:** O botão existe, mas não está **parametrizado** para injetar o assunto "Modelagem de Dados Forense" na sua index.
+
+---
+
+### **📋 Diagnóstico de Necessidade (Para chegar na Nota 100):**
+
+Para equalizar este artigo com o padrão de excelência do VCMH, precisamos:
+
+feito * **Oportunidade (IA/Big Data):** O artigo ignora a "onda" de IA mencionada na sua análise estratégica.
+
+Feito 1. **Refazer o `<head>` (Item #0):** Sincronizar Title/H1 com o tema de Big Data e Fraudes Digitais.
+		Também foram ajustadas metagas (OGs, Twitter, JSON-LD)
+		
+feito 2. **Inserir a "Chave de Impugnação":** Focar em como a falha na modelagem de dados (Ex: falta de integridade referencial) anula uma prova digital.
+	-> INCLUÍDO resumo estratégico também.
+	
+feito 3. **Adicionar Tabela de Diagnóstico:** Mostrar um exemplo de "Dados Brutos vs. Dados Modelados (Prova)".
+
+FEITO 4. **Selo de Autoridade:** Inserir o bloco de +22 anos e Expert em TI.
+
+feito 5. **Ajustar Quesitos:** Focar em quesitos que questionam a **Cadeia de Custódia dos Dados**.
+	iNCLUÍDO TAMBÉM O FICHÁRIO DINÂMICO
+
+FEITO 6. **Parametrizar o CTA:** Criar o link `tema=ModelagemTI` para o seu JS da index.
+	
+
+**Dr. Lincoln, o senhor gostaria que eu gerasse agora o Bloco #0 (Metadados e JSON-LD) e a "Chave de Impugnação" específica para este artigo de Modelagem de Dados, conectando-o com a estratégia de IA e Big Data?**

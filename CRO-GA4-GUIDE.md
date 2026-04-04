@@ -154,6 +154,107 @@ Esse comando gera `ga4-ab-report.json` com:
 - leads por teste/variante (`cro_ab_generate_lead`)
 - decisão automática com regra do plano (200 exposições por variante e lift mínimo de 10%)
 
+### 4.2 CONFIGURAR DIMENSÕES PARA CTA DE ARTIGOS (OBRIGATÓRIO PARA FUNIL POR PÁGINA)
+
+No GA4 (Admin > Definições personalizadas > Criar dimensão personalizada):
+
+1. Dimensão: `article_slug`
+  - Escopo: Evento
+  - Parâmetro do evento: `article_slug`
+
+2. Dimensão: `cta_position`
+  - Escopo: Evento
+  - Parâmetro do evento: `cta_position`
+
+3. Dimensão: `method`
+  - Escopo: Evento
+  - Parâmetro do evento: `method`
+
+Após criar, aguarde propagação (até 24h).
+
+---
+
+### 4.3 EXPLORAÇÃO PADRÃO: CTA FINAL x BOTÃO FLUTUANTE
+
+Criar em Explorar > Formato livre.
+
+**Técnica:**
+- Dimensões: `article_slug`, `cta_position`, `event_label`, `page path + query string`
+- Métricas: `Event count`, `Total users`
+- Filtros:
+  - `event_name` EXACTLY matches `generate_lead`
+  - `method` EXACTLY matches `WhatsApp`
+
+**Visual 1 (Tabela):**
+- Linhas: `article_slug`
+- Colunas: `cta_position`
+- Valores: `Event count`
+
+**Visual 2 (Tabela de detalhe):**
+- Linhas: `article_slug`, `event_label`
+- Colunas: `cta_position`
+- Valores: `Event count`, `Total users`
+
+**KPIs recomendados:**
+- `Leads por artigo` = Event count com filtro `generate_lead`
+- `Split de origem do lead` = % `final_cta` vs % `floating_button`
+- `Eficiência por usuário` = Event count / Total users
+
+---
+
+### 4.4 NOMENCLATURA PADRÃO (NÃO QUEBRAR)
+
+Para manter comparabilidade entre artigos:
+
+- Evento: `generate_lead`
+- Parâmetro `method`: `WhatsApp`
+- Parâmetro `cta_position`: usar apenas `final_cta` e `floating_button`
+- Parâmetro `article_slug`: slug exato da URL do artigo (sem `.html`)
+
+---
+
+### 4.5 EVENTO DE CLIQUE NOS CARDS DO INDEX (article_card_click)
+
+Evento implementado na home para medir quais cards realmente enviam tráfego para os artigos.
+
+**Evento:**
+- `article_card_click`
+
+**Parâmetros enviados:**
+- `article_slug`
+- `cta_text`
+- `placement` (valor padrão: `home_blog_carousel`)
+- `method` (valor padrão: `internal_link`)
+- `event_label` (mesmo valor de `article_slug`)
+
+**Dimensões custom recomendadas no GA4 (Admin > Definições personalizadas):**
+
+1. Dimensão: `placement`
+  - Escopo: Evento
+  - Parâmetro do evento: `placement`
+
+2. Dimensão: `cta_text`
+  - Escopo: Evento
+  - Parâmetro do evento: `cta_text`
+
+3. Dimensão: `method`
+  - Escopo: Evento
+  - Parâmetro do evento: `method`
+
+**Exploração pronta (Formato livre):**
+- Dimensões: `article_slug`, `cta_text`, `placement`
+- Métricas: `Event count`, `Total users`
+- Filtros:
+  - `event_name` EXACTLY matches `article_card_click`
+  - `placement` EXACTLY matches `home_blog_carousel`
+
+**Visual recomendado:**
+- Linhas: `article_slug`
+- Colunas: `cta_text`
+- Valores: `Event count`
+
+Isso permite identificar quais cards da home mais contribuem para distribuição de tráfego entre artigos.
+
 ---
 
 ### 5. RELATÓRIO SEMANAL (Copy/Cola no Google Sheets)
