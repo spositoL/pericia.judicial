@@ -45,12 +45,12 @@ function toNumber(value) {
   return Number.isFinite(num) ? num : 0;
 }
 
-function queryByTestAndVariant(sync, dateRange, eventName) {
+function queryByDimensions(sync, dateRange, eventName, testDimension, variantDimension) {
   return sync.runReport({
     dateRanges: [dateRange],
     dimensions: [
-      { name: 'customEvent:test_name' },
-      { name: 'customEvent:variant' }
+      { name: testDimension },
+      { name: variantDimension }
     ],
     metrics: [{ name: 'eventCount' }],
     dimensionFilter: {
@@ -88,6 +88,30 @@ function toRows(response) {
     variant: row.dimensionValues?.[1]?.value || 'unknown_variant',
     count: toNumber(row.metricValues?.[0]?.value)
   }));
+}
+
+async function safeQueryRows(sync, config) {
+  try {
+    const response = await queryByDimensions(
+      sync,
+      config.period,
+      config.eventName,
+      config.testDimension,
+      config.variantDimension
+    );
+
+    return {
+      rows: toRows(response),
+      source: config.source,
+      warning: null
+    };
+  } catch (error) {
+    return {
+      rows: [],
+      source: config.source,
+      warning: `${config.source}: ${error.message || String(error)}`
+    };
+  }
 }
 
 function buildReport(exposureRows, leadRows) {
@@ -178,24 +202,57 @@ function printReport(period, tests) {
   try {
     sync.validateConfig();
 
-    let exposureResponse;
-    let leadResponse;
+    const warnings = [];
 
-    try {
-      exposureResponse = await queryByTestAndVariant(sync, period, 'cro_ab_exposure');
-      leadResponse = await queryByTestAndVariant(sync, period, 'cro_ab_generate_lead');
-    } catch (error) {
+    const exposureQuery = await safeQueryRows(sync, {
+      period,
+      eventName: 'cro_ab_exposure',
+      testDimension: 'customEvent:test_name',
+      variantDimension: 'customEvent:variant',
+      source: 'cro_ab_exposure[test_name,variant]'
+    });
+
+    const leadLegacyQuery = await safeQueryRows(sync, {
+      period,
+      eventName: 'cro_ab_generate_lead',
+      testDimension: 'customEvent:test_name',
+      variantDimension: 'customEvent:variant',
+      source: 'cro_ab_generate_lead[test_name,variant]'
+    });
+
+    const leadLPQuery = await safeQueryRows(sync, {
+      period,
+      eventName: 'generate_lead',
+      testDimension: 'customEvent:ab_test_name',
+      variantDimension: 'customEvent:ab_variant',
+      source: 'generate_lead[ab_test_name,ab_variant]'
+    });
+
+    [exposureQuery, leadLegacyQuery, leadLPQuery]
+      .map((q) => q.warning)
+      .filter(Boolean)
+      .forEach((warning) => warnings.push(warning));
+
+    const exposureRows = exposureQuery.rows;
+    const leadRows = [...leadLegacyQuery.rows, ...leadLPQuery.rows]
+      .filter((row) => row.testName !== 'unknown_test' && row.variant !== 'unknown_variant');
+
+    const tests = buildReport(exposureRows, leadRows);
+
+    if (!tests.length) {
       const exposureTotal = await queryEventTotal(sync, period, 'cro_ab_exposure');
-      const leadTotal = await queryEventTotal(sync, period, 'cro_ab_generate_lead');
+      const leadTotal = await queryEventTotal(sync, period, 'generate_lead');
+
       const fallback = {
         period,
-        status: 'custom_dimensions_missing',
-        message: 'Configure as dimensoes de evento test_name e variant no GA4 para quebrar por variante.',
+        status: 'no_variant_breakdown',
+        message: 'Sem linhas por variante. Verifique dimensoes customizadas do GA4 para A/B.',
+        requiredDimensions: ['test_name', 'variant', 'ab_test_name', 'ab_variant'],
         totals: {
           exposure: toNumber(exposureTotal?.rows?.[0]?.metricValues?.[0]?.value),
           leads: toNumber(leadTotal?.rows?.[0]?.metricValues?.[0]?.value)
         },
-        error: error.message || String(error)
+        warnings
       };
 
       const outPath = path.join(__dirname, 'ga4-ab-report.json');
@@ -204,14 +261,13 @@ function printReport(period, tests) {
       console.log('\nAB TEST REPORT');
       console.log('==============');
       console.log(`Periodo: ${period.startDate} ate ${period.endDate}`);
-      console.log('Nao foi possivel quebrar por variante (dimensoes ainda nao configuradas).');
+      console.log('Sem quebra por variante no periodo.');
       console.log(`Exposicoes totais: ${fallback.totals.exposure}`);
-      console.log(`Leads A/B totais: ${fallback.totals.leads}`);
+      console.log(`Leads totais (generate_lead): ${fallback.totals.leads}`);
       console.log(`Relatorio salvo em: ${outPath}`);
       process.exit(0);
     }
 
-    const tests = buildReport(toRows(exposureResponse), toRows(leadResponse));
     printReport(period, tests);
 
     const payload = {
@@ -221,6 +277,14 @@ function printReport(period, tests) {
         minExposuresPerVariant: MIN_EXPOSURES_PER_VARIANT,
         minWinLiftPercent: MIN_WIN_LIFT_PERCENT
       },
+      sources: {
+        exposure: 'cro_ab_exposure[test_name,variant]',
+        leads: [
+          'cro_ab_generate_lead[test_name,variant]',
+          'generate_lead[ab_test_name,ab_variant]'
+        ]
+      },
+      warnings,
       tests
     };
 

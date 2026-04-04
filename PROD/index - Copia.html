@@ -458,6 +458,7 @@
 	</section>
 	
 	<div class="divisor-secao" style="width: 100%; height: 1px; background: linear-gradient(to right, transparent, rgba(197, 160, 89, 0.3), transparent); margin: 30px 0;"></div>
+	</main>
 
 	<section id="blog" class="blog-section">
 		<div class="container">
@@ -908,6 +909,7 @@
 	</section>
 	
 	<div class="divisor-secao" style="width: 100%; height: 1px; background: linear-gradient(to right, transparent, rgba(197, 160, 89, 0.3), transparent); margin: 30px 0;"></div>
+	</main>
 	
 	<section style="background: #f8f9fa; padding: 60px 0; border-top: 1px solid #eee;">
 		<div class="container">
@@ -968,7 +970,7 @@
             <form id="form-hibrido" action="https://formsubmit.co/lincoln.sposito@linspti.com.br" method="POST" style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 15px 40px rgba(0,0,0,0.1); border: 1px solid #e1e8ed;">
 			    
                 <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 25px; color: #1a2a3a;">Solicitar Consultoria Técnica</h3>
-					<p>Preencha os dados abaixo para iniciar o atendimento prioritário via WhatsApp.</p>
+				<p>Preencha os dados abaixo para iniciar o atendimento prioritário via WhatsApp.<p>
                 
                 <input type="hidden" name="_captcha" value="false">
 				<input type="hidden" name="_template" value="table">
@@ -1088,26 +1090,55 @@
 <script>
 /**
  * Monitoramento Consolidado de Leads - Dr. Lincoln Sposito
- * Finalidade: Captura de conversões GA4 na home
+ * Finalidade: Captura de conversões GA4 para botões de WhatsApp e Auditoria
  */
 document.addEventListener('DOMContentLoaded', function() {
     
-	// 1. Monitoramento do Botão Flutuante (WhatsApp Geral)
+    // 1. Monitoramento do Botão Flutuante (WhatsApp Geral)
     var btnStalking = document.getElementById('cta-whatsapp-stalking');
     if (btnStalking) {
         btnStalking.addEventListener('click', function() {
             if (typeof gtag === 'function') {
                 gtag('event', 'generate_lead', {
                     'event_category': 'Contato',
-					'event_label': 'WhatsApp - Home',
+                    'event_label': 'WhatsApp - Autopsia Stalking',
                     'method': 'WhatsApp',
                     'value': 1.0,
                     'currency': 'BRL',
-					'content_name': 'Home - CTA Flutuante',
-					'page_name': 'home',
-					'page_role': 'hub'
+                    'content_name': 'A Autópsia do Stalking Bancário'
                 });
-				console.log('GA4: Lead WhatsApp da home registrado.');
+                console.log('Forense: Lead WhatsApp registrado.');
+            }
+        });
+    }
+
+    // 2. Monitoramento do Botão de Auditoria (Final do Artigo)
+    var btnAuditoria = document.getElementById('btn-whatsapp-autopsia');
+    if (btnAuditoria) {
+        btnAuditoria.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'generate_lead', {
+                    'event_category': 'Conversão Artigo',
+                    'event_label': 'Botão Final - Autópsia Stalking',
+                    'method': 'WhatsApp',
+                    'value': 1.0,
+                    'currency': 'BRL',
+                    'content_name': 'Checklist de Identificação de Stalking'
+                });
+                console.log('Forense: Lead Auditoria registrado.');
+            }
+        });
+    }
+	var btnChecklist = document.getElementById('btn-download-checklist-autopsia');
+    if (btnChecklist) {
+        btnChecklist.addEventListener('click', function() {
+            if (typeof gtag === 'function') {
+                gtag('event', 'file_download', {
+                    'event_category': 'Materiais',
+                    'event_label': 'Checklist Admissibilidade - Stalking',
+                    'file_name': 'checklist-admissibilidade-stalking.pdf'
+                });
+                console.log('GA4: Download do Checklist rastreado.');
             }
         });
     }

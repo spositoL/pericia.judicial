@@ -128,7 +128,7 @@
                         Auditoria forense em sistemas de monitoramento (Fircosoft), lógica fuzzy e listas de sanções globais (OFAC/SWIFT). Expertise executiva no Rabobank e Itaú Argentina.
                     </p>
                     <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                        <a href="index.html?tema=AML&area=Compliance&assunto=Auditoria de Sistemas KYC#contato" style="background: #c5a059; color: #1a2a3a; padding: 18px 35px; text-decoration: none; font-weight: bold; border-radius: 5px;">
+                        <a id="cta-aml-hero-viabilidade" href="index.html?tema=AML&area=Compliance&assunto=Auditoria de Sistemas KYC#contato" style="background: #c5a059; color: #1a2a3a; padding: 18px 35px; text-decoration: none; font-weight: bold; border-radius: 5px;">
                             Análise de Viabilidade Técnica
                         </a>
                     </div>
@@ -191,9 +191,8 @@
                 </div>
             </div>
         </div>
-		<div style="margin-top: 40px; text-align: center;">
-			<a href="checklist-admissibilidade.html?foco=QuesitosAML" 
-			   onclick="gtag('event', 'click_quesitos_aml', {'event_category': 'Conversão', 'event_label': 'Download Quesitos AML'});"
+        <div style="margin-top: 40px; text-align: center;">
+            <a id="cta-aml-quesitos" href="checklist-admissibilidade.html?foco=QuesitosAML" 
 			   style="display: inline-block; padding: 18px 35px; background: #1a2a3a; color: #c5a059; text-decoration: none; font-weight: bold; border-radius: 5px; border: 1px solid #c5a059; transition: 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
 				<i class="fas fa-file-download" style="margin-right: 10px;"></i> Ver Modelo de Quesitos para Auditoria de AML
 			</a>
@@ -207,6 +206,16 @@
             <p style="margin: 0 0 10px; color: #445;"><strong>Quando há falso positivo?</strong> Quando a similaridade de nomes e regras de fuzzy matching supera limiar sem nexo com beneficiário real.</p>
             <p style="margin: 0 0 10px; color: #445;"><strong>O que a perícia entrega?</strong> Laudo com rastreabilidade de regra, evidência de parametrização e impacto processual.</p>
             <p style="margin: 0; color: #445;">Leituras correlatas: <a href="pericia-dados.html">Perícia de Dados</a> | <a href="artigo-resolucao-4966-auditoria-algoritmos.html">Resolução 4.966</a> | <a href="faq.html">FAQ</a></p>
+        </div>
+
+        <div style="margin: 24px auto 0; max-width: 920px; background: #fdfaf3; border: 1px solid #e8dcc1; border-radius: 10px; padding: 22px;">
+            <h3 style="margin-top: 0; font-family: 'Playfair Display', serif; color: #1a2a3a;">Rota recomendada no site</h3>
+            <p style="margin: 0 0 10px; color: #445;">Esta página funciona como <strong>pilar técnico</strong> de AML/KYC. Para conversão rápida, siga para:</p>
+            <p style="margin: 0; color: #445;">
+                <a id="cta-aml-lp-assistencia" href="lp-assistencia-tecnica-advogados.html" style="font-weight: 700;">LP Assistência Técnica para Advogados</a>
+                 ou
+                 <a href="index.html?tema=AML&area=Compliance&assunto=Auditoria de Sistemas KYC#contato" style="font-weight: 700;">contato direto com briefing pré-preenchido</a>.
+            </p>
         </div>
     </section>
 </main>
@@ -263,55 +272,46 @@
  * Finalidade: Captura de conversões GA4 para botões de WhatsApp e Auditoria
  */
 document.addEventListener('DOMContentLoaded', function() {
-    
-    // 1. Monitoramento do Botão Flutuante (WhatsApp Geral)
-    var btnStalking = document.getElementById('cta-whatsapp-stalking');
-    if (btnStalking) {
-        btnStalking.addEventListener('click', function() {
-            if (typeof gtag === 'function') {
-                gtag('event', 'generate_lead', {
-                    'event_category': 'Contato',
-                    'event_label': 'WhatsApp - Autopsia Stalking',
-                    'method': 'WhatsApp',
-                    'value': 1.0,
-                    'currency': 'BRL',
-                    'content_name': 'A Autópsia do Stalking Bancário'
-                });
-                console.log('Forense: Lead WhatsApp registrado.');
-            }
+    var pageName = 'pericia_aml_kyc';
+    var pageRole = 'pillar';
+
+    function trackClick(id, eventName, payload) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('click', function() {
+            if (typeof gtag !== 'function') return;
+            gtag('event', eventName, Object.assign({ page_name: pageName, page_role: pageRole }, payload));
         });
     }
 
-    // 2. Monitoramento do Botão de Auditoria (Final do Artigo)
-    var btnAuditoria = document.getElementById('btn-whatsapp-autopsia');
-    if (btnAuditoria) {
-        btnAuditoria.addEventListener('click', function() {
-            if (typeof gtag === 'function') {
-                gtag('event', 'generate_lead', {
-                    'event_category': 'Conversão Artigo',
-                    'event_label': 'Botão Final - Autópsia Stalking',
-                    'method': 'WhatsApp',
-                    'value': 1.0,
-                    'currency': 'BRL',
-                    'content_name': 'Checklist de Identificação de Stalking'
-                });
-                console.log('Forense: Lead Auditoria registrado.');
-            }
-        });
-    }
-	var btnChecklist = document.getElementById('btn-download-checklist-autopsia');
-    if (btnChecklist) {
-        btnChecklist.addEventListener('click', function() {
-            if (typeof gtag === 'function') {
-                gtag('event', 'file_download', {
-                    'event_category': 'Materiais',
-                    'event_label': 'Checklist Admissibilidade - Stalking',
-                    'file_name': 'checklist-admissibilidade-stalking.pdf'
-                });
-                console.log('GA4: Download do Checklist rastreado.');
-            }
-        });
-    }
+    trackClick('cta-whatsapp-stalking', 'generate_lead', {
+        event_category: 'Contato',
+        event_label: 'AML KYC - WhatsApp Flutuante',
+        method: 'WhatsApp',
+        value: 1.0,
+        currency: 'BRL',
+        content_name: 'Pericia AML KYC'
+    });
+
+    trackClick('cta-aml-hero-viabilidade', 'select_content', {
+        event_category: 'Navegacao',
+        event_label: 'AML KYC - Hero Viabilidade',
+        content_type: 'internal_link',
+        content_name: 'Formulario Contato AML'
+    });
+
+    trackClick('cta-aml-quesitos', 'file_download', {
+        event_category: 'Materiais',
+        event_label: 'AML KYC - Quesitos',
+        file_name: 'checklist-admissibilidade.html?foco=QuesitosAML'
+    });
+
+    trackClick('cta-aml-lp-assistencia', 'select_content', {
+        event_category: 'Navegacao',
+        event_label: 'AML KYC - Rota para LP Assistencia',
+        content_type: 'internal_link',
+        content_name: 'lp_assistencia_tecnica_advogados'
+    });
 });
 </script>
 

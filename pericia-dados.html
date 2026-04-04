@@ -301,6 +301,18 @@
 			</a>
 		</div> 
 
+		<section style="margin-top: 22px; background: #fdfaf3; border: 1px solid #e8dcc1; border-radius: 10px; padding: 20px;">
+			<h3 style="margin-top: 0; font-family: 'Playfair Display', serif; color: #1a2a3a;">Rota recomendada no site</h3>
+			<p style="margin: 0 0 10px; color: #445;">Esta é a página <strong>pilar</strong> de auditoria de dados. Use as rotas abaixo conforme o objetivo:</p>
+			<p style="margin: 0; color: #445;">
+				<a id="cta-pericia-dados-rota-res4966" href="pericia-resolucao-4966.html" style="font-weight: 700;">Pilar Resolução 4.966</a>
+				 |
+				 <a id="cta-pericia-dados-rota-aml" href="pericia-aml-kyc.html" style="font-weight: 700;">Pilar AML/KYC</a>
+				 |
+				 <a id="cta-pericia-dados-rota-lp-res4966" href="lp-resolucao-4966-auditoria-algoritmica.html" style="font-weight: 700;">LP de triagem rápida 4.966</a>
+			</p>
+		</section>
+
 		<section class="author-box bg-dark">
             <img src="img/perito-judicial-administracao-lincoln-sposito.webp" loading="lazy" alt="Retrato do Dr. Lincoln Sposito, Doutor em Administração e Perito Judicial especializado em saúde suplementar e finanças.">
             <div>
@@ -338,67 +350,70 @@
  * Finalidade: Captura de conversões GA4 para botões de WhatsApp e Auditoria
  */
 document.addEventListener('DOMContentLoaded', function() {
+	var pageName = 'pericia_dados';
+	var pageRole = 'pillar';
 
-	var ctaPericiaDadosHeroWhatsapp = document.getElementById('cta-pericia-dados-hero-whatsapp');
-	if (ctaPericiaDadosHeroWhatsapp) {
-		ctaPericiaDadosHeroWhatsapp.addEventListener('click', function() {
-			if (typeof gtag === 'function') {
-				gtag('event', 'generate_lead', {
-					'event_category': 'Contato',
-					'event_label': 'Pericia Dados - CTA Hero WhatsApp',
-					'method': 'WhatsApp',
-					'value': 1.0,
-					'currency': 'BRL',
-					'content_name': 'Pericia de Dados'
-				});
-			}
+	function trackClick(id, eventName, payload) {
+		var el = document.getElementById(id);
+		if (!el) return;
+		el.addEventListener('click', function() {
+			if (typeof gtag !== 'function') return;
+			gtag('event', eventName, Object.assign({ page_name: pageName, page_role: pageRole }, payload));
 		});
 	}
 
-	var ctaPericiaDadosHeroMateriais = document.getElementById('cta-pericia-dados-hero-materiais');
-	if (ctaPericiaDadosHeroMateriais) {
-		ctaPericiaDadosHeroMateriais.addEventListener('click', function() {
-			if (typeof gtag === 'function') {
-				gtag('event', 'file_download', {
-					'event_category': 'Materiais',
-					'event_label': 'Pericia Dados - Materiais de Apoio',
-					'file_name': 'materiais.html'
-				});
-			}
-		});
-	}
+    trackClick('cta-pericia-dados-hero-whatsapp', 'generate_lead', {
+		event_category: 'Contato',
+		event_label: 'Pericia Dados - CTA Hero WhatsApp',
+		method: 'WhatsApp',
+		value: 1.0,
+		currency: 'BRL',
+		content_name: 'Pericia de Dados'
+	});
 
-	var ctaPericiaDadosAnalise = document.getElementById('cta-pericia-dados-analise');
-	if (ctaPericiaDadosAnalise) {
-		ctaPericiaDadosAnalise.addEventListener('click', function() {
-			if (typeof gtag === 'function') {
-				gtag('event', 'select_content', {
-					'event_category': 'Navegacao',
-					'event_label': 'Pericia Dados - Solicitar Analise',
-					'content_type': 'internal_link',
-					'content_name': 'Pericia Dados - Contato'
-				});
-			}
-		});
-	}
+	trackClick('cta-pericia-dados-hero-materiais', 'file_download', {
+		event_category: 'Materiais',
+		event_label: 'Pericia Dados - Materiais de Apoio',
+		file_name: 'materiais.html'
+	});
+
+	trackClick('cta-pericia-dados-analise', 'select_content', {
+		event_category: 'Navegacao',
+		event_label: 'Pericia Dados - Solicitar Analise',
+		content_type: 'internal_link',
+		content_name: 'Pericia Dados - Contato'
+	});
+
+	trackClick('cta-pericia-dados-rota-res4966', 'select_content', {
+		event_category: 'Navegacao',
+		event_label: 'Pericia Dados - Rota Pilar Res4966',
+		content_type: 'internal_link',
+		content_name: 'pericia_resolucao_4966'
+	});
+
+	trackClick('cta-pericia-dados-rota-aml', 'select_content', {
+		event_category: 'Navegacao',
+		event_label: 'Pericia Dados - Rota Pilar AML',
+		content_type: 'internal_link',
+		content_name: 'pericia_aml_kyc'
+	});
+
+	trackClick('cta-pericia-dados-rota-lp-res4966', 'select_content', {
+		event_category: 'Navegacao',
+		event_label: 'Pericia Dados - Rota LP Res4966',
+		content_type: 'internal_link',
+		content_name: 'lp_resolucao_4966_auditoria_algoritmica'
+	});
     
     // 1. Monitoramento do Botão Flutuante (WhatsApp Geral)
-    var btnStalking = document.getElementById('cta-whatsapp-stalking');
-    if (btnStalking) {
-        btnStalking.addEventListener('click', function() {
-            if (typeof gtag === 'function') {
-                gtag('event', 'generate_lead', {
-                    'event_category': 'Contato',
-					'event_label': 'Pericia Dados - WhatsApp Flutuante',
-                    'method': 'WhatsApp',
-                    'value': 1.0,
-                    'currency': 'BRL',
-					'content_name': 'Pericia de Dados'
-                });
-                console.log('Forense: Lead WhatsApp registrado.');
-            }
-        });
-    }
+	trackClick('cta-whatsapp-stalking', 'generate_lead', {
+		event_category: 'Contato',
+		event_label: 'Pericia Dados - WhatsApp Flutuante',
+		method: 'WhatsApp',
+		value: 1.0,
+		currency: 'BRL',
+		content_name: 'Pericia de Dados'
+	});
 });
 </script>
 

@@ -143,6 +143,14 @@ No GA4 (Admin > Definições personalizadas > Criar dimensão personalizada):
   - Escopo: Evento
   - Parâmetro do evento: `lead_source`
 
+4. Dimensão: `ab_test_name`
+  - Escopo: Evento
+  - Parâmetro do evento: `ab_test_name`
+
+5. Dimensão: `ab_variant`
+  - Escopo: Evento
+  - Parâmetro do evento: `ab_variant`
+
 Após criar, aguarde propagação (até 24h) e execute:
 
 ```powershell
@@ -151,8 +159,40 @@ npm run ga4:ab-report
 
 Esse comando gera `ga4-ab-report.json` com:
 - exposição por teste/variante (`cro_ab_exposure`)
-- leads por teste/variante (`cro_ab_generate_lead`)
+- leads por teste/variante (`cro_ab_generate_lead` e `generate_lead` com `ab_test_name`/`ab_variant`)
 - decisão automática com regra do plano (200 exposições por variante e lift mínimo de 10%)
+
+### 4.1.1 EXPLORAÇÃO PADRÃO PARA LP A/B (HEADLINE + CTA)
+
+Criar em Explorar > Formato livre.
+
+**Dimensões:**
+- `ab_test_name`
+- `ab_variant`
+- `event_name`
+
+**Métricas:**
+- `Event count`
+- `Total users`
+
+**Filtros:**
+- incluir `event_name` IN (`cro_ab_exposure`, `generate_lead`)
+- excluir `(not set)` para `ab_test_name`
+
+**Visual 1 (Exposição):**
+- Linhas: `ab_test_name`, `ab_variant`
+- Valores: `Event count`
+- Filtro adicional: `event_name = cro_ab_exposure`
+
+**Visual 2 (Leads):**
+- Linhas: `ab_test_name`, `ab_variant`
+- Valores: `Event count`, `Total users`
+- Filtro adicional: `event_name = generate_lead`
+
+**Regra de decisão operacional:**
+- Mínimo 200 exposições por variante
+- Declarar vencedora apenas com lift >= 10%
+- Janela recomendada: 7 a 14 dias
 
 ### 4.2 CONFIGURAR DIMENSÕES PARA CTA DE ARTIGOS (OBRIGATÓRIO PARA FUNIL POR PÁGINA)
 
