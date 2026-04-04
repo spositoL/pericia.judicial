@@ -436,6 +436,46 @@
 				<div class="blog-grid">
 					<div class="carousel-track" id="carouselTrack">
 						<article class="blog-card" style="border-top: 5px solid #c5a059; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-radius: 0 0 8px 8px; transition: transform 0.3s ease;"> 
+							<img src="img/capa-artigo-log-chamadas-prova-judicial-assedio-bancario.webp" 
+								 loading="lazy"
+								 alt="O Poder do Log de Chamadas: Dr. Lincoln Sposito demonstra como a extração forense de metadados comprova o assédio bancário."
+								 style="width: 100%; height: 220px; object-fit: cover;">                            
+							
+							<div class="card-body" style="padding: 25px;">
+								<h3 class="section-title" style="color: #1a2a3a; font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 15px; line-height: 1.3;">
+									O Poder do Log de Chamadas: Prova Judicial Irrefutável contra o Assédio 📱🔍
+								</h3>
+								<p style="color: #555; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
+									Por que o print de tela não basta? Entenda como a <strong>Engenharia Forense</strong> transforma metadados e o histórico do celular em prova material robusta e auditável sob a <strong>ISO/IEC 27037</strong>.
+								</p>
+								<a href="artigo-log-chamadas-prova-judicial-assedio-bancario.html" 
+								   class="read-more" 
+								   style="color: #1a2a3a; font-weight: 800; text-decoration: none; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 8px;">
+									Acessar Análise Pericial <i class="fas fa-chevron-right" style="font-size: 0.7rem; color: #c5a059;"></i>
+								</a>
+							</div>
+						</article>	
+						<article class="blog-card" style="border-top: 5px solid #c5a059; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-radius: 0 0 8px 8px; transition: transform 0.3s ease;"> 
+							<img src="img/capa-artigo-analise-pericial-ccb-fgi-peac-dr-lincoln-sposito.webp" 
+								 loading="lazy"
+								 alt="Análise Pericial de CCB com Garantia FGI e PEAC: Dr. Lincoln Sposito detalha a revisão técnica de contratos de capital de giro."
+								 style="width: 100%; height: 220px; object-fit: cover;">                            
+							
+							<div class="card-body" style="padding: 25px;">
+								<h3 class="section-title" style="color: #1a2a3a; font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 15px; line-height: 1.3;">
+									CCB com Garantia FGI e PEAC: O Caminho para a Revisão Judicial 📊🏦
+								</h3>
+								<p style="color: #555; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
+									Identificando abusividades em contratos de capital de giro. Entenda como a <strong>Perícia Bancária</strong> audita cláusulas e encargos em Cédulas de Crédito Bancário para o recálculo técnico do saldo devedor.
+								</p>
+								<a href="artigo-analise-pericial-ccb-fgi-peac-dr-lincoln-sposito.html" 
+								   class="read-more" 
+								   style="color: #1a2a3a; font-weight: 800; text-decoration: none; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 8px;">
+									Acessar Análise Técnica <i class="fas fa-chevron-right" style="font-size: 0.7rem; color: #c5a059;"></i>
+								</a>
+							</div>
+						</article>						
+						<article class="blog-card" style="border-top: 5px solid #c5a059; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-radius: 0 0 8px 8px; transition: transform 0.3s ease;"> 
 							<img src="img/capa-responsabilidade-solidaria-banco-stalking-dr-lincoln.webp" 
 								 loading="lazy"
 								 alt="Análise Pericial de Responsabilidade Solidária: Dr. Lincoln Sposito demonstra a conexão técnica entre bancos e assessorias de cobrança."
@@ -794,8 +834,10 @@
 						<option value="Perícia em TI">Perícia relacionada a Tecnologia da Informação</option>
 						<option value="Perícia em Resolução 4.966">Perícia em Resolução 4.966</option>
 						<option value="Assédio Digital">Assédio Digital</option>
+						<option value="Assedio Bancario">Assédio Bancário</option>
 						<option value="Saúde Mental">Saúde Mental</option>						
 						<option value="Resolução 4966">Resolução 4966</option>						
+						<option value="CCB Capital de Giro">CCB Capital de Giro</option>					
 						<option value="Pericia Judicial">Perícia Judicial</option>						
 						<option value="Outros">Outras Demandas</option>
                     </select>
@@ -1256,6 +1298,29 @@ window.addEventListener('load', function() {
 			setTimeout(() => { campoNome.focus(); }, 600);
 		}
 	}
+	else if (tema === 'PericiaDigital') {
+		// 1. Decodifica os parâmetros da URL (Tratando acentos e espaços do link de Perícia Digital)
+		const areaDecodificada = areaParam ? decodeURIComponent(areaParam) : "Assédio Bancário";
+		const assuntoDecodificado = assuntoParam ? decodeURIComponent(assuntoParam) : "Auditoria de Histórico de Chamadas";
+
+		// 2. Preenche a Área e o Assunto nos campos do formulário (Foco em Prova Digital)
+		if (campoArea) {
+			campoArea.value = areaDecodificada;
+		}
+		if (campoAssunto) {
+			campoAssunto.value = assuntoDecodificado;
+		}
+		
+		// 3. Mensagem personalizada focada na Auditoria de Dados e Prova de Assédio
+		if (campoMensagem) {
+			campoMensagem.value = `Dr. Lincoln, preciso de uma perícia digital para auditar meu histórico de chamadas e logs de comunicação. O objetivo é materializar a frequência e a natureza abusiva do assédio bancário, transformando esses dados brutos em prova técnica robusta para o processo.`;
+		}
+		
+		// 4. Foco automático no campo nome para conversão imediata (Pilar de UX)
+		if (campoNome) {
+			setTimeout(() => { campoNome.focus(); }, 600);
+		}
+	}
 	else if (tema === 'SaudeMental') {
 		// 1. Decodifica os parâmetros da URL para tratar acentos e espaços
 		const areaDecodificada = areaParam ? decodeURIComponent(areaParam) : "Saúde Mental";
@@ -1298,6 +1363,29 @@ window.addEventListener('load', function() {
 		}
 		
 		// 4. Foco automático no campo nome para conversão imediata (Pilar de Conversão do Roteiro 7.0)
+		if (campoNome) {
+			setTimeout(() => { campoNome.focus(); }, 600);
+		}
+	}
+	else if (tema === 'FGIPEAC') {
+		// 1. Decodifica os parâmetros da URL (Tratando os espaços e acentos do link da CCB)
+		const areaDecodificada = areaParam ? decodeURIComponent(areaParam) : "CCB Capital de Giro";
+		const assuntoDecodificado = assuntoParam ? decodeURIComponent(assuntoParam) : "Pericia Tecnica: Liquidez Real, CET e Onerosidade Excessiva";
+
+		// 2. Preenche a Área e o Assunto nos campos do formulário
+		if (campoArea) {
+			campoArea.value = areaDecodificada;
+		}
+		if (campoAssunto) {
+			campoAssunto.value = assuntoDecodificado;
+		}
+		
+		// 3. Mensagem personalizada focada em Revisão de CCB e Onerosidade (Pilar de Autoridade Técnica)
+		if (campoMensagem) {
+			campoMensagem.value = `Dr. Lincoln, solicito a triagem técnica da CCB para análise de Capital de Giro. O objetivo é a conferência detalhada do CET (Custo Efetivo Total) e a verificação de onerosidade excessiva, visando a descaracterização da mora e a recalculação da liquidez real do título.`;
+		}
+		
+		// 4. Foco automático no campo nome para conversão imediata
 		if (campoNome) {
 			setTimeout(() => { campoNome.focus(); }, 600);
 		}

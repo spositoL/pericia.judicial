@@ -330,6 +330,7 @@ class GA4Sync {
       console.log('📊 Calculando taxas de conversão...');
       
       const conversionByPage = {};
+      const viewsByPage = {};
       
       // Agrupar conversões por página
       if (conversionData && conversionData.rows) {
@@ -343,26 +344,33 @@ class GA4Sync {
           conversionByPage[page] += count;
         });
       }
-      
-      // Calcular taxa
-      const rates = {};
+
+      // Agrupar visualizações por página
       if (metricsData && metricsData.rows) {
         metricsData.rows.forEach(row => {
           const page = row.dimensionValues[0].value;
-          const views = parseInt(row.metricValues[1].value) || 1;
-          const conversions = conversionByPage[page] || 0;
-          
-          if (!rates[page]) {
-            rates[page] = {
-              views: 0,
-              conversions: 0
-            };
+          const views = parseInt(row.metricValues[1].value) || 0;
+
+          if (!viewsByPage[page]) {
+            viewsByPage[page] = 0;
           }
-          
-          rates[page].views += views;
-          rates[page].conversions += conversions;
+          viewsByPage[page] += views;
         });
       }
+      
+      // Consolidar taxas por página sem duplicar conversões por linha de data
+      const rates = {};
+      const allPages = new Set([
+        ...Object.keys(viewsByPage),
+        ...Object.keys(conversionByPage)
+      ]);
+
+      allPages.forEach(page => {
+        rates[page] = {
+          views: viewsByPage[page] || 0,
+          conversions: conversionByPage[page] || 0
+        };
+      });
       
       return rates;
     } catch (error) {
