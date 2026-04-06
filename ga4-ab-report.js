@@ -220,34 +220,26 @@ function printReport(period, tests) {
       source: 'cro_ab_generate_lead[test_name,variant]'
     });
 
-    const leadLPQuery = await safeQueryRows(sync, {
-      period,
-      eventName: 'generate_lead',
-      testDimension: 'customEvent:ab_test_name',
-      variantDimension: 'customEvent:ab_variant',
-      source: 'generate_lead[ab_test_name,ab_variant]'
-    });
-
-    [exposureQuery, leadLegacyQuery, leadLPQuery]
+    [exposureQuery, leadLegacyQuery]
       .map((q) => q.warning)
       .filter(Boolean)
       .forEach((warning) => warnings.push(warning));
 
     const exposureRows = exposureQuery.rows;
-    const leadRows = [...leadLegacyQuery.rows, ...leadLPQuery.rows]
+    const leadRows = [...leadLegacyQuery.rows]
       .filter((row) => row.testName !== 'unknown_test' && row.variant !== 'unknown_variant');
 
     const tests = buildReport(exposureRows, leadRows);
 
     if (!tests.length) {
       const exposureTotal = await queryEventTotal(sync, period, 'cro_ab_exposure');
-      const leadTotal = await queryEventTotal(sync, period, 'generate_lead');
+      const leadTotal = await queryEventTotal(sync, period, 'cro_ab_generate_lead');
 
       const fallback = {
         period,
         status: 'no_variant_breakdown',
         message: 'Sem linhas por variante. Verifique dimensoes customizadas do GA4 para A/B.',
-        requiredDimensions: ['test_name', 'variant', 'ab_test_name', 'ab_variant'],
+        requiredDimensions: ['test_name', 'variant'],
         totals: {
           exposure: toNumber(exposureTotal?.rows?.[0]?.metricValues?.[0]?.value),
           leads: toNumber(leadTotal?.rows?.[0]?.metricValues?.[0]?.value)
@@ -279,10 +271,7 @@ function printReport(period, tests) {
       },
       sources: {
         exposure: 'cro_ab_exposure[test_name,variant]',
-        leads: [
-          'cro_ab_generate_lead[test_name,variant]',
-          'generate_lead[ab_test_name,ab_variant]'
-        ]
+        leads: ['cro_ab_generate_lead[test_name,variant]']
       },
       warnings,
       tests
