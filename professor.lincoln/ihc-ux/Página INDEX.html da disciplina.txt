@@ -1,25 +1,112 @@
 Página INDEX.html da disciplina
 FEITO 1) Reparei que a tabela de aulas da index está em ordem crescente de data, deve ser decrescente. 
-2) O aluno vai chegar no dia da aula na sala e eu estarei com o QRCODE aberto para ele acessar a página até 19h15, com tolerância de 2 minutos. 
-3) Neste caso, quem acessar pelo qrcode deve ser computado como presente e no horário. 
-4) Quem chegar depois das 19h17 será computado como em atraso;
-5) Acesso no mesmo dia mas após as 21h30 será considerado ausente. 
-6) Início da aula. Após este horário das 19h17, a página da aula será aberta automaticamente para eu iniciar a aula ou pelo meu comando manual. 
-7) No entanto, alunos que chegarem atrasado não terão acesso a página da aula. Neste caso, no slide da aula que eu estarei dando deve ter o QRCODE para acessar a página da aula, ai já computando o aluno em atraso. 
-8) Outro porém é que haverá alunos que simplesmente acompanharão a aula sem acessar a página da aula, o que significa que os números não necessariamente representam a presença ou atraso ou ausência efetiva. Precisamos ter este conceito claro, mas para fins de KPI de engajamento da aula presencial e do formato pode ser mantido. 
-9) Outro ponto de controle será o acesso a página da aula fora do dia da aula pelos alunos que terão de ter acesso para avaliação, para resolver exercícios, e demais atividades. Desta forma, temos de ter um KPI no ga4 para mensurar estes acessos;
-10) podemos chamar o primeiro KPI de presenca_aula (ligado aos eventos 3, 4, 5)
-11) o outro kpi seria o de engajamento aula (ligado ao evento 8). 
+FEITO 2) O aluno vai chegar no dia da aula na sala e eu estarei com o QRCODE aberto para ele acessar a página até 19h15, com tolerância de 2 minutos. 
+FEITO 3) Neste caso, quem acessar pelo qrcode deve ser computado como presente e no horário. 
+FEITO 4) Quem chegar depois das 19h17 será computado como em atraso;
+FEITO 5) Acesso no mesmo dia mas após as 21h30 será considerado ausente. 
+FEITO 6) Início da aula. Após este horário das 19h17, a página da aula será aberta automaticamente para eu iniciar a aula ou pelo meu comando manual. 
+FEITO 8) Outro porém é que haverá alunos que simplesmente acompanharão a aula sem acessar a página da aula, o que significa que os números não necessariamente representam a presença ou atraso ou ausência efetiva. Precisamos ter este conceito claro, mas para fins de KPI de engajamento da aula presencial e do formato pode ser mantido. 
+FEITO 9) Outro ponto de controle será o acesso à página da aula fora do dia da aula pelos alunos que terão de ter acesso para avaliação, para resolver exercícios, e demais atividades. Desta forma, temos de ter um KPI no ga4 para mensurar estes acessos;
+FEITO 10) podemos chamar o primeiro KPI de presenca_aula (ligado aos eventos 3, 4, 5)
+FEITO 11) o outro kpi seria o de engajamento aula (ligado ao evento 8). 
 
 Página da aula-06-03-2026.html 
-12) O formato da aula com tela grande, estilo slide está bom, para melhorar peço que aumente a fonte para que alunos possam enxergar melhor. 
-13) Peço que tenha header (logo do dr lincoln) e footer (Prof. Dr Lincoln Sposito, Todos os direitos reservados) fixos durante a transição de cada "slide" que é uma section;
-14) Com o QRCode funcionando como controle de presença, na primeira section desta forma não precia mais do CONFIRMAR PRESENÇA DIGITAL
-15) Seção 1:A primeira section poderia ir para o "Boas vindas a aula "nome da aula e disciplina", com as minhas informações de apresentação "Prof. Dr. Lincoln Sposito" e a data do dia da aula.
-16) Seção 2:A segunda section seria a "AGENDA" com o conteúdo da aula: 1 - Revisão da aula anterior; 2 - Correção do exercício da semana;3 - Pesquisa do você aprendeu (S/N)?; 4 - Aula expositiva do dia; 5 - Explicação do exercício da semana e qrcode do google forms; 6 - Recapitulação da aula do dia (resumo);
-17) Seção 3: 1 - Revisão da aula anterior, com a repetição do slide de fundamentação teórica da aula anterior
-18) Seção 4: 2 - Correção do exercício da semana (Gabarito do google forms, estatística das múltiplas escolhas, nuvem de palavras das respostas qualitativas e as respostas corretas em termos de conceito de cada questão descritiva; e para fechar a nuvem de palavras do parecer técnico das entrevistas realizadas pelos alunos para discussão da percepção dos leigos)
-19) Seção 5: 3 - Pesquisa do você aprendeu ERGONOMIA (S/N)? com o indicador realtime puxado do GA4;
-20) Seção 6: 4 - Aula expositiva do dia, aqui vem um conjunto de slides para explicar o conteúdo do dia então podem ser N Seções) vamos manter um padrão de 7 slides para explicar, o que nos leva a próxima seção 14;
-21) Seção 14: 5 - Explicação do exercício da semana e qrcode do google forms, com uma section explicando o que será a atividade da semana o link do google form e QRCode do link do google form. (2 seções neste caso, um para explicar e outro para o aluno acessar)
-22) Seção 16: 6 - Recapitulação da aula do dia (resumo) e reforço das datas e avisos quando necessário. Fechando com um OBRIGADO! e até a próxima aula.
+FEITO - 7) No entanto, alunos que chegarem atrasado não terão acesso a página da aula. Neste caso, no slide da aula que eu estarei dando deve ter o QRCODE para acessar a página da aula, ai já computando o aluno em atraso. 
+FEITO - 12) O formato da aula com tela grande, estilo slide está bom, para melhorar peço que aumente a fonte para que alunos possam enxergar melhor. 
+FEITO - 13) Peço que tenha header (logo do dr lincoln) e footer (Prof. Dr Lincoln Sposito, Todos os direitos reservados) fixos durante a transição de cada "slide" que é uma section;
+FEITO - 14) Com o QRCode funcionando como controle de presença, na primeira section desta forma não precisa mais do CONFIRMAR PRESENÇA DIGITAL
+FEITO - 15) Seção 1:A primeira section poderia ir para o "Boas vindas a aula "nome da aula e disciplina", com as minhas informações de apresentação "Prof. Dr. Lincoln Sposito" e a data do dia da aula.
+FEITO - 16) Seção 2:A segunda section seria a "AGENDA" com o conteúdo da aula: 1 - Revisão da aula anterior; 2 - Correção do exercício da semana;3 - Pesquisa do você aprendeu (S/N)?; 4 - Aula expositiva do dia; 5 - Explicação do exercício da semana e qrcode do google forms; 6 - Recapitulação da aula do dia (resumo);
+FEITO - 17) Seção 3: 1 - Revisão da aula anterior, com a repetição do slide de fundamentação teórica da aula anterior
+FEITO (PARCIALMENTE) - 18) Seção 4: 2 - Correção do exercício da semana (Gabarito do google forms, estatística das múltiplas escolhas, nuvem de palavras das respostas qualitativas e as respostas corretas em termos de conceito de cada questão descritiva; e para fechar a nuvem de palavras do parecer técnico das entrevistas realizadas pelos alunos para discussão da percepção dos leigos)
+FEITO - 19) Seção 5: 3 - Pesquisa do você aprendeu ERGONOMIA (S/N)? com o indicador realtime puxado do GA4;
+FEITO - 20) Seção 6: 4 - Aula expositiva do dia, aqui vem um conjunto de slides para explicar o conteúdo do dia então podem ser N Seções) vamos manter um padrão de 7 slides para explicar, o que nos leva a próxima seção 14;
+FEITO - 21) Seção 14: 5 - Explicação do exercício da semana e qrcode do google forms, com uma section explicando o que será a atividade da semana o link do google form e QRCode do link do google form. (2 seções neste caso, um para explicar e outro para o aluno acessar)
+FEITO - 22) Seção 16: 6 - Recapitulação da aula do dia (resumo) e reforço das datas e avisos quando necessário. Fechando com um OBRIGADO! e até a próxima aula.
+
+
+
+FORMULÁRIO DA AULA DE 02/03
+sem mexer na estrutura do html, que já contempla tudo que é necessário de funcional, adapte o conteúdo para a aula de 02/03/2026 da disciplina de sistemas distribuídos. 
+. A aula estará nesta estrutura "\pericia.judicial\professor.lincoln\sistemas-distribuidos\". Considere isto para a navegação e para os controles GA4 necessários, caso tenhamos de reconfigurálos.
+Criar as sections
+1) Seção 1:A primeira section é a de "Boas vindas a aula "nome da aula e disciplina", com as minhas informações de apresentação "Prof. Dr. Lincoln Sposito" e a data do dia da aula.
+2) Seção 2:A segunda section seria a "AGENDA" com o conteúdo da aula: 1 - Revisão da aula anterior; 2 - Quis com 5 questões no ;3 - Pesquisa do você aprendeu (S/N)?; 4 - Aula expositiva do dia; 5 - Explicação do exercício da semana e qrcode do google forms; 6 - Recapitulação da aula do dia (resumo);7 - Feedback on line
+3) Seção 3: 1 - Revisão da aula anterior, com a repetição do slide de fundamentação teórica da aula anterior
+Slide 1: A Essência dos Sistemas Distribuídos (SD)
+
+O que é um SD? É um conjunto de componentes em computadores em rede que se coordenam exclusivamente por troca de mensagens.
+
+
+A Meta de Ouro: Alcançar a Transparência, fazendo com que múltiplos computadores pareçam um sistema único para o usuário.
+
+
+Os Desafios Reais: Operar em redes sem um relógio global e gerenciar falhas que ocorrem de forma independente em cada nó.
+
+Slide 2: Fundamentação Teórica (Visão dos Autores)
+Neste slide, consolidamos a base acadêmica do curso seguindo as diretrizes da APA 7ª edição:
+
+* "Um sistema distribuído é aquele em que componentes localizados em computadores em rede se comunicam e coordenam suas ações apenas por meio de troca de mensagens" (Coulouris et al., 2013, p. 1).
+* "O middleware é uma camada de software que fornece um modelo de programação comum e oculta a heterogeneidade das redes, hardware e sistemas operacionais" (Monteiro et al., 2020, p. X).
+* "A independência entre requisições (stateless) é o que permite que grandes servidores web gerenciem milhões de acessos simultâneos" (Tanenbaum & Steen, 2007, p. X).
++2
+
+Slide 3: Middleware e Interoperabilidade
+
+O Papel do Middleware: Atua como a "cola" ou "capa de invisibilidade" que isola a aplicação das particularidades de cada Sistema Operacional e Hardware.
++1
+
+
+Componentização: Permite que serviços em linguagens diferentes (ex: Java e Python) interajam sem conflitos de baixo nível.
+
+
+Eficiência de Transmissão: A escolha entre JSON (leve e rápido) e XML (verboso e baseado em tags) impacta diretamente a latência e o consumo de banda.
+
+Slide 4: Escalabilidade e o Modelo Stateless
+
+O Conceito Stateless: O servidor não armazena o "estado" ou memória do cliente entre as chamadas.
+
+Por que importa? Permite a Escalabilidade Horizontal. Se um servidor falha, o cliente é redirecionado para outro nó instantaneamente sem perda de continuidade.
++1
+
+
+Padrão de Mercado: É o pilar fundamental do protocolo HTTP e das arquiteturas modernas de microsserviços.
+
+Slide 5: Disponibilidade, Replicação e Tolerância a Falhas
+
+Estudo de Caso (Gmail): Se um datacenter em São Paulo sofre queda total, o usuário não perde acesso porque os dados estão replicados em múltiplos nós geograficamente distantes (ex: Iowa ou Holanda).
++1
+
+Mecanismos de Defesa:
+
+
+Disponibilidade: O Middleware redireciona o tráfego automaticamente ao detectar falhas.
+
+
+Consistência: Protocolos de sincronização garantem que o dado seja o mesmo em todas as réplicas.
+
+
+Tolerância a Falhas: O sistema aceita falhas parciais para manter o serviço total "transparente" e operacional.
+
+4) Seção 4: 2 - exercício interativo com a turma para fixar a revisão pelo link https://www.menti.com/alo1y6dyvuup (deve gerar o QRCODE como é feito para a section do google form usando o script de qrcode.js que já usamos na página
+5) Seção 5: 3 - Pesquisa do você aprendeu <tema da revisão> (S/N)? com o indicador realtime puxado do GA4;
+6) Seção 6: 4 - Aula expositiva do dia, aqui vem um conjunto de slides para explicar o conteúdo do dia então podem ser N Seções) vamos manter um padrão de 7 slides para explicar, o que nos leva a próxima seção 14;
+Slide 1: Abertura e ContextoTítulo: Componentização de Sistemas: Princípios e Benefícios.Subtítulo: Da rigidez do Monolito à flexibilidade dos Sistemas Distribuídos.Apresentação: Prof. Dr. Lincoln Sposito.Slide 2: O Fim da Era MonolíticaO Monolito: Descrito como um "castelo de cartas" onde alterações pontuais podem gerar falhas em cascata em todo o sistema.A Transição: Substituição de estruturas rígidas por blocos de "Lego" (componentes) independentes.Visão Estratégica: Redução do risco de "reescrita total" ao permitir evolução incremental.Slide 3: Fundamentação Teórica (Normas APA 7)Neste slide, consolidamos o embasamento acadêmico da disciplina:Evolução: "A componentização permite que sistemas distribuídos sejam estendidos e reconfigurados de forma independente, facilitando a evolução do software sem reescrita total" (Coulouris et al., 2013).Gestão de Recursos: "O middleware funciona como um gerenciador de recursos e uma camada de abstração que oculta a heterogeneidade das redes e sistemas operacionais" (Tanenbaum & Steen, 2007).Modelo de Programação: "O middleware atua como uma camada de software que provê um modelo de programação comum, mascarando as diferenças entre os diversos nós da rede" (Monteiro et al., 2020).Slide 4: O Middleware como Camada de UnificaçãoA "Capa de Invisibilidade": Camada intermediária que situa-se entre as aplicações e os sistemas operacionais locais.Abstração: Oculta a complexidade técnica para que o sistema pareça único e transparente ao usuário.Interoperabilidade: Viabiliza a conversa entre sistemas heterogêneos (ex: integração entre Java e Delphi).Slide 5: Quadro Sinótico: Por que as Empresas Investem?Este quadro apresenta a justificativa de negócio para a adoção de sistemas distribuídos:BenefícioImpacto no Negócio (Gestão)Impacto Técnico (Engenharia)AgilidadeLançamento de recursos em dias.Deploy isolado de partes do sistema.EscalabilidadeEconomia: amplia-se apenas o necessário.Rodar componentes em múltiplos servidores.ManutenibilidadeMenor custo de reparo e suporte.Localização rápida de bugs em módulos.Slide 6: O Dilema da Eficiência (JSON vs XML)Peso da Rede: A eficiência na serialização é crítica para a performance de sistemas de alta carga.Comparativo:XML: Verboso, baseado em tags, maior consumo de banda.JSON: Leve, baseado em pares chave-valor, menor latência.Slide 7: Exercício Prático: "Projeto de Mesa"Cenário: Desenvolvimento de um sistema distribuído para o Colégio Mirassol.Tarefa: Identificar e separar os componentes (Financeiro, Acadêmico, Portaria).Desafio Intelectual: De que forma o componente "Portaria" notifica o "Acadêmico" sobre a entrada de um aluno utilizando exclusivamente Interfaces e Middleware?.
+
+7) Seção 14: 5 - Explicação do exercício da semana e qrcode do google forms, com uma section explicando o que será a atividade da semana o link do google form e QRCode do link do google form. (2 seções neste caso, um para explicar e outro para o aluno acessar)
+https://forms.gle/H6UBL1t4g5nQvPb37
+
+8) Seção 16: 6 - Recapitulação da aula do dia (resumo) e reforço das datas e avisos quando necessário. Fechando com um OBRIGADO! e até a próxima aula. Com download dos arquivos de revisão (conteudo-revisao-sistemas-distribuidos-aula-02-03-2026.pdf) e do tema da aula (conteudo-aula-02-03-2026-revisado.pdf)
+
+9) Seção 17: 7 - Coleta de feedback
+   <section class="card" style="text-align: center;">
+        <span class="tag">Métrica de UX</span>
+        <h2>O que achou da aula de hoje?</h2>
+        <p>Seu feedback é anônimo e alimenta nosso dashboard de satisfação em tempo real.</p>
+        <div class="feedback-icons">
+            <span class="emoji" title="Excelente" onclick="gtag('event', 'feedback_aula', {'sentimento': 'excelente'}); alert('Obrigado! Feedback registrado.');">😍</span>
+            <span class="emoji" title="Bom" onclick="gtag('event', 'feedback_aula', {'sentimento': 'bom'}); alert('Fico feliz que gostou!');">🙂</span>
+            <span class="emoji" title="Regular" onclick="gtag('event', 'feedback_aula', {'sentimento': 'regular'}); alert('Obrigado. Vamos melhorar!');">😐</span>
+            <span class="emoji" title="Ruim" onclick="gtag('event', 'feedback_aula', {'sentimento': 'ruim'}); alert('Sinto muito. Vamos conversar para ajustar.');">☹️</span>
+        </div>
+    </section>	
