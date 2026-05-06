@@ -549,4 +549,17 @@
       <priority>0.90</priority>
     </url>
 
+    /*05/05/2026*/
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-divida-eterna-cartao-credito-parcelamento-automatico.html</loc>
+      <lastmod>2026-05-05</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-divida-cartao-credito-stalking-bancario.html</loc>
+      <lastmod>2026-05-05</lastmod>
+      <priority>0.80</priority>
+    </url>
+
 </urlset>
