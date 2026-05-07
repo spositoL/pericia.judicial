@@ -473,6 +473,27 @@
 				<div class="blog-grid">
 					<div class="carousel-track" id="carouselTrack">
 						<article class="blog-card" style="border-top: 5px solid #c5a059; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-radius: 0 0 8px 8px; transition: transform 0.3s ease;"> 
+							<img src="img/capa-artigo-duty-to-mitigate-the-loss-pericia-cartao-paralisado.webp" 
+								 loading="lazy"
+								 alt="Capa do artigo sobre O Duty to Mitigate the Loss na Perícia de Cartões Paralisados"
+								 style="width: 100%; height: 220px; object-fit: cover; object-position: top;">
+							
+							<div class="card-body" style="padding: 25px;">
+								<h3 class="section-title" style="color: #1a2a3a; font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 15px; line-height: 1.3;">
+									O “Duty to Mitigate the Loss” na Perícia de Cartões Paralisados
+								</h3>
+								<p style="color: #555; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
+									<p>O banco pode esperar indefinidamente para inflar a dívida de um cartão paralisado?</p>
+									A tese do dever de mitigar o próprio prejuízo mostra que a inércia estratégica não é neutra. Quando o credor deixa a dívida crescer sem cooperar para uma solução justa, a perícia pode delimitar o ponto de abuso e recompor o saldo correto.
+								</p>
+								<a href="artigo-duty-to-mitigate-the-loss-pericia-cartao-paralisado.html"   
+								   class="read-more"   
+								   style="color: #1a2a3a; font-weight: 800; text-decoration: none; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 8px;">
+									Ver Análise Técnico-Pericial <i class="fas fa-chevron-right" style="font-size: 0.7rem; color: #c5a059;"></i>
+								</a>
+							</div>
+						</article>
+						<article class="blog-card" style="border-top: 5px solid #c5a059; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-radius: 0 0 8px 8px; transition: transform 0.3s ease;"> 
 							<img src="img/capa-artigo-alucinacao-matematica-pericia-divida-bancaria-revisional.webp" 
 								 loading="lazy"
 								 alt="Capa do artigo sobre Alucinação Matemática: Quando a Dívida Real é 98% Menor que a Cobrada"
@@ -1098,12 +1119,13 @@
                         <option value="">Selecione a área...</option>
 						<option value="Alucinação Matemática">Alucinação Matemática - Parcelamento de Cartão de Crédito</option>
 						<option value="Assédio Digital">Assédio Digital (Stalking Bancário)</option>
-						<option value="Assedio Bancario">Assédio Bancário  (Stalking Bancário)</option>
-						<option value="Cartão de Crédito - Stalking">Cartão de Crédito - Stalking</option>						
+						<option value="Assedio Bancario">Assédio Bancário  (Stalking Bancário)</option>						
+						<option value="Cartão de Crédito - Stalking">Cartão de Crédito - Stalking</option>												
 						<option value="CCB Capital de Giro">CCB Capital de Giro</option>					
 						<option value="Cheque especial">Cheque especial</option>
 						<option value="Consórcio">Consórcio</option>
 						<option value="Credito PJ">Crédito PJ CCB</option> 					
+						<option value="Duty to Mitigate">Cartao de Crédito - Duty to Mitigate</option>						
 						<option value="Emprestimo PJ CCB">Empréstimo PJ CCB</option>					
 						<option value="Financiamento Imobiliário">Financiamento Imobiliário</option>
 						<option value="Financiamento de Veículos">Financiamento de Veículos</option>						
@@ -1732,7 +1754,33 @@ window.addEventListener('load', function() {
 		// 4. Foco automático no campo nome para conversão imediata
 		if (campoNome) {
 			setTimeout(() => { campoNome.focus(); }, 600);
+		}						
+	}
+	else if (tema === 'DutyToMitigate') {
+		// 1. Decodifica os parâmetros da URL para tratar acentos e espaços
+		const areaDecodificada = areaParam ? decodeURIComponent(areaParam) : "Duty to Mitigate";
+		const assuntoDecodificado = assuntoParam ? decodeURIComponent(assuntoParam) : "Cartao de Crédito - Duty to Mitigate";
+
+		// 2. Preenche a Área e o Assunto nos campos do formulário
+		if (campoArea) {
+			campoArea.value = areaDecodificada;
 		}
+		if (campoAssunto) {
+			campoAssunto.value = assuntoDecodificado;
+		}
+		
+		// 3. Mensagem personalizada focada na Engenharia da Sanfona e Asfixia Programada
+		if (campoMensagem) {
+			campoMensagem.value = "Dr. Lincoln, li seu artigo sobre a Cartao de Crédito - Duty to Mitigate. Meu cartão tem vários parcelamentos que parecem nunca acabar. Mesmo pagando, o saldo não cai. Gostaria de uma análise técnica para identificar se há parcelamentos enfileirados e CET abusivo violando o Artigo 54-D do CDC.";
+		}
+		
+		// 4. Foco automático no campo nome para conversão imediata
+		if (campoNome) {
+			setTimeout(() => { campoNome.focus(); }, 600);
+		}
+		
+		DutyToMitigate
+		
 	}// <-- Aqui faltava fechar esta chave!
 }); // <-- Agora o fechamento do EventListener está correto
 </script>
