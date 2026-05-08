@@ -473,6 +473,26 @@
 				<div class="blog-grid">
 					<div class="carousel-track" id="carouselTrack">
 						<article class="blog-card" style="border-top: 5px solid #c5a059; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-radius: 0 0 8px 8px; transition: transform 0.3s ease;"> 
+							<img src="img/capa-artigo-extincao-divida-compensacao-repeticao-indebito-cdc.webp" 
+								 loading="lazy"
+								 alt="Capa do artigo sobre O Duty to Mitigate the Loss na Perícia de Cartões Paralisados"
+								 style="width: 100%; height: 220px; object-fit: cover; object-position: top;">
+							
+							<div class="card-body" style="padding: 25px;">
+								<h3 class="section-title" style="color: #1a2a3a; font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 15px; line-height: 1.3;">
+									Xeque-Mate: Extinção da Dívida por Compensação e Repetição de Indébito
+								</h3>
+								<p style="color: #555; font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
+									Este é o desfecho: o momento em que a perícia técnica transforma uma dívida de seis dígitos em liberdade financeira.
+								</p>
+								<a href="artigo-extincao-divida-compensacao-repeticao-indebito-cdc.html"   
+								   class="read-more"   
+								   style="color: #1a2a3a; font-weight: 800; text-decoration: none; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 8px;">
+									Ver Análise Técnico-Pericial <i class="fas fa-chevron-right" style="font-size: 0.7rem; color: #c5a059;"></i>
+								</a>
+							</div>
+						</article>					
+						<article class="blog-card" style="border-top: 5px solid #c5a059; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border-radius: 0 0 8px 8px; transition: transform 0.3s ease;"> 
 							<img src="img/capa-artigo-duty-to-mitigate-the-loss-pericia-cartao-paralisado.webp" 
 								 loading="lazy"
 								 alt="Capa do artigo sobre O Duty to Mitigate the Loss na Perícia de Cartões Paralisados"
@@ -1125,6 +1145,7 @@
 						<option value="Cheque especial">Cheque especial</option>
 						<option value="Consórcio">Consórcio</option>
 						<option value="Credito PJ">Crédito PJ CCB</option> 					
+						<option value="Divida Bancaria">Dívida Bancária - Cartão de Crédito</option> 					
 						<option value="Duty to Mitigate">Cartao de Crédito - Duty to Mitigate</option>						
 						<option value="Emprestimo PJ CCB">Empréstimo PJ CCB</option>					
 						<option value="Financiamento Imobiliário">Financiamento Imobiliário</option>
@@ -1779,7 +1800,29 @@ window.addEventListener('load', function() {
 			setTimeout(() => { campoNome.focus(); }, 600);
 		}
 		
-		DutyToMitigate
+	}
+	else if (tema === 'ExtincaoDivida') {
+		// 1. Decodifica os parâmetros da URL para tratar acentos e espaços
+		const areaDecodificada = areaParam ? decodeURIComponent(areaParam) : "Divida Bancaria";
+		const assuntoDecodificado = assuntoParam ? decodeURIComponent(assuntoParam) : "Análise de Extinção: Compensação e Repetição de Indébito";
+
+		// 2. Preenche a Área e o Assunto nos campos do formulário
+		if (campoArea) {
+			campoArea.value = areaDecodificada;
+		}
+		if (campoAssunto) {
+			campoAssunto.value = assuntoDecodificado;
+		}
+		
+		// 3. Mensagem personalizada focada na Engenharia da Sanfona e Asfixia Programada
+		if (campoMensagem) {
+			campoMensagem.value = "Dr. Lincoln, li seu artigo sobre a Cartao de Crédito - Dívida Bancária. Meu cartão tem vários parcelamentos que parecem nunca acabar. Mesmo pagando, o saldo não cai. Gostaria de uma análise técnica para identificar se há parcelamentos enfileirados e CET abusivo violando o Artigo 54-D do CDC.";
+		}
+		
+		// 4. Foco automático no campo nome para conversão imediata
+		if (campoNome) {
+			setTimeout(() => { campoNome.focus(); }, 600);
+		}
 		
 	}// <-- Aqui faltava fechar esta chave!
 }); // <-- Agora o fechamento do EventListener está correto
