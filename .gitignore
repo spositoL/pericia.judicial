@@ -25,3 +25,8 @@ yarn-*.log*
 Thumbs.db
 *.log
 *.tmp
+
+# ====================================
+# Large local media
+# ====================================
+TikTok/CARTAO_CREDITO_YOUTUBE.mp4

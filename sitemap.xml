@@ -15,7 +15,6 @@
   <url>
     <loc>https://spositol.github.io/pericia.judicial/sobre.html</loc>
     <lastmod>2026-02-13</lastmod>
-    <priority>0.80</priority>
     <priority>0.70</priority>
   </url>
 
@@ -29,7 +28,6 @@
     <loc>https://spositol.github.io/pericia.judicial/artigo-plano-saude-445.html</loc>	
     <lastmod>2026-02-13</lastmod>
     <priority>0.60</priority>
-    <priority>0.60</priority>
   </url>
   
   <url>
@@ -41,7 +39,6 @@
   <url>
     <loc>https://spositol.github.io/pericia.judicial/artigo-pericia-cdc-abusividade.html</loc>	
     <lastmod>2026-02-13</lastmod>
-    <priority>0.60</priority>
     <priority>0.60</priority>
   </url>  
 
@@ -328,7 +325,7 @@
     </url>
 
     <url>
-      <loc>https://spositol.github.io/pericia.judicial/arquivos/Consultoria Estratégica, Perícia Financeira e Transformação Digital.pdf</loc>
+      <loc>https://spositol.github.io/pericia.judicial/arquivos/Consultoria%20Estrat%C3%A9gica%2C%20Per%C3%ADcia%20Financeira%20e%20Transforma%C3%A7%C3%A3o%20Digital.pdf</loc>
       <lastmod>2026-03-08</lastmod>
       <priority>0.70</priority>
     </url>
@@ -520,6 +517,102 @@
     </url>
 
     <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-ditadura-ativismo-acionistas-gestao-ruido-redes.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-consorcio-escandalo-midia-sensacionalista-governanca.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-guerra-dos-feudos-parceiros-comerciais-sabotagem-cadeia-suprimentos.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-fisiologismo-regulatorio-entidades-classe-balcao-lobbies.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-efeito-eco-incompetencia-mercado-brasileiro-blindagem-corporativa.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-analise-lideranca-carlo-ancelotti-selecao-brasileira-2026.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-imediatismo-vetor-decadencia-planejamento-estrategico-longo-prazo.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-turnaround-1994-resiliencia-pragmatismo-blindagem-cultural.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-falencia-cognicao-base-formacao-profissionais-mutilados.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-gestao-de-crise-desercao-lideranca-compromisso-corporativo.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-acovardamento-mercado-proposta-valor-dna-inovador.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-apagao-accountability-cultura-ownership-gargalos-operacionais.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-armadilha-turnover-retencao-talentos-alta-performance.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-marketing-sem-backend-eficiencia-operacional-retencao.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-ciranda-metodologias-impacto-produtividade.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
+      <loc>https://spositol.github.io/pericia.judicial/artigo-efeito-messias-governanca-corporativa.html</loc>
+      <lastmod>2026-07-09</lastmod>
+      <priority>0.80</priority>
+    </url>
+
+    <url>
       <loc>https://spositol.github.io/pericia.judicial/lp-revisional-fgi-peac.html</loc>
       <lastmod>2026-04-04</lastmod>
       <priority>0.90</priority>
@@ -549,7 +642,6 @@
       <priority>0.90</priority>
     </url>
 
-    /*05/05/2026*/
     <url>
       <loc>https://spositol.github.io/pericia.judicial/artigo-divida-eterna-cartao-credito-parcelamento-automatico.html</loc>
       <lastmod>2026-05-05</lastmod>
@@ -577,12 +669,6 @@
     <url>
       <loc>https://spositol.github.io/pericia.judicial/artigo-extincao-divida-compensacao-repeticao-indebito-cdc.html</loc>
       <lastmod>2026-05-07</lastmod>
-      <priority>0.80</priority>
-    </url>
-	
-	<url>
-      <loc>https://spositol.github.io/pericia.judicial/artigo-extincao-divida-compensacao-repeticao-indebito-cdc.html</loc>
-      <lastmod>2026-05-08</lastmod>
       <priority>0.80</priority>
     </url>
 	

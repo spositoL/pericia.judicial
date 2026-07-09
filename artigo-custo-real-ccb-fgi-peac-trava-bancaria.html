@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>A ilusão da taxa nominal em linhas de fomento: o custo real da CCB com FGI PEAC</title>
+	<meta name="description" content="Entenda como trava bancária, capital retido, seguro embutido e CET opaco podem dobrar o custo real de uma CCB vinculada ao FGI PEAC.">
+	<meta name="keywords" content="CCB, FGI PEAC, Taxa Real, Taxa Nominal, Trava Bancária, CDB Retido, CET, Perícia Financeira, Jurimetria, Dr. Lincoln Sposito">
+	<link rel="canonical" href="https://spositol.github.io/pericia.judicial/artigo-custo-real-ccb-fgi-peac-trava-bancaria.html" />
+
+	<meta property="og:type" content="article">
+	<meta property="og:url" content="https://spositol.github.io/pericia.judicial/artigo-custo-real-ccb-fgi-peac-trava-bancaria.html">
+	<meta property="og:title" content="A ilusão da taxa nominal em linhas de fomento: como a perícia trava a taxa real da CCB com FGI PEAC">
+	<meta property="og:description" content="Uma análise técnico-pericial sobre como capital retido, venda casada e CET incompleto elevam o custo real de uma CCB para muito além da taxa anunciada.">
+	<meta property="og:image" content="https://spositol.github.io/pericia.judicial/img/capa-artigo-taxa-real-ccb-fgi-peac-pericia-tecnica.webp">
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@lincolnsposito">
+	<meta name="twitter:creator" content="@lincolnsposito">
+	<meta name="twitter:title" content="CCB com FGI PEAC: a taxa nominal pode esconder um custo real muito maior">
+	<meta name="twitter:description" content="Veja como a perícia financeira reconstrói o fluxo real e demonstra quando a taxa efetiva salta para mais do que o dobro do anunciado.">
+	<meta name="twitter:image" content="https://spositol.github.io/pericia.judicial/img/capa-artigo-taxa-real-ccb-fgi-peac-pericia-tecnica.webp">
+
+	<link rel="stylesheet" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<style>
+		.site-header {
+			background-color: #1a2a3a;
+			padding: 15px 0;
+			border-bottom: 2px solid #c5a059;
+		}
+		.site-header-inner {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			max-width: 1100px;
+			margin: 0 auto;
+			padding: 0 20px;
+		}
+		.site-logo-link {
+			text-decoration: none;
+			display: block;
+			width: 220px;
+		}
+		.site-nav-list {
+			list-style: none;
+			display: flex;
+			gap: 20px;
+			margin: 0;
+			padding: 0;
+		}
+		.site-nav-link {
+			color: white;
+			text-decoration: none;
+			font-family: 'Inter', sans-serif;
+			font-weight: 600;
+		}
+		.site-nav-link-accent {
+			color: var(--accent);
+			font-weight: bold;
+		}
+		.breadcrumb-bar {
+			background: #f4f4f4;
+			padding: 12px 0;
+			border-bottom: 1px solid #ddd;
+		}
+		.breadcrumb-inner {
+			max-width: 1100px;
+			margin: 0 auto;
+			padding: 0 20px;
+			font-family: 'Inter', sans-serif;
+			font-size: 0.85rem;
+			text-align: center;
+		}
+		.breadcrumb-link {
+			color: #c5a059;
+			text-decoration: none;
+			font-weight: 600;
+		}
+		.breadcrumb-sep {
+			margin: 0 10px;
+			color: #999;
+		}
+		.breadcrumb-current {
+			color: #666;
+			font-weight: 400;
+		}
+		.article-hero {
+			background-color: #ffffff;
+			padding: 40px 20px;
+			border-bottom: 1px solid #eeeeee;
+			text-align: center;
+		}
+		.tag-list {
+			display: flex;
+			gap: 8px;
+			justify-content: center;
+			margin-bottom: 15px;
+			flex-wrap: wrap;
+		}
+		.article-meta-top {
+			display: block;
+			margin-bottom: 15px;
+			color: #666;
+			font-size: 0.9rem;
+		}
+		.back-link {
+			text-decoration: none;
+			color: #c5a059;
+			font-weight: bold;
+			font-size: 0.9rem;
+		}
+		.article-title-main {
+			margin-top: 20px;
+			margin-left: auto;
+			margin-right: auto;
+			max-width: 980px;
+			font-family: 'Playfair Display', serif;
+			color: #1a2a3a;
+			font-size: 2.35rem;
+			line-height: 1.2;
+		}
+		.article-summary {
+			background-color: #f8f9fa;
+			border-left: 5px solid #c5a059;
+			padding: 25px;
+			margin: 30px auto;
+			border-radius: 0 8px 8px 0;
+			max-width: 940px;
+			text-align: left;
+		}
+		.article-summary-lead {
+			margin-top: 0;
+			color: #1a2a3a;
+			font-weight: 700;
+			font-size: 1.08em;
+		}
+		.article-summary-body {
+			color: #444;
+			line-height: 1.65;
+			margin-bottom: 0;
+		}
+		.warning-box {
+			background: #fff6f6;
+			border-left: 5px solid #a43a32;
+			padding: 18px;
+			border-radius: 6px;
+			margin: 24px 0;
+		}
+		.warning-text {
+			margin: 0;
+			color: #5a2521;
+			line-height: 1.6;
+		}
+		.info-cta {
+			margin: 34px 0;
+			background: #eef7ff;
+			border: 1px solid #cde4ff;
+			border-radius: 10px;
+			padding: 20px;
+		}
+		.info-cta-title {
+			margin-top: 0;
+			color: #1a2a3a;
+		}
+		.info-cta-text {
+			margin-bottom: 14px;
+			color: #334;
+			line-height: 1.6;
+		}
+		.info-cta-link {
+			display: inline-block;
+			background: #1a2a3a;
+			color: #fff;
+			text-decoration: none;
+			font-weight: 700;
+			padding: 12px 20px;
+			border-radius: 6px;
+		}
+		.gold-cta {
+			margin: 40px 0 10px;
+			background: linear-gradient(135deg, #d4af37 0%, #f0cf63 45%, #b8891f 100%);
+			border-radius: 12px;
+			padding: 26px;
+			text-align: center;
+			box-shadow: 0 8px 24px rgba(142, 105, 23, 0.35);
+		}
+		.gold-cta-title {
+			margin: 0 0 10px;
+			color: #1a2a3a;
+			font-family: 'Playfair Display', serif;
+		}
+		.gold-cta-text {
+			margin: 0 0 18px;
+			color: #1a2a3a;
+			font-weight: 600;
+		}
+		.gold-cta-link {
+			display: inline-block;
+			background: #1a2a3a;
+			color: #fff;
+			text-decoration: none;
+			font-weight: 800;
+			letter-spacing: 0.3px;
+			padding: 13px 24px;
+			border-radius: 8px;
+		}
+		.note-box {
+			margin-top: 28px;
+			background: #f4f8f4;
+			border-left: 5px solid #2e7d32;
+			padding: 18px;
+			border-radius: 6px;
+		}
+		.note-text {
+			margin: 0;
+			color: #1f4f24;
+			line-height: 1.6;
+		}
+	</style>
+
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-5F1FGJ25TK"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	  gtag('config', 'G-5F1FGJ25TK', {
+		'page_path': '/artigo-custo-real-ccb-fgi-peac-trava-bancaria.html',
+		'content_group': 'Pericia Bancaria'
+	  });
+	</script>
+
+	<script type="application/ld+json">
+	{
+	  "@context": "https://schema.org",
+	  "@graph": [
+		{
+		  "@type": "Article",
+		  "@id": "https://spositol.github.io/pericia.judicial/artigo-custo-real-ccb-fgi-peac-trava-bancaria.html#article",
+		  "headline": "A Ilusão da Taxa Nominal em Linhas de Fomento: Como a Perícia Técnica demonstra o custo real de uma CCB vinculada ao FGI PEAC",
+		  "description": "Estudo técnico sobre taxa nominal, taxa efetiva real, trava bancária por CDB retido, venda casada e opacidade do CET em CCB vinculada ao FGI PEAC.",
+		  "image": "https://spositol.github.io/pericia.judicial/img/capa-artigo-taxa-real-ccb-fgi-peac-pericia-tecnica.webp",                                                                    
+		  "datePublished": "2026-06-20T09:00:00-03:00",
+		  "dateModified": "2026-06-20T09:00:00-03:00",
+		  "author": {
+			"@type": "Person",
+			"name": "Dr. Lincoln Sposito",
+			"jobTitle": "Doutor em Administração e Perito Judicial Especialista em Finanças e Ciência de Dados",
+			"url": "https://spositol.github.io/pericia.judicial/"
+		  },
+		  "publisher": {
+			"@type": "Organization",
+			"name": "Dr. Lincoln Sposito - Perícia e Estratégia",
+			"logo": {
+			  "@type": "ImageObject",
+			  "url": "https://spositol.github.io/pericia.judicial/img/grafico.svg"
+			}
+		  },
+		  "mainEntityOfPage": {
+			"@type": "WebPage",
+			"@id": "https://spositol.github.io/pericia.judicial/artigo-custo-real-ccb-fgi-peac-trava-bancaria.html"
+		  }
+		},
+		{
+		  "@type": "FAQPage",
+		  "mainEntity": [
+			{
+			  "@type": "Question",
+			  "name": "A taxa nominal da CCB mostra o custo real da operação?",
+			  "acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Nem sempre. Quando há retenção de capital, financiamento de tarifas e seguro, ou ausência de CET detalhado, a taxa efetiva real percebida pelo tomador pode superar amplamente a taxa nominal do contrato."
+			  }
+			},
+			{
+			  "@type": "Question",
+			  "name": "Por que o CDB retido pode elevar o custo efetivo real?",
+			  "acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Porque o banco cobra juros sobre o valor bruto integral da CCB, embora o empresário só tenha acesso a uma fração do capital, criando um custo sobre liquidez fictícia e reduzindo o caixa operacional da empresa."
+			  }
+			},
+			{
+			  "@type": "Question",
+			  "name": "A perícia financeira pode reconstruir o contrato com base no valor líquido efetivo?",
+			  "acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Sim. A perícia pode expurgar rubricas abusivas, recalcular o fluxo financeiro sobre o capital realmente disponibilizado e demonstrar tecnicamente a diferença entre a forma contratual e a substância econômica da operação."
+			  }
+			}
+		  ]
+		}
+	  ]
+	}
+	</script>
+</head>
+<body>
+
+<header class="site-header">
+	<div class="container site-header-inner">
+		<a href="index.html" class="site-logo-link">
+			<img src="grafico.svg" width="220" height="60" loading="lazy" alt="Logo Dr. Lincoln Sposito">
+		</a>
+		<nav>
+			<ul class="site-nav-list">
+				<li><a href="index.html" class="site-nav-link">Início</a></li>
+				<li><a href="sobre.html" class="site-nav-link">Sobre</a></li>
+				<li><a href="index.html#servicos" class="btn-nav">Serviços</a></li>
+				<li><a href="pericia-dados.html" class="btn-nav">Perícia de Dados</a></li>
+				<li><a href="index.html#blog" class="btn-nav">Artigos</a></li>
+				<li><a href="casos-emblematicos.html" class="btn-nav">Casos emblemáticos</a></li>
+				<li><a href="materiais.html" class="site-nav-link">Materiais</a></li>
+				<li><a href="faq.html" class="btn-nav site-nav-link-accent">FAQ</a></li>
+				<li><a href="index.html#contato" class="btn-nav">Contato</a></li>
+			</ul>
+		</nav>
+	</div>
+</header>
+
+<nav class="breadcrumb-container breadcrumb-bar" aria-label="Breadcrumb">
+	<div class="breadcrumb-inner">
+		<a href="index.html" class="breadcrumb-link">Início</a>
+		<span class="breadcrumb-sep">&gt;</span>
+		<a href="index.html#blog" class="breadcrumb-link">Artigos</a>
+		<span class="breadcrumb-sep">&gt;</span>
+		<span class="breadcrumb-current">Custo Real da CCB com FGI PEAC</span>
+	</div>
+</nav>
+
+<article class="article-container">
+	<header class="article-header article-hero">
+		<div class="tags-wrapper tag-list">
+			<span class="tag-categoria tag-bancario">CCB</span>
+			<span class="tag-categoria tag-direito">FGI PEAC</span>
+			<span class="tag-categoria tag-tidados">ENGENHARIA FINANCEIRA</span>
+			<span class="tag-categoria tag-bancario">JURIMETRIA</span>
+		</div>
+
+		<span class="article-meta article-meta-top">
+			Publicado em 20 de Junho de 2026 • Perícia Financeira • Linhas de Fomento Empresarial
+		</span>
+
+		<a href="index.html#blog" class="back-link">
+			&larr; Voltar para os artigos
+		</a>
+
+		<h1 class="article-title-main">
+			A Ilusão da Taxa Nominal em Linhas de Fomento: Como a Perícia Técnica trava a taxa real de uma CCB vinculada ao FGI PEAC
+		</h1>
+
+		<div class="resumo-estrategico article-summary">
+			<p class="article-summary-lead">Em contratos de fomento empresarial, a taxa anunciada pode ser apenas a superfície. O custo real está no fluxo de caixa efetivamente entregue ao tomador.</p>
+			<p class="article-summary-body">Este artigo mostra, sob a ótica da engenharia financeira e da jurimetria aplicada à prova pericial, como a cumulação de encargos, sobreasseguração e travas de liquidez pode converter uma taxa nominal de 1,80% a.m. em uma taxa efetiva real de 3,63% a.m., com impacto direto sobre o caixa da empresa.</p>
+		</div>
+	</header>
+
+	<img src="img/capa-artigo-taxa-real-ccb-fgi-peac-pericia-tecnica.webp" loading="lazy" alt="Capa do artigo sobre custo real da CCB com FGI PEAC e trava bancária" class="article-capa">
+
+	<div class="article-content">
+		<p>As linhas de fomento governamental, como o Programa Emergencial de Acesso a Crédito, nasceram para ampliar capital de giro e reduzir risco das instituições financeiras por meio de garantias complementares. Em tese, isso deveria aproximar o empresário de uma estrutura de crédito mais eficiente. Na prática, a perícia encontra contratos em que a proteção pública não é revertida em benefício econômico ao tomador.</p>
+		<p>Quando o banco mantém taxa nominal aparentemente moderada, mas simultaneamente retém parcela do principal, financia encargos acessórios e omite a leitura completa do CET, a operação deixa de ser simples crédito e passa a operar como mecanismo de asfixia do fluxo de caixa.</p>
+
+		<h2>O caso técnico em análise</h2>
+		<p>Em perícia recente sobre uma Cédula de Crédito Bancário emitida sob o amparo do FGI PEAC, a taxa nominal pactuada era de <strong>1,80% ao mês</strong>, equivalente a aproximadamente <strong>23,87% ao ano</strong>. O contrato, à primeira vista, parecia se manter dentro de uma faixa defensável para crédito empresarial.</p>
+		<p>Contudo, a modelagem pericial do fluxo real mostrou outra fotografia: a <strong>taxa efetiva real percebida pela empresa alcançava 3,63% ao mês</strong>, ou cerca de <strong>53,34% ao ano</strong>. A diferença não decorreu de simples variação interpretativa, mas de uma incompatibilidade objetiva entre o valor contratado e a liquidez efetivamente disponibilizada.</p>
+
+		<div class="warning-box">
+			<p class="warning-text"><strong>Ponto pericial central:</strong> a empresa pagava juros sobre 100% do valor bruto da CCB, embora tivesse acesso operacional apenas à fração líquida remanescente após retenções, prêmios financiados e uma trava bancária por CDB fiduciário.</p>
+		</div>
+
+		<h2>Os três mecanismos de inflação oculta do custo de capital</h2>
+		<h3>1. Trava bancária por CDB retido</h3>
+		<p>Como condição para a liberação do crédito, foi imposta retenção compulsória de <strong>20% do valor total financiado</strong> na forma de CDB fiduciário. Sob a ótica econômica, a empresa assumiu dívida integral, mas recebeu liquidez parcial. Sob a ótica jurídica, o banco agregou garantia privada a uma operação já assistida por garantia pública do FGI.</p>
+		<p>O resultado técnico é inequívoco: cobra-se remuneração sobre capital que não cumpriu função operacional no caixa da empresa. Trata-se de uma forma de <em>over-collateralization</em> que distorce a taxa efetiva e pode revelar enriquecimento sem causa quando comparada ao risco residual realmente suportado pela instituição financeira.</p>
+
+		<h3>2. Financiamento de encargos acessórios e venda casada</h3>
+		<p>Tarifa de cadastro, prêmio de seguro prestamista e outros acessórios foram incorporados ao saldo financiado. Isso amplia artificialmente a base de incidência dos juros, fazendo com que o empresário remunere, em parcelas compostas, valores que jamais foram convertidos em capital de giro.</p>
+		<p>Do ponto de vista pericial, o problema se agrava quando o seguro é contratado em desenho fechado, com protagonismo do próprio banco na estipulação e no benefício econômico, hipótese que exige leitura crítica à luz do Tema Repetitivo 972 do STJ.</p>
+
+		<h3>3. Opacidade do Custo Efetivo Total</h3>
+		<p>A ausência de planilha completa de CET, ou seu preenchimento parcial no quadro-resumo, impede a compreensão prévia do impacto total da operação. Sem visibilidade sobre cada rubrica e sem a tradução da taxa nominal para a taxa efetivamente incidente sobre o capital líquido, a assimetria informacional passa a contaminar a formação da vontade contratual.</p>
+		<p>É justamente nesse ponto que a jurimetria encontra utilidade prática: transformar a opacidade contratual em uma métrica comparável, auditável e apta a demonstrar em juízo a divergência entre preço anunciado e custo verdadeiro.</p>
+
+		<section class="info-cta">
+			<h3 class="info-cta-title">Sua empresa recebeu menos liquidez do que o valor nominal da CCB?</h3>
+			<p class="info-cta-text">Uma triagem técnica preliminar permite comparar taxa contratada, capital efetivamente liberado, garantias acumuladas e custo real da operação antes de qualquer medida judicial.</p>
+			<a href="index.html?tema=FGIPEAC&area=CCB%20Capital%20de%20Giro&assunto=Triagem%20Tecnica:%20Taxa%20Real%20e%20Trava%20Bancaria%20na%20CCB#contato" class="info-cta-link">Solicitar triagem técnica da CCB</a>
+		</section>
+
+		<h2>Como a perícia trava a taxa real</h2>
+		<p>Na engenharia financeira pericial, a taxa não é aceita como dado absoluto do contrato. Ela é testada contra o fluxo econômico real. A metodologia aplicada reconstrói o cronograma financeiro a partir do que foi efetivamente entregue ao tomador, identificando se a taxa pactuada se sustenta quando depurada de distorções.</p>
+		<ol>
+			<li><strong>Expurgo integral</strong> das rubricas abusivas ou não aderentes à finalidade do financiamento.</li>
+			<li><strong>Liberação do saldo retido</strong> em CDB quando caracterizada sobregarantia incompatível com a lógica do FGI PEAC.</li>
+			<li><strong>Recálculo do cronograma</strong> com incidência de juros apenas sobre o saldo líquido efetivamente disponibilizado, em estrutura verificável e auditável.</li>
+		</ol>
+		<p>Ao substituir a narrativa bancária por um modelo matemático aderente à substância econômica, a perícia revela se a taxa nominal era preço verdadeiro ou apenas peça de marketing contratual. Em muitos casos, a diferença é suficientemente robusta para subsidiar revisão do saldo, impugnação de cláusulas e recomposição do equilíbrio econômico-financeiro.</p>
+
+		<h2>Leitura jurimétrica do desequilíbrio</h2>
+		<p>O valor probatório desse tipo de análise não está só no cálculo isolado, mas na capacidade de demonstrar padrões. Quando se observa combinação reiterada de garantia pública, capital retido, acessórios financiados e CET mal explicitado, passa a existir base objetiva para comparar a operação com referências de mercado e aferir desvio de proporcionalidade entre risco e remuneração.</p>
+		<p>Em linguagem simples: se o banco teve seu risco reduzido pelo FGI, protegido por aval e ainda reforçado por CDB retido, a permanência de uma taxa típica de crédito mais arriscado merece escrutínio técnico. É aí que a jurimetria deixa de ser estatística abstrata e se torna ferramenta de convencimento judicial.</p>
+
+		<h2>Conclusão</h2>
+		<p>A perícia financeira matemática é indispensável para desmontar operações de crédito que aparentam moderação formal, mas escondem forte desequilíbrio econômico. Em linhas de fomento como o FGI PEAC, a análise não pode parar na taxa nominal. É preciso medir a taxa real percebida pelo tomador, a liquidez efetivamente entregue e a coerência entre risco bancário e preço cobrado.</p>
+		<p>Quando a prova técnica demonstra que a empresa pagou por capital que não utilizou, por acessórios que não escolheu e por garantias que excederam a lógica do programa de fomento, o contrato deixa de ser apenas oneroso e passa a ser tecnicamente questionável. A função da perícia, nesse contexto, é devolver método, transparência e racionalidade ao debate judicial.</p>
+
+		<section class="gold-cta">
+			<h2 class="gold-cta-title">Quer medir a taxa real da sua CCB com critério pericial?</h2>
+			<p class="gold-cta-text">Fale com o Dr. Lincoln Sposito para avaliar capital retido, CET efetivo, venda casada e viabilidade de revisão técnica do contrato.</p>
+			<a href="https://wa.me/5511914612603?text=Ol%C3%A1%20Dr.%20Lincoln,%20quero%20avaliar%20o%20custo%20real%20da%20minha%20CCB%20com%20FGI%20PEAC,%20incluindo%20CDB%20retido,%20CET%20e%20poss%C3%ADvel%20revis%C3%A3o%20pericial." id="cta-whatsapp-ccb-fgi-real" target="_blank" rel="noopener noreferrer" class="gold-cta-link">QUERO FALAR COM O PERITO AGORA</a>
+		</section>
+
+		<div class="note-box">
+			<p class="note-text"><strong>Nota:</strong> Este artigo possui caráter informativo e segue metodologia pericial financeira voltada à reconstrução de fluxo de caixa, análise do CET e exame de aderência econômica da contratação.</p>
+		</div>
+	</div>
+</article>
+
+<a href="https://wa.me/5511914612603?text=Olá Dr. Lincoln, me interessei pelo seu trabalho de perícia. Podemos falar sobre um caso que eu tenho?" 
+   id="cta-whatsapp-stalking"
+   class="whatsapp-flutuante" 
+   target="_blank" 
+	rel="noopener noreferrer"
+   aria-label="Falar com Dr. Lincoln Sposito no WhatsApp">
+	<i class="fab fa-whatsapp"></i>
+</a>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+	function bindWhatsappLeadEvent(elementId, ctaPosition, eventLabel) {
+		var element = document.getElementById(elementId);
+		if (!element) {
+			return;
+		}
+
+		element.addEventListener('click', function() {
+			if (typeof gtag === 'function') {
+				gtag('event', 'generate_lead', {
+					'event_category': 'Contato',
+					'event_label': eventLabel,
+					'method': 'WhatsApp',
+					'value': 1.0,
+					'currency': 'BRL',
+					'article_slug': 'artigo-custo-real-ccb-fgi-peac-trava-bancaria',
+					'cta_position': ctaPosition,
+					'content_name': 'Custo Real CCB FGI PEAC Trava Bancaria'
+				});
+			}
+		});
+	}
+
+	bindWhatsappLeadEvent('cta-whatsapp-ccb-fgi-real', 'final_cta', 'Custo Real CCB FGI PEAC - CTA Final WhatsApp');
+	bindWhatsappLeadEvent('cta-whatsapp-stalking', 'floating_button', 'Custo Real CCB FGI PEAC - WhatsApp Flutuante');
+});
+</script>
+
+</body>
+</html>
