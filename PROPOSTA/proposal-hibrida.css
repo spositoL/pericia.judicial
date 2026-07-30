@@ -276,6 +276,8 @@ a {
 .segment-section,
 .entry-section,
 .proof-section,
+.authority-section,
+.content-section,
 .cta-section {
     margin-top: 24px;
     padding: 30px;
@@ -293,6 +295,8 @@ a {
 .segment-card,
 .entry-card,
 .proof-card,
+.authority-card,
+.content-card,
 .cta-box {
     padding: 24px;
     background: var(--surface);
@@ -316,7 +320,9 @@ a {
 
 .segment-card h3,
 .entry-card h3,
-.proof-card h3 {
+.proof-card h3,
+.authority-card h3,
+.content-card h3 {
     margin: 0 0 8px;
     font-size: 1.02rem;
 }
@@ -353,6 +359,159 @@ a {
     margin-top: 20px;
 }
 
+.authority-grid,
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 20px;
+}
+
+.authority-card,
+.content-card {
+    border-radius: 22px;
+}
+
+.authority-card p,
+.content-card p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.8;
+}
+
+.authority-card a,
+.content-card a {
+    display: inline-flex;
+    margin-top: 18px;
+    text-decoration: none;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.capture-section {
+    margin-top: 24px;
+    padding: 30px;
+    background: rgba(255, 253, 248, 0.78);
+    border: 1px solid rgba(24, 33, 43, 0.08);
+    border-radius: 28px;
+}
+
+.capture-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 20px;
+    align-items: start;
+    margin-top: 20px;
+}
+
+.capture-support,
+.intake-form,
+.faq-support-card,
+.priority-support-card {
+    border-radius: 22px;
+}
+
+.capture-copy,
+.faq-support-card,
+.priority-support-card,
+.intake-form {
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+}
+
+.capture-copy h3,
+.faq-support-card h3,
+.intake-form h3 {
+    margin: 0 0 10px;
+    font-size: 1.08rem;
+}
+
+.capture-copy p,
+.faq-support-card p,
+.priority-support-card p,
+.intake-form p,
+.intake-form label {
+    color: var(--muted);
+    line-height: 1.75;
+}
+
+.capture-actions {
+    display: grid;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.faq-support-card,
+.priority-support-card {
+    margin-top: 18px;
+}
+
+.faq-support-card a,
+.priority-support-card a {
+    display: inline-flex;
+    margin-top: 14px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.priority-support-card {
+    background: #fff8ec;
+    border: 1px solid rgba(197, 160, 89, 0.35);
+}
+
+.priority-support-card small {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--gold-deep);
+    font-weight: 800;
+    letter-spacing: 0.12em;
+}
+
+.intake-form {
+    display: grid;
+    gap: 16px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.form-group {
+    display: grid;
+    gap: 6px;
+}
+
+.intake-form input,
+.intake-form select,
+.intake-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid rgba(24, 33, 43, 0.16);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--text);
+    font: inherit;
+}
+
+.intake-form textarea {
+    resize: vertical;
+}
+
+.form-submit {
+    min-height: 54px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #d8b868 0%, #b69249 100%);
+    color: #18212b;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+}
+
 .cta-section {
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
@@ -370,7 +529,14 @@ a {
     .segment-grid,
     .entry-grid,
     .proof-grid,
+    .authority-grid,
+    .content-grid,
+    .capture-grid,
     .cta-section {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
         grid-template-columns: 1fr;
     }
 
@@ -393,6 +559,9 @@ a {
     .segment-section,
     .entry-section,
     .proof-section,
+    .authority-section,
+    .content-section,
+    .capture-section,
     .cta-section {
         padding: 22px;
     }
